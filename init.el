@@ -26,7 +26,7 @@
 ;; C-ca ; org-agenda
 ;; C-cb; org-iswitchb
 
-(message "using $Id: init.el 96 2011-04-15 23:07:39Z nhoffman $")
+(message "loading ~/.emacs.d/init.el")
 
 ;; startup, etc
 (setq column-number-mode t)
