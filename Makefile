@@ -13,7 +13,7 @@ icicles:
 	bin/get-icicles.sh
 
 link:
-	ln -sf ${CWD} ~/.emacs.d
+	rm -rf ~/.emacs.d && ln -sf ${CWD} ~/.emacs.d
 
 xmodmap:
 	cp .Xmodmap ${HOME}
