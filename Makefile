@@ -1,17 +1,29 @@
-home=${HOME}
-thisdir=$(shell pwd)
-version=$(shell svn info | grep Revision | cut -d' ' -f 2)
+CWD=$(shell pwd)
 
-install:
-	cp .Xmodmap ${home}
+all:
+
+extras: ess icicles
+
+install: extras link xmodmap
+
+ess:
+	bin/get-ess.sh
+
+icicles:
+	bin/get-icicles.sh && bin/compile-icicles.sh
+
+link:
+	ln -sf ${CWD} ~/.emacs.d
+
+xmodmap:
+	cp .Xmodmap ${HOME}
 
 snapshot:
-	cd .. ;\
-	tar -czvf nh-dotemacs-${version}.gz \
-		.emacs.d/init.el \
-		.emacs.d/README.txt \
+	cd .. && \
+	tar -czvf nh-dotemacs.tgz \
+		.emacs.d/*.el \
+		.emacs.d/README.rst \
 		.emacs.d/Makefile \
-		.emacs.d/.Xmodmap \
-		.emacs.d/*.el && \
-	cp nh-dotemacs-${version}.gz nh-dotemacs.gz && \
-	cd ${thisdir} 
+		.emacs.d/.Xmodmap && \
+	cd ${CWD}
+

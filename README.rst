@@ -1,17 +1,18 @@
-============================
-.emacs file for Noah Hoffman
-============================
+======================
+My emacs configuration
+======================
 
-Installing
-==========
+Primarily for personal use, of course. This repository contains
+(perhaps mostly) code obtained from other sources. Hopefully I have
+complied with everyone's licensing requirements. Please open an issue
+if any code hasn't been properly attributed.
 
-Place the .gz archive in your home directory and execute the following commands::
+License
+=======
 
-  tar -xzvf nh-dotemacs-*.gz
-  cd .emacs.d
-  make install
+GPLv3
 
-The above will place a directory called ``.emacs.d`` in your home
-directory and copy the file .Xmodmap to your home directory.
+Installation
+============
 
 
