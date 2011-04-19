@@ -15,4 +15,8 @@ GPLv3
 Installation
 ============
 
+Check out in place and run ``make extras`` to download any external libraries. To deploy from elsewhere::
 
+  make install 
+
+will create a soft link to your home directory.

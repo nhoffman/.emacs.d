@@ -10,7 +10,7 @@ ess:
 	bin/get-ess.sh
 
 icicles:
-	bin/get-icicles.sh && bin/compile-icicles.sh
+	bin/get-icicles.sh
 
 link:
 	ln -sf ${CWD} ~/.emacs.d
