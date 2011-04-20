@@ -1,7 +1,17 @@
-;; .emacs file for Noah Hoffman - ngh2 AT uw.edu - This is public
-;; domain software - do whatever you want with it, but there is
-;; absolutely no warranty. Note license information associated with
-;; other files included in this archive.
+;; emacs configuration for Noah Hoffman
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;; non-default key mappings defined here:
 ;; f5 ; call-last-kbd-macro
@@ -28,12 +38,19 @@
 
 (message "loading ~/.emacs.d/init.el")
 
-;; startup, etc
+;; startup, appearance, etc
 (setq column-number-mode t)
 (setq inhibit-splash-screen t)
 (setq require-final-newline t)
 (setq make-backup-files nil) ;; no backup files
 (setq initial-scratch-message nil) ;; no instructions in the *scratch* buffer
+(tool-bar-mode -1)
+
+;; date and time in status bar
+;; http://efod.se/writings/linuxbook/html/date-and-time.html
+(setq display-time-day-and-date t
+      display-time-24hr-format t)
+(display-time)
 
 ;; debugging
 ;; (setq debug-on-error t)
@@ -50,6 +67,7 @@
 (set-cursor-color "red")
 (blink-cursor-mode 1)
 
+;; marking
 (transient-mark-mode 1) ;; highlight active region - default in emacs 23.1+
 (global-set-key (kbd "M-C-t") 'transient-mark-mode)
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list)
@@ -57,8 +75,6 @@
 ;; imenu
 (setq imenu-auto-rescan 1)
 (global-set-key (kbd "C-x m") 'imenu) ;; overwrites default sequence for compose-mail
-
-(tool-bar-mode -1)
 
 ;; shortcuts for keyboard macros
 ;; see http://www.emacswiki.org/emacs/KeyboardMacros
@@ -69,7 +85,7 @@
 (global-set-key '[(f5)]          'call-last-kbd-macro)
 (global-set-key '[(shift f5)]    'toggle-kbd-macro-recording-on)
 
-;; load this file
+;; convenience function to (re)load this file
 (defun load-init ()
   "Load ~/.emacs.d/init.el"
   (interactive)
@@ -141,13 +157,6 @@
 (global-set-key (kbd "<f7>") 'visual-line-mode)
 (global-set-key (kbd "<f8>") 'ns-toggle-fullscreen)
 
-;; set default font (old method here for reference)
-;; (condition-case nil
-;;     (set-default-font "Liberation Mono-10")
-;;   (error (message "** could not load Liberation Mono-10")))
-
-;; (add-to-list 'default-frame-alist '(font . "Liberation Mono-10"))
-
 ;; platform and display-specific settings
 (defun fix-frame ()
   (interactive)
@@ -195,27 +204,7 @@
 	     )
 	  )
 
-;; (message (format "my-default-font is %s" my-default-font))
-;; (defun set-my-default-font ()
-;;   (interactive)
-;;   (condition-case nil
-;;       (define-my-default-font)
-;;     (message (format "setting default font to %s" my-default-font))
-;;     (set-default-font my-default-font)    
-;;     (error (message (format "** could not set to font %s" my-default-font))))
-;; )
-
-;; (unless (equal window-system nil)
-;;   (message (format "setting default font to %s" my-default-font))
-;;   (condition-case nil
-;;       (set-default-font my-default-font)
-;;     (error (message (format "** could not set to font %s" my-default-font))))
-;;   ;; sets this font in new frames
-;;   ;; (add-to-list 'default-frame-alist '(font . "font name"))
-;;   ;; (add-to-list 'default-frame-alist (list 'font . my-default-font))
-;;   )
-
-;; Copies lines without selecting them
+;; Copies lines in the absence of an active region
 ;; see http://emacs-fu.blogspot.com/2009/11/copying-lines-without-selecting-them.html
 (defadvice kill-ring-save (before slick-copy activate compile) "When
   called interactively with no active region, copy a single line
@@ -269,8 +258,6 @@ instead."  (interactive (if mark-active (list (region-beginning)
       ;; (setq arg (if (plusp arg) (1- arg) (1+ arg)))
       (setq arg (if (>= arg 0) (1- arg) (1+ arg)))
       )))
-
-;; provide a keystroke for the above function
 (global-set-key (kbd "C-x 4") 'transpose-buffers)
 
 ;; also from http://www.emacswiki.org/emacs/SwitchingBuffers
@@ -285,8 +272,6 @@ instead."  (interactive (if mark-active (list (region-beginning)
     (switch-to-buffer this-frame-buffer)
     (other-frame 1)
     (switch-to-buffer other-frame-buffer)))
-
-;; provide a keystroke for the above function
 (global-set-key (kbd "C-x 5") 'switch-buffers-between-frames)
 
 ;; Default 'untabify converts a tab to equivalent number of
@@ -405,7 +390,6 @@ instead."  (interactive (if mark-active (list (region-beginning)
 ;; moinmoin-mode
 ;;  wget -U Mozilla -O moinmoin-mode.el "http://moinmoin.wikiwikiweb.de/EmacsForMoinMoin/MoinMoinMode?action=raw"
 ;; requires http://homepage1.nifty.com/bmonkey/emacs/elisp/screen-lines.el
-
 (condition-case nil
     (require 'moinmoin-mode)
   (error (message "** could not load moinmon-mode")))
@@ -634,14 +618,7 @@ instead."  (interactive (if mark-active (list (region-beginning)
 ;; support for preset connections
 ;; TODO: consider using Tom's setup: https://uwmc-labmed.beanstalkapp.com/developers/browse/personal/twe/trunk/EMACS/sql.el
 (setq sql-connection-alist
-      '((mastermu
-         (sql-product 'mysql)
-         (sql-server "web.labmed.washington.edu")
-         (sql-user "nhoffman")
-         (sql-database "mastermu")
-         ;;(sql-port 3306)
-	 )
-        (filemaker-sps
+      '((filemaker-sps
          (sql-product 'mysql)
          (sql-server "1.2.3.4")
          (sql-user "me")
@@ -684,13 +661,10 @@ This is used to set `sql-alternate-buffer-name' within
 ;; suppress graphical passphrase prompt
 (setenv "GPG_AGENT_INFO" nil)
 
-;; date and time in status bar
-;; http://efod.se/writings/linuxbook/html/date-and-time.html
-(setq display-time-day-and-date t
-      display-time-24hr-format t)
-(display-time)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+;; content below was added by emacs ;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; added by emacs
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
