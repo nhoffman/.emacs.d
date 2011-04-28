@@ -46,14 +46,16 @@
 	      	(filename . "Seq/"))
 
 	       ;; taxtastic
-	       ("taxonomy-tests"
-		(filename . "/taxonomy/tests"))
-	       ("taxonomy-package"
-		(filename . "/taxonomy/taxonomy"))
-	       ("taxonomy"
-		(filename . "/taxonomy/"))
+	       ("taxtastic-scripts"
+		(filename . "/taxtastic/taxtastic/scripts/"))
+	       ("taxtastic-subcommands"
+		(filename . "/taxtastic/taxtastic/subcommands/"))
+	       ("taxtastic-package"
+		(filename . "/taxtastic/taxtastic"))
+	       ("taxtastic-tests"
+		(filename . "/taxtastic/tests"))
 	       ("taxtastic"
-		(filename . "/taxtastic"))
+		(filename . "/taxtastic/"))
 
 	       ("clinlabr"
 	      	(filename . "/clinlabr/"))
@@ -145,6 +147,12 @@
 	      	(filename . "/refset/gut/"))
 	       ("refset"
 	      	(filename . "/refset/"))
+
+	       ;; classcompare
+	       ("classcompare/pipeline"
+	      	(filename . "/classcompare/pipeline/"))
+	       ("classcompare"
+	      	(filename . "/classcompare/"))
 
 	       ;; working/nhoffman
 	       ("clst" (filename . "working/nhoffman/clst"))
