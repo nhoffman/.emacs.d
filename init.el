@@ -359,7 +359,6 @@ instead."  (interactive (if mark-active (list (region-beginning)
 ;; org-mode
 (condition-case nil
     (require 'org-install)
-  ;; The following lines are always needed.  Choose your own keys.
   (error (message "** could not load system org-mode")))
 
 (global-set-key (kbd "C-c l") 'org-store-link)
@@ -379,6 +378,10 @@ instead."  (interactive (if mark-active (list (region-beginning)
 ;; org-mode file suffix matching
 (push '("\\.org\\'" . org-mode) auto-mode-alist)
 (push '("\\.org\\.txt\\'" . org-mode) auto-mode-alist)
+
+(setq org-agenda-files (list "~/Dropbox/notes/index.org"
+                             "~/Dropbox/departmental/hiring/techForMe/hiring_notes.org.gpg"
+			     ))
 
 ;; Set to the location of your Org files on your local system
 (setq org-directory "~/Dropbox/notes")
@@ -673,7 +676,7 @@ This is used to set `sql-alternate-buffer-name' within
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/Dropbox/notes/index.org")))
+ ;; '(org-agenda-files (quote ("~/Dropbox/notes/index.org")))
  '(safe-local-variable-values (quote ((toggle-read-only . t)))))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
@@ -681,4 +684,6 @@ This is used to set `sql-alternate-buffer-name' within
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
+
+
 

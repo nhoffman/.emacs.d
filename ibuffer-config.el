@@ -145,6 +145,10 @@
 	       ;; reference sets
 	       ("refset-gut"
 	      	(filename . "/refset/gut/"))
+	       ("refset-stomach"
+	      	(filename . "/refset/stomach/"))
+	       ("refset-vaginal"
+	      	(filename . "/refset/vaginal/"))
 	       ("refset"
 	      	(filename . "/refset/"))
 
@@ -182,6 +186,7 @@
 	       ("20101214_sujatha_aligns" (filename . "working/nhoffman/20101214_sujatha_aligns"))
 	       ("20101227_aligns" (filename . "working/nhoffman/20101227_aligns"))
 	       ("20110204_test_lactos" (filename . "working/nhoffman/20110204_test_lactos"))
+	       ("20110505_plate5_aligns" (filename . "working/nhoffman/20110505_plate5_aligns"))
 	       ("working/nhoffman" (filename . "working/nhoffman"))
 
 	       ;; catch anything else in bvdiversity
