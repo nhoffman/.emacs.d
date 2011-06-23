@@ -169,6 +169,9 @@
 	 (setq mac-option-modifier 'meta)
 	 (setq mac-command-key-is-meta nil)
 	 (setq my-default-font "Bitstream Vera Sans Mono-14")
+	 ;; enable edit-with-emacs for chrome
+	 ;; (require 'edit-server)
+	 ;; (edit-server-start)
 	 )
 	((string= "x" window-system)
 	 (message (format "** running %s windowing system" window-system))
@@ -206,17 +209,17 @@
 
 ;; Copies lines in the absence of an active region
 ;; see http://emacs-fu.blogspot.com/2009/11/copying-lines-without-selecting-them.html
-(defadvice kill-ring-save (before slick-copy activate compile) "When
-  called interactively with no active region, copy a single line
-  instead."  (interactive (if mark-active (list (region-beginning)
-  (region-end)) (message "Copied line") (list
-  (line-beginning-position) (line-beginning-position 2)))))
+;; (defadvice kill-ring-save (before slick-copy activate compile) "When
+;;   called interactively with no active region, copy a single line
+;;   instead."  (interactive (if mark-active (list (region-beginning)
+;;   (region-end)) (message "Copied line") (list
+;;   (line-beginning-position) (line-beginning-position 2)))))
 
-(defadvice kill-region (before slick-cut activate compile) "When
-called interactively with no active region, kill a single line
-instead."  (interactive (if mark-active (list (region-beginning)
-(region-end)) (list (line-beginning-position) (line-beginning-position
-2)))))
+;; (defadvice kill-region (before slick-cut activate compile) "When
+;; called interactively with no active region, kill a single line
+;; instead."  (interactive (if mark-active (list (region-beginning)
+;; (region-end)) (list (line-beginning-position) (line-beginning-position
+;; 2)))))
 
 ;; move lines up and down more easily
 ;; see http://stackoverflow.com/questions/2423834/move-line-region-up-and-down-in-emacs
@@ -664,6 +667,18 @@ This is used to set `sql-alternate-buffer-name' within
 ;; suppress graphical passphrase prompt
 (setenv "GPG_AGENT_INFO" nil)
 
+;; rainbow-delimiters
+;; http://www.emacswiki.org/emacs/RainbowDelimiters
+;; setup:
+;; cd ~/.emacs.d
+;; wget http://www.emacswiki.org/emacs/download/rainbow-delimiters.el
+;; emacs -batch -f batch-byte-compile rainbow-delimiters.el
+;; or M-x byte-compile-file <location of rainbow-delimiters.el>
+;; M-x rainbow-delimiters-mode
+(condition-case nil
+    (require 'rainbow-delimiters)
+  (error (message "** could not load rainbow-delimiters")))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; content below was added by emacs ;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -684,6 +699,3 @@ This is used to set `sql-alternate-buffer-name' within
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
-
-
-

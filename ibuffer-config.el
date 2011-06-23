@@ -149,8 +149,26 @@
 	      	(filename . "/refset/stomach/"))
 	       ("refset-vaginal"
 	      	(filename . "/refset/vaginal/"))
+	       ("refset-blast"
+	      	(filename . "/refset/blast/"))
+	       ("refset-rdpseqs"
+	      	(filename . "/refset/rdpseqs/"))
 	       ("refset"
 	      	(filename . "/refset/"))
+
+	       ;; pipelines
+	       ("vaginal-pipeline-nonoise"
+	      	(filename . "/home/matsengrp/vaginal-nonoise"))
+	       ("vaginal-pipeline-plates1to4"
+	      	(filename . "/home/matsengrp/vaginal-plates1to4"))
+	       ("vaginal-pipeline"
+	      	(filename . "/home/matsengrp/vaginal"))
+
+
+	       ("stomach-pipeline-dev"
+	      	(filename . "/home/matsengrp/stomach-dev"))
+	       ("stomach-pipeline"
+	      	(filename . "/home/matsengrp/stomach"))
 
 	       ;; classcompare
 	       ("classcompare/pipeline"
@@ -277,8 +295,7 @@
 	      	(mode . python-mode))
 
 	       ("emacs-lisp"
-	      	(mode . emacs-lisp-mode))
-	       
+	      	(mode . emacs-lisp-mode))	       
 	       )
 	      
 	      ;; ;;;;;;;;;;;;;;;;;
