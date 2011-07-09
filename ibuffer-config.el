@@ -157,18 +157,31 @@
 	      	(filename . "/refset/"))
 
 	       ;; pipelines
+	       ("vaginal-analysis-p5-tiny"
+	      	(filename . "/vaginal_analysis/plate5_tiny"))
+	       ("vaginal-analysis-p5-nonoise"
+	      	(filename . "/vaginal_analysis/plate5_nonoise"))
+	       ("vaginal-analysis-p5"
+	      	(filename . "/vaginal_analysis/plate5"))
+	       ("vaginal-analysis-p1to4"
+	      	(filename . "/vaginal_analysis/plates1to4"))
+	       ("vaginal-analysis-p1to4-trimmed"
+	      	(filename . "/vaginal_analysis/plates1to4_trimmed"))
+	       ("vaginal-analysis-bin"
+	      	(filename . "/vaginal_analysis/bin"))
+	       ("vaginal-analysis"
+	      	(filename . "/vaginal_analysis/"))
+
 	       ("vaginal-pipeline-nonoise"
-	      	(filename . "/home/matsengrp/vaginal-nonoise"))
+	      	(filename . "/vaginal/vaginal-nonoise"))
 	       ("vaginal-pipeline-plates1to4"
-	      	(filename . "/home/matsengrp/vaginal-plates1to4"))
+	      	(filename . "/vaginal/vaginal-plates1to4"))
 	       ("vaginal-pipeline"
-	      	(filename . "/home/matsengrp/vaginal"))
+	      	(filename . "/vaginal/vaginal-master"))
 
 
-	       ("stomach-pipeline-dev"
-	      	(filename . "/home/matsengrp/stomach-dev"))
 	       ("stomach-pipeline"
-	      	(filename . "/home/matsengrp/stomach"))
+	      	(filename . "/stomach/stomach-master"))
 
 	       ;; classcompare
 	       ("classcompare/pipeline"
