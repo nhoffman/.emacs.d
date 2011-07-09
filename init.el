@@ -92,6 +92,22 @@
   (load "~/.emacs.d/init.el"))
 (global-set-key (kbd "M-C-i") 'load-init)
 
+;; add a journal entry
+(defun insert-time ()
+ (interactive)
+ (insert (format-time-string "<%Y-%m-%d %a>")))
+
+(defun journal ()
+ (interactive)
+ (find-file "~/Dropbox/notes/index.org")
+ (end-of-buffer)
+ (insert "\n")
+ (insert "* ")
+ (insert-time)
+ (beginning-of-line)
+ (forward-char 2))
+(global-set-key (kbd "C-x C-j") 'journal)
+
 ;; setup for emacs desktop
 ;; http://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html
 ;; http://www.emacswiki.org/emacs/DeskTop
