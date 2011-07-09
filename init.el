@@ -102,6 +102,7 @@
  (find-file "~/Dropbox/notes/index.org")
  (end-of-buffer)
  (insert "\n")
+ (delete-blank-lines)
  (insert "* ")
  (insert-time)
  (beginning-of-line)
