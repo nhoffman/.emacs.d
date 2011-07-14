@@ -12,14 +12,26 @@
 	      	(filename . "Dropbox/notes/"))
 	       
 	       ;; qdashboard
-	       ("qdashboard-config"
+	       ("qdash-config"
 	      	(filename . "/qdashboard/config"))
-	       ("qdashboard-data"
+
+	       ("qdash-data-TAT"
+	      	(filename . "/qdashboard/data/TAT"))
+	       ("qdash-data-cancelCredit"
+	      	(filename . "/qdashboard/data/cancelCredit"))
+	       ("qdash-data"
 	      	(filename . "/qdashboard/data"))
-	       ("qdashboard-metrics"
+
+	       ("qdash-metrics-TAT"
+	      	(filename . "/qdashboard/metrics/TAT"))
+	       ("qdash-metrics-collectionBatches"
+	      	(filename . "/qdashboard/metrics/collectionBatches"))
+	       ("qdash-metrics"
 	      	(filename . "/qdashboard/metrics"))
-	       ("qdashboard-reports"
+
+	       ("qdash-reports"
 	      	(filename . "/qdashboard/reports"))
+
 	       ("qdashboard"
 	      	(filename . "/qdashboard/"))
 
