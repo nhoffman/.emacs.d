@@ -392,6 +392,8 @@
 	     (define-key org-mode-map (kbd "M-<right>") 'forward-word)
 	     (define-key org-mode-map (kbd "M-<left>") 'backward-word)
 	     (icicle-mode)
+	     (org-indent-mode)
+	     (visual-line-mode)
 	     )
 	  )
 
