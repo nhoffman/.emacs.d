@@ -392,6 +392,8 @@
 	     (define-key org-mode-map (kbd "M-<right>") 'forward-word)
 	     (define-key org-mode-map (kbd "M-<left>") 'backward-word)
 	     (icicle-mode)
+	     (org-indent-mode)
+	     (visual-line-mode)
 	     )
 	  )
 
@@ -695,6 +697,18 @@ This is used to set `sql-alternate-buffer-name' within
 (condition-case nil
     (require 'rainbow-delimiters)
   (error (message "** could not load rainbow-delimiters")))
+
+;; gist.el
+;; https://github.com/defunkt/gist.el
+;; added as a submodule:
+;; % git submodule add https://github.com/defunkt/gist.el.git
+;; now, to clone .emacs.d elsewhere:
+;; % git clone git@github.com:nhoffman/.emacs.d.git
+;; % cd .emacs.d
+;; % git submodule init && git submodule update
+(condition-case nil
+    (require 'gist "~/.emacs.d/gist.el/gist.el")
+  (error (message "** could not load gist")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; content below was added by emacs ;;;;;;
