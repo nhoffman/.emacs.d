@@ -707,7 +707,7 @@ This is used to set `sql-alternate-buffer-name' within
 ;; % cd .emacs.d
 ;; % git submodule init && git submodule update
 (condition-case nil
-    (require 'gist "~/.emacs.d/gist.el")
+    (require 'gist "~/.emacs.d/gist.el/gist.el")
   (error (message "** could not load gist")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
