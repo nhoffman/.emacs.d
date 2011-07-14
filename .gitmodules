@@ -1,0 +1,3 @@
+[submodule "gist.el"]
+	path = gist.el
+	url = https://github.com/defunkt/gist.el.git
