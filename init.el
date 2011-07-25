@@ -682,7 +682,7 @@ This is used to set `sql-alternate-buffer-name' within
 
 ;; http://www.emacswiki.org/emacs/EasyPG
 (require 'epa-file)
-(epa-file-enable)
+;; (epa-file-enable)
 ;; suppress graphical passphrase prompt
 (setenv "GPG_AGENT_INFO" nil)
 
