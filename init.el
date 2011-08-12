@@ -391,6 +391,10 @@
 	     (turn-on-font-lock)
 	     (define-key org-mode-map (kbd "M-<right>") 'forward-word)
 	     (define-key org-mode-map (kbd "M-<left>") 'backward-word)
+	     ;; provides key mapping for the above; replaces default
+	     ;; key bindings for org-promote/demote-subtree
+	     (define-key org-mode-map (kbd "M-S-<right>") 'org-do-demote)
+	     (define-key org-mode-map (kbd "M-S-<left>") 'org-do-promote)
 	     (icicle-mode)
 	     (org-indent-mode)
 	     (visual-line-mode)
@@ -402,7 +406,7 @@
 (push '("\\.org\\.txt\\'" . org-mode) auto-mode-alist)
 
 (setq org-agenda-files (list "~/Dropbox/notes/index.org"
-                             "~/Dropbox/departmental/hiring/techForMe/hiring_notes.org.gpg"
+			     "~/Dropbox/fredross/notes/plans.org"
 			     ))
 
 ;; Set to the location of your Org files on your local system
