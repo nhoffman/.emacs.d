@@ -182,10 +182,10 @@
 	      	(filename . "/vaginal_analysis/plate5_nonoise"))
 	       ("vaginal-analysis-p5"
 	      	(filename . "/vaginal_analysis/plate5"))
-	       ("vaginal-analysis-p1to4"
-	      	(filename . "/vaginal_analysis/plates1to4"))
 	       ("vaginal-analysis-p1to4-trimmed"
 	      	(filename . "/vaginal_analysis/plates1to4_trimmed"))
+	       ("vaginal-analysis-p1to4"
+	      	(filename . "/vaginal_analysis/plates1to4"))
 	       ("vaginal-analysis-bin"
 	      	(filename . "/vaginal_analysis/bin"))
 	       ("vaginal-analysis"
@@ -238,6 +238,8 @@
 	       ("20110204_test_lactos" (filename . "working/nhoffman/20110204_test_lactos"))
 	       ("20110505_plate5_aligns" (filename . "working/nhoffman/20110505_plate5_aligns"))
 	       ("working/nhoffman" (filename . "working/nhoffman"))
+	       
+	       ("working" (filename . "/working/"))
 
 	       ;; catch anything else in bvdiversity
 	       ("bvdiversity"
