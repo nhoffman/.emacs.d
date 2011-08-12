@@ -32,6 +32,13 @@
 	       ("qdash-reports"
 	      	(filename . "/qdashboard/reports"))
 
+	       ("qdash-R-code"
+	      	(filename . "/qdashboard/qdashboard.R/R"))
+	       ("qdash-R-man"
+	      	(filename . "/qdashboard/qdashboard.R/man"))
+	       ("qdash-R-package"
+	      	(filename . "/qdashboard/qdashboard.R"))
+
 	       ("qdashboard"
 	      	(filename . "/qdashboard/"))
 
