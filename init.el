@@ -480,7 +480,7 @@
 
 ;; python-mode file name mappings
 (push '("SConstruct" . python-mode) auto-mode-alist)
-
+(push '("SConscript" . python-mode) auto-mode-alist)
 
 ;; ess-mode hooks
 (add-hook 'ess-mode-hook
