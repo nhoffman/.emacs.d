@@ -162,17 +162,42 @@
 	      	(filename . "bvdiversity/scripts/"))
 
 	       ;; reference sets
-	       ("refset-gut"
-	      	(filename . "/refset/gut/"))
-	       ("refset-stomach"
-	      	(filename . "/refset/stomach/"))
+
+	       ("refset/build"
+	      	(filename . "/refset-new/build/"))
+
+	       ("refset/common"
+	      	(filename . "/refset-new/common/"))
+
 	       ("refset-vaginal"
+	      	(filename . "/refset-new/targets/vaginal"))
+	       ("refset-stomach"
+	      	(filename . "/refset-new/targets/stomach"))
+	       ("refset-gut"
+	      	(filename . "/refset-new/targets/gut"))
+	       ("refset-lacto2"
+	      	(filename . "/refset-new/targets/lactobacillus2"))
+	       ("refset-lacto10"
+	      	(filename . "/refset-new/targets/lactobacillus10"))
+
+	       ("refset/targets"
+	      	(filename . "/refset-new/targets/"))
+
+	       ("refset-top"
+	      	(filename . "/refset-new/"))
+	       
+	       ;; old refset
+	       ("refset-gut-old"
+	      	(filename . "/refset/gut/"))
+	       ("refset-stomach-old"
+	      	(filename . "/refset/stomach/"))
+	       ("refset-vaginal-old"
 	      	(filename . "/refset/vaginal/"))
-	       ("refset-blast"
+	       ("refset-blast-old"
 	      	(filename . "/refset/blast/"))
-	       ("refset-rdpseqs"
+	       ("refset-rdpseqs-old"
 	      	(filename . "/refset/rdpseqs/"))
-	       ("refset"
+	       ("refset-old"
 	      	(filename . "/refset/"))
 
 	       ;; pipelines
@@ -198,8 +223,11 @@
 	       ("vaginal-pipeline"
 	      	(filename . "/vaginal/vaginal-master"))
 
-
-	       ("stomach-pipeline"
+	       ("stomach-pilot"
+	      	(filename . "/stomach/stomach-master/pilot/"))
+	       ("stomach-bin"
+	      	(filename . "/stomach/stomach-master/bin"))
+	       ("stomach-master"
 	      	(filename . "/stomach/stomach-master"))
 
 	       ;; classcompare
@@ -237,8 +265,11 @@
 	       ("20101227_aligns" (filename . "working/nhoffman/20101227_aligns"))
 	       ("20110204_test_lactos" (filename . "working/nhoffman/20110204_test_lactos"))
 	       ("20110505_plate5_aligns" (filename . "working/nhoffman/20110505_plate5_aligns"))
+	       ("w-nh-validate" (filename . "working/nhoffman/validate"))
 	       ("working/nhoffman" (filename . "working/nhoffman"))
 	       
+	       ("working/matsen" (filename . "working/matsen"))
+
 	       ("working" (filename . "/working/"))
 
 	       ;; catch anything else in bvdiversity
