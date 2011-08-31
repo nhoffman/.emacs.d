@@ -91,6 +91,12 @@
 	      	(filename . "blast2tree"))
 	       ("labqc"
 	      	(filename . "labqc/"))
+
+	       ;; alnvu
+	       ("alnvu-package" (filename . "/alnvu/alnvu/"))
+	       ("alnvu-tests" (filename . "/alnvu/tests/"))
+	       ("alnvu-testfiles" (filename . "/alnvu/testfiles/"))
+	       ("alnvu" (filename . "/alnvu/"))
 	       
 	       ;; moinlm 
 	       ("moinlm-config"
@@ -211,6 +217,8 @@
 	      	(filename . "/vaginal_analysis/plates1to4_trimmed"))
 	       ("vaginal-analysis-p1to4"
 	      	(filename . "/vaginal_analysis/plates1to4"))
+	       ("vaginal-analysis-forney"
+	      	(filename . "/vaginal_analysis/forney"))
 	       ("vaginal-analysis-bin"
 	      	(filename . "/vaginal_analysis/bin"))
 	       ("vaginal-analysis"
@@ -225,6 +233,8 @@
 
 	       ("stomach-pilot"
 	      	(filename . "/stomach/stomach-master/pilot/"))
+	       ("stomach-pilot-some"
+	      	(filename . "/stomach/stomach-master/pilot_some/"))
 	       ("stomach-bin"
 	      	(filename . "/stomach/stomach-master/bin"))
 	       ("stomach-master"
