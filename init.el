@@ -395,7 +395,7 @@
 	     ;; key bindings for org-promote/demote-subtree
 	     (define-key org-mode-map (kbd "M-S-<right>") 'org-do-demote)
 	     (define-key org-mode-map (kbd "M-S-<left>") 'org-do-promote)
-	     (icicle-mode)
+	     ;; (icicle-mode)
 	     (org-indent-mode)
 	     (visual-line-mode)
 	     )
@@ -415,6 +415,17 @@
 (setq org-mobile-inbox-for-pull "~/Dropbox/notes/flagged.org")
 ;; Set to <your Dropbox root directory>/MobileOrg.
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
+
+;; org-babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((R . t)
+   (latex . t)
+   (python . t)   
+   (sh . t)   
+   (sql . t)
+   (sqlite . t)
+   ))
 
 ;; moinmoin-mode
 ;;  wget -U Mozilla -O moinmoin-mode.el "http://moinmoin.wikiwikiweb.de/EmacsForMoinMoin/MoinMoinMode?action=raw"
