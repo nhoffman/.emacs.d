@@ -52,6 +52,12 @@
       display-time-24hr-format t)
 (display-time)
 
+;; file path in title bar
+;; http://stackoverflow.com/questions/3669511/the-function-to-show-current-files-full-path-in-mini-buffer
+(setq frame-title-format
+      (list (format "%s %%S: %%j " (system-name))
+        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+
 ;; debugging
 ;; (setq debug-on-error t)
 ;; (setq debug-on-signal t)

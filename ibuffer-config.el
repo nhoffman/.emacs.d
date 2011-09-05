@@ -185,6 +185,8 @@
 	      	(filename . "/refset-new/targets/lactobacillus2"))
 	       ("refset-lacto10"
 	      	(filename . "/refset-new/targets/lactobacillus10"))
+	       ("refset-clinical"
+	      	(filename . "/refset-new/targets/clinical"))
 
 	       ("refset/targets"
 	      	(filename . "/refset-new/targets/"))
