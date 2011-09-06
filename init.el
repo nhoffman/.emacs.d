@@ -77,6 +77,7 @@
 (transient-mark-mode 1) ;; highlight active region - default in emacs 23.1+
 (global-set-key (kbd "M-C-t") 'transient-mark-mode)
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list)
+(iswitchb-mode 1)
 
 ;; imenu
 (setq imenu-auto-rescan 1)
@@ -636,6 +637,14 @@
     (require 'icicles)
   (error (message "** could not load icicles")))
 
+;; uniquify - http://www.emacswiki.org/emacs/uniquify
+(require 'uniquify)
+
+;; ido mode
+;; (condition-case nil
+;;     (require 'ido)
+;;   (error (message "** could not load ido mode")))
+
 ;; keyboard macro copy-and-comment, bound to CM-;
 (fset 'copy-and-comment
    "\367\C-x\C-x\273")
@@ -742,11 +751,12 @@ This is used to set `sql-alternate-buffer-name' within
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- ;; '(org-agenda-files (quote ("~/Dropbox/notes/index.org")))
- '(safe-local-variable-values (quote ((toggle-read-only . t)))))
+ '(safe-local-variable-values (quote ((toggle-read-only . t))))
+ '(uniquify-buffer-name-style (quote post-forward) nil (uniquify)))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
+
