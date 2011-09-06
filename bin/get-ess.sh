@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ver=5.13
+ver=5.14
 
 rm -rf ./ess && \
 wget http://ess.r-project.org/downloads/ess/ess-${ver}.tgz && \
