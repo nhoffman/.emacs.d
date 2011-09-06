@@ -634,8 +634,12 @@
 ;; (setq load-path (cons "~/.emacs.d/icicles" load-path))
 (add-to-list 'load-path "~/.emacs.d/icicles")
 (condition-case nil
-    (require 'icicles)
+    (require 'icicles)  
   (error (message "** could not load icicles")))
+
+(condition-case nil
+    (icicle-mode 1)
+  (error (message "** could not start icicles")))
 
 ;; uniquify - http://www.emacswiki.org/emacs/uniquify
 (require 'uniquify)
