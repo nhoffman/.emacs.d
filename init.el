@@ -421,17 +421,6 @@
 ;; Set to <your Dropbox root directory>/MobileOrg.
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
 
-;; org-babel
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((R . t)
-   (latex . t)
-   (python . t)   
-   (sh . t)   
-   (sql . t)
-   (sqlite . t)
-   ))
-
 ;; moinmoin-mode
 ;;  wget -U Mozilla -O moinmoin-mode.el "http://moinmoin.wikiwikiweb.de/EmacsForMoinMoin/MoinMoinMode?action=raw"
 ;; requires http://homepage1.nifty.com/bmonkey/emacs/elisp/screen-lines.el
