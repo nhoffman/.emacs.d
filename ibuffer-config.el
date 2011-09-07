@@ -81,7 +81,12 @@
 	   
 	       ;; zsh
 	       ("zsh"
-	      	(filename . "zsh/"))
+	      	(filename . "/zsh/"))
+
+
+	       ;; .emacs
+	       (".emacs.d"
+	      	(filename . "/.emacs.d/"))
 
 	       ("blast2tree/tests"
 	      	(filename . "blast2tree/tests"))
