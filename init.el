@@ -79,6 +79,18 @@
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list)
 (iswitchb-mode 1)
 
+;; window splitting
+;; see http://en.wikipedia.org/wiki/Emacs_Lisp
+(defadvice split-window-vertically
+  ;; vertical split contains next (instead of current) buffer
+  (after my-window-splitting-advice first () activate)
+  (set-window-buffer (next-window) (other-buffer)))
+
+(defadvice split-window-horizontally
+  ;; horizontal split contains next (instead of current) buffer
+  (after my-window-splitting-advice first () activate)
+  (set-window-buffer (next-window) (other-buffer)))
+
 ;; imenu
 (setq imenu-auto-rescan 1)
 (global-set-key (kbd "C-x m") 'imenu) ;; overwrites default sequence for compose-mail
@@ -267,6 +279,12 @@
   (other-window -1))
 (global-set-key (kbd "C-<right>") 'other-window)
 (global-set-key (kbd "C-<left>") 'back-window)
+
+(defun copy-buffer-file-name ()
+  "Add `buffer-file-name' to `kill-ring'"
+  (interactive)
+  (kill-new buffer-file-name t)
+)
 
 ;; see http://www.emacswiki.org/emacs/SwitchingBuffers
 ;; note that original code used function 'plusp', which
@@ -490,7 +508,7 @@
 	     ;; add function index to menu bar
 	     (imenu-add-menubar-index)
 	     ;; (python-mode-untabify)
-	     (linum-mode)
+	     ;; (linum-mode)
 	     )
 	  )
 
@@ -615,12 +633,25 @@
   (define-key ibuffer-mode-map (kbd "s p")     'ibuffer-do-sort-by-filename-or-dired)
   )
 
+;; from http://curiousprogrammer.wordpress.com/2009/04/02/ibuffer/
+(defun ibuffer-ediff-marked-buffers ()
+  "Compare two marked buffers using ediff"
+  (interactive)
+  (let* ((marked-buffers (ibuffer-get-marked-buffers))
+         (len (length marked-buffers)))
+    (unless (= 2 len)
+      (error (format "%s buffer%s been marked (needs to be 2)"
+                     len (if (= len 1) " has" "s have"))))
+    (ediff-buffers (car marked-buffers) (cadr marked-buffers))))
+
+
 (add-hook 'ibuffer-mode-hook
 	  '(lambda ()
 	     (ibuffer-auto-mode 1) ;; minor mode that keeps the buffer list up to date
 	     (ibuffer-switch-to-saved-filter-groups "default")
 	     (define-key ibuffer-mode-map (kbd "a") 'ibuffer-show-all-filter-groups)
 	     (define-key ibuffer-mode-map (kbd "z") 'ibuffer-hide-all-filter-groups)
+	     (define-key ibuffer-mode-map (kbd "e") 'ibuffer-ediff-marked-buffers)
 	     (my-ibuffer-sort-hook)
 	     )
 	  )
