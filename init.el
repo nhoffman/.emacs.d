@@ -59,7 +59,7 @@
         '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
 ;; debugging
-;; (setq debug-on-error t)
+(setq debug-on-error t)
 ;; (setq debug-on-signal t)
 
 ;; scrolling - see http://www.emacswiki.org/emacs/SmoothScrolling
@@ -521,12 +521,12 @@
 	  )
 
 ;; tex-mode hooks
-(add-hook 'tex-mode-hook
-	  '(lambda ()
-	     (flyspell-mode)
-	     (imenu-add-menubar-index) ;; add function index to menu bar
-	     )
-	  )
+;; (add-hook 'tex-mode-hook
+;; 	  '(lambda ()
+;; 	     (flyspell-mode)
+;; 	     (imenu-add-menubar-index) ;; add function index to menu bar
+;; 	     )
+;; 	  )
 
 ;; rst-mode hooks
 (add-hook 'rst-mode-hook
