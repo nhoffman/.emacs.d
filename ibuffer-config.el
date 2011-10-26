@@ -53,6 +53,16 @@
 	      	(filename . "/bioscons/tests"))
 	       ("bioscons"
 	      	(filename . "/bioscons"))
+
+	       ;; romperroom
+	       ("romperroom-subcommands"
+	      	(filename . "/romperroom/romperroom/subcommands/"))
+	       ("romperroom-package"
+	      	(filename . "/romperroom/romperroom"))
+	       ("romperroom-tests"
+	      	(filename . "/romperroom/tests"))
+	       ("romperroom"
+	      	(filename . "/romperroom"))
 	       
 	       ;; Seq
 	       ("Seq-tests"
@@ -82,11 +92,6 @@
 	       ;; zsh
 	       ("zsh"
 	      	(filename . "/zsh/"))
-
-
-	       ;; .emacs
-	       (".emacs.d"
-	      	(filename . "/.emacs.d/"))
 
 	       ("blast2tree/tests"
 	      	(filename . "blast2tree/tests"))
@@ -253,41 +258,49 @@
 	       ("classcompare"
 	      	(filename . "/classcompare/"))
 
-	       ;; working/nhoffman
-	       ("clst" (filename . "working/nhoffman/clst"))
-	       ("clst-old" (filename . "working/nhoffman/clst-old"))
-	       ("report_template" (filename . "working/nhoffman/report_template"))
-	       ("grantupdate" (filename . "working/nhoffman/grantupdate"))
-	       ("20100817_poster" (filename . "working/nhoffman/20100817_poster"))
-	       ("20100902_lacobacillus_seqs" (filename . "working/nhoffman/20100902_lacobacillus_seqs"))
-	       ("20100908_sujatha_aligns" (filename . "working/nhoffman/20100908_sujatha_aligns"))
-	       ("20100914_taxtable" (filename . "working/nhoffman/20100914_taxtable"))
-	       ("20100915_refseqs" (filename . "working/nhoffman/20100915_refseqs"))
-	       ("20100916_amplicon" (filename . "working/nhoffman/20100916_amplicon"))
-	       ("reclassify" (filename . "working/nhoffman/reclassify"))
-	       ("20100920_leaveoneout" (filename . "working/nhoffman/20100920_leaveoneout"))
-	       ("20100928_Dialister_type3" (filename . "working/nhoffman/20100928_Dialister_type3"))
-	       ("20101002_sujatha_aligns" (filename . "working/nhoffman/20101002_sujatha_aligns"))
-	       ("20101020_scons_parallelization_example" (filename . "working/nhoffman/20101020_scons_parallelization_example"))
-	       ("20101021_sujatha_queries" (filename . "working/nhoffman/20101021_sujatha_queries"))
-	       ("20101104_hmp_seqs" (filename . "working/nhoffman/20101104_hmp_seqs"))
-	       ("20101022_placedb_example" (filename . "working/nhoffman/20101022_placedb_example"))
-	       ("20101105_leaveoneout" (filename . "working/nhoffman/20101105_leaveoneout"))
-	       ("20101116_firmicutes" (filename . "working/nhoffman/20101116_firmicutes"))
-	       ("20101208_bacteroidetes" (filename . "working/nhoffman/20101208_bacteroidetes"))
-	       ("20101207_no_match" (filename . "working/nhoffman/20101207_no_match"))
-	       ("20101208_lactobacillaceae" (filename . "working/nhoffman/20101208_lactobacillaceae"))
-	       ("20101213_bacteroidetes_chlorobi_group" (filename . "working/nhoffman/20101213_bacteroidetes_chlorobi_group"))
-	       ("20101214_sujatha_aligns" (filename . "working/nhoffman/20101214_sujatha_aligns"))
-	       ("20101227_aligns" (filename . "working/nhoffman/20101227_aligns"))
-	       ("20110204_test_lactos" (filename . "working/nhoffman/20110204_test_lactos"))
-	       ("20110505_plate5_aligns" (filename . "working/nhoffman/20110505_plate5_aligns"))
-	       ("w-nh-validate" (filename . "working/nhoffman/validate"))
-	       ("working/nhoffman" (filename . "working/nhoffman"))
+	       ;; MatsenGrp/working/nhoffman
+	       ("clst" (filename . "MatsenGrp/working/nhoffman/clst"))
+	       ("clst-old" (filename . "MatsenGrp/working/nhoffman/clst-old"))
+	       ("report_template" (filename . "MatsenGrp/working/nhoffman/report_template"))
+	       ("grantupdate" (filename . "MatsenGrp/working/nhoffman/grantupdate"))
+	       ("20100817_poster" (filename . "MatsenGrp/working/nhoffman/20100817_poster"))
+	       ("20100902_lacobacillus_seqs" (filename . "MatsenGrp/working/nhoffman/20100902_lacobacillus_seqs"))
+	       ("20100908_sujatha_aligns" (filename . "MatsenGrp/working/nhoffman/20100908_sujatha_aligns"))
+	       ("20100914_taxtable" (filename . "MatsenGrp/working/nhoffman/20100914_taxtable"))
+	       ("20100915_refseqs" (filename . "MatsenGrp/working/nhoffman/20100915_refseqs"))
+	       ("20100916_amplicon" (filename . "MatsenGrp/working/nhoffman/20100916_amplicon"))
+	       ("reclassify" (filename . "MatsenGrp/working/nhoffman/reclassify"))
+	       ("20100920_leaveoneout" (filename . "MatsenGrp/working/nhoffman/20100920_leaveoneout"))
+	       ("20100928_Dialister_type3" (filename . "MatsenGrp/working/nhoffman/20100928_Dialister_type3"))
+	       ("20101002_sujatha_aligns" (filename . "MatsenGrp/working/nhoffman/20101002_sujatha_aligns"))
+	       ("20101020_scons_parallelization_example" (filename . "MatsenGrp/working/nhoffman/20101020_scons_parallelization_example"))
+	       ("20101021_sujatha_queries" (filename . "MatsenGrp/working/nhoffman/20101021_sujatha_queries"))
+	       ("20101104_hmp_seqs" (filename . "MatsenGrp/working/nhoffman/20101104_hmp_seqs"))
+	       ("20101022_placedb_example" (filename . "MatsenGrp/working/nhoffman/20101022_placedb_example"))
+	       ("20101105_leaveoneout" (filename . "MatsenGrp/working/nhoffman/20101105_leaveoneout"))
+	       ("20101116_firmicutes" (filename . "MatsenGrp/working/nhoffman/20101116_firmicutes"))
+	       ("20101208_bacteroidetes" (filename . "MatsenGrp/working/nhoffman/20101208_bacteroidetes"))
+	       ("20101207_no_match" (filename . "MatsenGrp/working/nhoffman/20101207_no_match"))
+	       ("20101208_lactobacillaceae" (filename . "MatsenGrp/working/nhoffman/20101208_lactobacillaceae"))
+	       ("20101213_bacteroidetes_chlorobi_group" (filename . "MatsenGrp/working/nhoffman/20101213_bacteroidetes_chlorobi_group"))
+	       ("20101214_sujatha_aligns" (filename . "MatsenGrp/working/nhoffman/20101214_sujatha_aligns"))
+	       ("20101227_aligns" (filename . "MatsenGrp/working/nhoffman/20101227_aligns"))
+	       ("20110204_test_lactos" (filename . "MatsenGrp/working/nhoffman/20110204_test_lactos"))
+	       ("20110505_plate5_aligns" (filename . "MatsenGrp/working/nhoffman/20110505_plate5_aligns"))
+	       ("w-nh-validate" (filename . "MatsenGrp/working/nhoffman/validate"))
+	       ("MatsenGrp/working/nhoffman" (filename . "MatsenGrp/working/nhoffman"))
 	       
-	       ("working/matsen" (filename . "working/matsen"))
+	       ("MatsenGrp/working/matsen" (filename . "MatsenGrp/working/matsen"))
+	       ("working" (filename . "/MatsenGrp/working/"))
 
-	       ("working" (filename . "/working/"))
+	       ;; nhoffman/working
+	       ("~validate/nestly" (filename . "/nhoffman/working/validate/nestly"))
+	       ("~validate-package" (filename . "/nhoffman/working/validate/validate/"))
+	       ("~validate-dev" (filename . "/nhoffman/working/validate/experiments/dev/"))
+	       ("~validate-clinical" (filename . "/nhoffman/working/validate/experiments/clinical/"))
+	       ("~validate" (filename . "/nhoffman/working/validate/"))
+	       ("~working" (filename . "/nhoffman/working/"))
+
 
 	       ;; catch anything else in bvdiversity
 	       ("bvdiversity"
@@ -365,6 +378,10 @@
 	       ;; projects under p_acnes
 	       ("p_acnes"
 	      	(filename . "p_acnes/"))
+
+	       ;; .emacs
+	       (".emacs.d"
+	      	(filename . "/.emacs.d/"))
 
 	       ;; catch remaining files by mode
 	       ("R-files"
