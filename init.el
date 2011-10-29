@@ -111,33 +111,32 @@
   (load "~/.emacs.d/init.el"))
 (global-set-key (kbd "M-C-i") 'load-init)
 
-;; add a journal entry
 (defun insert-time ()
- (interactive)
- (insert (format-time-string "<%Y-%m-%d %a>")))
-
- ;; (defun add-note (filename)
-;;   ;; (interactive "F")
-;;   (find-file 'filename)
-;;   (end-of-buffer)
-;;   (delete-blank-lines)
-;;   (insert "\n* note ")
-;;   (insert-time)
-;;   (beginning-of-line)
-;;   (forward-char 2))
-;; (global-set-key (kbd "C-x C-n") '(add-note "~/Dropbox/notes/index.org"))
-
-(defun journal ()
+  ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
   (interactive)
-  (find-file "~/Dropbox/notes/index.org")
+  (insert (format-time-string "<%Y-%m-%d %a>")))
+
+(defun org-add-entry (filename time-format)
+  ;; Add an entry to an org-file with today's timestamp.
+  (interactive "FFile: ")
+  (find-file filename)
   (end-of-buffer)
   (delete-blank-lines)
-  (insert "\n* journal ")
-  (insert-time)
+  (insert "\n* ")
+  (insert (format-time-string time-format))
   (beginning-of-line)
   (forward-char 2))
-(global-set-key (kbd "C-x C-j") 'journal)
 
+(global-set-key
+ (kbd "C-x C-n") (lambda () (interactive)
+		   (org-add-entry "~/Dropbox/notes/index.org" 
+				  "<%Y-%m-%d %a>")))
+
+(global-set-key
+ (kbd "C-x C-j") (lambda () (interactive)
+		   (org-add-entry "~/Dropbox/notes/journal.org" 
+				  "%A, %B %d, %Y [%Y%m%d]")))
+ 
 ;; setup for emacs desktop
 ;; http://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html
 ;; http://www.emacswiki.org/emacs/DeskTop
