@@ -135,7 +135,7 @@
 (global-set-key
  (kbd "C-x C-j") (lambda () (interactive)
 		   (org-add-entry "~/Dropbox/notes/journal.org" 
-				  "%A, %B %d, %Y [%Y%m%d]")))
+				  "%A, %B %d, %Y (%Y%m%d)")))
  
 ;; setup for emacs desktop
 ;; http://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html
