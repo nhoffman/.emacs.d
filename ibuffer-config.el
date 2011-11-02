@@ -80,9 +80,11 @@
 	       ("taxtastic-subcommands"
 		(filename . "/taxtastic/taxtastic/subcommands/"))
 	       ("taxtastic-package"
-		(filename . "/taxtastic/taxtastic"))
+		(filename . "/taxtastic/taxtastic/"))
+	       ("taxtastic-docs"
+		(filename . "/taxtastic/docs/"))
 	       ("taxtastic-tests"
-		(filename . "/taxtastic/tests"))
+		(filename . "/taxtastic/tests/"))
 	       ("taxtastic"
 		(filename . "/taxtastic/"))
 
