@@ -180,44 +180,32 @@
 	       ;; reference sets
 
 	       ("refset/build"
-	      	(filename . "/refset-new/build/"))
+	      	(filename . "/refset/build/"))
 
 	       ("refset/common"
-	      	(filename . "/refset-new/common/"))
+	      	(filename . "/refset/common/"))
 
 	       ("refset-vaginal"
-	      	(filename . "/refset-new/targets/vaginal"))
+	      	(filename . "/refset/targets/vaginal"))
 	       ("refset-stomach"
-	      	(filename . "/refset-new/targets/stomach"))
+	      	(filename . "/refset/targets/stomach"))
 	       ("refset-gut"
-	      	(filename . "/refset-new/targets/gut"))
+	      	(filename . "/refset/targets/gut"))
 	       ("refset-lacto2"
-	      	(filename . "/refset-new/targets/lactobacillus2"))
+	      	(filename . "/refset/targets/lactobacillus2"))
 	       ("refset-lacto10"
-	      	(filename . "/refset-new/targets/lactobacillus10"))
+	      	(filename . "/refset/targets/lactobacillus10"))
 	       ("refset-clinical"
-	      	(filename . "/refset-new/targets/clinical"))
+	      	(filename . "/refset/targets/clinical"))
+	       ("refset-lampe"
+	      	(filename . "/refset/targets/lampe"))
 
 	       ("refset/targets"
-	      	(filename . "/refset-new/targets/"))
+	      	(filename . "/refset/targets/"))
 
 	       ("refset-top"
-	      	(filename . "/refset-new/"))
-	       
-	       ;; old refset
-	       ("refset-gut-old"
-	      	(filename . "/refset/gut/"))
-	       ("refset-stomach-old"
-	      	(filename . "/refset/stomach/"))
-	       ("refset-vaginal-old"
-	      	(filename . "/refset/vaginal/"))
-	       ("refset-blast-old"
-	      	(filename . "/refset/blast/"))
-	       ("refset-rdpseqs-old"
-	      	(filename . "/refset/rdpseqs/"))
-	       ("refset-old"
 	      	(filename . "/refset/"))
-
+	       
 	       ;; pipelines
 	       ("vaginal-analysis-p5-tiny"
 	      	(filename . "/vaginal_analysis/plate5_tiny"))
@@ -227,6 +215,8 @@
 	      	(filename . "/vaginal_analysis/plate5"))
 	       ("vaginal-analysis-p1to4-trimmed"
 	      	(filename . "/vaginal_analysis/plates1to4_trimmed"))
+	       ("vaginal-analysis-p1to4-fl"
+	      	(filename . "/vaginal_analysis/plates1to4_fl"))
 	       ("vaginal-analysis-p1to4"
 	      	(filename . "/vaginal_analysis/plates1to4"))
 	       ("vaginal-analysis-forney"
@@ -251,6 +241,9 @@
 	      	(filename . "/stomach/stomach-master/bin"))
 	       ("stomach-master"
 	      	(filename . "/stomach/stomach-master"))
+
+	       ("lampe"
+	      	(filename . "/micro_processing/lampe_pipeline"))
 
 	       ;; classcompare
 	       ("classcompare/pipeline"
@@ -287,6 +280,7 @@
 	       ("20101227_aligns" (filename . "MatsenGrp/working/nhoffman/20101227_aligns"))
 	       ("20110204_test_lactos" (filename . "MatsenGrp/working/nhoffman/20110204_test_lactos"))
 	       ("20110505_plate5_aligns" (filename . "MatsenGrp/working/nhoffman/20110505_plate5_aligns"))
+	       ("20111003_clostridiales" (filename . "MatsenGrp/working/nhoffman/20111003_clostridiales"))
 	       ("w-nh-validate" (filename . "MatsenGrp/working/nhoffman/validate"))
 	       ("MatsenGrp/working/nhoffman" (filename . "MatsenGrp/working/nhoffman"))
 	       
