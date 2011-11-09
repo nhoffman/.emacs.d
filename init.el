@@ -59,7 +59,7 @@
         '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
 ;; debugging
-;; (setq debug-on-error t)
+(setq debug-on-error t)
 ;; (setq debug-on-signal t)
 
 ;; scrolling - see http://www.emacswiki.org/emacs/SmoothScrolling
@@ -111,22 +111,32 @@
   (load "~/.emacs.d/init.el"))
 (global-set-key (kbd "M-C-i") 'load-init)
 
-;; add a journal entry
 (defun insert-time ()
- (interactive)
- (insert (format-time-string "<%Y-%m-%d %a>")))
+  ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
+  (interactive)
+  (insert (format-time-string "<%Y-%m-%d %a>")))
 
-(defun journal ()
- (interactive)
- (find-file "~/Dropbox/notes/index.org")
- (end-of-buffer)
- (delete-blank-lines)
- (insert "\n* journal ")
- (insert-time)
- (beginning-of-line)
- (forward-char 2))
-(global-set-key (kbd "C-x C-j") 'journal)
+(defun org-add-entry (filename time-format)
+  ;; Add an entry to an org-file with today's timestamp.
+  (interactive "FFile: ")
+  (find-file filename)
+  (end-of-buffer)
+  (delete-blank-lines)
+  (insert "\n* ")
+  (insert (format-time-string time-format))
+  (beginning-of-line)
+  (forward-char 2))
 
+(global-set-key
+ (kbd "C-x C-n") (lambda () (interactive)
+		   (org-add-entry "~/Dropbox/notes/index.org" 
+				  "<%Y-%m-%d %a>")))
+
+(global-set-key
+ (kbd "C-x C-j") (lambda () (interactive)
+		   (org-add-entry "~/Dropbox/notes/journal.org" 
+				  "%A, %B %d, %Y (%Y%m%d)")))
+ 
 ;; setup for emacs desktop
 ;; http://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html
 ;; http://www.emacswiki.org/emacs/DeskTop
@@ -539,12 +549,12 @@
 	  )
 
 ;; tex-mode hooks
-(add-hook 'tex-mode-hook
-	  '(lambda ()
-	     (flyspell-mode)
-	     (imenu-add-menubar-index) ;; add function index to menu bar
-	     )
-	  )
+;; (add-hook 'tex-mode-hook
+;; 	  '(lambda ()
+;; 	     (flyspell-mode)
+;; 	     (imenu-add-menubar-index) ;; add function index to menu bar
+;; 	     )
+;; 	  )
 
 ;; rst-mode hooks
 (add-hook 'rst-mode-hook
