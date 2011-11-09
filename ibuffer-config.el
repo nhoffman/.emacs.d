@@ -53,6 +53,16 @@
 	      	(filename . "/bioscons/tests"))
 	       ("bioscons"
 	      	(filename . "/bioscons"))
+
+	       ;; romperroom
+	       ("romperroom-subcommands"
+	      	(filename . "/romperroom/romperroom/subcommands/"))
+	       ("romperroom-package"
+	      	(filename . "/romperroom/romperroom"))
+	       ("romperroom-tests"
+	      	(filename . "/romperroom/tests"))
+	       ("romperroom"
+	      	(filename . "/romperroom"))
 	       
 	       ;; Seq
 	       ("Seq-tests"
@@ -70,9 +80,11 @@
 	       ("taxtastic-subcommands"
 		(filename . "/taxtastic/taxtastic/subcommands/"))
 	       ("taxtastic-package"
-		(filename . "/taxtastic/taxtastic"))
+		(filename . "/taxtastic/taxtastic/"))
+	       ("taxtastic-docs"
+		(filename . "/taxtastic/docs/"))
 	       ("taxtastic-tests"
-		(filename . "/taxtastic/tests"))
+		(filename . "/taxtastic/tests/"))
 	       ("taxtastic"
 		(filename . "/taxtastic/"))
 
@@ -82,11 +94,6 @@
 	       ;; zsh
 	       ("zsh"
 	      	(filename . "/zsh/"))
-
-
-	       ;; .emacs
-	       (".emacs.d"
-	      	(filename . "/.emacs.d/"))
 
 	       ("blast2tree/tests"
 	      	(filename . "blast2tree/tests"))
@@ -175,44 +182,32 @@
 	       ;; reference sets
 
 	       ("refset/build"
-	      	(filename . "/refset-new/build/"))
+	      	(filename . "/refset/build/"))
 
 	       ("refset/common"
-	      	(filename . "/refset-new/common/"))
+	      	(filename . "/refset/common/"))
 
 	       ("refset-vaginal"
-	      	(filename . "/refset-new/targets/vaginal"))
+	      	(filename . "/refset/targets/vaginal"))
 	       ("refset-stomach"
-	      	(filename . "/refset-new/targets/stomach"))
+	      	(filename . "/refset/targets/stomach"))
 	       ("refset-gut"
-	      	(filename . "/refset-new/targets/gut"))
+	      	(filename . "/refset/targets/gut"))
 	       ("refset-lacto2"
-	      	(filename . "/refset-new/targets/lactobacillus2"))
+	      	(filename . "/refset/targets/lactobacillus2"))
 	       ("refset-lacto10"
-	      	(filename . "/refset-new/targets/lactobacillus10"))
+	      	(filename . "/refset/targets/lactobacillus10"))
 	       ("refset-clinical"
-	      	(filename . "/refset-new/targets/clinical"))
+	      	(filename . "/refset/targets/clinical"))
+	       ("refset-lampe"
+	      	(filename . "/refset/targets/lampe"))
 
 	       ("refset/targets"
-	      	(filename . "/refset-new/targets/"))
+	      	(filename . "/refset/targets/"))
 
 	       ("refset-top"
-	      	(filename . "/refset-new/"))
-	       
-	       ;; old refset
-	       ("refset-gut-old"
-	      	(filename . "/refset/gut/"))
-	       ("refset-stomach-old"
-	      	(filename . "/refset/stomach/"))
-	       ("refset-vaginal-old"
-	      	(filename . "/refset/vaginal/"))
-	       ("refset-blast-old"
-	      	(filename . "/refset/blast/"))
-	       ("refset-rdpseqs-old"
-	      	(filename . "/refset/rdpseqs/"))
-	       ("refset-old"
 	      	(filename . "/refset/"))
-
+	       
 	       ;; pipelines
 	       ("vaginal-analysis-p5-tiny"
 	      	(filename . "/vaginal_analysis/plate5_tiny"))
@@ -222,6 +217,8 @@
 	      	(filename . "/vaginal_analysis/plate5"))
 	       ("vaginal-analysis-p1to4-trimmed"
 	      	(filename . "/vaginal_analysis/plates1to4_trimmed"))
+	       ("vaginal-analysis-p1to4-fl"
+	      	(filename . "/vaginal_analysis/plates1to4_fl"))
 	       ("vaginal-analysis-p1to4"
 	      	(filename . "/vaginal_analysis/plates1to4"))
 	       ("vaginal-analysis-forney"
@@ -247,47 +244,59 @@
 	       ("stomach-master"
 	      	(filename . "/stomach/stomach-master"))
 
+	       ("lampe"
+	      	(filename . "/micro_processing/lampe_pipeline"))
+
 	       ;; classcompare
 	       ("classcompare/pipeline"
 	      	(filename . "/classcompare/pipeline/"))
 	       ("classcompare"
 	      	(filename . "/classcompare/"))
 
-	       ;; working/nhoffman
-	       ("clst" (filename . "working/nhoffman/clst"))
-	       ("clst-old" (filename . "working/nhoffman/clst-old"))
-	       ("report_template" (filename . "working/nhoffman/report_template"))
-	       ("grantupdate" (filename . "working/nhoffman/grantupdate"))
-	       ("20100817_poster" (filename . "working/nhoffman/20100817_poster"))
-	       ("20100902_lacobacillus_seqs" (filename . "working/nhoffman/20100902_lacobacillus_seqs"))
-	       ("20100908_sujatha_aligns" (filename . "working/nhoffman/20100908_sujatha_aligns"))
-	       ("20100914_taxtable" (filename . "working/nhoffman/20100914_taxtable"))
-	       ("20100915_refseqs" (filename . "working/nhoffman/20100915_refseqs"))
-	       ("20100916_amplicon" (filename . "working/nhoffman/20100916_amplicon"))
-	       ("reclassify" (filename . "working/nhoffman/reclassify"))
-	       ("20100920_leaveoneout" (filename . "working/nhoffman/20100920_leaveoneout"))
-	       ("20100928_Dialister_type3" (filename . "working/nhoffman/20100928_Dialister_type3"))
-	       ("20101002_sujatha_aligns" (filename . "working/nhoffman/20101002_sujatha_aligns"))
-	       ("20101020_scons_parallelization_example" (filename . "working/nhoffman/20101020_scons_parallelization_example"))
-	       ("20101021_sujatha_queries" (filename . "working/nhoffman/20101021_sujatha_queries"))
-	       ("20101104_hmp_seqs" (filename . "working/nhoffman/20101104_hmp_seqs"))
-	       ("20101022_placedb_example" (filename . "working/nhoffman/20101022_placedb_example"))
-	       ("20101105_leaveoneout" (filename . "working/nhoffman/20101105_leaveoneout"))
-	       ("20101116_firmicutes" (filename . "working/nhoffman/20101116_firmicutes"))
-	       ("20101208_bacteroidetes" (filename . "working/nhoffman/20101208_bacteroidetes"))
-	       ("20101207_no_match" (filename . "working/nhoffman/20101207_no_match"))
-	       ("20101208_lactobacillaceae" (filename . "working/nhoffman/20101208_lactobacillaceae"))
-	       ("20101213_bacteroidetes_chlorobi_group" (filename . "working/nhoffman/20101213_bacteroidetes_chlorobi_group"))
-	       ("20101214_sujatha_aligns" (filename . "working/nhoffman/20101214_sujatha_aligns"))
-	       ("20101227_aligns" (filename . "working/nhoffman/20101227_aligns"))
-	       ("20110204_test_lactos" (filename . "working/nhoffman/20110204_test_lactos"))
-	       ("20110505_plate5_aligns" (filename . "working/nhoffman/20110505_plate5_aligns"))
-	       ("w-nh-validate" (filename . "working/nhoffman/validate"))
-	       ("working/nhoffman" (filename . "working/nhoffman"))
+	       ;; MatsenGrp/working/nhoffman
+	       ("clst" (filename . "MatsenGrp/working/nhoffman/clst"))
+	       ("clst-old" (filename . "MatsenGrp/working/nhoffman/clst-old"))
+	       ("report_template" (filename . "MatsenGrp/working/nhoffman/report_template"))
+	       ("grantupdate" (filename . "MatsenGrp/working/nhoffman/grantupdate"))
+	       ("20100817_poster" (filename . "MatsenGrp/working/nhoffman/20100817_poster"))
+	       ("20100902_lacobacillus_seqs" (filename . "MatsenGrp/working/nhoffman/20100902_lacobacillus_seqs"))
+	       ("20100908_sujatha_aligns" (filename . "MatsenGrp/working/nhoffman/20100908_sujatha_aligns"))
+	       ("20100914_taxtable" (filename . "MatsenGrp/working/nhoffman/20100914_taxtable"))
+	       ("20100915_refseqs" (filename . "MatsenGrp/working/nhoffman/20100915_refseqs"))
+	       ("20100916_amplicon" (filename . "MatsenGrp/working/nhoffman/20100916_amplicon"))
+	       ("reclassify" (filename . "MatsenGrp/working/nhoffman/reclassify"))
+	       ("20100920_leaveoneout" (filename . "MatsenGrp/working/nhoffman/20100920_leaveoneout"))
+	       ("20100928_Dialister_type3" (filename . "MatsenGrp/working/nhoffman/20100928_Dialister_type3"))
+	       ("20101002_sujatha_aligns" (filename . "MatsenGrp/working/nhoffman/20101002_sujatha_aligns"))
+	       ("20101020_scons_parallelization_example" (filename . "MatsenGrp/working/nhoffman/20101020_scons_parallelization_example"))
+	       ("20101021_sujatha_queries" (filename . "MatsenGrp/working/nhoffman/20101021_sujatha_queries"))
+	       ("20101104_hmp_seqs" (filename . "MatsenGrp/working/nhoffman/20101104_hmp_seqs"))
+	       ("20101022_placedb_example" (filename . "MatsenGrp/working/nhoffman/20101022_placedb_example"))
+	       ("20101105_leaveoneout" (filename . "MatsenGrp/working/nhoffman/20101105_leaveoneout"))
+	       ("20101116_firmicutes" (filename . "MatsenGrp/working/nhoffman/20101116_firmicutes"))
+	       ("20101208_bacteroidetes" (filename . "MatsenGrp/working/nhoffman/20101208_bacteroidetes"))
+	       ("20101207_no_match" (filename . "MatsenGrp/working/nhoffman/20101207_no_match"))
+	       ("20101208_lactobacillaceae" (filename . "MatsenGrp/working/nhoffman/20101208_lactobacillaceae"))
+	       ("20101213_bacteroidetes_chlorobi_group" (filename . "MatsenGrp/working/nhoffman/20101213_bacteroidetes_chlorobi_group"))
+	       ("20101214_sujatha_aligns" (filename . "MatsenGrp/working/nhoffman/20101214_sujatha_aligns"))
+	       ("20101227_aligns" (filename . "MatsenGrp/working/nhoffman/20101227_aligns"))
+	       ("20110204_test_lactos" (filename . "MatsenGrp/working/nhoffman/20110204_test_lactos"))
+	       ("20110505_plate5_aligns" (filename . "MatsenGrp/working/nhoffman/20110505_plate5_aligns"))
+	       ("20111003_clostridiales" (filename . "MatsenGrp/working/nhoffman/20111003_clostridiales"))
+	       ("w-nh-validate" (filename . "MatsenGrp/working/nhoffman/validate"))
+	       ("MatsenGrp/working/nhoffman" (filename . "MatsenGrp/working/nhoffman"))
 	       
-	       ("working/matsen" (filename . "working/matsen"))
+	       ("MatsenGrp/working/matsen" (filename . "MatsenGrp/working/matsen"))
+	       ("working" (filename . "/MatsenGrp/working/"))
 
-	       ("working" (filename . "/working/"))
+	       ;; nhoffman/working
+	       ("~validate/nestly" (filename . "/nhoffman/working/validate/nestly"))
+	       ("~validate-package" (filename . "/nhoffman/working/validate/validate/"))
+	       ("~validate-dev" (filename . "/nhoffman/working/validate/experiments/dev/"))
+	       ("~validate-clinical" (filename . "/nhoffman/working/validate/experiments/clinical/"))
+	       ("~validate" (filename . "/nhoffman/working/validate/"))
+	       ("~working" (filename . "/nhoffman/working/"))
+
 
 	       ;; catch anything else in bvdiversity
 	       ("bvdiversity"
@@ -365,6 +374,10 @@
 	       ;; projects under p_acnes
 	       ("p_acnes"
 	      	(filename . "p_acnes/"))
+
+	       ;; .emacs
+	       (".emacs.d"
+	      	(filename . "/.emacs.d/"))
 
 	       ;; catch remaining files by mode
 	       ("R-files"
