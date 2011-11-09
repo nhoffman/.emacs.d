@@ -218,6 +218,12 @@
     )
   )
 
+(defun font-dejavu ()
+  ;; set default font to dejavu sans mono-11
+  (interactive)
+  (set-default-font "dejavu sans mono-11")
+  )
+
 ;; apply above settings on startup
 (fix-frame)
 
