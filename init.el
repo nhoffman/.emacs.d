@@ -240,6 +240,12 @@
     )
   )
 
+(defun font-dejavu ()
+  ;; set default font to dejavu sans mono-11
+  (interactive)
+  (set-default-font "dejavu sans mono-11")
+  )
+
 ;; apply above settings on startup
 (fix-frame)
 
@@ -585,15 +591,28 @@
 (require 'ibuffer)
 (setq ibuffer-config-file "~/.emacs.d/ibuffer-config.el")
 
-(defun load-ibuffer-config ()
+(defun ibuffer-load-config ()
+  ;; load the ibuffer config file
   (interactive)
   (condition-case nil
-      (load ibuffer-config-file)
-      (message (format "** loading ibuffer config in %s" ibuffer-config-file))
+      (progn
+	(message (format "** loading ibuffer config in %s" ibuffer-config-file))	
+	(load ibuffer-config-file)
+	)
     (error (message (format "** could not load %s" ibuffer-config-file))))
-)
+  )
 
-(load-ibuffer-config)
+;; load the config file on startup
+(ibuffer-load-config)
+
+(defun ibuffer-reload ()
+  ;; kill ibuffer, reload the config file, and return to ibuffer
+  (interactive)
+  (ibuffer)
+  (kill-buffer)
+  (ibuffer-load-config)
+  (ibuffer)
+  )
 
 (global-set-key (kbd "C-x C-g") 'ibuffer)
 (global-set-key (kbd "C-x M-g") 'ibuffer-switch-to-saved-filter-groups)
