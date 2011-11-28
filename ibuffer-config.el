@@ -188,20 +188,19 @@
 	      	(filename . "/refset/common/"))
 
 	       ("refset-vaginal"
-	      	(filename . "/refset/targets/vaginal"))
+	      	(filename . "/refset/targets/vaginal/"))
 	       ("refset-stomach"
-	      	(filename . "/refset/targets/stomach"))
+	      	(filename . "/refset/targets/stomach/"))
+	       ("refset-gut-lampe"
+	      	(filename . "/refset/targets/gut-lampe/"))
 	       ("refset-gut"
-	      	(filename . "/refset/targets/gut"))
+	      	(filename . "/refset/targets/gut/"))
 	       ("refset-lacto2"
-	      	(filename . "/refset/targets/lactobacillus2"))
+	      	(filename . "/refset/targets/lactobacillus2/"))
 	       ("refset-lacto10"
-	      	(filename . "/refset/targets/lactobacillus10"))
+	      	(filename . "/refset/targets/lactobacillus10/"))
 	       ("refset-clinical"
-	      	(filename . "/refset/targets/clinical"))
-	       ("refset-lampe"
-	      	(filename . "/refset/targets/lampe"))
-
+	      	(filename . "/refset/targets/clinical/"))
 	       ("refset/targets"
 	      	(filename . "/refset/targets/"))
 
@@ -244,8 +243,12 @@
 	       ("stomach-master"
 	      	(filename . "/stomach/stomach-master"))
 
-	       ("lampe"
-	      	(filename . "/micro_processing/lampe_pipeline"))
+	       ("lampe_pipeline"
+	      	(filename . "/micro_processing/lampe_pipeline/"))
+
+	       ;; lampe shared space
+	       ("lampe_shared"
+	      	(filename . "/Lampe_J/MatsenCollab/"))
 
 	       ;; classcompare
 	       ("classcompare/pipeline"
@@ -290,7 +293,7 @@
 	       ("working" (filename . "/MatsenGrp/working/"))
 
 	       ;; nhoffman/working
-	       ("~validate/nestly" (filename . "/nhoffman/working/validate/nestly"))
+	       ("~validate-subcommands" (filename . "/nhoffman/working/validate/validate/subcommands/"))
 	       ("~validate-package" (filename . "/nhoffman/working/validate/validate/"))
 	       ("~validate-dev" (filename . "/nhoffman/working/validate/experiments/dev/"))
 	       ("~validate-clinical" (filename . "/nhoffman/working/validate/experiments/clinical/"))

@@ -59,7 +59,7 @@
         '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
 ;; debugging
-(setq debug-on-error t)
+;; (setq debug-on-error t)
 ;; (setq debug-on-signal t)
 
 ;; scrolling - see http://www.emacswiki.org/emacs/SmoothScrolling
