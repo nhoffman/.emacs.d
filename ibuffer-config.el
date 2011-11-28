@@ -88,6 +88,20 @@
 	       ("taxtastic"
 		(filename . "/taxtastic/"))
 
+	       ;; opiates
+	       ("opiates-scripts"
+		(filename . "/opiates/opiate/scripts/"))
+	       ("opiates-subcommands"
+		(filename . "/opiates/opiate/subcommands/"))
+	       ("opiates-package"
+		(filename . "/opiates/opiate/"))
+	       ("opiates-docs"
+		(filename . "/opiates/docs/"))
+	       ("opiates-tests"
+		(filename . "/opiates/tests/"))
+	       ("opiates"
+		(filename . "/opiates/"))
+
 	       ("clinlabr"
 	      	(filename . "/clinlabr/"))
 	   
