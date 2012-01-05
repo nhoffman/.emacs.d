@@ -143,16 +143,12 @@
 (require 'desktop)
 
 ;; should save desktop periodically instead of just on exit, but not
-;; if emacs is started with --no-desktop TODO: this disables auto save
-;; of desktop entirely - need to check explicity for --no-desktop
-(unless (equal desktop-save-mode nil)
-  (message "Enabling desktop auto-save")
-  (add-hook 'auto-save-hook (lambda () (desktop-save-in-desktop-dir)))
-  )
-
+;; if emacs is started with --no-desktop
 (desktop-save-mode 1)
-;; restore only N buffers on startup; restore others lazily
-;; (setq desktop-restore-eager 10)
+(if (and desktop-save-mode (not (member "--no-desktop" command-line-args)))
+    (progn
+      (message "Enabling desktop auto-save")
+      (add-hook 'auto-save-hook 'desktop-save-in-desktop-dir)))
 
 ;; TODO - instructions for using this?
 (defun toggle-kbd-macro-recording-on ()
@@ -289,18 +285,18 @@
   (previous-line 1))
 (global-set-key (kbd "M-<down>") 'move-line-down)
 
+(defun copy-buffer-file-name ()
+  "Add `buffer-file-name' to `kill-ring'"
+  (interactive)
+  (kill-new buffer-file-name t)
+)
+
 ;; other-window bound by default to `C-x o`
 (defun back-window ()
   (interactive)
   (other-window -1))
 (global-set-key (kbd "C-<right>") 'other-window)
 (global-set-key (kbd "C-<left>") 'back-window)
-
-(defun copy-buffer-file-name ()
-  "Add `buffer-file-name' to `kill-ring'"
-  (interactive)
-  (kill-new buffer-file-name t)
-)
 
 ;; see http://www.emacswiki.org/emacs/SwitchingBuffers
 ;; note that original code used function 'plusp', which
@@ -802,6 +798,13 @@ This is used to set `sql-alternate-buffer-name' within
     (require 'gist "~/.emacs.d/gist.el/gist.el")
   (error (message "** could not load gist")))
 
+;; magit
+;; http://philjackson.github.com/magit/
+(add-to-list 'load-path "~/.emacs.d/magit")
+(condition-case nil
+    (require 'magit)
+  (error (message "** could not load magit")))
+(global-set-key (kbd "C-c m") 'magit-status)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; content below was added by emacs ;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

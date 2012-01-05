@@ -300,11 +300,22 @@
 	       ("20110204_test_lactos" (filename . "MatsenGrp/working/nhoffman/20110204_test_lactos"))
 	       ("20110505_plate5_aligns" (filename . "MatsenGrp/working/nhoffman/20110505_plate5_aligns"))
 	       ("20111003_clostridiales" (filename . "MatsenGrp/working/nhoffman/20111003_clostridiales"))
-	       ("w-nh-validate" (filename . "MatsenGrp/working/nhoffman/validate"))
+	       
+	       ;; validate
+	       ("validate-subcommands" (filename . "MatsenGrp/working/nhoffman/validate/validate/subcommands/"))
+	       ("validate-package" (filename . "MatsenGrp/working/nhoffman/validate/validate/"))
+	       ("validate-dev" (filename . "MatsenGrp/working/nhoffman/validate/experiments/dev/"))
+	       ("validate-clinical" (filename . "MatsenGrp/working/nhoffman/validate/experiments/clinical/"))
+	       ("validate-full" (filename . "MatsenGrp/working/nhoffman/validate/experiments/full/"))
+	       ("validate-hmp_spp" (filename . "MatsenGrp/working/nhoffman/validate/experiments/hmp_spp/"))
+
+	       ("validate" (filename . "MatsenGrp/working/nhoffman/validate/"))
+
+	       ;; anythin not otherwise caught
 	       ("MatsenGrp/working/nhoffman" (filename . "MatsenGrp/working/nhoffman"))
 	       
 	       ("MatsenGrp/working/matsen" (filename . "MatsenGrp/working/matsen"))
-	       ("working" (filename . "/MatsenGrp/working/"))
+	       ("matsengrp-working" (filename . "/MatsenGrp/working/"))
 
 	       ;; nhoffman/working
 	       ("~validate-subcommands" (filename . "/nhoffman/working/validate/validate/subcommands/"))
@@ -313,7 +324,6 @@
 	       ("~validate-clinical" (filename . "/nhoffman/working/validate/experiments/clinical/"))
 	       ("~validate" (filename . "/nhoffman/working/validate/"))
 	       ("~working" (filename . "/nhoffman/working/"))
-
 
 	       ;; catch anything else in bvdiversity
 	       ("bvdiversity"
