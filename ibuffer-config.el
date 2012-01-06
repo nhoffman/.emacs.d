@@ -7,6 +7,9 @@
 	      ("default"
 
 	       ;;;; separately versioned projects
+	       ("magit"
+	      	(name . "magit"))
+
 	       ;; notes
 	       ("notes"
 	      	(filename . "Dropbox/notes/"))
