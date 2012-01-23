@@ -307,10 +307,12 @@
 	       ;; validate
 	       ("validate-subcommands" (filename . "MatsenGrp/working/nhoffman/validate/validate/subcommands/"))
 	       ("validate-package" (filename . "MatsenGrp/working/nhoffman/validate/validate/"))
-	       ("validate-dev" (filename . "MatsenGrp/working/nhoffman/validate/experiments/dev/"))
-	       ("validate-clinical" (filename . "MatsenGrp/working/nhoffman/validate/experiments/clinical/"))
-	       ("validate-full" (filename . "MatsenGrp/working/nhoffman/validate/experiments/full/"))
-	       ("validate-hmp_spp" (filename . "MatsenGrp/working/nhoffman/validate/experiments/hmp_spp/"))
+	       ("validate-experiments" (filename . "MatsenGrp/working/nhoffman/validate/experiments/"))
+	       ("validate-bin" (filename . "MatsenGrp/working/nhoffman/validate/bin/"))
+	       ;; ("validate-dev" (filename . "MatsenGrp/working/nhoffman/validate/experiments/dev/"))
+	       ;; ("validate-clinical" (filename . "MatsenGrp/working/nhoffman/validate/experiments/clinical/"))
+	       ;; ("validate-full" (filename . "MatsenGrp/working/nhoffman/validate/experiments/full/"))
+	       ;; ("validate-hmp_spp" (filename . "MatsenGrp/working/nhoffman/validate/experiments/hmp_spp/"))
 
 	       ("validate" (filename . "MatsenGrp/working/nhoffman/validate/"))
 
