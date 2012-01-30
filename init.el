@@ -143,8 +143,7 @@
 (require 'desktop)
 
 ;; should save desktop periodically instead of just on exit, but not
-;; if emacs is started with --no-desktop TODO: this disables auto save
-;; of desktop entirely - need to check explicity for --no-desktop
+;; if emacs is started with --no-desktop
 (unless (equal desktop-save-mode nil)
   (message "Enabling desktop auto-save")
   (add-hook 'auto-save-hook (lambda () (desktop-save-in-desktop-dir)))
