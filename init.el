@@ -144,14 +144,11 @@
 
 ;; should save desktop periodically instead of just on exit, but not
 ;; if emacs is started with --no-desktop
-(unless (equal desktop-save-mode nil)
-  (message "Enabling desktop auto-save")
-  (add-hook 'auto-save-hook (lambda () (desktop-save-in-desktop-dir)))
-  )
-
 (desktop-save-mode 1)
-;; restore only N buffers on startup; restore others lazily
-;; (setq desktop-restore-eager 10)
+(if (and desktop-save-mode (not (member "--no-desktop" command-line-args)))
+    (progn
+      (message "Enabling desktop auto-save")
+      (add-hook 'auto-save-hook 'desktop-save-in-desktop-dir)))
 
 ;; TODO - instructions for using this?
 (defun toggle-kbd-macro-recording-on ()
@@ -288,18 +285,18 @@
   (previous-line 1))
 (global-set-key (kbd "M-<down>") 'move-line-down)
 
+(defun copy-buffer-file-name ()
+  "Add `buffer-file-name' to `kill-ring'"
+  (interactive)
+  (kill-new buffer-file-name t)
+)
+
 ;; other-window bound by default to `C-x o`
 (defun back-window ()
   (interactive)
   (other-window -1))
 (global-set-key (kbd "C-<right>") 'other-window)
 (global-set-key (kbd "C-<left>") 'back-window)
-
-(defun copy-buffer-file-name ()
-  "Add `buffer-file-name' to `kill-ring'"
-  (interactive)
-  (kill-new buffer-file-name t)
-)
 
 ;; see http://www.emacswiki.org/emacs/SwitchingBuffers
 ;; note that original code used function 'plusp', which
@@ -357,8 +354,8 @@
 ;; (setq load-path (cons "/usr/local/share/emacs/site-lisp/" load-path))
 ;; (setq load-path (cons "~/.emacs.d" load-path))
 
+;; (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/")
 (add-to-list 'load-path "~/.emacs.d/")
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/")
 
 ;; word count - http://www.emacswiki.org/emacs/WordCount
 (condition-case nil
@@ -416,9 +413,28 @@
   (error (message "** could not load pylit")))
 
 ;; org-mode
-(condition-case nil
-    (require 'org-install)
-  (error (message "** could not load system org-mode")))
+;; (condition-case nil
+;;     (require 'org-install)
+;;   (error (message "** could not load system org-mode")))
+
+;; org-mode
+;; install most recent version:
+;; http://orgmode.org/worg/org-faq.html#keeping-current-with-Org-mode-development
+;; git clone git://orgmode.org/org-mode.git
+;; cd org-mode && make && make doc
+;; refresh using:
+;; cd ~/.emacs.d/org-mode && git pull && make clean && make && make doc
+(add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
+(require 'org-install)
+
+;; (condition-case nil
+;;     (require 'org-install "~/.emacs.d/org-mode/lisp/org.el")
+;;   (error (message "** could not load local org-mode in ~/.emacs.d; trying system org-mode")
+;; 	 (condition-case nil
+;; 	     (require 'org-install)
+;; 	   (error (message "** could not load system org-mode")))
+;; 	 )
+;;   )
 
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -446,9 +462,24 @@
 		(sh . t)   
 		(sql . t)
 		(sqlite . t)
+		(pygment . t)
 		))
 	     )
 	  )
+
+(custom-set-variables
+ '(org-confirm-babel-evaluate nil)
+ '(org-src-fontify-natively t))
+
+;; set up pygments
+;; see http://oompiller.wordpress.com/2011/07/05/syntax-highlighting-using-pygment-in-org-mode/
+;; cd ~/.emacs.d; wget https://raw.github.com/jianingy/org-babel-plugins/master/ob-pygment.el
+;; requires '(setq org-babel-load-languages (quote (pygment . t)))' above
+(condition-case nil
+    (progn
+      (require 'ob-pygment)
+      (setq org-pygment-path "/usr/local/bin/pygmentize"))
+  (error (message "** could not load ob-pygment")))
 
 ;; org-mode file suffix matching
 (push '("\\.org\\'" . org-mode) auto-mode-alist)
@@ -801,6 +832,13 @@ This is used to set `sql-alternate-buffer-name' within
     (require 'gist "~/.emacs.d/gist.el/gist.el")
   (error (message "** could not load gist")))
 
+;; magit
+;; http://philjackson.github.com/magit/
+(add-to-list 'load-path "~/.emacs.d/magit")
+(condition-case nil
+    (require 'magit)
+  (error (message "** could not load magit")))
+(global-set-key (kbd "C-c m") 'magit-status)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; content below was added by emacs ;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
