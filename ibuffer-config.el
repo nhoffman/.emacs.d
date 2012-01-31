@@ -315,13 +315,19 @@
 	       ;; ("validate-hmp_spp" (filename . "MatsenGrp/working/nhoffman/validate/experiments/hmp_spp/"))
 
 	       ("validate" (filename . "MatsenGrp/working/nhoffman/validate/"))
+	       
+	       ;; pplacer_pipeline
+	       ("pppipeline-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/"))
+	       ("pppipeline-lampe-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/config/lampe/"))
+	       ("pppipeline-scons-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/site_scons/"))
+	       ("pppipeline-bin-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/bin/"))
 
 	       ;; anythin not otherwise caught
 	       ("MatsenGrp/working/nhoffman" (filename . "MatsenGrp/working/nhoffman"))
 	       
 	       ("MatsenGrp/working/matsen" (filename . "MatsenGrp/working/matsen"))
 	       ("matsengrp-working" (filename . "/MatsenGrp/working/"))
-
+	       
 	       ;; nhoffman/working
 	       ("~validate-subcommands" (filename . "/nhoffman/working/validate/validate/subcommands/"))
 	       ("~validate-package" (filename . "/nhoffman/working/validate/validate/"))
