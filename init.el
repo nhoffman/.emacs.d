@@ -354,8 +354,8 @@
 ;; (setq load-path (cons "/usr/local/share/emacs/site-lisp/" load-path))
 ;; (setq load-path (cons "~/.emacs.d" load-path))
 
+;; (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/")
 (add-to-list 'load-path "~/.emacs.d/")
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/")
 
 ;; word count - http://www.emacswiki.org/emacs/WordCount
 (condition-case nil
@@ -413,9 +413,28 @@
   (error (message "** could not load pylit")))
 
 ;; org-mode
-(condition-case nil
-    (require 'org-install)
-  (error (message "** could not load system org-mode")))
+;; (condition-case nil
+;;     (require 'org-install)
+;;   (error (message "** could not load system org-mode")))
+
+;; org-mode
+;; install most recent version:
+;; http://orgmode.org/worg/org-faq.html#keeping-current-with-Org-mode-development
+;; git clone git://orgmode.org/org-mode.git
+;; cd org-mode && make && make doc
+;; refresh using:
+;; cd ~/.emacs.d/org-mode && git pull && make clean && make && make doc
+(add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
+(require 'org-install)
+
+;; (condition-case nil
+;;     (require 'org-install "~/.emacs.d/org-mode/lisp/org.el")
+;;   (error (message "** could not load local org-mode in ~/.emacs.d; trying system org-mode")
+;; 	 (condition-case nil
+;; 	     (require 'org-install)
+;; 	   (error (message "** could not load system org-mode")))
+;; 	 )
+;;   )
 
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -443,9 +462,24 @@
 		(sh . t)   
 		(sql . t)
 		(sqlite . t)
+		(pygment . t)
 		))
 	     )
 	  )
+
+(custom-set-variables
+ '(org-confirm-babel-evaluate nil)
+ '(org-src-fontify-natively t))
+
+;; set up pygments
+;; see http://oompiller.wordpress.com/2011/07/05/syntax-highlighting-using-pygment-in-org-mode/
+;; cd ~/.emacs.d; wget https://raw.github.com/jianingy/org-babel-plugins/master/ob-pygment.el
+;; requires '(setq org-babel-load-languages (quote (pygment . t)))' above
+(condition-case nil
+    (progn
+      (require 'ob-pygment)
+      (setq org-pygment-path "/usr/local/bin/pygmentize"))
+  (error (message "** could not load ob-pygment")))
 
 ;; org-mode file suffix matching
 (push '("\\.org\\'" . org-mode) auto-mode-alist)
