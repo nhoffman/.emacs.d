@@ -421,9 +421,12 @@
 ;; # install most recent version:
 ;; # http://orgmode.org/worg/org-faq.html#keeping-current-with-Org-mode-development
 ;; # add as submodule:
-;; git submodule add git://orgmode.org/org-mode.git && git submodule init
-;; cd org-mode && make && make doc
+;; git submodule add git://orgmode.org/org-mode.git
+;; git submodule init
+;; git commit -a -m "add org-mode as submodule"
 ;; git push
+;; # install it
+;; cd org-mode && make && make doc
 ;; # refresh using:
 ;; cd ~/.emacs.d/org-mode && git pull && make clean && make && make doc
 ;; # install to a new computer:
