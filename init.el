@@ -418,12 +418,21 @@
 ;;   (error (message "** could not load system org-mode")))
 
 ;; org-mode
-;; install most recent version:
-;; http://orgmode.org/worg/org-faq.html#keeping-current-with-Org-mode-development
-;; git clone git://orgmode.org/org-mode.git
+;; # install most recent version:
+;; # http://orgmode.org/worg/org-faq.html#keeping-current-with-Org-mode-development
+;; # add as submodule:
+;; git submodule add git://orgmode.org/org-mode.git
+;; git submodule init
+;; git commit -a -m "add org-mode as submodule"
+;; git push
+;; # install it
 ;; cd org-mode && make && make doc
-;; refresh using:
+;; # refresh using:
 ;; cd ~/.emacs.d/org-mode && git pull && make clean && make && make doc
+;; # install to a new computer:
+;; cd .emacs.d && git submodule init && git submodule update
+;; # ...then install as above
+
 (add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
 (require 'org-install)
 
