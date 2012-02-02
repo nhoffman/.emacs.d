@@ -834,6 +834,10 @@ This is used to set `sql-alternate-buffer-name' within
 
 ;; magit
 ;; http://philjackson.github.com/magit/
+;; cd ~/.emacs.d
+;; git submodule add https://github.com/magit/magit.git
+;; git commit -a -m "add magit as submodule"
+;; cd magit && make
 (add-to-list 'load-path "~/.emacs.d/magit")
 (condition-case nil
     (require 'magit)

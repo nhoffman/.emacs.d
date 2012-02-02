@@ -1,3 +1,6 @@
 [submodule "gist.el"]
 	path = gist.el
 	url = https://github.com/defunkt/gist.el.git
+[submodule "magit"]
+	path = magit
+	url = https://github.com/magit/magit.git
