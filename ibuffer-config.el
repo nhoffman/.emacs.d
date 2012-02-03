@@ -309,12 +309,14 @@
 	       ("validate-package" (filename . "MatsenGrp/working/nhoffman/validate/validate/"))
 	       ("validate-experiments" (filename . "MatsenGrp/working/nhoffman/validate/experiments/"))
 	       ("validate-bin" (filename . "MatsenGrp/working/nhoffman/validate/bin/"))
-	       ;; ("validate-dev" (filename . "MatsenGrp/working/nhoffman/validate/experiments/dev/"))
-	       ;; ("validate-clinical" (filename . "MatsenGrp/working/nhoffman/validate/experiments/clinical/"))
-	       ;; ("validate-full" (filename . "MatsenGrp/working/nhoffman/validate/experiments/full/"))
-	       ;; ("validate-hmp_spp" (filename . "MatsenGrp/working/nhoffman/validate/experiments/hmp_spp/"))
-
 	       ("validate" (filename . "MatsenGrp/working/nhoffman/validate/"))
+
+	       ;; validate-pub
+	       ("validate-pub-subcommands" (filename . "MatsenGrp/micro_processing/validate/validate/subcommands/"))
+	       ("validate-pub-package" (filename . "MatsenGrp/micro_processing/validate/validate/"))
+	       ("validate-pub-experiments" (filename . "MatsenGrp/micro_processing/validate/experiments/"))
+	       ("validate-pub-bin" (filename . "MatsenGrp/micro_processing/validate/bin/"))
+	       ("validate-pub" (filename . "MatsenGrp/micro_processing/validate/"))
 	       
 	       ;; pplacer_pipeline
 	       ("pppipeline-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/"))
