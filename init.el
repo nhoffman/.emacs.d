@@ -122,7 +122,7 @@
   (find-file filename)
   (end-of-buffer)
   (delete-blank-lines)
-  (insert "\n* ")
+  ;;(insert "\n* ")
   (insert (format-time-string time-format))
   (beginning-of-line)
   (forward-char 2))
@@ -130,13 +130,13 @@
 (global-set-key
  (kbd "C-x C-n") (lambda () (interactive)
 		   (org-add-entry "~/Dropbox/notes/index.org" 
-				  "<%Y-%m-%d %a>")))
+				  "\n* <%Y-%m-%d %a>")))
 
 (global-set-key
- (kbd "C-x C-j") (lambda () (interactive)
-		   (org-add-entry "~/Dropbox/notes/journal.org" 
-				  "%A, %B %d, %Y (%Y%m%d)")))
- 
+ (kbd "C-x C-m") (lambda () (interactive)
+		   (org-add-entry "~/Dropbox/notes/todo.org" 
+				  "\n** TODO <%Y-%m-%d %a>")))
+
 ;; setup for emacs desktop
 ;; http://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html
 ;; http://www.emacswiki.org/emacs/DeskTop
