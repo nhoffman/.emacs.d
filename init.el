@@ -220,11 +220,13 @@
 	 ;; M-w or C-w copies to system clipboard
 	 ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
 	 (setq x-select-enable-clipboard t)
+	 (setq scroll-bar-mode nil)
 	 )
 	(t
 	 (message "** running unknown windowing system")
 	 (setq my-default-font nil)
 	 (menu-bar-mode -1) ;; hide menu bar
+	 (setq scroll-bar-mode nil)
 	 )
 	)
 
@@ -249,8 +251,9 @@
 ;; TODO - not sure why this doesn't seem to take effect on frame creation
 (add-hook 'server-visit-hook
 	  '(lambda ()
-	     (message "** applying server-visit-hooks")
-	     (fix-frame)
+	     (progn
+	       (message "** applying server-visit-hooks")
+	       (fix-frame))
 	     )
 	  )
 
@@ -576,12 +579,12 @@
 	  '(lambda()
 	     (message "Loading ess-mode hooks")
 	     ;; leave my underscore key alone!
-	     (ess-toggle-underscore nil)
+	     (setq ess-S-assign "_")
+	     ;; (ess-toggle-underscore nil)
 	     ;; set ESS indentation style
 	     ;; choose from GNU, BSD, K&R, CLB, and C++
 	     (ess-set-style 'GNU 'quiet)
 	     (flyspell-mode)
-	     (ess-imenu-R) ;; add function index to menu bar TODO - why doesn't this work?
 	     )
 	  )
 
