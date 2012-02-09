@@ -307,19 +307,29 @@
 	       ;; validate
 	       ("validate-subcommands" (filename . "MatsenGrp/working/nhoffman/validate/validate/subcommands/"))
 	       ("validate-package" (filename . "MatsenGrp/working/nhoffman/validate/validate/"))
-	       ("validate-dev" (filename . "MatsenGrp/working/nhoffman/validate/experiments/dev/"))
-	       ("validate-clinical" (filename . "MatsenGrp/working/nhoffman/validate/experiments/clinical/"))
-	       ("validate-full" (filename . "MatsenGrp/working/nhoffman/validate/experiments/full/"))
-	       ("validate-hmp_spp" (filename . "MatsenGrp/working/nhoffman/validate/experiments/hmp_spp/"))
-
+	       ("validate-experiments" (filename . "MatsenGrp/working/nhoffman/validate/experiments/"))
+	       ("validate-bin" (filename . "MatsenGrp/working/nhoffman/validate/bin/"))
 	       ("validate" (filename . "MatsenGrp/working/nhoffman/validate/"))
+
+	       ;; validate-pub
+	       ("validate-pub-subcommands" (filename . "MatsenGrp/micro_processing/validate/validate/subcommands/"))
+	       ("validate-pub-package" (filename . "MatsenGrp/micro_processing/validate/validate/"))
+	       ("validate-pub-experiments" (filename . "MatsenGrp/micro_processing/validate/experiments/"))
+	       ("validate-pub-bin" (filename . "MatsenGrp/micro_processing/validate/bin/"))
+	       ("validate-pub" (filename . "MatsenGrp/micro_processing/validate/"))
+	       
+	       ;; pplacer_pipeline
+	       ("pppipeline-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/"))
+	       ("pppipeline-lampe-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/config/lampe/"))
+	       ("pppipeline-scons-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/site_scons/"))
+	       ("pppipeline-bin-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/bin/"))
 
 	       ;; anythin not otherwise caught
 	       ("MatsenGrp/working/nhoffman" (filename . "MatsenGrp/working/nhoffman"))
 	       
 	       ("MatsenGrp/working/matsen" (filename . "MatsenGrp/working/matsen"))
 	       ("matsengrp-working" (filename . "/MatsenGrp/working/"))
-
+	       
 	       ;; nhoffman/working
 	       ("~validate-subcommands" (filename . "/nhoffman/working/validate/validate/subcommands/"))
 	       ("~validate-package" (filename . "/nhoffman/working/validate/validate/"))
