@@ -38,6 +38,9 @@
 
 (message "loading ~/.emacs.d/init.el")
 
+;; aliases
+(defalias 'dtw 'delete-trailing-whitespace)
+
 ;; startup, appearance, etc
 (setq column-number-mode t)
 (setq inhibit-splash-screen t)
