@@ -581,6 +581,14 @@
 (push '("SConscript" . python-mode) auto-mode-alist)
 (push '("\\.cgi" . markdown-mode) auto-mode-alist)
 
+;; python-pylint
+;; https://gist.github.com/302848
+;; git submodule add git://gist.github.com/302848.git python-pylint
+;; invoke with M-x python-pylint RET
+(add-to-list 'load-path "~/.emacs.d/python-pylint")
+(autoload 'python-pylint "~/.emacs.d/python-pylint")
+(autoload 'pylint "~/.emacs.d/python-pylint")
+
 ;; ess-mode hooks
 (add-hook 'ess-mode-hook
 	  '(lambda()
