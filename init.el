@@ -48,6 +48,7 @@
 (setq make-backup-files nil) ;; no backup files
 (setq initial-scratch-message nil) ;; no instructions in the *scratch* buffer
 (tool-bar-mode -1)
+(setq suggest-key-bindings 4)
 
 ;; date and time in status bar
 ;; http://efod.se/writings/linuxbook/html/date-and-time.html
@@ -114,10 +115,11 @@
   (load "~/.emacs.d/init.el"))
 (global-set-key (kbd "M-C-i") 'load-init)
 
-(defun insert-time ()
+(defun insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
   (interactive)
   (insert (format-time-string "<%Y-%m-%d %a>")))
+(global-set-key (kbd "C-c d") 'insert-date)
 
 (defun org-add-entry (filename time-format)
   ;; Add an entry to an org-file with today's timestamp.
@@ -576,6 +578,7 @@
 ;; python-mode file name mappings
 (push '("SConstruct" . python-mode) auto-mode-alist)
 (push '("SConscript" . python-mode) auto-mode-alist)
+(push '("\\.cgi" . markdown-mode) auto-mode-alist)
 
 ;; ess-mode hooks
 (add-hook 'ess-mode-hook
