@@ -47,7 +47,7 @@
 (setq require-final-newline t)
 (setq make-backup-files nil) ;; no backup files
 (setq initial-scratch-message nil) ;; no instructions in the *scratch* buffer
-(tool-bar-mode -1)
+;; (tool-bar-mode -1)
 (setq suggest-key-bindings 4)
 
 ;; date and time in status bar
@@ -544,6 +544,7 @@
 
 ;;enable on-the-fly spell-check
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+(setq flyspell-issue-welcome-flag nil) ;; fix error message 
 
 ;; support for emacs use within pine/alpine
 ;; see http://snarfed.org/space/emacs%20font-lock%20faces%20for%20composing%20email
