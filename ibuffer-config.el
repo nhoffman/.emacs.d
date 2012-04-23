@@ -91,6 +91,21 @@
 	       ("taxtastic"
 		(filename . "/taxtastic/"))
 
+	       ;; seqmagick
+	       ("seqmagick-scripts"
+		(filename . "/seqmagick/seqmagick/scripts/"))
+	       ("seqmagick-subcommands"
+		(filename . "/seqmagick/seqmagick/subcommands/"))
+	       ("seqmagick-package"
+		(filename . "/seqmagick/seqmagick/"))
+	       ("seqmagick-docs"
+		(filename . "/seqmagick/docs/"))
+	       ("seqmagick-tests"
+		(filename . "/seqmagick/tests/"))
+	       ("seqmagick"
+		(filename . "/seqmagick/"))
+
+
 	       ;; opiates
 	       ("opiates-scripts"
 		(filename . "/opiates/opiate/scripts/"))
@@ -303,6 +318,7 @@
 	       ("20110204_test_lactos" (filename . "MatsenGrp/working/nhoffman/20110204_test_lactos"))
 	       ("20110505_plate5_aligns" (filename . "MatsenGrp/working/nhoffman/20110505_plate5_aligns"))
 	       ("20111003_clostridiales" (filename . "MatsenGrp/working/nhoffman/20111003_clostridiales"))
+	       ("iontorrent" (filename . "MatsenGrp/working/nhoffman/iontorrent"))
 	       
 	       ;; validate
 	       ("validate-subcommands" (filename . "MatsenGrp/working/nhoffman/validate/validate/subcommands/"))

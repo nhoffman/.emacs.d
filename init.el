@@ -84,15 +84,15 @@
 
 ;; window splitting
 ;; see http://en.wikipedia.org/wiki/Emacs_Lisp
-(defadvice split-window-vertically
-  ;; vertical split contains next (instead of current) buffer
-  (after my-window-splitting-advice first () activate)
-  (set-window-buffer (next-window) (other-buffer)))
+;; (defadvice split-window-vertically
+;;   ;; vertical split contains next (instead of current) buffer
+;;   (after my-window-splitting-advice first () activate)
+;;   (set-window-buffer (next-window) (other-buffer)))
 
-(defadvice split-window-horizontally
-  ;; horizontal split contains next (instead of current) buffer
-  (after my-window-splitting-advice first () activate)
-  (set-window-buffer (next-window) (other-buffer)))
+;; (defadvice split-window-horizontally
+;;   ;; horizontal split contains next (instead of current) buffer
+;;   (after my-window-splitting-advice first () activate)
+;;   (set-window-buffer (next-window) (other-buffer)))
 
 ;; imenu
 (setq imenu-auto-rescan 1)
@@ -132,12 +132,12 @@
 
 (global-set-key
  (kbd "C-x C-n") (lambda () (interactive)
-		   (org-add-entry "~/Dropbox/notes/index.org" 
+		   (org-add-entry "~/Dropbox/notes/index.org"
 				  "\n* <%Y-%m-%d %a>")))
 
 (global-set-key
  (kbd "C-x C-m") (lambda () (interactive)
-		   (org-add-entry "~/Dropbox/notes/todo.org" 
+		   (org-add-entry "~/Dropbox/notes/todo.org"
 				  "\n** TODO <%Y-%m-%d %a>")))
 
 ;; setup for emacs desktop
@@ -218,13 +218,14 @@
 	 ;; (edit-server-start)
 	 )
 	((string= "x" window-system)
-	 (message (format "** running %s windowing system" window-system))
-	 (setq my-default-font "Liberation Mono-10")
-	 ;; M-w or C-w copies to system clipboard
-	 ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
-	 (setq x-select-enable-clipboard t)
-	 (setq scroll-bar-mode nil)
-	 )
+	 (progn 
+	   (message (format "** running %s windowing system" window-system))
+	   (setq my-default-font "Liberation Mono-10")
+	   ;; M-w or C-w copies to system clipboard
+	   ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
+	   (setq x-select-enable-clipboard t)
+	   (setq scroll-bar-mode nil)
+	   ))
 	(t
 	 (message "** running unknown windowing system")
 	 (setq my-default-font nil)
@@ -473,8 +474,8 @@
 	      'org-babel-load-languages
 	      '((R . t)
 		(latex . t)
-		(python . t)   
-		(sh . t)   
+		(python . t)
+		(sh . t)
 		(sql . t)
 		(sqlite . t)
 		(pygment . t)
@@ -485,6 +486,16 @@
 (custom-set-variables
  '(org-confirm-babel-evaluate nil)
  '(org-src-fontify-natively t))
+
+;; (defun org-babel-format-block ()
+;;   ;; Format the current source block
+;;   (interactive)
+;;   (progn
+;;     (org-edit-special)
+;;     (mark-whole-buffer)
+;;     (indent-region)
+;;     (org-edit-src-exit)
+;;     ))
 
 ;; set up pygments
 ;; see http://oompiller.wordpress.com/2011/07/05/syntax-highlighting-using-pygment-in-org-mode/
@@ -641,7 +652,7 @@
   (interactive)
   (condition-case nil
       (progn
-	(message (format "** loading ibuffer config in %s" ibuffer-config-file))	
+	(message (format "** loading ibuffer config in %s" ibuffer-config-file))
 	(load ibuffer-config-file)
 	)
     (error (message (format "** could not load %s" ibuffer-config-file))))
@@ -738,7 +749,7 @@
 ;; (setq load-path (cons "~/.emacs.d/icicles" load-path))
 (add-to-list 'load-path "~/.emacs.d/icicles")
 (condition-case nil
-    (require 'icicles)  
+    (require 'icicles)
   (error (message "** could not load icicles")))
 
 (condition-case nil
