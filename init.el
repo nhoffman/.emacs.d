@@ -47,7 +47,8 @@
 (setq require-final-newline t)
 (setq make-backup-files nil) ;; no backup files
 (setq initial-scratch-message nil) ;; no instructions in the *scratch* buffer
-(tool-bar-mode -1)
+;; (tool-bar-mode -1)
+(setq suggest-key-bindings 4)
 
 ;; date and time in status bar
 ;; http://efod.se/writings/linuxbook/html/date-and-time.html
@@ -114,10 +115,11 @@
   (load "~/.emacs.d/init.el"))
 (global-set-key (kbd "M-C-i") 'load-init)
 
-(defun insert-time ()
+(defun insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
   (interactive)
   (insert (format-time-string "<%Y-%m-%d %a>")))
+(global-set-key (kbd "C-c d") 'insert-date)
 
 (defun org-add-entry (filename time-format)
   ;; Add an entry to an org-file with today's timestamp.
@@ -553,6 +555,7 @@
 
 ;;enable on-the-fly spell-check
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+(setq flyspell-issue-welcome-flag nil) ;; fix error message 
 
 ;; support for emacs use within pine/alpine
 ;; see http://snarfed.org/space/emacs%20font-lock%20faces%20for%20composing%20email
@@ -587,6 +590,15 @@
 ;; python-mode file name mappings
 (push '("SConstruct" . python-mode) auto-mode-alist)
 (push '("SConscript" . python-mode) auto-mode-alist)
+(push '("\\.cgi" . markdown-mode) auto-mode-alist)
+
+;; python-pylint
+;; https://gist.github.com/302848
+;; git submodule add git://gist.github.com/302848.git python-pylint
+;; invoke with M-x python-pylint RET
+(add-to-list 'load-path "~/.emacs.d/python-pylint")
+(autoload 'python-pylint "~/.emacs.d/python-pylint")
+(autoload 'pylint "~/.emacs.d/python-pylint")
 
 ;; ess-mode hooks
 (add-hook 'ess-mode-hook

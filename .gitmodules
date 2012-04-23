@@ -7,3 +7,6 @@
 [submodule "org-mode"]
 	path = org-mode
 	url = git://orgmode.org/org-mode.git
+[submodule "python-pylint"]
+	path = python-pylint
+	url = git://gist.github.com/302848.git
