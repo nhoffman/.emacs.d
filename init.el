@@ -206,8 +206,10 @@
 ;; platform and display-specific settings
 (defun fix-frame ()
   (interactive)
+  (menu-bar-mode -1) ;; hide menu bar
+  (tool-bar-mode -1) ;; hide tool bar
   (cond ((string= "ns" window-system) ;; cocoa
-	 (message (format "** running %s windowing system" window-system))
+	 (progn (message (format "** running %s windowing system" window-system))
 	 ;; key bindings for mac - see
 	 ;; http://stuff-things.net/2009/01/06/emacs-on-the-mac/
 	 ;; http://osx.iusethis.com/app/carbonemacspackage
@@ -218,7 +220,7 @@
 	 ;; enable edit-with-emacs for chrome
 	 ;; (require 'edit-server)
 	 ;; (edit-server-start)
-	 )
+	 ))
 	((string= "x" window-system)
 	 (progn 
 	   (message (format "** running %s windowing system" window-system))
@@ -226,14 +228,14 @@
 	   ;; M-w or C-w copies to system clipboard
 	   ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
 	   (setq x-select-enable-clipboard t)
-	   (setq scroll-bar-mode nil)
+	   (scroll-bar-mode -1) ;; hide scroll bar
 	   ))
 	(t
+	 (progn 
 	 (message "** running unknown windowing system")
 	 (setq my-default-font nil)
-	 (menu-bar-mode -1) ;; hide menu bar
-	 (setq scroll-bar-mode nil)
-	 )
+	 (scroll-bar-mode -1) ;; hide scroll bar
+	 ))
 	)
 
   (unless (equal window-system nil)
@@ -255,13 +257,7 @@
 
 ;; ...and when creating a new connection to emacs server via emacsclient
 ;; TODO - not sure why this doesn't seem to take effect on frame creation
-(add-hook 'server-visit-hook
-	  '(lambda ()
-	     (progn
-	       (message "** applying server-visit-hooks")
-	       (fix-frame))
-	     )
-	  )
+(add-hook 'server-visit-hook 'fix-frame)
 
 ;; Copies lines in the absence of an active region
 ;; see http://emacs-fu.blogspot.com/2009/11/copying-lines-without-selecting-them.html
