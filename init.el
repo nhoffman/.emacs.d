@@ -747,23 +747,24 @@
 ;; http://www.emacswiki.org/emacs/Icicles_-_Libraries
 ;; wget http://www.emacswiki.org/emacs/download/get-icicles.sh
 ;; sh get-icicles.sh
-;; (setq load-path (cons "~/.emacs.d/icicles" load-path))
-(add-to-list 'load-path "~/.emacs.d/icicles")
-(condition-case nil
-    (require 'icicles)  
-  (error (message "** could not load icicles")))
 
-(condition-case nil
-    (icicle-mode 1)
-  (error (message "** could not start icicles")))
+;; (add-to-list 'load-path "~/.emacs.d/icicles")
+;; (condition-case nil
+;;     (require 'icicles)  
+;;   (error (message "** could not load icicles")))
+
+;; (condition-case nil
+;;     (icicle-mode 1)
+;;   (error (message "** could not start icicles")))
 
 ;; uniquify - http://www.emacswiki.org/emacs/uniquify
 (require 'uniquify)
 
 ;; ido mode
-;; (condition-case nil
-;;     (require 'ido)
-;;   (error (message "** could not load ido mode")))
+;; http://www.masteringemacs.org/articles/2010/10/10/introduction-to-ido-mode/
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
 
 ;; keyboard macro copy-and-comment, bound to CM-;
 (fset 'copy-and-comment
