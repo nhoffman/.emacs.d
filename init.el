@@ -566,10 +566,10 @@
 	     (setq py-indent-offset tab-width)
 	     (setq py-smart-indentation t)
 	     (define-key python-mode-map "\C-m" 'newline-and-indent)
-	     (hs-minor-mode)
+	     ;; (hs-minor-mode)
 	     ;; add function index to menu bar
-	     (imenu-add-menubar-index)
-	     ;; (python-mode-untabify)
+	     ;; (imenu-add-menubar-index)
+	     (python-mode-untabify)
 	     ;; (linum-mode)
 	     )
 	  )
@@ -577,6 +577,7 @@
 ;; python-mode file name mappings
 (push '("SConstruct" . python-mode) auto-mode-alist)
 (push '("SConscript" . python-mode) auto-mode-alist)
+(push '("*.cgi" . python-mode) auto-mode-alist)
 
 ;; ess-mode hooks
 (add-hook 'ess-mode-hook
@@ -880,3 +881,4 @@ This is used to set `sql-alternate-buffer-name' within
   ;; If there is more than one, they won't work right.
  )
 
+(setq ns-pop-up-frames nil)
