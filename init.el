@@ -47,7 +47,6 @@
 (setq require-final-newline t)
 (setq make-backup-files nil) ;; no backup files
 (setq initial-scratch-message nil) ;; no instructions in the *scratch* buffer
-;; (tool-bar-mode -1)
 (setq suggest-key-bindings 4)
 
 ;; date and time in status bar
@@ -207,7 +206,7 @@
 (defun fix-frame ()
   (interactive)
   (menu-bar-mode -1) ;; hide menu bar
-  ;; (tool-bar-mode -1) ;; hide tool bar
+  (tool-bar-mode -1) ;; hide tool bar
   (cond ((string= "ns" window-system) ;; cocoa
 	 (progn (message (format "** running %s windowing system" window-system))
 	 ;; key bindings for mac - see
@@ -228,13 +227,14 @@
 	   ;; M-w or C-w copies to system clipboard
 	   ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
 	   (setq x-select-enable-clipboard t)
-	   ;; (scroll-bar-mode -1) ;; hide scroll bar
+	   ;; (set-scroll-bar-mode -1) ;; hide scroll bar
+	   (scroll-bar-mode -1) ;; hide scroll bar
 	   ))
 	(t
 	 (progn 
 	 (message "** running unknown windowing system")
 	 (setq my-default-font nil)
-	 ;; (scroll-bar-mode -1) ;; hide scroll bar
+	 (scroll-bar-mode -1) ;; hide scroll bar
 	 ))
 	)
 
@@ -751,7 +751,17 @@
 ;; http://www.masteringemacs.org/articles/2010/10/10/introduction-to-ido-mode/
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
+(setq ido-use-virtual-buffers t)
 (ido-mode 1)
+
+;; use recentf with ido - see http://wikemacs.org/wiki/Recentf
+(recentf-mode 1)
+
+(defun ido-choose-from-recentf ()
+  "Use ido to select a recently visited file from the `recentf-list'"
+  (interactive)
+  (find-file (ido-completing-read "Open file: " recentf-list nil t)))
+(global-set-key (kbd "C-c f") 'ido-choose-from-recentf)
 
 ;; keyboard macro copy-and-comment, bound to CM-;
 (fset 'copy-and-comment
