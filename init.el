@@ -418,11 +418,7 @@
   (error (message "** could not load pylit")))
 
 ;; org-mode
-;; (condition-case nil
-;;     (require 'org-install)
-;;   (error (message "** could not load system org-mode")))
 
-;; org-mode
 ;; # install most recent version:
 ;; # http://orgmode.org/worg/org-faq.html#keeping-current-with-Org-mode-development
 ;; # add as submodule:
@@ -440,15 +436,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
 (require 'org-install)
-
-;; (condition-case nil
-;;     (require 'org-install "~/.emacs.d/org-mode/lisp/org.el")
-;;   (error (message "** could not load local org-mode in ~/.emacs.d; trying system org-mode")
-;; 	 (condition-case nil
-;; 	     (require 'org-install)
-;; 	   (error (message "** could not load system org-mode")))
-;; 	 )
-;;   )
 
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -512,13 +499,6 @@
 (setq org-agenda-files (list "~/Dropbox/notes/index.org"
 			     "~/Dropbox/fredross/notes/plans.org"
 			     ))
-
-;; Set to the location of your Org files on your local system
-(setq org-directory "~/Dropbox/notes")
-;; Set to the name of the file where new notes will be stored
-(setq org-mobile-inbox-for-pull "~/Dropbox/notes/flagged.org")
-;; Set to <your Dropbox root directory>/MobileOrg.
-(setq org-mobile-directory "~/Dropbox/MobileOrg")
 
 ;; moinmoin-mode
 ;;  wget -U Mozilla -O moinmoin-mode.el "http://moinmoin.wikiwikiweb.de/EmacsForMoinMoin/MoinMoinMode?action=raw"
