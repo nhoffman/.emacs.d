@@ -1,4 +1,4 @@
-;; emacs configuration for Noah Hoffman
+; emacs configuration for Noah Hoffman
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -555,9 +555,9 @@
 	     (setq py-indent-offset tab-width)
 	     (setq py-smart-indentation t)
 	     (define-key python-mode-map "\C-m" 'newline-and-indent)
-	     (hs-minor-mode)
+	     ;; (hs-minor-mode)
 	     ;; add function index to menu bar
-	     (imenu-add-menubar-index)
+	     ;; (imenu-add-menubar-index)
 	     ;; (python-mode-untabify)
 	     ;; (linum-mode)
 	     )
@@ -566,7 +566,7 @@
 ;; python-mode file name mappings
 (push '("SConstruct" . python-mode) auto-mode-alist)
 (push '("SConscript" . python-mode) auto-mode-alist)
-(push '("\\.cgi" . markdown-mode) auto-mode-alist)
+(push '("*.cgi" . python-mode) auto-mode-alist)
 
 ;; python-pylint
 ;; https://gist.github.com/302848
@@ -868,6 +868,10 @@ This is used to set `sql-alternate-buffer-name' within
     (require 'magit)
   (error (message "** could not load magit")))
 (global-set-key (kbd "C-c m") 'magit-status)
+
+;; emacsclient
+(setq ns-pop-up-frames nil) ;; buffers opened from command line don't create new frame
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; content below was added by emacs ;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
