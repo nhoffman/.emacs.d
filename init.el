@@ -1,4 +1,4 @@
-;; emacs configuration for Noah Hoffman
+; emacs configuration for Noah Hoffman
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@
 (setq make-backup-files nil) ;; no backup files
 (setq initial-scratch-message nil) ;; no instructions in the *scratch* buffer
 ;; (tool-bar-mode -1)
+(setq suggest-key-bindings 4)
 
 ;; date and time in status bar
 ;; http://efod.se/writings/linuxbook/html/date-and-time.html
@@ -84,15 +85,15 @@
 
 ;; window splitting
 ;; see http://en.wikipedia.org/wiki/Emacs_Lisp
-(defadvice split-window-vertically
-  ;; vertical split contains next (instead of current) buffer
-  (after my-window-splitting-advice first () activate)
-  (set-window-buffer (next-window) (other-buffer)))
+;; (defadvice split-window-vertically
+;;   ;; vertical split contains next (instead of current) buffer
+;;   (after my-window-splitting-advice first () activate)
+;;   (set-window-buffer (next-window) (other-buffer)))
 
-(defadvice split-window-horizontally
-  ;; horizontal split contains next (instead of current) buffer
-  (after my-window-splitting-advice first () activate)
-  (set-window-buffer (next-window) (other-buffer)))
+;; (defadvice split-window-horizontally
+;;   ;; horizontal split contains next (instead of current) buffer
+;;   (after my-window-splitting-advice first () activate)
+;;   (set-window-buffer (next-window) (other-buffer)))
 
 ;; imenu
 (setq imenu-auto-rescan 1)
@@ -114,10 +115,11 @@
   (load "~/.emacs.d/init.el"))
 (global-set-key (kbd "M-C-i") 'load-init)
 
-(defun insert-time ()
+(defun insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
   (interactive)
   (insert (format-time-string "<%Y-%m-%d %a>")))
+(global-set-key (kbd "C-c d") 'insert-date)
 
 (defun org-add-entry (filename time-format)
   ;; Add an entry to an org-file with today's timestamp.
@@ -132,12 +134,12 @@
 
 (global-set-key
  (kbd "C-x C-n") (lambda () (interactive)
-		   (org-add-entry "~/Dropbox/notes/index.org" 
+		   (org-add-entry "~/Dropbox/notes/index.org"
 				  "\n* <%Y-%m-%d %a>")))
 
 (global-set-key
  (kbd "C-x C-m") (lambda () (interactive)
-		   (org-add-entry "~/Dropbox/notes/todo.org" 
+		   (org-add-entry "~/Dropbox/notes/todo.org"
 				  "\n** TODO <%Y-%m-%d %a>")))
 
 ;; setup for emacs desktop
@@ -204,8 +206,10 @@
 ;; platform and display-specific settings
 (defun fix-frame ()
   (interactive)
+  (menu-bar-mode -1) ;; hide menu bar
+  ;; (tool-bar-mode -1) ;; hide tool bar
   (cond ((string= "ns" window-system) ;; cocoa
-	 (message (format "** running %s windowing system" window-system))
+	 (progn (message (format "** running %s windowing system" window-system))
 	 ;; key bindings for mac - see
 	 ;; http://stuff-things.net/2009/01/06/emacs-on-the-mac/
 	 ;; http://osx.iusethis.com/app/carbonemacspackage
@@ -216,21 +220,22 @@
 	 ;; enable edit-with-emacs for chrome
 	 ;; (require 'edit-server)
 	 ;; (edit-server-start)
-	 )
+	 ))
 	((string= "x" window-system)
-	 (message (format "** running %s windowing system" window-system))
-	 (setq my-default-font "Liberation Mono-10")
-	 ;; M-w or C-w copies to system clipboard
-	 ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
-	 (setq x-select-enable-clipboard t)
-	 (setq scroll-bar-mode nil)
-	 )
+	 (progn 
+	   (message (format "** running %s windowing system" window-system))
+	   (setq my-default-font "Liberation Mono-10")
+	   ;; M-w or C-w copies to system clipboard
+	   ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
+	   (setq x-select-enable-clipboard t)
+	   ;; (scroll-bar-mode -1) ;; hide scroll bar
+	   ))
 	(t
+	 (progn 
 	 (message "** running unknown windowing system")
 	 (setq my-default-font nil)
-	 (menu-bar-mode -1) ;; hide menu bar
-	 (setq scroll-bar-mode nil)
-	 )
+	 ;; (scroll-bar-mode -1) ;; hide scroll bar
+	 ))
 	)
 
   (unless (equal window-system nil)
@@ -252,13 +257,7 @@
 
 ;; ...and when creating a new connection to emacs server via emacsclient
 ;; TODO - not sure why this doesn't seem to take effect on frame creation
-(add-hook 'server-visit-hook
-	  '(lambda ()
-	     (progn
-	       (message "** applying server-visit-hooks")
-	       (fix-frame))
-	     )
-	  )
+(add-hook 'server-visit-hook 'fix-frame)
 
 ;; Copies lines in the absence of an active region
 ;; see http://emacs-fu.blogspot.com/2009/11/copying-lines-without-selecting-them.html
@@ -473,8 +472,8 @@
 	      'org-babel-load-languages
 	      '((R . t)
 		(latex . t)
-		(python . t)   
-		(sh . t)   
+		(python . t)
+		(sh . t)
 		(sql . t)
 		(sqlite . t)
 		(pygment . t)
@@ -485,6 +484,16 @@
 (custom-set-variables
  '(org-confirm-babel-evaluate nil)
  '(org-src-fontify-natively t))
+
+;; (defun org-babel-format-block ()
+;;   ;; Format the current source block
+;;   (interactive)
+;;   (progn
+;;     (org-edit-special)
+;;     (mark-whole-buffer)
+;;     (indent-region)
+;;     (org-edit-src-exit)
+;;     ))
 
 ;; set up pygments
 ;; see http://oompiller.wordpress.com/2011/07/05/syntax-highlighting-using-pygment-in-org-mode/
@@ -569,7 +578,7 @@
 	     ;; (hs-minor-mode)
 	     ;; add function index to menu bar
 	     ;; (imenu-add-menubar-index)
-	     (python-mode-untabify)
+	     ;; (python-mode-untabify)
 	     ;; (linum-mode)
 	     )
 	  )
@@ -578,6 +587,14 @@
 (push '("SConstruct" . python-mode) auto-mode-alist)
 (push '("SConscript" . python-mode) auto-mode-alist)
 (push '("*.cgi" . python-mode) auto-mode-alist)
+
+;; python-pylint
+;; https://gist.github.com/302848
+;; git submodule add git://gist.github.com/302848.git python-pylint
+;; invoke with M-x python-pylint RET
+(add-to-list 'load-path "~/.emacs.d/python-pylint")
+(autoload 'python-pylint "~/.emacs.d/python-pylint")
+(autoload 'pylint "~/.emacs.d/python-pylint")
 
 ;; ess-mode hooks
 (add-hook 'ess-mode-hook
@@ -643,7 +660,7 @@
   (interactive)
   (condition-case nil
       (progn
-	(message (format "** loading ibuffer config in %s" ibuffer-config-file))	
+	(message (format "** loading ibuffer config in %s" ibuffer-config-file))
 	(load ibuffer-config-file)
 	)
     (error (message (format "** could not load %s" ibuffer-config-file))))
@@ -737,23 +754,24 @@
 ;; http://www.emacswiki.org/emacs/Icicles_-_Libraries
 ;; wget http://www.emacswiki.org/emacs/download/get-icicles.sh
 ;; sh get-icicles.sh
-;; (setq load-path (cons "~/.emacs.d/icicles" load-path))
-(add-to-list 'load-path "~/.emacs.d/icicles")
-(condition-case nil
-    (require 'icicles)  
-  (error (message "** could not load icicles")))
 
-(condition-case nil
-    (icicle-mode 1)
-  (error (message "** could not start icicles")))
+;; (add-to-list 'load-path "~/.emacs.d/icicles")
+;; (condition-case nil
+;;     (require 'icicles)  
+;;   (error (message "** could not load icicles")))
+
+;; (condition-case nil
+;;     (icicle-mode 1)
+;;   (error (message "** could not start icicles")))
 
 ;; uniquify - http://www.emacswiki.org/emacs/uniquify
 (require 'uniquify)
 
 ;; ido mode
-;; (condition-case nil
-;;     (require 'ido)
-;;   (error (message "** could not load ido mode")))
+;; http://www.masteringemacs.org/articles/2010/10/10/introduction-to-ido-mode/
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
 
 ;; keyboard macro copy-and-comment, bound to CM-;
 (fset 'copy-and-comment
@@ -860,6 +878,10 @@ This is used to set `sql-alternate-buffer-name' within
     (require 'magit)
   (error (message "** could not load magit")))
 (global-set-key (kbd "C-c m") 'magit-status)
+
+;; emacsclient
+(setq ns-pop-up-frames nil) ;; buffers opened from command line don't create new frame
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; content below was added by emacs ;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -881,4 +903,3 @@ This is used to set `sql-alternate-buffer-name' within
   ;; If there is more than one, they won't work right.
  )
 
-(setq ns-pop-up-frames nil)
