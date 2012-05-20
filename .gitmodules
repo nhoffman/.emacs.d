@@ -6,7 +6,7 @@
 	url = https://github.com/magit/magit.git
 [submodule "org-mode"]
 	path = org-mode
-	url = git://orgmode.org/org-mode.git
+	url = https://github.com/emacsmirror/org.git
 [submodule "python-pylint"]
 	path = python-pylint
 	url = git://gist.github.com/302848.git
