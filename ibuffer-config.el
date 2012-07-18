@@ -239,6 +239,14 @@
 	       ("refset-top"
 	      	(filename . "/refset/"))
 	       
+	       ;; pplacer-pipeline
+	       ("pp-pipeline-config"
+	      	(filename . "/micro_processing/pplacer_pipeline/config/"))
+	       ("pp-pipeline-bin"
+	      	(filename . "/micro_processing/pplacer_pipeline/bin/"))
+	       ("pp-pipeline"
+	      	(filename . "/micro_processing/pplacer_pipeline/"))
+	       
 	       ;; pipelines
 	       ("vaginal-analysis-p5-tiny"
 	      	(filename . "/vaginal_analysis/plate5_tiny"))
@@ -320,12 +328,12 @@
 	       ("20111003_clostridiales" (filename . "MatsenGrp/working/nhoffman/20111003_clostridiales"))
 	       ("iontorrent" (filename . "MatsenGrp/working/nhoffman/iontorrent"))
 	       
-	       ;; validate
-	       ("validate-subcommands" (filename . "MatsenGrp/working/nhoffman/validate/validate/subcommands/"))
-	       ("validate-package" (filename . "MatsenGrp/working/nhoffman/validate/validate/"))
-	       ("validate-experiments" (filename . "MatsenGrp/working/nhoffman/validate/experiments/"))
-	       ("validate-bin" (filename . "MatsenGrp/working/nhoffman/validate/bin/"))
-	       ("validate" (filename . "MatsenGrp/working/nhoffman/validate/"))
+	       ;; ~validate
+	       ("~validate-subcommands" (filename . "nhoffman/working/validate/validate/subcommands/"))
+	       ("~validate-package" (filename . "nhoffman/working/validate/validate/"))
+	       ("~validate-experiments" (filename . "nhoffman/working/validate/experiments/"))
+	       ("~validate-bin" (filename . "nhoffman/working/validate/bin/"))
+	       ("~validate" (filename . "nhoffman/working/validate/"))
 
 	       ;; validate-pub
 	       ("validate-pub-subcommands" (filename . "MatsenGrp/micro_processing/validate/validate/subcommands/"))
