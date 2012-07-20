@@ -35,6 +35,7 @@
   (interactive)
   (org-babel-tangle)
   (org-export-as-html-and-open 3)
+  (copy-file "init.html" "../.emacs.d.ghpages/index.html" t)
   )
 
 (defalias 'dtw 'delete-trailing-whitespace)

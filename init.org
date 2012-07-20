@@ -7,6 +7,9 @@
 #+BIND: org-export-html-postamble nil
 #+BABEL: :results output :exports both 
 
+- The source for this page is available at https://github.com/nhoffman/.emacs.d
+- The html-exported version of this page is hosted at http://nhoffman.github.com/.emacs.d 
+
 #+BEGIN_SRC elisp :tangle init.el 
 (message "loading ~/.emacs.d/init.el")
 #+END_SRC
@@ -57,12 +60,13 @@ Convenience function to (re)load init.el
 Tangle and export html
 
 #+BEGIN_SRC elisp :tangle init.el
-(defun init-compile ()
-  "Tangle and export html"
-  (interactive)
-  (org-babel-tangle)
-  (org-export-as-html-and-open 3)
-  )
+  (defun init-compile ()
+    "Tangle and export html"
+    (interactive)
+    (org-babel-tangle)
+    (org-export-as-html-and-open 3)
+    (copy-file "init.html" "../.emacs.d.ghpages/index.html" t)
+    )
 #+END_SRC
 
 * Various aliases and key bindings
@@ -1005,4 +1009,9 @@ Buffers opened from command line don't create new frame
   ;; If there is more than one, they won't work right.
  )
 #+END_SRC
+
+
+
+
+
 

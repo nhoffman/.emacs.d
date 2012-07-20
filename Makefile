@@ -25,4 +25,11 @@ ess: FORCE
 xmodmap:
 	cp .Xmodmap ${HOME}
 
+publish:
+	cd ../.emacs.d.ghpages; \
+	git commit -a -m "update ghpages"; \
+	git push origin gh-pages;
+	cd ${CWD}
+
+
 FORCE:
