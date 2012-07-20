@@ -1,4 +1,5 @@
-; emacs configuration for Noah Hoffman
+
+(message "loading ~/.emacs.d/init.el")
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -13,106 +14,273 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;; non-default key mappings defined here:
-;; f5 ; call-last-kbd-macro
-;; shift-f5 ; toggle-kbd-macro-recording-on
-;; f6 ; Toggle lineum-mode
-;; f7 ; toggle visual-line-mode
-;; f8 ; ns-toggle-fullscreen
-;; C-M-t ; transient-mark-mode
-;; C-M-i ; load-init
-;; C-x C-b ; remap to electric-buffer-list
-;; C-x m ; remap to imenu (default is compose-mail)
-;; C-right ; other-window
-;; C-left ; other-window -1 (back-window)
-;; C-x C-c ; save-buffers-kill-terminal with confirmation
-;; C-M-; ; copy region and comment
-;; C-M-q ; unfill-paragraph
-;; C-x C-g ; ibuffer
-;; C-x M-g ; ibuffer-switch-to-saved-buffer-groups
-;; C-x 4; transpose-buffers
-;; C-x 5; switch-buffers-between-frames
-;; C-cl ; org-store-link
-;; C-ca ; org-agenda
-;; C-cb; org-iswitchb
+(setq init-file-name "init.el")
+(defun init-insert-code-block ()
+  ;; Insert a code block that will be tangled into `init-file-name`
+  (interactive)
+  (backward-paragraph)
+  (insert (format "#+BEGIN_SRC elisp :tangle %s" init-file-name))
+  (forward-paragraph)
+  (insert "#+END_SRC\n"))
+(global-set-key (kbd "C-c i") 'init-insert-code-block)
 
-(message "loading ~/.emacs.d/init.el")
+(defun init-load ()
+  "Load ~/.emacs.d/init.el"
+  (interactive)
+  (load "~/.emacs.d/init.el"))
+(global-set-key (kbd "M-C-i") 'init-load)
 
-;; aliases
+(defun init-compile ()
+  "Tangle and export html"
+  (interactive)
+  (org-babel-tangle)
+  (org-export-as-html-and-open 3)
+  )
+
 (defalias 'dtw 'delete-trailing-whitespace)
 
-;; startup, appearance, etc
+(global-set-key (kbd "<f6>") 'linum-mode)
+(global-set-key (kbd "<f7>") 'visual-line-mode)
+(global-set-key (kbd "<f8>") 'ns-toggle-fullscreen)
+
+;; (setq debug-on-error t)
+;; (setq debug-on-signal t)
+
 (setq column-number-mode t)
 (setq inhibit-splash-screen t)
 (setq require-final-newline t)
 (setq make-backup-files nil) ;; no backup files
 (setq initial-scratch-message nil) ;; no instructions in the *scratch* buffer
 (setq suggest-key-bindings 4)
+(show-paren-mode 1)
 
-;; date and time in status bar
-;; http://efod.se/writings/linuxbook/html/date-and-time.html
 (setq display-time-day-and-date t
       display-time-24hr-format t)
 (display-time)
 
-;; file path in title bar
-;; http://stackoverflow.com/questions/3669511/the-function-to-show-current-files-full-path-in-mini-buffer
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
         '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
-;; debugging
-;; (setq debug-on-error t)
-;; (setq debug-on-signal t)
+(global-auto-revert-mode 1)
 
-;; scrolling - see http://www.emacswiki.org/emacs/SmoothScrolling
+(global-set-key [(control x) (control c)]
+                (function
+                 (lambda () (interactive)
+                   (cond ((y-or-n-p "Quit? (save-buffers-kill-terminal) ")
+                          (save-buffers-kill-terminal))))))
+
+(defun fix-frame ()
+  (interactive)
+  (menu-bar-mode -1) ;; hide menu bar
+  (tool-bar-mode -1) ;; hide tool bar
+  (cond ((string= "ns" window-system) ;; cocoa
+         (progn (message (format "** running %s windowing system" window-system))
+         ;; key bindings for mac - see
+         ;; http://stuff-things.net/2009/01/06/emacs-on-the-mac/
+         ;; http://osx.iusethis.com/app/carbonemacspackage
+         (set-keyboard-coding-system 'mac-roman)
+         (setq mac-option-modifier 'meta)
+         (setq mac-command-key-is-meta nil)
+         (setq my-default-font "Bitstream Vera Sans Mono-14")
+         ;; enable edit-with-emacs for chrome
+         ;; (require 'edit-server)
+         ;; (edit-server-start)
+         ))
+        ((string= "x" window-system)
+         (progn 
+           (message (format "** running %s windowing system" window-system))
+           (setq my-default-font "Liberation Mono-10")
+           ;; M-w or C-w copies to system clipboard
+           ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
+           (setq x-select-enable-clipboard t)
+           ;; (set-scroll-bar-mode -1) ;; hide scroll bar
+           (scroll-bar-mode -1) ;; hide scroll bar
+           ))
+        (t
+         (progn 
+         (message "** running unknown windowing system")
+         (setq my-default-font nil)
+         (scroll-bar-mode -1) ;; hide scroll bar
+         ))
+        )
+
+  (unless (equal window-system nil)
+    (message (format "** setting default font to %s" my-default-font))
+    (condition-case nil
+        (set-default-font my-default-font)
+      (error (message (format "** could not set to font %s" my-default-font))))
+    )
+  )
+
+(defun font-dejavu ()
+  ;; set default font to dejavu sans mono-11
+  (interactive)
+  (set-default-font "dejavu sans mono-11")
+  )
+
+(fix-frame)
+
+(add-hook 'server-visit-hook 'fix-frame)
+
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; number of lines at a time
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mosue 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 (setq scroll-conservatively 1) ;; scroll by one line to follow cursor off screen
+(setq scroll-margin 2) ;; Start scrolling when 2 lines from top/bottom
 
-;; cursor appearance
-(set-cursor-color "red")
-(blink-cursor-mode 1)
-
-;; marking
 (transient-mark-mode 1) ;; highlight active region - default in emacs 23.1+
 (global-set-key (kbd "M-C-t") 'transient-mark-mode)
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list)
+
+(set-cursor-color "red")
+(blink-cursor-mode 1)
+
 (iswitchb-mode 1)
 
-;; window splitting
-;; see http://en.wikipedia.org/wiki/Emacs_Lisp
-;; (defadvice split-window-vertically
-;;   ;; vertical split contains next (instead of current) buffer
-;;   (after my-window-splitting-advice first () activate)
-;;   (set-window-buffer (next-window) (other-buffer)))
+(global-set-key (kbd "<f5>") 'call-last-kbd-macro)
 
-;; (defadvice split-window-horizontally
-;;   ;; horizontal split contains next (instead of current) buffer
-;;   (after my-window-splitting-advice first () activate)
-;;   (set-window-buffer (next-window) (other-buffer)))
+(require 'desktop)
 
-;; imenu
-(setq imenu-auto-rescan 1)
-(global-set-key (kbd "C-x m") 'imenu) ;; overwrites default sequence for compose-mail
+(desktop-save-mode 1)
+(if (and desktop-save-mode (not (member "--no-desktop" command-line-args)))
+    (progn
+      (message "Enabling desktop auto-save")
+      (add-hook 'auto-save-hook 'desktop-save-in-desktop-dir)))
 
-;; shortcuts for keyboard macros
-;; see http://www.emacswiki.org/emacs/KeyboardMacros
-;; note that default bindings for macros are
-;; C-x ( – start defining a keyboard macro
-;; C-x ) – stop defining the keyboard macro
-;; C-x e – execute the keyboard macro
-(global-set-key '[(f5)]          'call-last-kbd-macro)
-(global-set-key '[(shift f5)]    'toggle-kbd-macro-recording-on)
-
-;; convenience function to (re)load this file
-(defun load-init ()
-  "Load ~/.emacs.d/init.el"
+(defun move-line-up ()
   (interactive)
-  (load "~/.emacs.d/init.el"))
-(global-set-key (kbd "M-C-i") 'load-init)
+  (transpose-lines 1)
+  (previous-line 2))
+(global-set-key (kbd "M-<up>") 'move-line-up)
+
+(defun move-line-down ()
+  (interactive)
+  (next-line 1)
+  (transpose-lines 1)
+  (previous-line 1))
+(global-set-key (kbd "M-<down>") 'move-line-down)
+
+(defun back-window ()
+  (interactive)
+  (other-window -1))
+(global-set-key (kbd "C-<right>") 'other-window)
+(global-set-key (kbd "C-<left>") 'back-window)
+
+(defun transpose-buffers (arg)
+  "Transpose the buffers shown in two windows."
+  (interactive "p")
+  (let ((selector (if (>= arg 0) 'next-window 'previous-window)))
+    (while (/= arg 0)
+      (let ((this-win (window-buffer))
+            (next-win (window-buffer (funcall selector))))
+        (set-window-buffer (selected-window) next-win)
+        (set-window-buffer (funcall selector) this-win)
+        (select-window (funcall selector)))
+      ;; (setq arg (if (plusp arg) (1- arg) (1+ arg)))
+      (setq arg (if (>= arg 0) (1- arg) (1+ arg)))
+      )))
+(global-set-key (kbd "C-x 4") 'transpose-buffers)
+
+(defun switch-buffers-between-frames ()
+  "switch-buffers-between-frames switches the buffers between the two last frames"
+  (interactive)
+  (let ((this-frame-buffer nil)
+        (other-frame-buffer nil))
+    (setq this-frame-buffer (car (frame-parameter nil 'buffer-list)))
+    (other-frame 1)
+    (setq other-frame-buffer (car (frame-parameter nil 'buffer-list)))
+    (switch-to-buffer this-frame-buffer)
+    (other-frame 1)
+    (switch-to-buffer other-frame-buffer)))
+(global-set-key (kbd "C-x 5") 'switch-buffers-between-frames)
+
+(setq-default ispell-program-name "aspell")
+(setq ispell-dictionary "en")
+
+(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+(setq flyspell-issue-welcome-flag nil) ;; fix error message
+
+(add-hook 'find-file-hooks
+          '(lambda ()
+             (if (equal "pico." (substring (buffer-name (current-buffer)) 0 5))
+                 ;; (message "** running hook for pine/alpine")
+                 (mail-mode))))
+
+(add-to-list 'load-path "~/.emacs.d/")
+
+(condition-case nil
+    (require 'tex-site)
+  (error (message "** could not load auctex")))
+
+(condition-case nil
+    (require 'ess-site "~/.emacs.d/ess/lisp/ess-site")
+  (error (message "** could not load local ESS in ~/.emacs.d; trying system ESS")
+         (condition-case nil
+             (require 'ess-site)
+           (error (message "** could not load system ESS")))
+         )
+  )
+
+(add-hook 'ess-mode-hook
+          '(lambda()
+             (message "Loading ess-mode hooks")
+             ;; leave my underscore key alone!
+             (setq ess-S-assign "_")
+             ;; (ess-toggle-underscore nil)
+             ;; set ESS indentation style
+             ;; choose from GNU, BSD, K&R, CLB, and C++
+             (ess-set-style 'GNU 'quiet)
+             (flyspell-mode)
+             )
+          )
+
+(add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
+(require 'org-install)
+
+(add-hook 'org-mode-hook
+          '(lambda ()
+             (message "Loading org-mode hooks")
+             (turn-on-font-lock)
+             (define-key org-mode-map (kbd "M-<right>") 'forward-word)
+             (define-key org-mode-map (kbd "M-<left>") 'backward-word)
+             ;; provides key mapping for the above; replaces default
+             ;; key bindings for org-promote/demote-subtree
+             (define-key org-mode-map (kbd "M-S-<right>") 'org-do-demote)
+             (define-key org-mode-map (kbd "M-S-<left>") 'org-do-promote)
+             (org-indent-mode)
+             (visual-line-mode)
+             ;; org-babel
+             (org-babel-do-load-languages
+              'org-babel-load-languages
+              '((R . t)
+                (latex . t)
+                (python . t)
+                (sh . t)
+                (sql . t)
+                (sqlite . t)
+                (pygment . t)
+                ))
+             )
+          )
+
+(custom-set-variables
+ '(org-confirm-babel-evaluate nil)
+ '(org-src-fontify-natively t))
+
+(setq org-agenda-files (list "~/Dropbox/notes/index.org"
+                             "~/Dropbox/fredross/notes/plans.org"
+                             ))
+
+(push '("\\.org\\'" . org-mode) auto-mode-alist)
+(push '("\\.org\\.txt\\'" . org-mode) auto-mode-alist)
+
+(condition-case nil
+    (progn
+      (require 'ob-pygment)
+      (setq org-pygment-path "/usr/local/bin/pygmentize"))
+  (error (message "** could not load ob-pygment")))
 
 (defun insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
@@ -133,388 +301,22 @@
 
 (global-set-key
  (kbd "C-x C-n") (lambda () (interactive)
-		   (org-add-entry "~/Dropbox/notes/index.org"
-				  "\n* <%Y-%m-%d %a>")))
+                   (org-add-entry "~/Dropbox/notes/index.org"
+                                  "\n* <%Y-%m-%d %a>")))
 
 (global-set-key
  (kbd "C-x C-m") (lambda () (interactive)
-		   (org-add-entry "~/Dropbox/notes/todo.org"
-				  "\n** TODO <%Y-%m-%d %a>")))
+                   (org-add-entry "~/Dropbox/notes/todo.org"
+                                  "\n** TODO <%Y-%m-%d %a>")))
 
-;; setup for emacs desktop
-;; http://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html
-;; http://www.emacswiki.org/emacs/DeskTop
-(require 'desktop)
-
-;; should save desktop periodically instead of just on exit, but not
-;; if emacs is started with --no-desktop
-(desktop-save-mode 1)
-(if (and desktop-save-mode (not (member "--no-desktop" command-line-args)))
-    (progn
-      (message "Enabling desktop auto-save")
-      (add-hook 'auto-save-hook 'desktop-save-in-desktop-dir)))
-
-;; TODO - instructions for using this?
-(defun toggle-kbd-macro-recording-on ()
-  "One-key keyboard macros: turn recording on."
-  (interactive)
-  (define-key
-    global-map
-    (events-to-keys (this-command-keys) t)
-    'toggle-kbd-macro-recording-off)
-  (start-kbd-macro nil))
-
-(defun toggle-kbd-macro-recording-off ()
-  "One-key keyboard macros: turn recording off."
-  (interactive)
-  (define-key
-    global-map
-    (events-to-keys (this-command-keys) t)
-    'toggle-kbd-macro-recording-on)
-  (end-kbd-macro))
-
-;; enhance marking in transient mark mode
-;; see http://www.masteringemacs.org/articles/2010/12/22/fixing-mark-commands-transient-mark-mode/
-;; (defun push-mark-no-activate ()
-;;   "Pushes `point' to `mark-ring' and does not activate the region
-;; Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
-;;   (interactive)
-;;   (push-mark (point) t nil)
-;;   (message "Pushed mark to ring"))
-;; (global-set-key (kbd "C-`") 'push-mark-no-activate)
-
-;; (defun jump-to-mark ()
-;;   "Jumps to the local mark, respecting the `mark-ring' order.
-;; This is the same as using \\[set-mark-command] with the prefix argument."
-;;   (interactive)
-;;   (set-mark-command 1))
-;; (global-set-key (kbd "M-`") 'jump-to-mark)
-
-;; (defun exchange-point-and-mark-no-activate ()
-;;   "Identical to exchange-point-and-mark but will not activate the region."
-;;   (interactive)
-;;   (exchange-point-and-mark)
-;;   (deactivate-mark nil))
-;; (define-key global-map [remap exchange-point-and-mark] 'exchange-point-and-mark-no-activate)
-
-;; not available before 23.1
-(global-set-key (kbd "<f6>") 'linum-mode)
-(global-set-key (kbd "<f7>") 'visual-line-mode)
-(global-set-key (kbd "<f8>") 'ns-toggle-fullscreen)
-
-;; platform and display-specific settings
-(defun fix-frame ()
-  (interactive)
-  (menu-bar-mode -1) ;; hide menu bar
-  (tool-bar-mode -1) ;; hide tool bar
-  (cond ((string= "ns" window-system) ;; cocoa
-	 (progn (message (format "** running %s windowing system" window-system))
-	 ;; key bindings for mac - see
-	 ;; http://stuff-things.net/2009/01/06/emacs-on-the-mac/
-	 ;; http://osx.iusethis.com/app/carbonemacspackage
-	 (set-keyboard-coding-system 'mac-roman)
-	 (setq mac-option-modifier 'meta)
-	 (setq mac-command-key-is-meta nil)
-	 (setq my-default-font "Bitstream Vera Sans Mono-14")
-	 ;; enable edit-with-emacs for chrome
-	 ;; (require 'edit-server)
-	 ;; (edit-server-start)
-	 ))
-	((string= "x" window-system)
-	 (progn 
-	   (message (format "** running %s windowing system" window-system))
-	   (setq my-default-font "Liberation Mono-10")
-	   ;; M-w or C-w copies to system clipboard
-	   ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
-	   (setq x-select-enable-clipboard t)
-	   ;; (set-scroll-bar-mode -1) ;; hide scroll bar
-	   (scroll-bar-mode -1) ;; hide scroll bar
-	   ))
-	(t
-	 (progn 
-	 (message "** running unknown windowing system")
-	 (setq my-default-font nil)
-	 (scroll-bar-mode -1) ;; hide scroll bar
-	 ))
-	)
-
-  (unless (equal window-system nil)
-    (message (format "** setting default font to %s" my-default-font))
-    (condition-case nil
-	(set-default-font my-default-font)
-      (error (message (format "** could not set to font %s" my-default-font))))
-    )
-  )
-
-(defun font-dejavu ()
-  ;; set default font to dejavu sans mono-11
-  (interactive)
-  (set-default-font "dejavu sans mono-11")
-  )
-
-;; apply above settings on startup
-(fix-frame)
-
-;; ...and when creating a new connection to emacs server via emacsclient
-;; TODO - not sure why this doesn't seem to take effect on frame creation
-(add-hook 'server-visit-hook 'fix-frame)
-
-;; Copies lines in the absence of an active region
-;; see http://emacs-fu.blogspot.com/2009/11/copying-lines-without-selecting-them.html
-;; (defadvice kill-ring-save (before slick-copy activate compile) "When
-;;   called interactively with no active region, copy a single line
-;;   instead."  (interactive (if mark-active (list (region-beginning)
-;;   (region-end)) (message "Copied line") (list
-;;   (line-beginning-position) (line-beginning-position 2)))))
-
-;; (defadvice kill-region (before slick-cut activate compile) "When
-;; called interactively with no active region, kill a single line
-;; instead."  (interactive (if mark-active (list (region-beginning)
-;; (region-end)) (list (line-beginning-position) (line-beginning-position
-;; 2)))))
-
-;; move lines up and down more easily
-;; see http://stackoverflow.com/questions/2423834/move-line-region-up-and-down-in-emacs
-;; move line up
-(defun move-line-up ()
-  (interactive)
-  (transpose-lines 1)
-  (previous-line 2))
-(global-set-key (kbd "M-<up>") 'move-line-up)
-
-;; move line down
-(defun move-line-down ()
-  (interactive)
-  (next-line 1)
-  (transpose-lines 1)
-  (previous-line 1))
-(global-set-key (kbd "M-<down>") 'move-line-down)
-
-(defun copy-buffer-file-name ()
-  "Add `buffer-file-name' to `kill-ring'"
-  (interactive)
-  (kill-new buffer-file-name t)
-)
-
-;; other-window bound by default to `C-x o`
-(defun back-window ()
-  (interactive)
-  (other-window -1))
-(global-set-key (kbd "C-<right>") 'other-window)
-(global-set-key (kbd "C-<left>") 'back-window)
-
-;; see http://www.emacswiki.org/emacs/SwitchingBuffers
-;; note that original code used function 'plusp', which
-;; seems not to be defined
-(defun transpose-buffers (arg)
-  "Transpose the buffers shown in two windows."
-  (interactive "p")
-  (let ((selector (if (>= arg 0) 'next-window 'previous-window)))
-    (while (/= arg 0)
-      (let ((this-win (window-buffer))
-            (next-win (window-buffer (funcall selector))))
-        (set-window-buffer (selected-window) next-win)
-        (set-window-buffer (funcall selector) this-win)
-        (select-window (funcall selector)))
-      ;; (setq arg (if (plusp arg) (1- arg) (1+ arg)))
-      (setq arg (if (>= arg 0) (1- arg) (1+ arg)))
-      )))
-(global-set-key (kbd "C-x 4") 'transpose-buffers)
-
-;; also from http://www.emacswiki.org/emacs/SwitchingBuffers
-(defun switch-buffers-between-frames ()
-  "switch-buffers-between-frames switches the buffers between the two last frames"
-  (interactive)
-  (let ((this-frame-buffer nil)
-	(other-frame-buffer nil))
-    (setq this-frame-buffer (car (frame-parameter nil 'buffer-list)))
-    (other-frame 1)
-    (setq other-frame-buffer (car (frame-parameter nil 'buffer-list)))
-    (switch-to-buffer this-frame-buffer)
-    (other-frame 1)
-    (switch-to-buffer other-frame-buffer)))
-(global-set-key (kbd "C-x 5") 'switch-buffers-between-frames)
-
-;; Default 'untabify converts a tab to equivalent number of
-;; spaces before deleting a single character.
-(setq backward-delete-char-untabify-method "all")
-(show-paren-mode 1)
-;; Start scrolling when 2 lines from top/bottom
-(setq scroll-margin 2)
-
-;; Require prompt before exit on C-x C-c
-;; http://www.dotemacs.de/dotfiles/KilianAFoth.emacs.html
-(global-set-key [(control x) (control c)]
-		(function
-		 (lambda () (interactive)
-		   (cond ((y-or-n-p "Quit? (save-buffers-kill-terminal) ")
-			  (save-buffers-kill-terminal))))))
-
-;; automatically refresh buffers from disk (default is every 5 sec)
-;; see http://www.cs.cmu.edu/cgi-bin/info2www?(emacs)Reverting
-;; note variable auto-revert-interval
-(global-auto-revert-mode 1)
-
-;; set Emacs Load Path
-;; (setq load-path (cons "/usr/local/share/emacs/site-lisp/" load-path))
-;; (setq load-path (cons "~/.emacs.d" load-path))
-
-;; (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/")
-(add-to-list 'load-path "~/.emacs.d/")
-
-;; word count - http://www.emacswiki.org/emacs/WordCount
-(condition-case nil
-    (require 'wc)
-  (error (message "** could not load wc")))
-
-;; load auctex
-(condition-case nil
-    (require 'tex-site)
-  (error (message "** could not load auctex")))
-
-;; load ess-mode
-;; to install locally:
-;; export ESS_VER=5.9.1
-;; cd ~/src && \
-;; wget http://ess.r-project.org/downloads/ess/ess-${ESS_VER}.tgz && \
-;; tar -xzvf ess-${ESS_VER}.tgz && \
-;; cp -r ess-${ESS_VER} ~/.emacs.d/ess
-(condition-case nil
-    (require 'ess-site "~/.emacs.d/ess/lisp/ess-site")
-  (error (message "** could not load local ESS in ~/.emacs.d; trying system ESS")
-	 (condition-case nil
-	     (require 'ess-site)
-	   (error (message "** could not load system ESS")))
-	 )
-  )
-
-;; clean up items defining function arguments - place cursor at the
-;; start of the line before '\item'
-(fset 'rd-clean-item
-   "\C-[[B\C-k\C-[[B\C-?\C-?\C-e\C-m\C-[[B\C-a")
-
-;; enable pylit
-;; http://www.emacswiki.org/cgi-bin/wiki/pylit.el
-;; As of 2007-02-09, the PyLit_ distribution does not include a script
-;; to invoke PyLit's functionality from the command line.  On any
-;; UNIX-like system, this can be easily worked around by creating a
-;; file ``pylit`` somewhere in your executable search path (the
-;; ``PATH``) with the following contents:
-;;
-;; #!/bin/sh
-;; exec env PYTHONPATH=/path/to/pylit/repository/src \
-;; python /path/to/pylit/repository/src.pylit.py "$@"
-;;
-;; or perhaps better for my setup:
-;; sudo cat > /usr/local/bin/pylit << EOF
-;; #!/bin/sh
-;; pylit.py "$@"
-
-;; EOF
-;; sudo chmod +x /usr/local/bin/pylit
-
-(condition-case nil
-    (require 'pylit)
-  (error (message "** could not load pylit")))
-
-;; org-mode
-
-;; # install most recent version:
-;; # http://orgmode.org/worg/org-faq.html#keeping-current-with-Org-mode-development
-;; # add as submodule:
-;; git submodule add git://orgmode.org/org-mode.git
-;; git submodule init
-;; git commit -a -m "add org-mode as submodule"
-;; git push
-;; # install it
-;; cd org-mode && make && make doc
-;; # refresh using:
-;; cd ~/.emacs.d/org-mode && git pull && make clean && make && make doc
-;; # install to a new computer:
-;; cd .emacs.d && git submodule init && git submodule update
-;; # ...then install as above
-
-(add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
-(require 'org-install)
-
-(global-set-key (kbd "C-c l") 'org-store-link)
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c b") 'org-iswitchb)
-
-(add-hook 'org-mode-hook
-	  '(lambda ()
-	     (message "Loading org-mode hooks")
-	     (turn-on-font-lock)
-	     (define-key org-mode-map (kbd "M-<right>") 'forward-word)
-	     (define-key org-mode-map (kbd "M-<left>") 'backward-word)
-	     ;; provides key mapping for the above; replaces default
-	     ;; key bindings for org-promote/demote-subtree
-	     (define-key org-mode-map (kbd "M-S-<right>") 'org-do-demote)
-	     (define-key org-mode-map (kbd "M-S-<left>") 'org-do-promote)
-	     ;; (icicle-mode)
-	     (org-indent-mode)
-	     (visual-line-mode)
-	     ;; org-babel
-	     (org-babel-do-load-languages
-	      'org-babel-load-languages
-	      '((R . t)
-		(latex . t)
-		(python . t)
-		(sh . t)
-		(sql . t)
-		(sqlite . t)
-		(pygment . t)
-		))
-	     )
-	  )
-
-(custom-set-variables
- '(org-confirm-babel-evaluate nil)
- '(org-src-fontify-natively t))
-
-;; (defun org-babel-format-block ()
-;;   ;; Format the current source block
-;;   (interactive)
-;;   (progn
-;;     (org-edit-special)
-;;     (mark-whole-buffer)
-;;     (indent-region)
-;;     (org-edit-src-exit)
-;;     ))
-
-;; set up pygments
-;; see http://oompiller.wordpress.com/2011/07/05/syntax-highlighting-using-pygment-in-org-mode/
-;; cd ~/.emacs.d; wget https://raw.github.com/jianingy/org-babel-plugins/master/ob-pygment.el
-;; requires '(setq org-babel-load-languages (quote (pygment . t)))' above
-(condition-case nil
-    (progn
-      (require 'ob-pygment)
-      (setq org-pygment-path "/usr/local/bin/pygmentize"))
-  (error (message "** could not load ob-pygment")))
-
-;; org-mode file suffix matching
-(push '("\\.org\\'" . org-mode) auto-mode-alist)
-(push '("\\.org\\.txt\\'" . org-mode) auto-mode-alist)
-
-(setq org-agenda-files (list "~/Dropbox/notes/index.org"
-			     "~/Dropbox/fredross/notes/plans.org"
-			     ))
-
-;; moinmoin-mode
-;;  wget -U Mozilla -O moinmoin-mode.el "http://moinmoin.wikiwikiweb.de/EmacsForMoinMoin/MoinMoinMode?action=raw"
-;; requires http://homepage1.nifty.com/bmonkey/emacs/elisp/screen-lines.el
 (condition-case nil
     (require 'moinmoin-mode)
   (error (message "** could not load moinmon-mode")))
 
-;; markdown-mode
-;;  see http://jblevins.org/projects/markdown-mode/
-;;  wget http://jblevins.org/git/markdown-mode.git/plain/markdown-mode.el
 (autoload 'markdown-mode "markdown-mode.el"
    "Major mode for editing Markdown files" t)
 (push '("\\.md" . markdown-mode) auto-mode-alist)
 
-;; chrome "edit with emacs"
 (condition-case nil
     (require 'edit-server)
   (error (message "** could not load edit-server (chrome edit with emacs)")))
@@ -523,116 +325,57 @@
     (edit-server-start)
   (error (message "** could not start edit-server (chrome edit with emacs)")))
 
-;;;;;;;; spelling ;;;;;;;
-;;use aspell instead of ispell
-;;this may need to remain the last line
-(setq-default ispell-program-name "aspell")
-(setq ispell-dictionary "en")
-
-;;enable on-the-fly spell-check
-(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
-(setq flyspell-issue-welcome-flag nil) ;; fix error message 
-
-;; support for emacs use within pine/alpine
-;; see http://snarfed.org/space/emacs%20font-lock%20faces%20for%20composing%20email
-(add-hook 'find-file-hooks
-	  '(lambda ()
-	     (if (equal "pico." (substring (buffer-name (current-buffer)) 0 5))
-		 ;; (message "** running hook for pine/alpine")
-		 (mail-mode)
-	       )
-	     )
-	  )
-
-
-;;;; python-mode configuration
-;; see http://jesselegg.com/archives/2010/02/25/emacs-python-programmers-part-1/
 (add-hook 'python-mode-hook
-	  '(lambda ()
-	     (message "Loading python-mode hooks")
-	     (setq indent-tabs-mode nil)
-	     (setq tab-width 4)
-	     (setq py-indent-offset tab-width)
-	     (setq py-smart-indentation t)
-	     (define-key python-mode-map "\C-m" 'newline-and-indent)
-	     ;; (hs-minor-mode)
-	     ;; add function index to menu bar
-	     ;; (imenu-add-menubar-index)
-	     ;; (python-mode-untabify)
-	     ;; (linum-mode)
-	     )
-	  )
+          '(lambda ()
+             (message "Loading python-mode hooks")
+             (setq indent-tabs-mode nil)
+             (setq tab-width 4)
+             (setq py-indent-offset tab-width)
+             (setq py-smart-indentation t)
+             (define-key python-mode-map "\C-m" 'newline-and-indent)
+             ;; (hs-minor-mode)
+             ;; add function index to menu bar
+             ;; (imenu-add-menubar-index)
+             ;; (python-mode-untabify)
+             ;; (linum-mode)
+             )
+          )
 
-;; python-mode file name mappings
 (push '("SConstruct" . python-mode) auto-mode-alist)
 (push '("SConscript" . python-mode) auto-mode-alist)
 (push '("*.cgi" . python-mode) auto-mode-alist)
 
-;; python-pylint
-;; https://gist.github.com/302848
-;; git submodule add git://gist.github.com/302848.git python-pylint
-;; invoke with M-x python-pylint RET
+(setq backward-delete-char-untabify-method "all")
+
 (add-to-list 'load-path "~/.emacs.d/python-pylint")
 (autoload 'python-pylint "~/.emacs.d/python-pylint")
 (autoload 'pylint "~/.emacs.d/python-pylint")
 
-;; ess-mode hooks
-(add-hook 'ess-mode-hook
-	  '(lambda()
-	     (message "Loading ess-mode hooks")
-	     ;; leave my underscore key alone!
-	     (setq ess-S-assign "_")
-	     ;; (ess-toggle-underscore nil)
-	     ;; set ESS indentation style
-	     ;; choose from GNU, BSD, K&R, CLB, and C++
-	     (ess-set-style 'GNU 'quiet)
-	     (flyspell-mode)
-	     )
-	  )
-
-;; text mode hooks
 (add-hook 'text-mode-hook
-	  '(lambda ()
-	     ;; (longlines-mode)
-	     (flyspell-mode)
-	     )
-	  )
+          '(lambda ()
+             ;; (longlines-mode)
+             (flyspell-mode)
+             )
+          )
 
-;; tex-mode hooks
-;; (add-hook 'tex-mode-hook
-;; 	  '(lambda ()
-;; 	     (flyspell-mode)
-;; 	     (imenu-add-menubar-index) ;; add function index to menu bar
-;; 	     )
-;; 	  )
-
-;; rst-mode hooks
 (add-hook 'rst-mode-hook
-	  '(lambda ()
-	     (message "Loading rst-mode hooks")
-	     (flyspell-mode)
-	     (define-key rst-mode-map (kbd "C-c C-a") 'rst-adjust)
-	     )
-	  )
+          '(lambda ()
+             (message "Loading rst-mode hooks")
+             (flyspell-mode)
+             (define-key rst-mode-map (kbd "C-c C-a") 'rst-adjust)
+             )
+          )
 
-;; pylit-mode hooks
-(add-hook 'pylit-mode-hook
-	  '(lambda ()
-	     (message "Loading pylit-mode hooks")
-	     (flyspell-mode)
-	     )
-	  )
-
-;; remote file editing using tramp
-;; see http://www.gnu.org/software/tramp/
 (condition-case nil
     (require 'tramp)
   (setq tramp-default-method "scp")
   (error (message "** could not load tramp")))
 
-;; ibuffer
-;; see http://emacs-fu.blogspot.com/2010/02/dealing-with-many-buffers-ibuffer.html
 (require 'ibuffer)
+(global-set-key (kbd "C-x C-g") 'ibuffer)
+(global-set-key (kbd "C-x M-g") 'ibuffer-switch-to-saved-filter-groups)
+(setq ibuffer-show-empty-filter-groups nil)
+
 (setq ibuffer-config-file "~/.emacs.d/ibuffer-config.el")
 
 (defun ibuffer-load-config ()
@@ -640,28 +383,13 @@
   (interactive)
   (condition-case nil
       (progn
-	(message (format "** loading ibuffer config in %s" ibuffer-config-file))
-	(load ibuffer-config-file)
-	)
+        (message (format "** loading ibuffer config in %s" ibuffer-config-file))
+        (load ibuffer-config-file)
+        )
     (error (message (format "** could not load %s" ibuffer-config-file))))
   )
 
-;; load the config file on startup
 (ibuffer-load-config)
-
-(defun ibuffer-reload ()
-  ;; kill ibuffer, reload the config file, and return to ibuffer
-  (interactive)
-  (ibuffer)
-  (kill-buffer)
-  (ibuffer-load-config)
-  (ibuffer)
-  )
-
-(global-set-key (kbd "C-x C-g") 'ibuffer)
-(global-set-key (kbd "C-x M-g") 'ibuffer-switch-to-saved-filter-groups)
-
-(setq ibuffer-show-empty-filter-groups nil)
 
 (defun ibuffer-show-all-filter-groups ()
   "Show all filter groups"
@@ -673,40 +401,45 @@
   "Hide all filter groups"
   (interactive)
   (setq ibuffer-hidden-filter-groups
-	(delete-dups
-	 (append ibuffer-hidden-filter-groups
-		 (mapcar 'car (ibuffer-generate-filter-groups
-			       (ibuffer-current-state-list)
-			       (not ibuffer-show-empty-filter-groups)
-			       t)))))
+        (delete-dups
+         (append ibuffer-hidden-filter-groups
+                 (mapcar 'car (ibuffer-generate-filter-groups
+                               (ibuffer-current-state-list)
+                               (not ibuffer-show-empty-filter-groups)
+                               t)))))
   (ibuffer-update nil t))
 
-;; from http://www.emacswiki.org/emacs/IbufferMode
-(defun my-ibuffer-sort-hook ()
+(defun ibuffer-reload ()
+  ;; kill ibuffer, reload the config file, and return to ibuffer
+  (interactive)
+  (ibuffer)
+  (kill-buffer)
+  (ibuffer-load-config)
+  (ibuffer)
+  )
 
+(defun my-ibuffer-sort-hook ()
   ;; add another sorting method for ibuffer (allow the grouping of
   ;; filenames and dired buffers
-
   (define-ibuffer-sorter filename-or-dired
     "Sort the buffers by their pathname."
     (:description "filenames plus dired")
     (string-lessp
      (with-current-buffer (car a)
        (or buffer-file-name
-	   (if (eq major-mode 'dired-mode)
-	       (expand-file-name dired-directory))
-	   ;; so that all non pathnames are at the end
-	   "~"))
+           (if (eq major-mode 'dired-mode)
+               (expand-file-name dired-directory))
+           ;; so that all non pathnames are at the end
+           "~"))
      (with-current-buffer (car b)
        (or buffer-file-name
-	   (if (eq major-mode 'dired-mode)
-	       (expand-file-name dired-directory))
-	   ;; so that all non pathnames are at the end
-	   "~"))))
+           (if (eq major-mode 'dired-mode)
+               (expand-file-name dired-directory))
+           ;; so that all non pathnames are at the end
+           "~"))))
   (define-key ibuffer-mode-map (kbd "s p")     'ibuffer-do-sort-by-filename-or-dired)
   )
 
-;; from http://curiousprogrammer.wordpress.com/2009/04/02/ibuffer/
 (defun ibuffer-ediff-marked-buffers ()
   "Compare two marked buffers using ediff"
   (interactive)
@@ -717,78 +450,41 @@
                      len (if (= len 1) " has" "s have"))))
     (ediff-buffers (car marked-buffers) (cadr marked-buffers))))
 
-
 (add-hook 'ibuffer-mode-hook
-	  '(lambda ()
-	     (ibuffer-auto-mode 1) ;; minor mode that keeps the buffer list up to date
-	     (ibuffer-switch-to-saved-filter-groups "default")
-	     (define-key ibuffer-mode-map (kbd "a") 'ibuffer-show-all-filter-groups)
-	     (define-key ibuffer-mode-map (kbd "z") 'ibuffer-hide-all-filter-groups)
-	     (define-key ibuffer-mode-map (kbd "e") 'ibuffer-ediff-marked-buffers)
-	     (my-ibuffer-sort-hook)
-	     )
-	  )
+          '(lambda ()
+             (ibuffer-auto-mode 1) ;; minor mode that keeps the buffer list up to date
+             (ibuffer-switch-to-saved-filter-groups "default")
+             (define-key ibuffer-mode-map (kbd "a") 'ibuffer-show-all-filter-groups)
+             (define-key ibuffer-mode-map (kbd "z") 'ibuffer-hide-all-filter-groups)
+             (define-key ibuffer-mode-map (kbd "e") 'ibuffer-ediff-marked-buffers)
+             (my-ibuffer-sort-hook)
+             )
+          )
 
-;; icicles
-;; http://www.emacswiki.org/emacs/Icicles
-;; http://www.emacswiki.org/emacs/Icicles_-_Libraries
-;; wget http://www.emacswiki.org/emacs/download/get-icicles.sh
-;; sh get-icicles.sh
-
-;; (add-to-list 'load-path "~/.emacs.d/icicles")
-;; (condition-case nil
-;;     (require 'icicles)  
-;;   (error (message "** could not load icicles")))
-
-;; (condition-case nil
-;;     (icicle-mode 1)
-;;   (error (message "** could not start icicles")))
-
-;; uniquify - http://www.emacswiki.org/emacs/uniquify
 (require 'uniquify)
 
-;; ido mode
-;; http://www.masteringemacs.org/articles/2010/10/10/introduction-to-ido-mode/
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (setq ido-use-virtual-buffers t)
 (ido-mode 1)
 
-;; use recentf with ido - see http://wikemacs.org/wiki/Recentf
 (recentf-mode 1)
-
 (defun ido-choose-from-recentf ()
   "Use ido to select a recently visited file from the `recentf-list'"
   (interactive)
   (find-file (ido-completing-read "Open file: " recentf-list nil t)))
 (global-set-key (kbd "C-c f") 'ido-choose-from-recentf)
 
-;; keyboard macro copy-and-comment, bound to CM-;
-(fset 'copy-and-comment
-   "\367\C-x\C-x\273")
-(global-set-key (kbd "M-C-;") 'copy-and-comment)
-
-;; define get-buffer-file-name
-(fset 'get-buffer-file-name
-   "\C-hvbuffer-file-name\C-m")
-
-;; from http://defindit.com/readme_files/emacs_hints_tricks.html
-(defun unfill-paragraph ()
-  (interactive)
-  (let ((fill-column (point-max)))
-  (fill-paragraph nil)))
-(global-set-key (kbd "M-C-q") 'unfill-paragraph)
-
-;; git support (included in emacs 22.2+)
 (require 'vc-git)
 
-;; sql-sqlite
+(add-to-list 'load-path "~/.emacs.d/magit")
+(condition-case nil
+    (require 'magit)
+  (error (message "** could not load magit")))
+(global-set-key (kbd "C-c m") 'magit-status)
+
 (setq sql-sqlite-program "sqlite3")
 
-;; sql-related enhancements
-;; http://atomized.org/2008/10/enhancing-emacs%E2%80%99-sql-mode/
-;; support for preset connections
-;; TODO: consider using Tom's setup: https://uwmc-labmed.beanstalkapp.com/developers/browse/personal/twe/trunk/EMACS/sql.el
 (setq sql-connection-alist
       '((filemaker-sps
          (sql-product 'mysql)
@@ -811,7 +507,6 @@
 ;; buffer naming
 (defun sql-make-smart-buffer-name ()
   "Return a string that can be used to rename a SQLi buffer.
-
 This is used to set `sql-alternate-buffer-name' within
 `sql-interactive-mode'."
   (or (and (boundp 'sql-name) sql-name)
@@ -827,55 +522,39 @@ This is used to set `sql-alternate-buffer-name' within
             (setq sql-alternate-buffer-name (sql-make-smart-buffer-name))
             (sql-rename-buffer)))
 
-;; http://www.emacswiki.org/emacs/EasyPG
 (require 'epa-file)
 ;; (epa-file-enable)
 ;; suppress graphical passphrase prompt
 (setenv "GPG_AGENT_INFO" nil)
 
-;; rainbow-delimiters
-;; http://www.emacswiki.org/emacs/RainbowDelimiters
-;; setup:
-;; cd ~/.emacs.d
-;; wget http://www.emacswiki.org/emacs/download/rainbow-delimiters.el
-;; emacs -batch -f batch-byte-compile rainbow-delimiters.el
-;; or M-x byte-compile-file <location of rainbow-delimiters.el>
-;; M-x rainbow-delimiters-mode
 (condition-case nil
     (require 'rainbow-delimiters)
   (error (message "** could not load rainbow-delimiters")))
 
-;; gist.el
-;; https://github.com/defunkt/gist.el
-;; added as a submodule:
-;; % git submodule add https://github.com/defunkt/gist.el.git
-;; now, to clone .emacs.d elsewhere:
-;; % git clone git@github.com:nhoffman/.emacs.d.git
-;; % cd .emacs.d
-;; % git submodule init && git submodule update
-(condition-case nil
-    (require 'gist "~/.emacs.d/gist.el/gist.el")
-  (error (message "** could not load gist")))
+(defun copy-buffer-file-name ()
+  "Add `buffer-file-name' to `kill-ring'"
+  (interactive)
+  (kill-new buffer-file-name t)
+)
 
-;; magit
-;; http://philjackson.github.com/magit/
-;; cd ~/.emacs.d
-;; git submodule add https://github.com/magit/magit.git
-;; git commit -a -m "add magit as submodule"
-;; cd magit && make
-(add-to-list 'load-path "~/.emacs.d/magit")
-(condition-case nil
-    (require 'magit)
-  (error (message "** could not load magit")))
-(global-set-key (kbd "C-c m") 'magit-status)
+(fset 'copy-and-comment
+   "\367\C-x\C-x\273")
+(global-set-key (kbd "M-C-;") 'copy-and-comment)
 
-;; emacsclient
-(setq ns-pop-up-frames nil) ;; buffers opened from command line don't create new frame
+(fset 'get-buffer-file-name
+   "\C-hvbuffer-file-name\C-m")
+
+(defun unfill-paragraph ()
+  (interactive)
+  (let ((fill-column (point-max)))
+  (fill-paragraph nil)))
+(global-set-key (kbd "M-C-q") 'unfill-paragraph)
+
+(setq ns-pop-up-frames nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; content below was added by emacs ;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -892,4 +571,3 @@ This is used to set `sql-alternate-buffer-name' within
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
-

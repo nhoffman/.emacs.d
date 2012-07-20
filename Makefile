@@ -2,28 +2,27 @@ CWD=$(shell pwd)
 
 all:
 
-extras: ess icicles
+submodules: ess magit
 
-install: extras link xmodmap
+magit: FORCE
+	cd magit; \
+	git pull; \
+	make clean; \
+	make; \
+	cd ${CWD}; \
+	git add magit; \
+	git commit -m "update magit"
 
-ess:
-	bin/get-ess.sh
-
-icicles:
-	bin/get-icicles.sh
-
-link:
-	rm -rf ~/.emacs.d && ln -sf ${CWD} ~/.emacs.d
+ess: FORCE
+	cd ess; \
+	git pull; \
+	make clean; \
+	make ; \
+	cd ${CWD}; \
+	git add ess; \
+	git commit -m "update ess"
 
 xmodmap:
 	cp .Xmodmap ${HOME}
 
-snapshot:
-	cd .. && \
-	tar -czvf nh-dotemacs.tgz \
-		.emacs.d/*.el \
-		.emacs.d/README.rst \
-		.emacs.d/Makefile \
-		.emacs.d/.Xmodmap && \
-	cd ${CWD}
-
+FORCE:
