@@ -6,7 +6,7 @@ submodules: ess magit
 
 magit: FORCE
 	cd magit; \
-	git pull; \
+	git pull origin master; \
 	make clean; \
 	make; \
 	cd ${CWD}; \
@@ -15,7 +15,7 @@ magit: FORCE
 
 ess: FORCE
 	cd ess; \
-	git pull; \
+	git pull origin master; \
 	make clean; \
 	make ; \
 	cd ${CWD}; \
