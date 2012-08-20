@@ -120,6 +120,35 @@
 	       ("opiates"
 		(filename . "/opiates/"))
 
+	       ;; ungapatchka
+	       ("ungapatchka-scripts"
+		(filename . "/ungapatchka/ungapatchka/scripts/"))
+	       ("ungapatchka-subcommands"
+		(filename . "/ungapatchka/ungapatchka/subcommands/"))
+	       ("ungapatchka-package"
+		(filename . "/ungapatchka/ungapatchka/"))
+	       ("ungapatchka-docs"
+		(filename . "/ungapatchka/docs/"))
+	       ("ungapatchka-tests"
+		(filename . "/ungapatchka/tests/"))
+	       ("ungapatchka"
+		(filename . "/ungapatchka/"))
+
+	       ;; ion_pilot
+	       ("ion_pilot-scripts"
+		(filename . "/ion_pilot/ion_tools/scripts/"))
+	       ("ion_pilot-subcommands"
+		(filename . "/ion_pilot/ion_tools/subcommands/"))
+	       ("ion_pilot-package"
+		(filename . "/ion_pilot/ion_tools/"))
+	       ("ion_pilot-docs"
+		(filename . "/ion_pilot/docs/"))
+	       ("ion_pilot-tests"
+		(filename . "/ion_pilot/tests/"))
+	       ("ion_pilot"
+		(filename . "/ion_pilot/"))
+
+
 	       ("clinlabr"
 	      	(filename . "/clinlabr/"))
 	   
