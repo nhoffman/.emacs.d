@@ -31,10 +31,10 @@
 (global-set-key (kbd "M-C-i") 'init-load)
 
 (defun init-compile ()
-  "Tangle and export html"
+  "Tangle init.org and export html"
   (interactive)
   (org-babel-tangle)
-  (org-export-as-html-and-open 3)
+  (org-export-as-html 3)
   (copy-file "init.html" "../.emacs.d.ghpages/index.html" t)
   )
 
@@ -71,6 +71,8 @@
                    (cond ((y-or-n-p "Quit? (save-buffers-kill-terminal) ")
                           (save-buffers-kill-terminal))))))
 
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 (defun fix-frame ()
   (interactive)
   (menu-bar-mode -1) ;; hide menu bar
@@ -89,7 +91,7 @@
          ;; (edit-server-start)
          ))
         ((string= "x" window-system)
-         (progn 
+         (progn
            (message (format "** running %s windowing system" window-system))
            (setq my-default-font "Liberation Mono-10")
            ;; M-w or C-w copies to system clipboard
@@ -99,7 +101,7 @@
            (scroll-bar-mode -1) ;; hide scroll bar
            ))
         (t
-         (progn 
+         (progn
          (message "** running unknown windowing system")
          (setq my-default-font nil)
          (scroll-bar-mode -1) ;; hide scroll bar
@@ -210,6 +212,10 @@
                  (mail-mode))))
 
 (add-to-list 'load-path "~/.emacs.d/")
+
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
+                          ("gnu" . "http://elpa.gnu.org/packages/")
+                          ("marmalade" . "http://marmalade-repo.org/packages/")))
 
 (condition-case nil
     (require 'tex-site)
