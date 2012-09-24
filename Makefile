@@ -4,9 +4,18 @@ all:
 
 submodules: ess magit
 
+org-mode: FORCE
+	cd org-mode; \
+	git pull origin master; \
+	make clean; \
+	make; \
+	cd ${CWD}; \
+	git add org-mode; \
+	git commit -m "update org-mode"
+
 magit: FORCE
 	cd magit; \
-	git pull; \
+	git pull origin master; \
 	make clean; \
 	make; \
 	cd ${CWD}; \
@@ -15,7 +24,7 @@ magit: FORCE
 
 ess: FORCE
 	cd ess; \
-	git pull; \
+	git pull origin master; \
 	make clean; \
 	make ; \
 	cd ${CWD}; \
