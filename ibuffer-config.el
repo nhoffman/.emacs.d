@@ -1,7 +1,7 @@
 ;; switch between groups using ibuffer-switch-to-saved-filter-groups
 (setq ibuffer-saved-filter-groups
       (quote (
-	      
+
 	      ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	      ;; (mostly) organized by directory
 	      ("default"
@@ -13,7 +13,7 @@
 	       ;; notes
 	       ("notes"
 	      	(filename . "Dropbox/notes/"))
-	       
+
 	       ;; qdashboard
 	       ("qdash-config"
 	      	(filename . "/qdashboard/config"))
@@ -66,14 +66,14 @@
 	      	(filename . "/romperroom/tests"))
 	       ("romperroom"
 	      	(filename . "/romperroom"))
-	       
+
 	       ;; Seq
 	       ("Seq-tests"
 	      	(filename . "Seq/tests"))
 	       ("Seq-taxonomy"
 	      	(filename . "Seq/taxonomy"))
 	       ("Seq-scripts"
-	      	(filename . "Seq/scripts"))	       
+	      	(filename . "Seq/scripts"))
 	       ("Seq"
 	      	(filename . "Seq/"))
 
@@ -120,9 +120,38 @@
 	       ("opiates"
 		(filename . "/opiates/"))
 
+	       ;; ungapatchka
+	       ("ungapatchka-scripts"
+		(filename . "/ungapatchka/ungapatchka/scripts/"))
+	       ("ungapatchka-subcommands"
+		(filename . "/ungapatchka/ungapatchka/subcommands/"))
+	       ("ungapatchka-package"
+		(filename . "/ungapatchka/ungapatchka/"))
+	       ("ungapatchka-docs"
+		(filename . "/ungapatchka/docs/"))
+	       ("ungapatchka-tests"
+		(filename . "/ungapatchka/tests/"))
+	       ("ungapatchka"
+		(filename . "/ungapatchka/"))
+
+	       ;; ion_pilot
+	       ("ion_pilot-scripts"
+		(filename . "/ion_pilot/ion_tools/scripts/"))
+	       ("ion_pilot-subcommands"
+		(filename . "/ion_pilot/ion_tools/subcommands/"))
+	       ("ion_pilot-package"
+		(filename . "/ion_pilot/ion_tools/"))
+	       ("ion_pilot-docs"
+		(filename . "/ion_pilot/docs/"))
+	       ("ion_pilot-tests"
+		(filename . "/ion_pilot/tests/"))
+	       ("ion_pilot"
+		(filename . "/ion_pilot/"))
+
+
 	       ("clinlabr"
 	      	(filename . "/clinlabr/"))
-	   
+
 	       ;; zsh
 	       ("zsh"
 	      	(filename . "/zsh/"))
@@ -141,8 +170,8 @@
 	       ("alnvu-tests" (filename . "/alnvu/tests/"))
 	       ("alnvu-testfiles" (filename . "/alnvu/testfiles/"))
 	       ("alnvu" (filename . "/alnvu/"))
-	       
-	       ;; moinlm 
+
+	       ;; moinlm
 	       ("moinlm-config"
 	      	(filename . "moinlm/config"))
 	       ("moinlm-plugin-action"
@@ -238,7 +267,7 @@
 
 	       ("refset-top"
 	      	(filename . "/refset/"))
-	       
+
 	       ;; pplacer-pipeline
 	       ("pp-pipeline-config"
 	      	(filename . "/micro_processing/pplacer_pipeline/config/"))
@@ -246,7 +275,7 @@
 	      	(filename . "/micro_processing/pplacer_pipeline/bin/"))
 	       ("pp-pipeline"
 	      	(filename . "/micro_processing/pplacer_pipeline/"))
-	       
+
 	       ;; pipelines
 	       ("vaginal-analysis-p5-tiny"
 	      	(filename . "/vaginal_analysis/plate5_tiny"))
@@ -285,6 +314,13 @@
 
 	       ("lampe_pipeline"
 	      	(filename . "/micro_processing/lampe_pipeline/"))
+
+	       ("fredricks-default"
+	      	(filename . "/micro_processing/fredricks/default/"))
+	       ("fredricks-hybrid2"
+	      	(filename . "/micro_processing/fredricks/hybrid2/"))
+	       ("fredricks"
+	      	(filename . "/micro_processing/fredricks/"))
 
 	       ;; lampe shared space
 	       ("lampe_shared"
@@ -327,7 +363,7 @@
 	       ("20110505_plate5_aligns" (filename . "MatsenGrp/working/nhoffman/20110505_plate5_aligns"))
 	       ("20111003_clostridiales" (filename . "MatsenGrp/working/nhoffman/20111003_clostridiales"))
 	       ("iontorrent" (filename . "MatsenGrp/working/nhoffman/iontorrent"))
-	       
+
 	       ;; ~validate
 	       ("~validate-subcommands" (filename . "nhoffman/working/validate/validate/subcommands/"))
 	       ("~validate-package" (filename . "nhoffman/working/validate/validate/"))
@@ -341,7 +377,7 @@
 	       ("validate-pub-experiments" (filename . "MatsenGrp/micro_processing/validate/experiments/"))
 	       ("validate-pub-bin" (filename . "MatsenGrp/micro_processing/validate/bin/"))
 	       ("validate-pub" (filename . "MatsenGrp/micro_processing/validate/"))
-	       
+
 	       ;; pplacer_pipeline
 	       ("pppipeline-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/"))
 	       ("pppipeline-lampe-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/config/lampe/"))
@@ -350,10 +386,10 @@
 
 	       ;; anythin not otherwise caught
 	       ("MatsenGrp/working/nhoffman" (filename . "MatsenGrp/working/nhoffman"))
-	       
+
 	       ("MatsenGrp/working/matsen" (filename . "MatsenGrp/working/matsen"))
 	       ("matsengrp-working" (filename . "/MatsenGrp/working/"))
-	       
+
 	       ;; nhoffman/working
 	       ("~validate-subcommands" (filename . "/nhoffman/working/validate/validate/subcommands/"))
 	       ("~validate-package" (filename . "/nhoffman/working/validate/validate/"))
@@ -365,7 +401,7 @@
 	       ;; catch anything else in bvdiversity
 	       ("bvdiversity"
 	      	(filename . "bvdiversity/"))
-	       
+
 	       ;; pplacer
 	       ("pplacer"
 	      	(filename . "src/pplacer/"))
@@ -411,12 +447,12 @@
 	       ("teaching"
 	      	(filename . "/teaching/"))
 
-	       ;; labmed projects 
+	       ;; labmed projects
 	       ("deltas"
 	      	(filename . "/deltas/"))
 	       ("papers"
 	      	(filename . "/papers/"))
-	  
+
 	       ;; stuff in Dropbox
 	       ("dropbox-career"
 	      	(filename . "Dropbox/career"))
@@ -434,7 +470,7 @@
 	      	(filename . "presentations/090225_lm510_16sClassification"))
 	       ("201008_tenMinutesOfResearch"
 	      	(filename . "presentations/2010_tenMinutesOfResearch"))
-	       
+
 	       ;; projects under p_acnes
 	       ("p_acnes"
 	      	(filename . "p_acnes/"))
@@ -454,9 +490,9 @@
 	      	(mode . python-mode))
 
 	       ("emacs-lisp"
-	      	(mode . emacs-lisp-mode))	       
+	      	(mode . emacs-lisp-mode))
 	       )
-	      
+
 	      ;; ;;;;;;;;;;;;;;;;;
 	      ;; organize entirely by mode
 	      ("mode"
@@ -472,6 +508,6 @@
 	       ("emacs-lisp"
 		(mode . emacs-lisp-mode))
 	       )
-	      
+
 	      )
 	     ))

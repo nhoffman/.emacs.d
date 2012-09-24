@@ -5,17 +5,17 @@
 #+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+STYLE: <link rel="stylesheet" type="text/css" href="./worg.css" />
 #+BIND: org-export-html-postamble nil
-#+BABEL: :results output :exports both 
+#+BABEL: :results output :exports both
 
 - The source for this page is available at https://github.com/nhoffman/.emacs.d
-- The html-exported version of this page is hosted at http://nhoffman.github.com/.emacs.d 
+- The html-exported version of this page is hosted at http://nhoffman.github.com/.emacs.d
 
-#+BEGIN_SRC elisp :tangle init.el 
+#+BEGIN_SRC elisp :tangle init.el
 (message "loading ~/.emacs.d/init.el")
 #+END_SRC
 
 * License
-#+BEGIN_SRC elisp :tangle init.el 
+#+BEGIN_SRC elisp :tangle init.el
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
@@ -35,7 +35,7 @@
 | C-c i     | markup paragraph at point as a code block |
 | C-c C-v t | tangle this file                          |
 
-#+BEGIN_SRC elisp :tangle init.el 
+#+BEGIN_SRC elisp :tangle init.el
   (setq init-file-name "init.el")
   (defun init-insert-code-block ()
     ;; Insert a code block that will be tangled into `init-file-name`
@@ -61,10 +61,10 @@ Tangle and export html
 
 #+BEGIN_SRC elisp :tangle init.el
   (defun init-compile ()
-    "Tangle and export html"
+    "Tangle init.org and export html"
     (interactive)
     (org-babel-tangle)
-    (org-export-as-html-and-open 3)
+    (org-export-as-html 3)
     (copy-file "init.html" "../.emacs.d.ghpages/index.html" t)
     )
 #+END_SRC
@@ -128,9 +128,9 @@ see http://www.cs.cmu.edu/cgi-bin/info2www?(emacs)Reverting
 (global-auto-revert-mode 1)
 #+END_SRC
 
-* Exiting
+* Exiting and saving
 
-- Require prompt before exit on C-x C-c
+Require prompt before exit on C-x C-c
 - http://www.dotemacs.de/dotfiles/KilianAFoth.emacs.html
 
 #+BEGIN_SRC elisp :tangle init.el
@@ -139,6 +139,12 @@ see http://www.cs.cmu.edu/cgi-bin/info2www?(emacs)Reverting
 		 (lambda () (interactive)
 		   (cond ((y-or-n-p "Quit? (save-buffers-kill-terminal) ")
 			  (save-buffers-kill-terminal))))))
+#+END_SRC
+
+Delete trailing whitespace before save.
+
+#+BEGIN_SRC elisp :tangle init.el
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
 * Platform and display-specific settings
@@ -163,7 +169,7 @@ Detect platform and window system and set up fonts accordingly
 	 ;; (edit-server-start)
 	 ))
 	((string= "x" window-system)
-	 (progn 
+	 (progn
 	   (message (format "** running %s windowing system" window-system))
 	   (setq my-default-font "Liberation Mono-10")
 	   ;; M-w or C-w copies to system clipboard
@@ -173,7 +179,7 @@ Detect platform and window system and set up fonts accordingly
 	   (scroll-bar-mode -1) ;; hide scroll bar
 	   ))
 	(t
-	 (progn 
+	 (progn
 	 (message "** running unknown windowing system")
 	 (setq my-default-font nil)
 	 (scroll-bar-mode -1) ;; hide scroll bar
@@ -210,7 +216,7 @@ TODO - not sure why this doesn't seem to take effect on frame creation
 (add-hook 'server-visit-hook 'fix-frame)
 #+END_SRC
 
-* Scrolling 
+* Scrolling
 
 See http://www.emacswiki.org/emacs/SmoothScrolling
 
@@ -263,7 +269,7 @@ Some additional keyboard macro bindings.
 
 References:
 - http://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html
-- http://www.emacswiki.org/emacs/DeskTop 
+- http://www.emacswiki.org/emacs/DeskTop
 
 #+BEGIN_SRC elisp :tangle init.el
 (require 'desktop)
@@ -373,7 +379,7 @@ Enable on-the-fly spell-check
 
 #+BEGIN_SRC elisp :tangle init.el
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
-(setq flyspell-issue-welcome-flag nil) ;; fix error message 
+(setq flyspell-issue-welcome-flag nil) ;; fix error message
 #+END_SRC
 
 * pine/alpine
@@ -392,6 +398,18 @@ http://snarfed.org/space/emacs%20font-lock%20faces%20for%20composing%20email
 
 #+BEGIN_SRC elisp :tangle init.el
 (add-to-list 'load-path "~/.emacs.d/")
+#+END_SRC
+
+* ELPA
+
+Identify and install anew package using =M-x package-list-packages=
+
+Use all available package repositories (GNU, ELPA and Marmalade).
+
+#+BEGIN_SRC elisp :tangle init.el
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
+                          ("gnu" . "http://elpa.gnu.org/packages/")
+                          ("marmalade" . "http://marmalade-repo.org/packages/")))
 #+END_SRC
 
 * Auctex
@@ -863,7 +881,7 @@ cd magit && make
 
 - see http://atomized.org/2008/10/enhancing-emacs%E2%80%99-sql-mode/
 
-Use sqlite3 
+Use sqlite3
 
 #+BEGIN_SRC elisp :tangle init.el
 (setq sql-sqlite-program "sqlite3")
@@ -1009,9 +1027,3 @@ Buffers opened from command line don't create new frame
   ;; If there is more than one, they won't work right.
  )
 #+END_SRC
-
-
-
-
-
-
