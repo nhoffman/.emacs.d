@@ -479,6 +479,13 @@
 	       (".emacs.d"
 	      	(filename . "/.emacs.d/"))
 
+	       ;; inferior R processes
+	       ;; ("R processes"
+	       ;; 	(filename . "^\\.R"))
+
+	       ("R help"
+		(name . "\*help"))
+
 	       ;; catch remaining files by mode
 	       ("R-files"
 	      	(or
@@ -491,6 +498,10 @@
 
 	       ("emacs-lisp"
 	      	(mode . emacs-lisp-mode))
+
+	       ("Dired"
+	      	(mode . dired-mode))
+
 	       )
 
 	      ;; ;;;;;;;;;;;;;;;;;
