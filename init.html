@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="title" content="init.el for Noah Hoffman"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-09-22T15:04-0700"/>
+<meta name="generated" content="2012-11-15T17:37-0800"/>
 <meta name="author" content="Noah Hoffman"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -62,6 +62,30 @@
 </style>
 <link rel="stylesheet" type="text/css" href="./worg.css" />
 <script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012  Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
  {
@@ -106,7 +130,7 @@
 
 
 
-<pre class="src src-elisp">(message <span style="color: #00cd00;">"loading ~/.emacs.d/init.el"</span>)
+<pre class="src src-elisp">(message <span style="color: #8b2252;">"loading ~/.emacs.d/init.el"</span>)
 </pre>
 
 
@@ -183,18 +207,18 @@
 
 
 
-<pre class="src src-elisp"><span style="color: #cd0000;">;; </span><span style="color: #cd0000;">This program is free software: you can redistribute it and/or modify</span>
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">it under the terms of the GNU General Public License as published by</span>
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">the Free Software Foundation, either version 3 of the License, or</span>
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(at your option) any later version.</span>
+<pre class="src src-elisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">This program is free software: you can redistribute it and/or modify</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">it under the terms of the GNU General Public License as published by</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">the Free Software Foundation, either version 3 of the License, or</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">(at your option) any later version.</span>
 
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">This program is distributed in the hope that it will be useful,</span>
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">GNU General Public License for more details.</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">This program is distributed in the hope that it will be useful,</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">GNU General Public License for more details.</span>
 
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">You should have received a copy of the GNU General Public License</span>
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">You should have received a copy of the GNU General Public License</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</span>
 </pre>
 
 
@@ -208,7 +232,6 @@
 
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
 <colgroup><col class="left" /><col class="left" />
 </colgroup>
 <tbody>
@@ -221,15 +244,15 @@
 
 
 
-<pre class="src src-elisp">(setq init-file-name <span style="color: #00cd00;">"init.el"</span>)
-(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">init-insert-code-block</span> ()
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">Insert a code block that will be tangled into `init-file-name`</span>
+<pre class="src src-elisp">(setq init-file-name <span style="color: #8b2252;">"init.el"</span>)
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">init-insert-code-block</span> ()
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">Insert a code block that will be tangled into `init-file-name`</span>
   (interactive)
   (backward-paragraph)
-  (insert (format <span style="color: #00cd00;">"#+BEGIN_SRC elisp :tangle %s"</span> init-file-name))
+  (insert (format <span style="color: #8b2252;">"#+BEGIN_SRC elisp :tangle %s"</span> init-file-name))
   (forward-paragraph)
-  (insert <span style="color: #00cd00;">"#+END_SRC\n"</span>))
-(global-set-key (kbd <span style="color: #00cd00;">"C-c i"</span>) 'init-insert-code-block)
+  (insert <span style="color: #8b2252;">"#+END_SRC\n"</span>))
+(global-set-key (kbd <span style="color: #8b2252;">"C-c i"</span>) 'init-insert-code-block)
 </pre>
 
 
@@ -239,11 +262,11 @@ Convenience function to (re)load init.el
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">init-load</span> ()
-  <span style="color: #00cd00;">"Load ~/.emacs.d/init.el"</span>
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">init-load</span> ()
+  <span style="color: #8b2252;">"Load ~/.emacs.d/init.el"</span>
   (interactive)
-  (load <span style="color: #00cd00;">"~/.emacs.d/init.el"</span>))
-(global-set-key (kbd <span style="color: #00cd00;">"M-C-i"</span>) 'init-load)
+  (load <span style="color: #8b2252;">"~/.emacs.d/init.el"</span>))
+(global-set-key (kbd <span style="color: #8b2252;">"M-C-i"</span>) 'init-load)
 </pre>
 
 
@@ -253,13 +276,25 @@ Tangle and export html
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">init-compile</span> ()
-  <span style="color: #00cd00;">"Tangle init.org and export html"</span>
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">init-compile</span> ()
+  <span style="color: #8b2252;">"Tangle init.org and export html"</span>
   (interactive)
   (org-babel-tangle)
   (org-export-as-html 3)
-  (copy-file <span style="color: #00cd00;">"init.html"</span> <span style="color: #00cd00;">"../.emacs.d.ghpages/index.html"</span> t)
+  (copy-file <span style="color: #8b2252;">"init.html"</span> <span style="color: #8b2252;">"../.emacs.d.ghpages/index.html"</span> t)
   )
+</pre>
+
+
+<p>
+Set up ghpages clone
+</p>
+
+
+
+<pre class="example">git clone git@github.com:nhoffman/.emacs.d.git .emacs.d.ghpages
+cd .emacs.d.ghpages
+git checkout gh-pages
 </pre>
 
 
@@ -275,7 +310,7 @@ Tangle and export html
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defalias</span> '<span style="color: #0000ee; font-weight: bold;">dtw</span> 'delete-trailing-whitespace)
+<pre class="src src-elisp">(<span style="color: #a020f0;">defalias</span> '<span style="color: #0000ff;">dtw</span> 'delete-trailing-whitespace)
 </pre>
 
 
@@ -285,9 +320,9 @@ Function keys
 
 
 
-<pre class="src src-elisp">(global-set-key (kbd <span style="color: #00cd00;">"&lt;f6&gt;"</span>) 'linum-mode)
-(global-set-key (kbd <span style="color: #00cd00;">"&lt;f7&gt;"</span>) 'visual-line-mode)
-(global-set-key (kbd <span style="color: #00cd00;">"&lt;f8&gt;"</span>) 'ns-toggle-fullscreen)
+<pre class="src src-elisp">(global-set-key (kbd <span style="color: #8b2252;">"&lt;f6&gt;"</span>) 'linum-mode)
+(global-set-key (kbd <span style="color: #8b2252;">"&lt;f7&gt;"</span>) 'visual-line-mode)
+(global-set-key (kbd <span style="color: #8b2252;">"&lt;f8&gt;"</span>) 'ns-toggle-fullscreen)
 </pre>
 
 
@@ -306,8 +341,8 @@ Enable debugging
 
 
 
-<pre class="src src-elisp"><span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(setq debug-on-error t)</span>
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(setq debug-on-signal t)</span>
+<pre class="src src-elisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">(setq debug-on-error t)</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">(setq debug-on-signal t)</span>
 
 </pre>
 
@@ -321,8 +356,8 @@ Startup appearance.
 <pre class="src src-elisp">(setq column-number-mode t)
 (setq inhibit-splash-screen t)
 (setq require-final-newline t)
-(setq make-backup-files nil) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">no backup files</span>
-(setq initial-scratch-message nil) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">no instructions in the *scratch* buffer</span>
+(setq make-backup-files nil) <span style="color: #b22222;">;; </span><span style="color: #b22222;">no backup files</span>
+(setq initial-scratch-message nil) <span style="color: #b22222;">;; </span><span style="color: #b22222;">no instructions in the *scratch* buffer</span>
 (setq suggest-key-bindings 4)
 (show-paren-mode 1)
 </pre>
@@ -347,8 +382,8 @@ File path in title bar. See <a href="http://stackoverflow.com/questions/3669511/
 
 
 <pre class="src src-elisp">(setq frame-title-format
-      (list (format <span style="color: #00cd00;">"%s %%S: %%j "</span> (system-name))
-        '(buffer-file-name <span style="color: #00cd00;">"%f"</span> (dired-directory dired-directory <span style="color: #00cd00;">"%b"</span>))))
+      (list (format <span style="color: #8b2252;">"%s %%S: %%j "</span> (system-name))
+        '(buffer-file-name <span style="color: #8b2252;">"%f"</span> (dired-directory dired-directory <span style="color: #8b2252;">"%b"</span>))))
 </pre>
 
 
@@ -385,8 +420,8 @@ Require prompt before exit on C-x C-c
 
 <pre class="src src-elisp">(global-set-key [(control x) (control c)]
                 (function
-                 (<span style="color: #00cdcd; font-weight: bold;">lambda</span> () (interactive)
-                   (<span style="color: #00cdcd; font-weight: bold;">cond</span> ((y-or-n-p <span style="color: #00cd00;">"Quit? (save-buffers-kill-terminal) "</span>)
+                 (<span style="color: #a020f0;">lambda</span> () (interactive)
+                   (<span style="color: #a020f0;">cond</span> ((y-or-n-p <span style="color: #8b2252;">"Quit? (save-buffers-kill-terminal) "</span>)
                           (save-buffers-kill-terminal))))))
 </pre>
 
@@ -415,53 +450,53 @@ Detect platform and window system and set up fonts accordingly
 </p>
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">fix-frame</span> ()
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">fix-frame</span> ()
   (interactive)
-  (menu-bar-mode -1) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">hide menu bar</span>
-  (tool-bar-mode -1) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">hide tool bar</span>
-  (<span style="color: #00cdcd; font-weight: bold;">cond</span> ((string= <span style="color: #00cd00;">"ns"</span> window-system) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">cocoa</span>
-         (<span style="color: #00cdcd; font-weight: bold;">progn</span> (message (format <span style="color: #00cd00;">"** running %s windowing system"</span> window-system))
-         <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">key bindings for mac - see</span>
-         <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">http://stuff-things.net/2009/01/06/emacs-on-the-mac/</span>
-         <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">http://osx.iusethis.com/app/carbonemacspackage</span>
+  (menu-bar-mode -1) <span style="color: #b22222;">;; </span><span style="color: #b22222;">hide menu bar</span>
+  (tool-bar-mode -1) <span style="color: #b22222;">;; </span><span style="color: #b22222;">hide tool bar</span>
+  (<span style="color: #a020f0;">cond</span> ((string= <span style="color: #8b2252;">"ns"</span> window-system) <span style="color: #b22222;">;; </span><span style="color: #b22222;">cocoa</span>
+         (<span style="color: #a020f0;">progn</span> (message (format <span style="color: #8b2252;">"** running %s windowing system"</span> window-system))
+         <span style="color: #b22222;">;; </span><span style="color: #b22222;">key bindings for mac - see</span>
+         <span style="color: #b22222;">;; </span><span style="color: #b22222;">http://stuff-things.net/2009/01/06/emacs-on-the-mac/</span>
+         <span style="color: #b22222;">;; </span><span style="color: #b22222;">http://osx.iusethis.com/app/carbonemacspackage</span>
          (set-keyboard-coding-system 'mac-roman)
          (setq mac-option-modifier 'meta)
          (setq mac-command-key-is-meta nil)
-         (setq my-default-font <span style="color: #00cd00;">"Bitstream Vera Sans Mono-14"</span>)
-         <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">enable edit-with-emacs for chrome</span>
-         <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(require 'edit-server)</span>
-         <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(edit-server-start)</span>
+         (setq my-default-font <span style="color: #8b2252;">"Bitstream Vera Sans Mono-14"</span>)
+         <span style="color: #b22222;">;; </span><span style="color: #b22222;">enable edit-with-emacs for chrome</span>
+         <span style="color: #b22222;">;; </span><span style="color: #b22222;">(require 'edit-server)</span>
+         <span style="color: #b22222;">;; </span><span style="color: #b22222;">(edit-server-start)</span>
          ))
-        ((string= <span style="color: #00cd00;">"x"</span> window-system)
-         (<span style="color: #00cdcd; font-weight: bold;">progn</span>
-           (message (format <span style="color: #00cd00;">"** running %s windowing system"</span> window-system))
-           (setq my-default-font <span style="color: #00cd00;">"Liberation Mono-10"</span>)
-           <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">M-w or C-w copies to system clipboard</span>
-           <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html</span>
+        ((string= <span style="color: #8b2252;">"x"</span> window-system)
+         (<span style="color: #a020f0;">progn</span>
+           (message (format <span style="color: #8b2252;">"** running %s windowing system"</span> window-system))
+           (setq my-default-font <span style="color: #8b2252;">"Liberation Mono-10"</span>)
+           <span style="color: #b22222;">;; </span><span style="color: #b22222;">M-w or C-w copies to system clipboard</span>
+           <span style="color: #b22222;">;; </span><span style="color: #b22222;">see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html</span>
            (setq x-select-enable-clipboard t)
-           <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(set-scroll-bar-mode -1) ;; hide scroll bar</span>
-           (scroll-bar-mode -1) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">hide scroll bar</span>
+           <span style="color: #b22222;">;; </span><span style="color: #b22222;">(set-scroll-bar-mode -1) ;; hide scroll bar</span>
+           (scroll-bar-mode -1) <span style="color: #b22222;">;; </span><span style="color: #b22222;">hide scroll bar</span>
            ))
         (t
-         (<span style="color: #00cdcd; font-weight: bold;">progn</span>
-         (message <span style="color: #00cd00;">"** running unknown windowing system"</span>)
+         (<span style="color: #a020f0;">progn</span>
+         (message <span style="color: #8b2252;">"** running unknown windowing system"</span>)
          (setq my-default-font nil)
-         (scroll-bar-mode -1) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">hide scroll bar</span>
+         (scroll-bar-mode -1) <span style="color: #b22222;">;; </span><span style="color: #b22222;">hide scroll bar</span>
          ))
         )
 
-  (<span style="color: #00cdcd; font-weight: bold;">unless</span> (equal window-system nil)
-    (message (format <span style="color: #00cd00;">"** setting default font to %s"</span> my-default-font))
-    (<span style="color: #00cdcd; font-weight: bold;">condition-case</span> nil
+  (<span style="color: #a020f0;">unless</span> (equal window-system nil)
+    (message (format <span style="color: #8b2252;">"** setting default font to %s"</span> my-default-font))
+    (<span style="color: #a020f0;">condition-case</span> nil
         (set-default-font my-default-font)
-      (<span style="color: #cd0000;">error</span> (message (format <span style="color: #00cd00;">"** could not set to font %s"</span> my-default-font))))
+      (<span style="color: #ff0000; font-weight: bold;">error</span> (message (format <span style="color: #8b2252;">"** could not set to font %s"</span> my-default-font))))
     )
   )
 
-(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">font-dejavu</span> ()
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">set default font to dejavu sans mono-11</span>
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">font-dejavu</span> ()
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">set default font to dejavu sans mono-11</span>
   (interactive)
-  (set-default-font <span style="color: #00cd00;">"dejavu sans mono-11"</span>)
+  (set-default-font <span style="color: #8b2252;">"dejavu sans mono-11"</span>)
   )
 
 </pre>
@@ -505,12 +540,12 @@ See <a href="http://www.emacswiki.org/emacs/SmoothScrolling">http://www.emacswik
 
 
 
-<pre class="src src-elisp">(setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">number of lines at a time</span>
-(setq mouse-wheel-progressive-speed nil) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">don't accelerate scrolling</span>
-(setq mouse-wheel-follow-mosue 't) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">scroll window under mouse</span>
-(setq scroll-step 1) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">keyboard scroll one line at a time</span>
-(setq scroll-conservatively 1) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">scroll by one line to follow cursor off screen</span>
-(setq scroll-margin 2) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">Start scrolling when 2 lines from top/bottom</span>
+<pre class="src src-elisp">(setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) <span style="color: #b22222;">;; </span><span style="color: #b22222;">number of lines at a time</span>
+(setq mouse-wheel-progressive-speed nil) <span style="color: #b22222;">;; </span><span style="color: #b22222;">don't accelerate scrolling</span>
+(setq mouse-wheel-follow-mosue 't) <span style="color: #b22222;">;; </span><span style="color: #b22222;">scroll window under mouse</span>
+(setq scroll-step 1) <span style="color: #b22222;">;; </span><span style="color: #b22222;">keyboard scroll one line at a time</span>
+(setq scroll-conservatively 1) <span style="color: #b22222;">;; </span><span style="color: #b22222;">scroll by one line to follow cursor off screen</span>
+(setq scroll-margin 2) <span style="color: #b22222;">;; </span><span style="color: #b22222;">Start scrolling when 2 lines from top/bottom</span>
 </pre>
 
 
@@ -526,9 +561,9 @@ See <a href="http://www.emacswiki.org/emacs/SmoothScrolling">http://www.emacswik
 
 
 
-<pre class="src src-elisp">(transient-mark-mode 1) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">highlight active region - default in emacs 23.1+</span>
-(global-set-key (kbd <span style="color: #00cd00;">"M-C-t"</span>) 'transient-mark-mode)
-(global-set-key (kbd <span style="color: #00cd00;">"C-x C-b"</span>) 'electric-buffer-list)
+<pre class="src src-elisp">(transient-mark-mode 1) <span style="color: #b22222;">;; </span><span style="color: #b22222;">highlight active region - default in emacs 23.1+</span>
+(global-set-key (kbd <span style="color: #8b2252;">"M-C-t"</span>) 'transient-mark-mode)
+(global-set-key (kbd <span style="color: #8b2252;">"C-x C-b"</span>) 'electric-buffer-list)
 </pre>
 
 
@@ -544,7 +579,7 @@ See <a href="http://www.emacswiki.org/emacs/SmoothScrolling">http://www.emacswik
 
 
 
-<pre class="src src-elisp">(set-cursor-color <span style="color: #00cd00;">"red"</span>)
+<pre class="src src-elisp">(set-cursor-color <span style="color: #8b2252;">"red"</span>)
 (blink-cursor-mode 1)
 </pre>
 
@@ -579,7 +614,6 @@ See <a href="http://www.emacswiki.org/emacs/KeyboardMacros">http://www.emacswiki
 note that default bindings for macros are:
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
 <colgroup><col class="left" /><col class="left" />
 </colgroup>
 <tbody>
@@ -596,7 +630,7 @@ Some additional keyboard macro bindings.
 
 
 
-<pre class="src src-elisp">(global-set-key (kbd <span style="color: #00cd00;">"&lt;f5&gt;"</span>) 'call-last-kbd-macro)
+<pre class="src src-elisp">(global-set-key (kbd <span style="color: #8b2252;">"&lt;f5&gt;"</span>) 'call-last-kbd-macro)
 </pre>
 
 
@@ -622,7 +656,7 @@ References:
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">desktop</span>)
+<pre class="src src-elisp">(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">desktop</span>)
 </pre>
 
 
@@ -634,9 +668,9 @@ started with <code>--no-desktop</code>
 
 
 <pre class="src src-elisp">(desktop-save-mode 1)
-(<span style="color: #00cdcd; font-weight: bold;">if</span> (and desktop-save-mode (not (member <span style="color: #00cd00;">"--no-desktop"</span> command-line-args)))
-    (<span style="color: #00cdcd; font-weight: bold;">progn</span>
-      (message <span style="color: #00cd00;">"Enabling desktop auto-save"</span>)
+(<span style="color: #a020f0;">if</span> (and desktop-save-mode (not (member <span style="color: #8b2252;">"--no-desktop"</span> command-line-args)))
+    (<span style="color: #a020f0;">progn</span>
+      (message <span style="color: #8b2252;">"Enabling desktop auto-save"</span>)
       (add-hook 'auto-save-hook 'desktop-save-in-desktop-dir)))
 </pre>
 
@@ -659,11 +693,11 @@ Move line up
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">move-line-up</span> ()
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">move-line-up</span> ()
   (interactive)
   (transpose-lines 1)
   (previous-line 2))
-(global-set-key (kbd <span style="color: #00cd00;">"M-&lt;up&gt;"</span>) 'move-line-up)
+(global-set-key (kbd <span style="color: #8b2252;">"M-&lt;up&gt;"</span>) 'move-line-up)
 </pre>
 
 
@@ -673,12 +707,12 @@ Move line down.
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">move-line-down</span> ()
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">move-line-down</span> ()
   (interactive)
   (next-line 1)
   (transpose-lines 1)
   (previous-line 1))
-(global-set-key (kbd <span style="color: #00cd00;">"M-&lt;down&gt;"</span>) 'move-line-down)
+(global-set-key (kbd <span style="color: #8b2252;">"M-&lt;down&gt;"</span>) 'move-line-down)
 </pre>
 
 
@@ -705,11 +739,11 @@ Note that other-window is bound by default to <code>C-x o</code>
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">back-window</span> ()
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">back-window</span> ()
   (interactive)
   (other-window -1))
-(global-set-key (kbd <span style="color: #00cd00;">"C-&lt;right&gt;"</span>) 'other-window)
-(global-set-key (kbd <span style="color: #00cd00;">"C-&lt;left&gt;"</span>) 'back-window)
+(global-set-key (kbd <span style="color: #8b2252;">"C-&lt;right&gt;"</span>) 'other-window)
+(global-set-key (kbd <span style="color: #8b2252;">"C-&lt;left&gt;"</span>) 'back-window)
 </pre>
 
 
@@ -733,20 +767,20 @@ Note that other-window is bound by default to <code>C-x o</code>
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">transpose-buffers</span> (arg)
-  <span style="color: #00cd00;">"Transpose the buffers shown in two windows."</span>
-  (interactive <span style="color: #00cd00;">"p"</span>)
-  (<span style="color: #00cdcd; font-weight: bold;">let</span> ((selector (<span style="color: #00cdcd; font-weight: bold;">if</span> (&gt;= arg 0) 'next-window 'previous-window)))
-    (<span style="color: #00cdcd; font-weight: bold;">while</span> (/= arg 0)
-      (<span style="color: #00cdcd; font-weight: bold;">let</span> ((this-win (window-buffer))
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">transpose-buffers</span> (arg)
+  <span style="color: #8b2252;">"Transpose the buffers shown in two windows."</span>
+  (interactive <span style="color: #8b2252;">"p"</span>)
+  (<span style="color: #a020f0;">let</span> ((selector (<span style="color: #a020f0;">if</span> (&gt;= arg 0) 'next-window 'previous-window)))
+    (<span style="color: #a020f0;">while</span> (/= arg 0)
+      (<span style="color: #a020f0;">let</span> ((this-win (window-buffer))
             (next-win (window-buffer (funcall selector))))
         (set-window-buffer (selected-window) next-win)
         (set-window-buffer (funcall selector) this-win)
         (select-window (funcall selector)))
-      <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(setq arg (if (plusp arg) (1- arg) (1+ arg)))</span>
-      (setq arg (<span style="color: #00cdcd; font-weight: bold;">if</span> (&gt;= arg 0) (1- arg) (1+ arg)))
+      <span style="color: #b22222;">;; </span><span style="color: #b22222;">(setq arg (if (plusp arg) (1- arg) (1+ arg)))</span>
+      (setq arg (<span style="color: #a020f0;">if</span> (&gt;= arg 0) (1- arg) (1+ arg)))
       )))
-(global-set-key (kbd <span style="color: #00cd00;">"C-x 4"</span>) 'transpose-buffers)
+(global-set-key (kbd <span style="color: #8b2252;">"C-x 4"</span>) 'transpose-buffers)
 </pre>
 
 
@@ -765,10 +799,10 @@ Also from <a href="http://www.emacswiki.org/emacs/SwitchingBuffers">http://www.e
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">switch-buffers-between-frames</span> ()
-  <span style="color: #00cd00;">"switch-buffers-between-frames switches the buffers between the two last frames"</span>
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">switch-buffers-between-frames</span> ()
+  <span style="color: #8b2252;">"switch-buffers-between-frames switches the buffers between the two last frames"</span>
   (interactive)
-  (<span style="color: #00cdcd; font-weight: bold;">let</span> ((this-frame-buffer nil)
+  (<span style="color: #a020f0;">let</span> ((this-frame-buffer nil)
         (other-frame-buffer nil))
     (setq this-frame-buffer (car (frame-parameter nil 'buffer-list)))
     (other-frame 1)
@@ -776,7 +810,7 @@ Also from <a href="http://www.emacswiki.org/emacs/SwitchingBuffers">http://www.e
     (switch-to-buffer this-frame-buffer)
     (other-frame 1)
     (switch-to-buffer other-frame-buffer)))
-(global-set-key (kbd <span style="color: #00cd00;">"C-x 5"</span>) 'switch-buffers-between-frames)
+(global-set-key (kbd <span style="color: #8b2252;">"C-x 5"</span>) 'switch-buffers-between-frames)
 </pre>
 
 
@@ -796,8 +830,8 @@ Use aspell instead of ispell
 
 
 
-<pre class="src src-elisp">(setq-default ispell-program-name <span style="color: #00cd00;">"aspell"</span>)
-(setq ispell-dictionary <span style="color: #00cd00;">"en"</span>)
+<pre class="src src-elisp">(setq-default ispell-program-name <span style="color: #8b2252;">"aspell"</span>)
+(setq ispell-dictionary <span style="color: #8b2252;">"en"</span>)
 </pre>
 
 
@@ -807,8 +841,8 @@ Enable on-the-fly spell-check
 
 
 
-<pre class="src src-elisp">(autoload 'flyspell-mode <span style="color: #00cd00;">"flyspell"</span> <span style="color: #00cd00;">"On-the-fly spelling checker."</span> t)
-(setq flyspell-issue-welcome-flag nil) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">fix error message</span>
+<pre class="src src-elisp">(autoload 'flyspell-mode <span style="color: #8b2252;">"flyspell"</span> <span style="color: #8b2252;">"On-the-fly spelling checker."</span> t)
+(setq flyspell-issue-welcome-flag nil) <span style="color: #b22222;">;; </span><span style="color: #b22222;">fix error message</span>
 </pre>
 
 
@@ -828,9 +862,9 @@ Enable on-the-fly spell-check
 
 
 <pre class="src src-elisp">(add-hook 'find-file-hooks
-          '(<span style="color: #00cdcd; font-weight: bold;">lambda</span> ()
-             (<span style="color: #00cdcd; font-weight: bold;">if</span> (equal <span style="color: #00cd00;">"pico."</span> (substring (buffer-name (current-buffer)) 0 5))
-                 <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(message "** running hook for pine/alpine")</span>
+          '(<span style="color: #a020f0;">lambda</span> ()
+             (<span style="color: #a020f0;">if</span> (equal <span style="color: #8b2252;">"pico."</span> (substring (buffer-name (current-buffer)) 0 5))
+                 <span style="color: #b22222;">;; </span><span style="color: #b22222;">(message "** running hook for pine/alpine")</span>
                  (mail-mode))))
 </pre>
 
@@ -847,7 +881,7 @@ Enable on-the-fly spell-check
 
 
 
-<pre class="src src-elisp">(add-to-list 'load-path <span style="color: #00cd00;">"~/.emacs.d/"</span>)
+<pre class="src src-elisp">(add-to-list 'load-path <span style="color: #8b2252;">"~/.emacs.d/"</span>)
 </pre>
 
 
@@ -869,9 +903,9 @@ Use all available package repositories (GNU, ELPA and Marmalade).
 
 
 
-<pre class="src src-elisp">(setq package-archives '((<span style="color: #00cd00;">"ELPA"</span> . <span style="color: #00cd00;">"http://tromey.com/elpa/"</span>)
-                          (<span style="color: #00cd00;">"gnu"</span> . <span style="color: #00cd00;">"http://elpa.gnu.org/packages/"</span>)
-                          (<span style="color: #00cd00;">"marmalade"</span> . <span style="color: #00cd00;">"http://marmalade-repo.org/packages/"</span>)))
+<pre class="src src-elisp">(setq package-archives '((<span style="color: #8b2252;">"ELPA"</span> . <span style="color: #8b2252;">"http://tromey.com/elpa/"</span>)
+                          (<span style="color: #8b2252;">"gnu"</span> . <span style="color: #8b2252;">"http://elpa.gnu.org/packages/"</span>)
+                          (<span style="color: #8b2252;">"marmalade"</span> . <span style="color: #8b2252;">"http://marmalade-repo.org/packages/"</span>)))
 </pre>
 
 
@@ -887,9 +921,9 @@ Use all available package repositories (GNU, ELPA and Marmalade).
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">condition-case</span> nil
-    (<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">tex-site</span>)
-  (<span style="color: #cd0000;">error</span> (message <span style="color: #00cd00;">"** could not load auctex"</span>)))
+<pre class="src src-elisp">(<span style="color: #a020f0;">condition-case</span> nil
+    (<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">tex-site</span>)
+  (<span style="color: #ff0000; font-weight: bold;">error</span> (message <span style="color: #8b2252;">"** could not load auctex"</span>)))
 </pre>
 
 
@@ -905,12 +939,12 @@ Use all available package repositories (GNU, ELPA and Marmalade).
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">condition-case</span> nil
-    (<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">ess-site</span> <span style="color: #00cd00;">"~/.emacs.d/ess/lisp/ess-site"</span>)
-  (<span style="color: #cd0000;">error</span> (message <span style="color: #00cd00;">"** could not load local ESS in ~/.emacs.d; trying system ESS"</span>)
-         (<span style="color: #00cdcd; font-weight: bold;">condition-case</span> nil
-             (<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">ess-site</span>)
-           (<span style="color: #cd0000;">error</span> (message <span style="color: #00cd00;">"** could not load system ESS"</span>)))
+<pre class="src src-elisp">(<span style="color: #a020f0;">condition-case</span> nil
+    (<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">ess-site</span> <span style="color: #8b2252;">"~/.emacs.d/ess/lisp/ess-site"</span>)
+  (<span style="color: #ff0000; font-weight: bold;">error</span> (message <span style="color: #8b2252;">"** could not load local ESS in ~/.emacs.d; trying system ESS"</span>)
+         (<span style="color: #a020f0;">condition-case</span> nil
+             (<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">ess-site</span>)
+           (<span style="color: #ff0000; font-weight: bold;">error</span> (message <span style="color: #8b2252;">"** could not load system ESS"</span>)))
          )
   )
 </pre>
@@ -923,13 +957,13 @@ Hooks
 
 
 <pre class="src src-elisp">(add-hook 'ess-mode-hook
-          '(<span style="color: #00cdcd; font-weight: bold;">lambda</span>()
-             (message <span style="color: #00cd00;">"Loading ess-mode hooks"</span>)
-             <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">leave my underscore key alone!</span>
-             (setq ess-S-assign <span style="color: #00cd00;">"_"</span>)
-             <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(ess-toggle-underscore nil)</span>
-             <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">set ESS indentation style</span>
-             <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">choose from GNU, BSD, K&amp;R, CLB, and C++</span>
+          '(<span style="color: #a020f0;">lambda</span>()
+             (message <span style="color: #8b2252;">"Loading ess-mode hooks"</span>)
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">leave my underscore key alone!</span>
+             (setq ess-S-assign <span style="color: #8b2252;">"_"</span>)
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">(ess-toggle-underscore nil)</span>
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">set ESS indentation style</span>
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">choose from GNU, BSD, K&amp;R, CLB, and C++</span>
              (ess-set-style 'GNU 'quiet)
              (flyspell-mode)
              )
@@ -987,8 +1021,8 @@ Use org-mode
 
 
 
-<pre class="src src-elisp">(add-to-list 'load-path <span style="color: #00cd00;">"~/.emacs.d/org-mode/lisp"</span>)
-(<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">org-install</span>)
+<pre class="src src-elisp">(add-to-list 'load-path <span style="color: #8b2252;">"~/.emacs.d/org-mode/lisp"</span>)
+(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">org-install</span>)
 </pre>
 
 
@@ -999,18 +1033,18 @@ org-mode hooks
 
 
 <pre class="src src-elisp">(add-hook 'org-mode-hook
-          '(<span style="color: #00cdcd; font-weight: bold;">lambda</span> ()
-             (message <span style="color: #00cd00;">"Loading org-mode hooks"</span>)
+          '(<span style="color: #a020f0;">lambda</span> ()
+             (message <span style="color: #8b2252;">"Loading org-mode hooks"</span>)
              (turn-on-font-lock)
-             (define-key org-mode-map (kbd <span style="color: #00cd00;">"M-&lt;right&gt;"</span>) 'forward-word)
-             (define-key org-mode-map (kbd <span style="color: #00cd00;">"M-&lt;left&gt;"</span>) 'backward-word)
-             <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">provides key mapping for the above; replaces default</span>
-             <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">key bindings for org-promote/demote-subtree</span>
-             (define-key org-mode-map (kbd <span style="color: #00cd00;">"M-S-&lt;right&gt;"</span>) 'org-do-demote)
-             (define-key org-mode-map (kbd <span style="color: #00cd00;">"M-S-&lt;left&gt;"</span>) 'org-do-promote)
+             (define-key org-mode-map (kbd <span style="color: #8b2252;">"M-&lt;right&gt;"</span>) 'forward-word)
+             (define-key org-mode-map (kbd <span style="color: #8b2252;">"M-&lt;left&gt;"</span>) 'backward-word)
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">provides key mapping for the above; replaces default</span>
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">key bindings for org-promote/demote-subtree</span>
+             (define-key org-mode-map (kbd <span style="color: #8b2252;">"M-S-&lt;right&gt;"</span>) 'org-do-demote)
+             (define-key org-mode-map (kbd <span style="color: #8b2252;">"M-S-&lt;left&gt;"</span>) 'org-do-promote)
              (org-indent-mode)
              (visual-line-mode)
-             <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">org-babel</span>
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">org-babel</span>
              (org-babel-do-load-languages
               'org-babel-load-languages
               '((R . t)
@@ -1028,12 +1062,12 @@ org-mode hooks
  '(org-confirm-babel-evaluate nil)
  '(org-src-fontify-natively t))
 
-(setq org-agenda-files (list <span style="color: #00cd00;">"~/Dropbox/notes/index.org"</span>
-                             <span style="color: #00cd00;">"~/Dropbox/fredross/notes/plans.org"</span>
+(setq org-agenda-files (list <span style="color: #8b2252;">"~/Dropbox/notes/index.org"</span>
+                             <span style="color: #8b2252;">"~/Dropbox/fredross/notes/plans.org"</span>
                              ))
 
-(push '(<span style="color: #00cd00;">"\\.org\\'"</span> . org-mode) auto-mode-alist)
-(push '(<span style="color: #00cd00;">"\\.org\\.txt\\'"</span> . org-mode) auto-mode-alist)
+(push '(<span style="color: #8b2252;">"\\.org\\'"</span> . org-mode) auto-mode-alist)
+(push '(<span style="color: #8b2252;">"\\.org\\.txt\\'"</span> . org-mode) auto-mode-alist)
 </pre>
 
 
@@ -1063,11 +1097,11 @@ Requires <code>(setq org-babel-load-languages (quote (pygment . t)))</code> abov
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">condition-case</span> nil
-    (<span style="color: #00cdcd; font-weight: bold;">progn</span>
-      (<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">ob-pygment</span>)
-      (setq org-pygment-path <span style="color: #00cd00;">"/usr/local/bin/pygmentize"</span>))
-  (<span style="color: #cd0000;">error</span> (message <span style="color: #00cd00;">"** could not load ob-pygment"</span>)))
+<pre class="src src-elisp">(<span style="color: #a020f0;">condition-case</span> nil
+    (<span style="color: #a020f0;">progn</span>
+      (<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">ob-pygment</span>)
+      (setq org-pygment-path <span style="color: #8b2252;">"/usr/local/bin/pygmentize"</span>))
+  (<span style="color: #ff0000; font-weight: bold;">error</span> (message <span style="color: #8b2252;">"** could not load ob-pygment"</span>)))
 </pre>
 
 
@@ -1083,22 +1117,22 @@ Requires <code>(setq org-babel-load-languages (quote (pygment . t)))</code> abov
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">insert-date</span> ()
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">Insert today's timestamp in format "&lt;%Y-%m-%d %a&gt;"</span>
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">insert-date</span> ()
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">Insert today's timestamp in format "&lt;%Y-%m-%d %a&gt;"</span>
   (interactive)
-  (insert (format-time-string <span style="color: #00cd00;">"&lt;%Y-%m-%d %a&gt;"</span>)))
-(global-set-key (kbd <span style="color: #00cd00;">"C-c d"</span>) 'insert-date)
+  (insert (format-time-string <span style="color: #8b2252;">"&lt;%Y-%m-%d %a&gt;"</span>)))
+(global-set-key (kbd <span style="color: #8b2252;">"C-c d"</span>) 'insert-date)
 </pre>
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">org-add-entry</span> (filename time-format)
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">Add an entry to an org-file with today's timestamp.</span>
-  (interactive <span style="color: #00cd00;">"FFile: "</span>)
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">org-add-entry</span> (filename time-format)
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">Add an entry to an org-file with today's timestamp.</span>
+  (interactive <span style="color: #8b2252;">"FFile: "</span>)
   (find-file filename)
   (end-of-buffer)
   (delete-blank-lines)
-  <span style="color: #cd0000;">;;</span><span style="color: #cd0000;">(insert "\n* ")</span>
+  <span style="color: #b22222;">;;</span><span style="color: #b22222;">(insert "\n* ")</span>
   (insert (format-time-string time-format))
   (beginning-of-line)
   (forward-char 2))
@@ -1112,9 +1146,9 @@ Add a new entry to main notes file.
 
 
 <pre class="src src-elisp">(global-set-key
- (kbd <span style="color: #00cd00;">"C-x C-n"</span>) (<span style="color: #00cdcd; font-weight: bold;">lambda</span> () (interactive)
-                   (org-add-entry <span style="color: #00cd00;">"~/Dropbox/notes/index.org"</span>
-                                  <span style="color: #00cd00;">"\n* &lt;%Y-%m-%d %a&gt;"</span>)))
+ (kbd <span style="color: #8b2252;">"C-x C-n"</span>) (<span style="color: #a020f0;">lambda</span> () (interactive)
+                   (org-add-entry <span style="color: #8b2252;">"~/Dropbox/notes/index.org"</span>
+                                  <span style="color: #8b2252;">"\n* &lt;%Y-%m-%d %a&gt;"</span>)))
 </pre>
 
 
@@ -1125,9 +1159,9 @@ Add an entry to todo file.
 
 
 <pre class="src src-elisp">(global-set-key
- (kbd <span style="color: #00cd00;">"C-x C-m"</span>) (<span style="color: #00cdcd; font-weight: bold;">lambda</span> () (interactive)
-                   (org-add-entry <span style="color: #00cd00;">"~/Dropbox/notes/todo.org"</span>
-                                  <span style="color: #00cd00;">"\n** TODO &lt;%Y-%m-%d %a&gt;"</span>)))
+ (kbd <span style="color: #8b2252;">"C-x C-m"</span>) (<span style="color: #a020f0;">lambda</span> () (interactive)
+                   (org-add-entry <span style="color: #8b2252;">"~/Dropbox/notes/todo.org"</span>
+                                  <span style="color: #8b2252;">"\n** TODO &lt;%Y-%m-%d %a&gt;"</span>)))
 </pre>
 
 
@@ -1153,9 +1187,9 @@ wget -U Mozilla -O moinmoin-mode.el "http://moinmoin.wikiwikiweb.de/EmacsForMoin
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">condition-case</span> nil
-    (<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">moinmoin-mode</span>)
-  (<span style="color: #cd0000;">error</span> (message <span style="color: #00cd00;">"** could not load moinmon-mode"</span>)))
+<pre class="src src-elisp">(<span style="color: #a020f0;">condition-case</span> nil
+    (<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">moinmoin-mode</span>)
+  (<span style="color: #ff0000; font-weight: bold;">error</span> (message <span style="color: #8b2252;">"** could not load moinmon-mode"</span>)))
 </pre>
 
 
@@ -1182,9 +1216,9 @@ wget http://jblevins.org/git/markdown-mode.git/plain/markdown-mode.el
 
 
 
-<pre class="src src-elisp">(autoload 'markdown-mode <span style="color: #00cd00;">"markdown-mode.el"</span>
-   <span style="color: #00cd00;">"Major mode for editing Markdown files"</span> t)
-(push '(<span style="color: #00cd00;">"\\.md"</span> . markdown-mode) auto-mode-alist)
+<pre class="src src-elisp">(autoload 'markdown-mode <span style="color: #8b2252;">"markdown-mode.el"</span>
+   <span style="color: #8b2252;">"Major mode for editing Markdown files"</span> t)
+(push '(<span style="color: #8b2252;">"\\.md"</span> . markdown-mode) auto-mode-alist)
 </pre>
 
 
@@ -1200,13 +1234,13 @@ wget http://jblevins.org/git/markdown-mode.git/plain/markdown-mode.el
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">condition-case</span> nil
-    (<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">edit-server</span>)
-  (<span style="color: #cd0000;">error</span> (message <span style="color: #00cd00;">"** could not load edit-server (chrome edit with emacs)"</span>)))
+<pre class="src src-elisp">(<span style="color: #a020f0;">condition-case</span> nil
+    (<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">edit-server</span>)
+  (<span style="color: #ff0000; font-weight: bold;">error</span> (message <span style="color: #8b2252;">"** could not load edit-server (chrome edit with emacs)"</span>)))
 
-(<span style="color: #00cdcd; font-weight: bold;">condition-case</span> nil
+(<span style="color: #a020f0;">condition-case</span> nil
     (edit-server-start)
-  (<span style="color: #cd0000;">error</span> (message <span style="color: #00cd00;">"** could not start edit-server (chrome edit with emacs)"</span>)))
+  (<span style="color: #ff0000; font-weight: bold;">error</span> (message <span style="color: #8b2252;">"** could not start edit-server (chrome edit with emacs)"</span>)))
 </pre>
 
 
@@ -1232,18 +1266,18 @@ Hooks
 
 
 <pre class="src src-elisp">(add-hook 'python-mode-hook
-          '(<span style="color: #00cdcd; font-weight: bold;">lambda</span> ()
-             (message <span style="color: #00cd00;">"Loading python-mode hooks"</span>)
+          '(<span style="color: #a020f0;">lambda</span> ()
+             (message <span style="color: #8b2252;">"Loading python-mode hooks"</span>)
              (setq indent-tabs-mode nil)
              (setq tab-width 4)
              (setq py-indent-offset tab-width)
              (setq py-smart-indentation t)
-             (define-key python-mode-map <span style="color: #00cd00;">"\C-m"</span> 'newline-and-indent)
-             <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(hs-minor-mode)</span>
-             <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">add function index to menu bar</span>
-             <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(imenu-add-menubar-index)</span>
-             <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(python-mode-untabify)</span>
-             <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(linum-mode)</span>
+             (define-key python-mode-map <span style="color: #8b2252;">"\C-m"</span> 'newline-and-indent)
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">(hs-minor-mode)</span>
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">add function index to menu bar</span>
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">(imenu-add-menubar-index)</span>
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">(python-mode-untabify)</span>
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">(linum-mode)</span>
              )
           )
 </pre>
@@ -1255,9 +1289,9 @@ File name mappings
 
 
 
-<pre class="src src-elisp">(push '(<span style="color: #00cd00;">"SConstruct"</span> . python-mode) auto-mode-alist)
-(push '(<span style="color: #00cd00;">"SConscript"</span> . python-mode) auto-mode-alist)
-(push '(<span style="color: #00cd00;">"*.cgi"</span> . python-mode) auto-mode-alist)
+<pre class="src src-elisp">(push '(<span style="color: #8b2252;">"SConstruct"</span> . python-mode) auto-mode-alist)
+(push '(<span style="color: #8b2252;">"SConscript"</span> . python-mode) auto-mode-alist)
+(push '(<span style="color: #8b2252;">"*.cgi"</span> . python-mode) auto-mode-alist)
 </pre>
 
 
@@ -1268,7 +1302,7 @@ deleting a single character.
 
 
 
-<pre class="src src-elisp">(setq backward-delete-char-untabify-method <span style="color: #00cd00;">"all"</span>)
+<pre class="src src-elisp">(setq backward-delete-char-untabify-method <span style="color: #8b2252;">"all"</span>)
 </pre>
 
 
@@ -1295,9 +1329,9 @@ Invoke with <code>M-x python-pylint RET</code>
 
 
 
-<pre class="src src-elisp">(add-to-list 'load-path <span style="color: #00cd00;">"~/.emacs.d/python-pylint"</span>)
-(autoload 'python-pylint <span style="color: #00cd00;">"~/.emacs.d/python-pylint"</span>)
-(autoload 'pylint <span style="color: #00cd00;">"~/.emacs.d/python-pylint"</span>)
+<pre class="src src-elisp">(add-to-list 'load-path <span style="color: #8b2252;">"~/.emacs.d/python-pylint"</span>)
+(autoload 'python-pylint <span style="color: #8b2252;">"~/.emacs.d/python-pylint"</span>)
+(autoload 'pylint <span style="color: #8b2252;">"~/.emacs.d/python-pylint"</span>)
 </pre>
 
 
@@ -1314,8 +1348,8 @@ Invoke with <code>M-x python-pylint RET</code>
 
 
 <pre class="src src-elisp">(add-hook 'text-mode-hook
-          '(<span style="color: #00cdcd; font-weight: bold;">lambda</span> ()
-             <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(longlines-mode)</span>
+          '(<span style="color: #a020f0;">lambda</span> ()
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">(longlines-mode)</span>
              (flyspell-mode)
              )
           )
@@ -1335,10 +1369,10 @@ Invoke with <code>M-x python-pylint RET</code>
 
 
 <pre class="src src-elisp">(add-hook 'rst-mode-hook
-          '(<span style="color: #00cdcd; font-weight: bold;">lambda</span> ()
-             (message <span style="color: #00cd00;">"Loading rst-mode hooks"</span>)
+          '(<span style="color: #a020f0;">lambda</span> ()
+             (message <span style="color: #8b2252;">"Loading rst-mode hooks"</span>)
              (flyspell-mode)
-             (define-key rst-mode-map (kbd <span style="color: #00cd00;">"C-c C-a"</span>) 'rst-adjust)
+             (define-key rst-mode-map (kbd <span style="color: #8b2252;">"C-c C-a"</span>) 'rst-adjust)
              )
           )
 </pre>
@@ -1362,10 +1396,10 @@ Invoke with <code>M-x python-pylint RET</code>
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">condition-case</span> nil
-    (<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">tramp</span>)
-  (setq tramp-default-method <span style="color: #00cd00;">"scp"</span>)
-  (<span style="color: #cd0000;">error</span> (message <span style="color: #00cd00;">"** could not load tramp"</span>)))
+<pre class="src src-elisp">(<span style="color: #a020f0;">condition-case</span> nil
+    (<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">tramp</span>)
+  (setq tramp-default-method <span style="color: #8b2252;">"scp"</span>)
+  (<span style="color: #ff0000; font-weight: bold;">error</span> (message <span style="color: #8b2252;">"** could not load tramp"</span>)))
 </pre>
 
 
@@ -1387,9 +1421,9 @@ Invoke with <code>M-x python-pylint RET</code>
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">ibuffer</span>)
-(global-set-key (kbd <span style="color: #00cd00;">"C-x C-g"</span>) 'ibuffer)
-(global-set-key (kbd <span style="color: #00cd00;">"C-x M-g"</span>) 'ibuffer-switch-to-saved-filter-groups)
+<pre class="src src-elisp">(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">ibuffer</span>)
+(global-set-key (kbd <span style="color: #8b2252;">"C-x C-g"</span>) 'ibuffer)
+(global-set-key (kbd <span style="color: #8b2252;">"C-x M-g"</span>) 'ibuffer-switch-to-saved-filter-groups)
 (setq ibuffer-show-empty-filter-groups nil)
 </pre>
 
@@ -1400,17 +1434,17 @@ Function to load config file. Load on starup.
 
 
 
-<pre class="src src-elisp">(setq ibuffer-config-file <span style="color: #00cd00;">"~/.emacs.d/ibuffer-config.el"</span>)
+<pre class="src src-elisp">(setq ibuffer-config-file <span style="color: #8b2252;">"~/.emacs.d/ibuffer-config.el"</span>)
 
-(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">ibuffer-load-config</span> ()
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">load the ibuffer config file</span>
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ibuffer-load-config</span> ()
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">load the ibuffer config file</span>
   (interactive)
-  (<span style="color: #00cdcd; font-weight: bold;">condition-case</span> nil
-      (<span style="color: #00cdcd; font-weight: bold;">progn</span>
-        (message (format <span style="color: #00cd00;">"** loading ibuffer config in %s"</span> ibuffer-config-file))
+  (<span style="color: #a020f0;">condition-case</span> nil
+      (<span style="color: #a020f0;">progn</span>
+        (message (format <span style="color: #8b2252;">"** loading ibuffer config in %s"</span> ibuffer-config-file))
         (load ibuffer-config-file)
         )
-    (<span style="color: #cd0000;">error</span> (message (format <span style="color: #00cd00;">"** could not load %s"</span> ibuffer-config-file))))
+    (<span style="color: #ff0000; font-weight: bold;">error</span> (message (format <span style="color: #8b2252;">"** could not load %s"</span> ibuffer-config-file))))
   )
 
 (ibuffer-load-config)
@@ -1423,14 +1457,14 @@ Show/hide all filter groups
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">ibuffer-show-all-filter-groups</span> ()
-  <span style="color: #00cd00;">"Show all filter groups"</span>
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ibuffer-show-all-filter-groups</span> ()
+  <span style="color: #8b2252;">"Show all filter groups"</span>
   (interactive)
   (setq ibuffer-hidden-filter-groups nil)
   (ibuffer-update nil t))
 
-(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">ibuffer-hide-all-filter-groups</span> ()
-  <span style="color: #00cd00;">"Hide all filter groups"</span>
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ibuffer-hide-all-filter-groups</span> ()
+  <span style="color: #8b2252;">"Hide all filter groups"</span>
   (interactive)
   (setq ibuffer-hidden-filter-groups
         (delete-dups
@@ -1444,8 +1478,8 @@ Show/hide all filter groups
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">ibuffer-reload</span> ()
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">kill ibuffer, reload the config file, and return to ibuffer</span>
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ibuffer-reload</span> ()
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">kill ibuffer, reload the config file, and return to ibuffer</span>
   (interactive)
   (ibuffer)
   (kill-buffer)
@@ -1462,26 +1496,26 @@ From <a href="http://www.emacswiki.org/emacs/IbufferMode">http://www.emacswiki.o
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">my-ibuffer-sort-hook</span> ()
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">add another sorting method for ibuffer (allow the grouping of</span>
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">filenames and dired buffers</span>
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">my-ibuffer-sort-hook</span> ()
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">add another sorting method for ibuffer (allow the grouping of</span>
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">filenames and dired buffers</span>
   (define-ibuffer-sorter filename-or-dired
-    <span style="color: #00cd00;">"Sort the buffers by their pathname."</span>
-    (<span style="color: #0000ee; font-weight: bold;">:description</span> <span style="color: #00cd00;">"filenames plus dired"</span>)
+    <span style="color: #8b2252;">"Sort the buffers by their pathname."</span>
+    (<span style="color: #483d8b;">:description</span> <span style="color: #8b2252;">"filenames plus dired"</span>)
     (string-lessp
-     (<span style="color: #00cdcd; font-weight: bold;">with-current-buffer</span> (car a)
+     (<span style="color: #a020f0;">with-current-buffer</span> (car a)
        (or buffer-file-name
-           (<span style="color: #00cdcd; font-weight: bold;">if</span> (eq major-mode 'dired-mode)
+           (<span style="color: #a020f0;">if</span> (eq major-mode 'dired-mode)
                (expand-file-name dired-directory))
-           <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">so that all non pathnames are at the end</span>
-           <span style="color: #00cd00;">"~"</span>))
-     (<span style="color: #00cdcd; font-weight: bold;">with-current-buffer</span> (car b)
+           <span style="color: #b22222;">;; </span><span style="color: #b22222;">so that all non pathnames are at the end</span>
+           <span style="color: #8b2252;">"~"</span>))
+     (<span style="color: #a020f0;">with-current-buffer</span> (car b)
        (or buffer-file-name
-           (<span style="color: #00cdcd; font-weight: bold;">if</span> (eq major-mode 'dired-mode)
+           (<span style="color: #a020f0;">if</span> (eq major-mode 'dired-mode)
                (expand-file-name dired-directory))
-           <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">so that all non pathnames are at the end</span>
-           <span style="color: #00cd00;">"~"</span>))))
-  (define-key ibuffer-mode-map (kbd <span style="color: #00cd00;">"s p"</span>)     'ibuffer-do-sort-by-filename-or-dired)
+           <span style="color: #b22222;">;; </span><span style="color: #b22222;">so that all non pathnames are at the end</span>
+           <span style="color: #8b2252;">"~"</span>))))
+  (define-key ibuffer-mode-map (kbd <span style="color: #8b2252;">"s p"</span>)     'ibuffer-do-sort-by-filename-or-dired)
   )
 </pre>
 
@@ -1492,14 +1526,14 @@ From <a href="http://curiousprogrammer.wordpress.com/2009/04/02/ibuffer/">http:/
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">ibuffer-ediff-marked-buffers</span> ()
-  <span style="color: #00cd00;">"Compare two marked buffers using ediff"</span>
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ibuffer-ediff-marked-buffers</span> ()
+  <span style="color: #8b2252;">"Compare two marked buffers using ediff"</span>
   (interactive)
-  (<span style="color: #00cdcd; font-weight: bold;">let*</span> ((marked-buffers (ibuffer-get-marked-buffers))
+  (<span style="color: #a020f0;">let*</span> ((marked-buffers (ibuffer-get-marked-buffers))
          (len (length marked-buffers)))
-    (<span style="color: #00cdcd; font-weight: bold;">unless</span> (= 2 len)
-      (<span style="color: #cd0000;">error</span> (format <span style="color: #00cd00;">"%s buffer%s been marked (needs to be 2)"</span>
-                     len (<span style="color: #00cdcd; font-weight: bold;">if</span> (= len 1) <span style="color: #00cd00;">" has"</span> <span style="color: #00cd00;">"s have"</span>))))
+    (<span style="color: #a020f0;">unless</span> (= 2 len)
+      (<span style="color: #ff0000; font-weight: bold;">error</span> (format <span style="color: #8b2252;">"%s buffer%s been marked (needs to be 2)"</span>
+                     len (<span style="color: #a020f0;">if</span> (= len 1) <span style="color: #8b2252;">" has"</span> <span style="color: #8b2252;">"s have"</span>))))
     (ediff-buffers (car marked-buffers) (cadr marked-buffers))))
 </pre>
 
@@ -1511,12 +1545,12 @@ Hooks
 
 
 <pre class="src src-elisp">(add-hook 'ibuffer-mode-hook
-          '(<span style="color: #00cdcd; font-weight: bold;">lambda</span> ()
-             (ibuffer-auto-mode 1) <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">minor mode that keeps the buffer list up to date</span>
-             (ibuffer-switch-to-saved-filter-groups <span style="color: #00cd00;">"default"</span>)
-             (define-key ibuffer-mode-map (kbd <span style="color: #00cd00;">"a"</span>) 'ibuffer-show-all-filter-groups)
-             (define-key ibuffer-mode-map (kbd <span style="color: #00cd00;">"z"</span>) 'ibuffer-hide-all-filter-groups)
-             (define-key ibuffer-mode-map (kbd <span style="color: #00cd00;">"e"</span>) 'ibuffer-ediff-marked-buffers)
+          '(<span style="color: #a020f0;">lambda</span> ()
+             (ibuffer-auto-mode 1) <span style="color: #b22222;">;; </span><span style="color: #b22222;">minor mode that keeps the buffer list up to date</span>
+             (ibuffer-switch-to-saved-filter-groups <span style="color: #8b2252;">"default"</span>)
+             (define-key ibuffer-mode-map (kbd <span style="color: #8b2252;">"a"</span>) 'ibuffer-show-all-filter-groups)
+             (define-key ibuffer-mode-map (kbd <span style="color: #8b2252;">"z"</span>) 'ibuffer-hide-all-filter-groups)
+             (define-key ibuffer-mode-map (kbd <span style="color: #8b2252;">"e"</span>) 'ibuffer-ediff-marked-buffers)
              (my-ibuffer-sort-hook)
              )
           )
@@ -1541,7 +1575,7 @@ Hooks
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">uniquify</span>)
+<pre class="src src-elisp">(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">uniquify</span>)
 </pre>
 
 
@@ -1577,11 +1611,11 @@ use recentf with ido - see <a href="http://wikemacs.org/wiki/Recentf">http://wik
 
 
 <pre class="src src-elisp">(recentf-mode 1)
-(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">ido-choose-from-recentf</span> ()
-  <span style="color: #00cd00;">"Use ido to select a recently visited file from the `</span><span style="color: #cd00cd;">recentf-list</span><span style="color: #00cd00;">'"</span>
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ido-choose-from-recentf</span> ()
+  <span style="color: #8b2252;">"Use ido to select a recently visited file from the `</span><span style="color: #008b8b;">recentf-list</span><span style="color: #8b2252;">'"</span>
   (interactive)
-  (find-file (ido-completing-read <span style="color: #00cd00;">"Open file: "</span> recentf-list nil t)))
-(global-set-key (kbd <span style="color: #00cd00;">"C-c f"</span>) 'ido-choose-from-recentf)
+  (find-file (ido-completing-read <span style="color: #8b2252;">"Open file: "</span> recentf-list nil t)))
+(global-set-key (kbd <span style="color: #8b2252;">"C-c f"</span>) 'ido-choose-from-recentf)
 </pre>
 
 
@@ -1597,7 +1631,7 @@ use recentf with ido - see <a href="http://wikemacs.org/wiki/Recentf">http://wik
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">vc-git</span>)
+<pre class="src src-elisp">(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">vc-git</span>)
 </pre>
 
 
@@ -1615,11 +1649,11 @@ cd magit &amp;&amp; make
 
 
 
-<pre class="src src-elisp">(add-to-list 'load-path <span style="color: #00cd00;">"~/.emacs.d/magit"</span>)
-(<span style="color: #00cdcd; font-weight: bold;">condition-case</span> nil
-    (<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">magit</span>)
-  (<span style="color: #cd0000;">error</span> (message <span style="color: #00cd00;">"** could not load magit"</span>)))
-(global-set-key (kbd <span style="color: #00cd00;">"C-c m"</span>) 'magit-status)
+<pre class="src src-elisp">(add-to-list 'load-path <span style="color: #8b2252;">"~/.emacs.d/magit"</span>)
+(<span style="color: #a020f0;">condition-case</span> nil
+    (<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">magit</span>)
+  (<span style="color: #ff0000; font-weight: bold;">error</span> (message <span style="color: #8b2252;">"** could not load magit"</span>)))
+(global-set-key (kbd <span style="color: #8b2252;">"C-c m"</span>) 'magit-status)
 </pre>
 
 
@@ -1644,7 +1678,7 @@ Use sqlite3
 
 
 
-<pre class="src src-elisp">(setq sql-sqlite-program <span style="color: #00cd00;">"sqlite3"</span>)
+<pre class="src src-elisp">(setq sql-sqlite-program <span style="color: #8b2252;">"sqlite3"</span>)
 </pre>
 
 
@@ -1657,37 +1691,37 @@ Preset connections
 <pre class="src src-elisp">(setq sql-connection-alist
       '((filemaker-sps
          (sql-product 'mysql)
-         (sql-server <span style="color: #00cd00;">"1.2.3.4"</span>)
-         (sql-user <span style="color: #00cd00;">"me"</span>)
-         (sql-password <span style="color: #00cd00;">"mypassword"</span>)
-         (sql-database <span style="color: #00cd00;">"thedb"</span>)
+         (sql-server <span style="color: #8b2252;">"1.2.3.4"</span>)
+         (sql-user <span style="color: #8b2252;">"me"</span>)
+         (sql-password <span style="color: #8b2252;">"mypassword"</span>)
+         (sql-database <span style="color: #8b2252;">"thedb"</span>)
          (sql-port 3307))))
 
-(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">sql-connect-preset</span> (name)
-  <span style="color: #00cd00;">"Connect to a predefined SQL connection listed in `</span><span style="color: #cd00cd;">sql-connection-alist</span><span style="color: #00cd00;">'"</span>
-  (eval `(<span style="color: #00cdcd; font-weight: bold;">let</span> ,(cdr (assoc name sql-connection-alist))
-    (<span style="color: #00cdcd; font-weight: bold;">flet</span> ((sql-get-login (<span style="color: #00cd00;">&amp;rest</span> what)))
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">sql-connect-preset</span> (name)
+  <span style="color: #8b2252;">"Connect to a predefined SQL connection listed in `</span><span style="color: #008b8b;">sql-connection-alist</span><span style="color: #8b2252;">'"</span>
+  (eval `(<span style="color: #a020f0;">let</span> ,(cdr (assoc name sql-connection-alist))
+    (<span style="color: #a020f0;">flet</span> ((sql-get-login (<span style="color: #228b22;">&amp;rest</span> what)))
       (sql-product-interactive sql-product)))))
 
-(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">sql-mastermu</span> ()
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">sql-mastermu</span> ()
   (interactive)
   (sql-connect-preset 'mastermu))
 
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">buffer naming</span>
-(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">sql-make-smart-buffer-name</span> ()
-  <span style="color: #00cd00;">"Return a string that can be used to rename a SQLi buffer.</span>
-<span style="color: #00cd00;">This is used to set `</span><span style="color: #cd00cd;">sql-alternate-buffer-name</span><span style="color: #00cd00;">' within</span>
-<span style="color: #00cd00;">`</span><span style="color: #cd00cd;">sql-interactive-mode</span><span style="color: #00cd00;">'."</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">buffer naming</span>
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">sql-make-smart-buffer-name</span> ()
+  <span style="color: #8b2252;">"Return a string that can be used to rename a SQLi buffer.</span>
+<span style="color: #8b2252;">This is used to set `</span><span style="color: #008b8b;">sql-alternate-buffer-name</span><span style="color: #8b2252;">' within</span>
+<span style="color: #8b2252;">`</span><span style="color: #008b8b;">sql-interactive-mode</span><span style="color: #8b2252;">'."</span>
   (or (and (boundp 'sql-name) sql-name)
-      (concat (<span style="color: #00cdcd; font-weight: bold;">if</span> (not(string= <span style="color: #00cd00;">""</span> sql-server))
+      (concat (<span style="color: #a020f0;">if</span> (not(string= <span style="color: #8b2252;">""</span> sql-server))
                   (concat
-                   (or (and (string-match <span style="color: #00cd00;">"[0-9.]+"</span> sql-server) sql-server)
-                       (car (split-string sql-server <span style="color: #00cd00;">"\\."</span>)))
-                   <span style="color: #00cd00;">"/"</span>))
+                   (or (and (string-match <span style="color: #8b2252;">"[0-9.]+"</span> sql-server) sql-server)
+                       (car (split-string sql-server <span style="color: #8b2252;">"\\."</span>)))
+                   <span style="color: #8b2252;">"/"</span>))
               sql-database)))
 
 (add-hook 'sql-interactive-mode-hook
-          (<span style="color: #00cdcd; font-weight: bold;">lambda</span> ()
+          (<span style="color: #a020f0;">lambda</span> ()
             (setq sql-alternate-buffer-name (sql-make-smart-buffer-name))
             (sql-rename-buffer)))
 </pre>
@@ -1711,10 +1745,10 @@ Preset connections
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">epa-file</span>)
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">(epa-file-enable)</span>
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">suppress graphical passphrase prompt</span>
-(setenv <span style="color: #00cd00;">"GPG_AGENT_INFO"</span> nil)
+<pre class="src src-elisp">(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">epa-file</span>)
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">(epa-file-enable)</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">suppress graphical passphrase prompt</span>
+(setenv <span style="color: #8b2252;">"GPG_AGENT_INFO"</span> nil)
 </pre>
 
 
@@ -1749,9 +1783,9 @@ Activate using <code>M-x rainbow-delimiters-mode</code>
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">condition-case</span> nil
-    (<span style="color: #00cdcd; font-weight: bold;">require</span> '<span style="color: #cd00cd;">rainbow-delimiters</span>)
-  (<span style="color: #cd0000;">error</span> (message <span style="color: #00cd00;">"** could not load rainbow-delimiters"</span>)))
+<pre class="src src-elisp">(<span style="color: #a020f0;">condition-case</span> nil
+    (<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">rainbow-delimiters</span>)
+  (<span style="color: #ff0000; font-weight: bold;">error</span> (message <span style="color: #8b2252;">"** could not load rainbow-delimiters"</span>)))
 </pre>
 
 
@@ -1775,8 +1809,8 @@ Activate using <code>M-x rainbow-delimiters-mode</code>
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">copy-buffer-file-name</span> ()
-  <span style="color: #00cd00;">"Add `</span><span style="color: #cd00cd;">buffer-file-name</span><span style="color: #00cd00;">' to `</span><span style="color: #cd00cd;">kill-ring</span><span style="color: #00cd00;">'"</span>
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">copy-buffer-file-name</span> ()
+  <span style="color: #8b2252;">"Add `</span><span style="color: #008b8b;">buffer-file-name</span><span style="color: #8b2252;">' to `</span><span style="color: #008b8b;">kill-ring</span><span style="color: #8b2252;">'"</span>
   (interactive)
   (kill-new buffer-file-name t)
 )
@@ -1796,8 +1830,8 @@ Activate using <code>M-x rainbow-delimiters-mode</code>
 
 
 <pre class="src src-elisp">(fset 'copy-and-comment
-   <span style="color: #00cd00;">"\367\C-x\C-x\273"</span>)
-(global-set-key (kbd <span style="color: #00cd00;">"M-C-;"</span>) 'copy-and-comment)
+   <span style="color: #8b2252;">"\367\C-x\C-x\273"</span>)
+(global-set-key (kbd <span style="color: #8b2252;">"M-C-;"</span>) 'copy-and-comment)
 </pre>
 
 
@@ -1814,7 +1848,7 @@ Activate using <code>M-x rainbow-delimiters-mode</code>
 
 
 <pre class="src src-elisp">(fset 'get-buffer-file-name
-   <span style="color: #00cd00;">"\C-hvbuffer-file-name\C-m"</span>)
+   <span style="color: #8b2252;">"\C-hvbuffer-file-name\C-m"</span>)
 </pre>
 
 
@@ -1833,11 +1867,11 @@ from <a href="http://defindit.com/readme_files/emacs_hints_tricks.html">http://d
 
 
 
-<pre class="src src-elisp">(<span style="color: #00cdcd; font-weight: bold;">defun</span> <span style="color: #0000ee; font-weight: bold;">unfill-paragraph</span> ()
+<pre class="src src-elisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">unfill-paragraph</span> ()
   (interactive)
-  (<span style="color: #00cdcd; font-weight: bold;">let</span> ((fill-column (point-max)))
+  (<span style="color: #a020f0;">let</span> ((fill-column (point-max)))
   (fill-paragraph nil)))
-(global-set-key (kbd <span style="color: #00cd00;">"M-C-q"</span>) 'unfill-paragraph)
+(global-set-key (kbd <span style="color: #8b2252;">"M-C-q"</span>) 'unfill-paragraph)
 </pre>
 
 
@@ -1873,24 +1907,24 @@ Buffers opened from command line don't create new frame
 
 
 
-<pre class="src src-elisp"><span style="color: #cd0000;">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
-<span style="color: #cd0000;">;; </span><span style="color: #cd0000;">content below was added by emacs ;;;;;;</span>
-<span style="color: #cd0000;">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
+<pre class="src src-elisp"><span style="color: #b22222;">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">content below was added by emacs ;;;;;;</span>
+<span style="color: #b22222;">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (custom-set-variables
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">custom-set-variables was added by Custom.</span>
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">If you edit it by hand, you could mess it up, so be careful.</span>
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">Your init file should contain only one such instance.</span>
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">If there is more than one, they won't work right.</span>
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">custom-set-variables was added by Custom.</span>
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">If you edit it by hand, you could mess it up, so be careful.</span>
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">Your init file should contain only one such instance.</span>
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">If there is more than one, they won't work right.</span>
  '(safe-local-variable-values (quote ((toggle-read-only . t))))
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify)))
 (custom-set-faces
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">custom-set-faces was added by Custom.</span>
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">If you edit it by hand, you could mess it up, so be careful.</span>
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">Your init file should contain only one such instance.</span>
-  <span style="color: #cd0000;">;; </span><span style="color: #cd0000;">If there is more than one, they won't work right.</span>
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">custom-set-faces was added by Custom.</span>
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">If you edit it by hand, you could mess it up, so be careful.</span>
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">Your init file should contain only one such instance.</span>
+  <span style="color: #b22222;">;; </span><span style="color: #b22222;">If there is more than one, they won't work right.</span>
  )
 </pre>
 

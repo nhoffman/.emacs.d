@@ -69,6 +69,14 @@ Tangle and export html
     )
 #+END_SRC
 
+Set up ghpages clone
+
+#+begin_example
+git clone git@github.com:nhoffman/.emacs.d.git .emacs.d.ghpages
+cd .emacs.d.ghpages
+git checkout gh-pages
+#+end_example
+
 * Various aliases and key bindings
 
 #+BEGIN_SRC elisp :tangle init.el
