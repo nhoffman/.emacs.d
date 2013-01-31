@@ -832,6 +832,25 @@ Hooks
 	  )
 #+END_SRC
 
+* dired
+
+Omit uninteresting files.
+
+- http://www.gnu.org/software/emacs/manual/html_node/dired-x/Omitting-Files-in-Dired.html
+
+#+BEGIN_SRC elisp :tangle init.el
+  ;; (add-hook 'dired-load-hook
+  ;;           (lambda ()
+  ;;             (load "dired-x")
+  ;;             ))
+  ;; (add-hook 'dired-mode-hook
+  ;;           (lambda ()
+  ;;             ;; Set dired-x buffer-local variables here.
+  ;;             (dired-omit-mode 1)
+  ;;             (setq dired-omit-extensions '(".pyc" ".git/"))
+  ;;             ))
+#+END_SRC
+
 * uniquify
 
 - http://www.emacswiki.org/emacs/uniquify
