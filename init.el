@@ -38,26 +38,26 @@
   (copy-file "init.html" "../.emacs.d.ghpages/index.html" t)
   )
 
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (package-initialize)
-
-  ;; the default value of package-archives is (("gnu" . "http://elpa.gnu.org/packages/"))
-
-  ;; Original Emacs Lisp Package Archive
-  (add-to-list 'package-archives
-               '("elpa" . "http://tromey.com/elpa/") t)
-  ;; User-contributed repository
-  ;; Marmalade is for packages that cannot be uploaded to s official ELPA repository.
-  (add-to-list 'package-archives
-               '("marmalade" . "http://marmalade-repo.org/packages/") t)
-  (add-to-list 'package-archives 
-               '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  (add-to-list 'package-archives 
-               '("org" . "http://orgmode.org/elpa/") t)
-  )
-
 (require 'package)
+
+(defvar package-my-package-list
+  '(gist magit org python-pylint ess))
+
+(defun package-install-list (package-list)
+  ;; Install each package named in "package-list" using elpa if not
+  ;; already installed.
+  (while package-list
+    (setq pkg (car package-list))
+    (unless (package-installed-p pkg)
+      (cond ((yes-or-no-p (format "Install %s? " pkg))
+             (package-install pkg))))
+    (setq package-list (cdr package-list)))
+)
+
+(defun package-install-my-packages ()
+  ;; Interactively installs packages listed in global 'package-my-package-list'
+  (interactive)
+  (package-install-list package-my-package-list))
 
 (defalias 'dtw 'delete-trailing-whitespace)
 
@@ -236,7 +236,7 @@
 
 (condition-case nil
     (require 'tex-site)
-  (error (message "** could not load auctex")))
+  (error (message "** could not load tex-site")))
 
 (add-hook 'ess-mode-hook
           '(lambda()
