@@ -54,6 +54,14 @@
        '("org" . "http://orgmode.org/elpa/") t)
   )
 
+(defun package-installed-not-builtin-p (package &optional min-version)
+  "Return true if PACKAGE, of MIN-VERSION or newer, is installed, ignoring built in packages.
+MIN-VERSION should be a version list."
+  (let ((pkg-desc (assq package package-alist)))
+    (if pkg-desc
+        (version-list-<= min-version
+                         (package-desc-vers (cdr pkg-desc))))))
+
 (defvar package-my-package-list
   '(gist magit org python-pylint ess htmlize edit-server markdown-mode moinmoin-mode rainbow-delimiters))
 
@@ -62,10 +70,11 @@
   ;; already installed.
   (while package-list
     (setq pkg (car package-list))
-    (unless (package-installed-p pkg)
+    (unless (package-installed-not-builtin-p pkg)
       (cond ((yes-or-no-p (format "Install %s? " pkg))
              (package-install pkg))))
     (setq package-list (cdr package-list)))
+  (message "done installing packages.")
 )
 
 (defun package-install-my-packages ()
