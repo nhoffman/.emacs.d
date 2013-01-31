@@ -111,12 +111,13 @@ Add some extra package repositories. The default value of package-archives is
 
 I didn't see any obvious way to configure which packages to install,
 so here are some functions to do so. Call
-"package-install-my-packages" interactively to install any missing
-packages.
+'package-install-my-packages' interactively to install any missing
+packages. It seems to be necessary to run 'M-x package-list-packages'
+first.
 
 #+BEGIN_SRC elisp :tangle init.el
 (defvar package-my-package-list
-  '(gist magit org python-pylint ess))
+  '(gist magit org python-pylint ess htmlize edit-server markdown-mode moinmoin-mode rainbow-delimiters))
 
 (defun package-install-list (package-list)
   ;; Install each package named in "package-list" using elpa if not
@@ -230,9 +231,6 @@ Detect platform and window system and set up fonts accordingly
 	 (setq mac-option-modifier 'meta)
 	 (setq mac-command-key-is-meta nil)
 	 (setq my-default-font "Bitstream Vera Sans Mono-14")
-	 ;; enable edit-with-emacs for chrome
-	 ;; (require 'edit-server)
-	 ;; (edit-server-start)
 	 ))
 	((string= "x" window-system)
 	 (progn
@@ -594,40 +592,19 @@ Add an entry to todo file.
 				  "\n** TODO <%Y-%m-%d %a>")))
 #+END_SRC
 
-* moinmoin
-Requires http://homepage1.nifty.com/bmonkey/emacs/elisp/screen-lines.el
-
-Installation:
-
-: wget -U Mozilla -O moinmoin-mode.el "http://moinmoin.wikiwikiweb.de/EmacsForMoinMoin/MoinMoinMode?action=raw"
-
-#+BEGIN_SRC elisp :tangle init.el
-(condition-case nil
-    (require 'moinmoin-mode)
-  (error (message "** could not load moinmon-mode")))
-#+END_SRC
-
 * markdown
 
-See http://jblevins.org/projects/markdown-mode/
-
-Installation
-
-: wget http://jblevins.org/git/markdown-mode.git/plain/markdown-mode.el
+Installed using elpa.
 
 #+BEGIN_SRC elisp :tangle init.el
-(autoload 'markdown-mode "markdown-mode.el"
-   "Major mode for editing Markdown files" t)
 (push '("\\.md" . markdown-mode) auto-mode-alist)
 #+END_SRC
 
 * chrome "edit with emacs"
 
-#+BEGIN_SRC elisp :tangle init.el
-(condition-case nil
-    (require 'edit-server)
-  (error (message "** could not load edit-server (chrome edit with emacs)")))
+'edit-server' is initialized by elpa, but we need to start the server.
 
+#+BEGIN_SRC elisp :tangle init.el
 (condition-case nil
     (edit-server-start)
   (error (message "** could not start edit-server (chrome edit with emacs)")))
@@ -935,26 +912,23 @@ This is used to set `sql-alternate-buffer-name' within
 (setenv "GPG_AGENT_INFO" nil)
 #+END_SRC
 
-* rainbow-delimiters
+* wc
 
-- see http://www.emacswiki.org/emacs/RainbowDelimiters
+From http://emacswiki.org/emacs/wc.el
 
-Setup
+To install:
 
 : cd ~/.emacs.d
-: wget http://www.emacswiki.org/emacs/download/rainbow-delimiters.el
-: emacs -batch -f batch-byte-compile rainbow-delimiters.el
-
-Activate using =M-x rainbow-delimiters-mode=
+: wget http://www.emacswiki.org/emacs/download/wc.el
 
 #+BEGIN_SRC elisp :tangle init.el
-(condition-case nil
-    (require 'rainbow-delimiters)
-  (error (message "** could not load rainbow-delimiters")))
+  (condition-case nil
+      (require 'wc)
+        (error (message "** could not load wc.el")))
+
 #+END_SRC
 
 * Misc utilities
-
 ** copy-buffer-file-name
 
 #+BEGIN_SRC elisp :tangle init.el

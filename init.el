@@ -55,7 +55,7 @@
   )
 
 (defvar package-my-package-list
-  '(gist magit org python-pylint ess))
+  '(gist magit org python-pylint ess htmlize edit-server markdown-mode moinmoin-mode rainbow-delimiters))
 
 (defun package-install-list (package-list)
   ;; Install each package named in "package-list" using elpa if not
@@ -121,9 +121,6 @@
          (setq mac-option-modifier 'meta)
          (setq mac-command-key-is-meta nil)
          (setq my-default-font "Bitstream Vera Sans Mono-14")
-         ;; enable edit-with-emacs for chrome
-         ;; (require 'edit-server)
-         ;; (edit-server-start)
          ))
         ((string= "x" window-system)
          (progn
@@ -331,17 +328,7 @@
                    (org-add-entry "~/Dropbox/notes/todo.org"
                                   "\n** TODO <%Y-%m-%d %a>")))
 
-(condition-case nil
-    (require 'moinmoin-mode)
-  (error (message "** could not load moinmon-mode")))
-
-(autoload 'markdown-mode "markdown-mode.el"
-   "Major mode for editing Markdown files" t)
 (push '("\\.md" . markdown-mode) auto-mode-alist)
-
-(condition-case nil
-    (require 'edit-server)
-  (error (message "** could not load edit-server (chrome edit with emacs)")))
 
 (condition-case nil
     (edit-server-start)
@@ -542,8 +529,8 @@ This is used to set `sql-alternate-buffer-name' within
 (setenv "GPG_AGENT_INFO" nil)
 
 (condition-case nil
-    (require 'rainbow-delimiters)
-  (error (message "** could not load rainbow-delimiters")))
+    (require 'wc)
+      (error (message "** could not load wc.el")))
 
 (defun copy-buffer-file-name ()
   "Add `buffer-file-name' to `kill-ring'"
