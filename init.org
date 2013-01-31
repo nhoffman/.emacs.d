@@ -534,6 +534,8 @@ org-mode hooks
 
 ** pygments
 
+Syntax highlighting using =pygments= (http://pygments.org/).
+
 http://oompiller.wordpress.com/2011/07/05/syntax-highlighting-using-pygment-in-org-mode/
 
 Install with

@@ -466,6 +466,17 @@
              )
           )
 
+;; (add-hook 'dired-load-hook
+;;           (lambda ()
+;;             (load "dired-x")
+;;             ))
+;; (add-hook 'dired-mode-hook
+;;           (lambda ()
+;;             ;; Set dired-x buffer-local variables here.
+;;             (dired-omit-mode 1)
+;;             (setq dired-omit-extensions '(".pyc" ".git/"))
+;;             ))
+
 (require 'uniquify)
 
 (setq ido-enable-flex-matching t)
