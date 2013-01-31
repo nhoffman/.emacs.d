@@ -38,7 +38,21 @@
   (copy-file "init.html" "../.emacs.d.ghpages/index.html" t)
   )
 
-(require 'package)
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  ;; Original Emacs Lisp Package Archive
+  (add-to-list 'package-archives
+       '("elpa" . "http://tromey.com/elpa/") t)
+  ;; User-contributed repository
+  ;; Marmalade is for packages that cannot be uploaded to s official ELPA repository.
+  (add-to-list 'package-archives
+       '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (add-to-list 'package-archives
+       '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives
+       '("org" . "http://orgmode.org/elpa/") t)
+  )
 
 (defvar package-my-package-list
   '(gist magit org python-pylint ess))
@@ -233,10 +247,6 @@
                  (mail-mode))))
 
 (add-to-list 'load-path "~/.emacs.d/")
-
-(condition-case nil
-    (require 'tex-site)
-  (error (message "** could not load tex-site")))
 
 (add-hook 'ess-mode-hook
           '(lambda()

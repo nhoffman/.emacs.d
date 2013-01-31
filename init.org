@@ -88,8 +88,25 @@ Some useful ELPA variables and functions:
 | package-install           | install a package                                                     |
 | package-installed-p       | return true if package is installed                                   |
 
+Add some extra package repositories. The default value of package-archives is
+=(("gnu" . "http://elpa.gnu.org/packages/"))=
+
 #+BEGIN_SRC elisp :tangle init.el
-(require 'package)
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  ;; Original Emacs Lisp Package Archive
+  (add-to-list 'package-archives
+       '("elpa" . "http://tromey.com/elpa/") t)
+  ;; User-contributed repository
+  ;; Marmalade is for packages that cannot be uploaded to s official ELPA repository.
+  (add-to-list 'package-archives
+       '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (add-to-list 'package-archives
+       '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives
+       '("org" . "http://orgmode.org/elpa/") t)
+  )
 #+END_SRC
 
 I didn't see any obvious way to configure which packages to install,
@@ -449,15 +466,11 @@ http://snarfed.org/space/emacs%20font-lock%20faces%20for%20composing%20email
 (add-to-list 'load-path "~/.emacs.d/")
 #+END_SRC
 
-* Auctex
+* LaTeX
 
-#+BEGIN_SRC elisp :tangle init.el
-(condition-case nil
-    (require 'tex-site)
-  (error (message "** could not load tex-site")))
-#+END_SRC
+Built in LaTeX major mode.
 
-(require 'tex-site)
+(require 'tex-mode)
 
 * ESS
 
