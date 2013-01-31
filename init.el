@@ -38,6 +38,27 @@
   (copy-file "init.html" "../.emacs.d.ghpages/index.html" t)
   )
 
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+
+  ;; the default value of package-archives is (("gnu" . "http://elpa.gnu.org/packages/"))
+
+  ;; Original Emacs Lisp Package Archive
+  (add-to-list 'package-archives
+               '("elpa" . "http://tromey.com/elpa/") t)
+  ;; User-contributed repository
+  ;; Marmalade is for packages that cannot be uploaded to s official ELPA repository.
+  (add-to-list 'package-archives
+               '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (add-to-list 'package-archives 
+               '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives 
+               '("org" . "http://orgmode.org/elpa/") t)
+  )
+
+(require 'package)
+
 (defalias 'dtw 'delete-trailing-whitespace)
 
 (global-set-key (kbd "<f6>") 'linum-mode)
@@ -213,22 +234,9 @@
 
 (add-to-list 'load-path "~/.emacs.d/")
 
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-                          ("gnu" . "http://elpa.gnu.org/packages/")
-                          ("marmalade" . "http://marmalade-repo.org/packages/")))
-
 (condition-case nil
     (require 'tex-site)
   (error (message "** could not load auctex")))
-
-(condition-case nil
-    (require 'ess-site "~/.emacs.d/ess/lisp/ess-site")
-  (error (message "** could not load local ESS in ~/.emacs.d; trying system ESS")
-         (condition-case nil
-             (require 'ess-site)
-           (error (message "** could not load system ESS")))
-         )
-  )
 
 (add-hook 'ess-mode-hook
           '(lambda()
@@ -242,9 +250,6 @@
              (flyspell-mode)
              )
           )
-
-(add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
-(require 'org-install)
 
 (add-hook 'org-mode-hook
           '(lambda ()
@@ -353,10 +358,6 @@
 (push '("*.cgi" . python-mode) auto-mode-alist)
 
 (setq backward-delete-char-untabify-method "all")
-
-(add-to-list 'load-path "~/.emacs.d/python-pylint")
-(autoload 'python-pylint "~/.emacs.d/python-pylint")
-(autoload 'pylint "~/.emacs.d/python-pylint")
 
 (add-hook 'text-mode-hook
           '(lambda ()
@@ -484,10 +485,6 @@
 
 (require 'vc-git)
 
-(add-to-list 'load-path "~/.emacs.d/magit")
-(condition-case nil
-    (require 'magit)
-  (error (message "** could not load magit")))
 (global-set-key (kbd "C-c m") 'magit-status)
 
 (setq sql-sqlite-program "sqlite3")
