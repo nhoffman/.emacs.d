@@ -69,6 +69,73 @@ Tangle and export html
     )
 #+END_SRC
 
+Set up ghpages clone
+
+#+begin_example
+git clone git@github.com:nhoffman/.emacs.d.git .emacs.d.ghpages
+cd .emacs.d.ghpages
+git checkout gh-pages
+#+end_example
+
+* ELPA
+
+Set up and initialize ELPA package manager.
+
+Some useful ELPA variables and functions:
+
+| M-x package-list-packages | open list of packages                                                 |
+| package-activated-list    | variable containing list of the names of currently activated packages |
+| package-install           | install a package                                                     |
+| package-installed-p       | return true if package is installed                                   |
+
+Add some extra package repositories. The default value of package-archives is
+=(("gnu" . "http://elpa.gnu.org/packages/"))=
+
+#+BEGIN_SRC elisp :tangle init.el
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  ;; Original Emacs Lisp Package Archive
+  (add-to-list 'package-archives
+       '("elpa" . "http://tromey.com/elpa/") t)
+  ;; User-contributed repository
+  ;; Marmalade is for packages that cannot be uploaded to s official ELPA repository.
+  (add-to-list 'package-archives
+       '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (add-to-list 'package-archives
+       '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives
+       '("org" . "http://orgmode.org/elpa/") t)
+  )
+#+END_SRC
+
+I didn't see any obvious way to configure which packages to install,
+so here are some functions to do so. Call
+'package-install-my-packages' interactively to install any missing
+packages. It seems to be necessary to run 'M-x package-list-packages'
+first.
+
+#+BEGIN_SRC elisp :tangle init.el
+(defvar package-my-package-list
+  '(gist magit org python-pylint ess htmlize edit-server markdown-mode moinmoin-mode rainbow-delimiters))
+
+(defun package-install-list (package-list)
+  ;; Install each package named in "package-list" using elpa if not
+  ;; already installed.
+  (while package-list
+    (setq pkg (car package-list))
+    (unless (package-installed-p pkg)
+      (cond ((yes-or-no-p (format "Install %s? " pkg))
+             (package-install pkg))))
+    (setq package-list (cdr package-list)))
+)
+
+(defun package-install-my-packages ()
+  ;; Interactively installs packages listed in global 'package-my-package-list'
+  (interactive)
+  (package-install-list package-my-package-list))
+#+END_SRC
+
 * Various aliases and key bindings
 
 #+BEGIN_SRC elisp :tangle init.el
@@ -164,9 +231,6 @@ Detect platform and window system and set up fonts accordingly
 	 (setq mac-option-modifier 'meta)
 	 (setq mac-command-key-is-meta nil)
 	 (setq my-default-font "Bitstream Vera Sans Mono-14")
-	 ;; enable edit-with-emacs for chrome
-	 ;; (require 'edit-server)
-	 ;; (edit-server-start)
 	 ))
 	((string= "x" window-system)
 	 (progn
@@ -400,38 +464,13 @@ http://snarfed.org/space/emacs%20font-lock%20faces%20for%20composing%20email
 (add-to-list 'load-path "~/.emacs.d/")
 #+END_SRC
 
-* ELPA
+* LaTeX
 
-Identify and install anew package using =M-x package-list-packages=
+Built in LaTeX major mode.
 
-Use all available package repositories (GNU, ELPA and Marmalade).
-
-#+BEGIN_SRC elisp :tangle init.el
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-                          ("gnu" . "http://elpa.gnu.org/packages/")
-                          ("marmalade" . "http://marmalade-repo.org/packages/")))
-#+END_SRC
-
-* Auctex
-
-#+BEGIN_SRC elisp :tangle init.el
-(condition-case nil
-    (require 'tex-site)
-  (error (message "** could not load auctex")))
-#+END_SRC
+(require 'tex-mode)
 
 * ESS
-
-#+BEGIN_SRC elisp :tangle init.el
-(condition-case nil
-    (require 'ess-site "~/.emacs.d/ess/lisp/ess-site")
-  (error (message "** could not load local ESS in ~/.emacs.d; trying system ESS")
-	 (condition-case nil
-	     (require 'ess-site)
-	   (error (message "** could not load system ESS")))
-	 )
-  )
-#+END_SRC
 
 Hooks
 
@@ -451,32 +490,6 @@ Hooks
 #+END_SRC
 
 * org-mode
-
-Add a git submodule (http://orgmode.org/worg/org-faq.html#keeping-current-with-Org-mode-development)
-
-: git submodule add git://orgmode.org/org-mode.git
-: git submodule init
-: git commit -a -m "add org-mode as submodule"
-: git push
-
-Add git submodule to clean clone
-
-: cd .emacs.d && git submodule init && git submodule update
-
-Refresh
-
-: cd ~/.emacs.d/org-mode && git pull && make clean && make && make doc
-
-Install
-
-: cd org-mode && make && make doc
-
-Use org-mode
-
-#+BEGIN_SRC elisp :tangle init.el
-(add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
-(require 'org-install)
-#+END_SRC
 
 org-mode hooks
 
@@ -520,6 +533,8 @@ org-mode hooks
 #+END_SRC
 
 ** pygments
+
+Syntax highlighting using =pygments= (http://pygments.org/).
 
 http://oompiller.wordpress.com/2011/07/05/syntax-highlighting-using-pygment-in-org-mode/
 
@@ -579,40 +594,19 @@ Add an entry to todo file.
 				  "\n** TODO <%Y-%m-%d %a>")))
 #+END_SRC
 
-* moinmoin
-Requires http://homepage1.nifty.com/bmonkey/emacs/elisp/screen-lines.el
-
-Installation:
-
-: wget -U Mozilla -O moinmoin-mode.el "http://moinmoin.wikiwikiweb.de/EmacsForMoinMoin/MoinMoinMode?action=raw"
-
-#+BEGIN_SRC elisp :tangle init.el
-(condition-case nil
-    (require 'moinmoin-mode)
-  (error (message "** could not load moinmon-mode")))
-#+END_SRC
-
 * markdown
 
-See http://jblevins.org/projects/markdown-mode/
-
-Installation
-
-: wget http://jblevins.org/git/markdown-mode.git/plain/markdown-mode.el
+Installed using elpa.
 
 #+BEGIN_SRC elisp :tangle init.el
-(autoload 'markdown-mode "markdown-mode.el"
-   "Major mode for editing Markdown files" t)
 (push '("\\.md" . markdown-mode) auto-mode-alist)
 #+END_SRC
 
 * chrome "edit with emacs"
 
-#+BEGIN_SRC elisp :tangle init.el
-(condition-case nil
-    (require 'edit-server)
-  (error (message "** could not load edit-server (chrome edit with emacs)")))
+'edit-server' is initialized by elpa, but we need to start the server.
 
+#+BEGIN_SRC elisp :tangle init.el
 (condition-case nil
     (edit-server-start)
   (error (message "** could not start edit-server (chrome edit with emacs)")))
@@ -659,17 +653,9 @@ deleting a single character.
 
 * python-pylint
 
-https://gist.github.com/302848
-
-: git submodule add git://gist.github.com/302848.git python-pylint
+Installed using ELPA.
 
 Invoke with =M-x python-pylint RET=
-
-#+BEGIN_SRC elisp :tangle init.el
-(add-to-list 'load-path "~/.emacs.d/python-pylint")
-(autoload 'python-pylint "~/.emacs.d/python-pylint")
-(autoload 'pylint "~/.emacs.d/python-pylint")
-#+END_SRC
 
 * text-mode
 
@@ -824,6 +810,25 @@ Hooks
 	  )
 #+END_SRC
 
+* dired
+
+Omit uninteresting files.
+
+- http://www.gnu.org/software/emacs/manual/html_node/dired-x/Omitting-Files-in-Dired.html
+
+#+BEGIN_SRC elisp :tangle init.el
+  ;; (add-hook 'dired-load-hook
+  ;;           (lambda ()
+  ;;             (load "dired-x")
+  ;;             ))
+  ;; (add-hook 'dired-mode-hook
+  ;;           (lambda ()
+  ;;             ;; Set dired-x buffer-local variables here.
+  ;;             (dired-omit-mode 1)
+  ;;             (setq dired-omit-extensions '(".pyc" ".git/"))
+  ;;             ))
+#+END_SRC
+
 * uniquify
 
 - http://www.emacswiki.org/emacs/uniquify
@@ -860,20 +865,9 @@ use recentf with ido - see http://wikemacs.org/wiki/Recentf
 (require 'vc-git)
 #+END_SRC
 
-Add magit (http://philjackson.github.com/magit/) as a submodule
-
-#+begin_example
-cd ~/.emacs.d
-git submodule add https://github.com/magit/magit.git
-git commit -a -m "add magit as submodule"
-cd magit && make
-#+end_example
+Magit is installed via ELPA.
 
 #+BEGIN_SRC elisp :tangle init.el
-(add-to-list 'load-path "~/.emacs.d/magit")
-(condition-case nil
-    (require 'magit)
-  (error (message "** could not load magit")))
 (global-set-key (kbd "C-c m") 'magit-status)
 #+END_SRC
 
@@ -939,26 +933,23 @@ This is used to set `sql-alternate-buffer-name' within
 (setenv "GPG_AGENT_INFO" nil)
 #+END_SRC
 
-* rainbow-delimiters
+* wc
 
-- see http://www.emacswiki.org/emacs/RainbowDelimiters
+From http://emacswiki.org/emacs/wc.el
 
-Setup
+To install:
 
 : cd ~/.emacs.d
-: wget http://www.emacswiki.org/emacs/download/rainbow-delimiters.el
-: emacs -batch -f batch-byte-compile rainbow-delimiters.el
-
-Activate using =M-x rainbow-delimiters-mode=
+: wget http://www.emacswiki.org/emacs/download/wc.el
 
 #+BEGIN_SRC elisp :tangle init.el
-(condition-case nil
-    (require 'rainbow-delimiters)
-  (error (message "** could not load rainbow-delimiters")))
+  (condition-case nil
+      (require 'wc)
+        (error (message "** could not load wc.el")))
+
 #+END_SRC
 
 * Misc utilities
-
 ** copy-buffer-file-name
 
 #+BEGIN_SRC elisp :tangle init.el

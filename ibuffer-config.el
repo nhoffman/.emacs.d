@@ -145,9 +145,18 @@
 		(filename . "/ion_pilot/docs/"))
 	       ("ion_pilot-tests"
 		(filename . "/ion_pilot/tests/"))
+	       ("ion_pilot-scons"
+		(or
+		 (filename . "/ion_pilot/SConstruct")
+		 (filename . "/ion_pilot/\.\+/SConstruct")
+		 ))
+	       ("ion_pilot-org"
+		(filename . "/ion_pilot/\.\+.org\$"))
 	       ("ion_pilot"
 		(filename . "/ion_pilot/"))
 
+	       ("ion_pplacer"
+		(filename . "/ion_pplacer/"))
 
 	       ("clinlabr"
 	      	(filename . "/clinlabr/"))
@@ -479,6 +488,13 @@
 	       (".emacs.d"
 	      	(filename . "/.emacs.d/"))
 
+	       ;; inferior R processes
+	       ;; ("R processes"
+	       ;; 	(filename . "^\\.R"))
+
+	       ("R help"
+		(name . "\*help"))
+
 	       ;; catch remaining files by mode
 	       ("R-files"
 	      	(or
@@ -491,6 +507,10 @@
 
 	       ("emacs-lisp"
 	      	(mode . emacs-lisp-mode))
+
+	       ("Dired"
+	      	(mode . dired-mode))
+
 	       )
 
 	      ;; ;;;;;;;;;;;;;;;;;

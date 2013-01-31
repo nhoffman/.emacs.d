@@ -38,6 +38,41 @@
   (copy-file "init.html" "../.emacs.d.ghpages/index.html" t)
   )
 
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  ;; Original Emacs Lisp Package Archive
+  (add-to-list 'package-archives
+       '("elpa" . "http://tromey.com/elpa/") t)
+  ;; User-contributed repository
+  ;; Marmalade is for packages that cannot be uploaded to s official ELPA repository.
+  (add-to-list 'package-archives
+       '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (add-to-list 'package-archives
+       '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives
+       '("org" . "http://orgmode.org/elpa/") t)
+  )
+
+(defvar package-my-package-list
+  '(gist magit org python-pylint ess htmlize edit-server markdown-mode moinmoin-mode rainbow-delimiters))
+
+(defun package-install-list (package-list)
+  ;; Install each package named in "package-list" using elpa if not
+  ;; already installed.
+  (while package-list
+    (setq pkg (car package-list))
+    (unless (package-installed-p pkg)
+      (cond ((yes-or-no-p (format "Install %s? " pkg))
+             (package-install pkg))))
+    (setq package-list (cdr package-list)))
+)
+
+(defun package-install-my-packages ()
+  ;; Interactively installs packages listed in global 'package-my-package-list'
+  (interactive)
+  (package-install-list package-my-package-list))
+
 (defalias 'dtw 'delete-trailing-whitespace)
 
 (global-set-key (kbd "<f6>") 'linum-mode)
@@ -86,9 +121,6 @@
          (setq mac-option-modifier 'meta)
          (setq mac-command-key-is-meta nil)
          (setq my-default-font "Bitstream Vera Sans Mono-14")
-         ;; enable edit-with-emacs for chrome
-         ;; (require 'edit-server)
-         ;; (edit-server-start)
          ))
         ((string= "x" window-system)
          (progn
@@ -213,23 +245,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/")
 
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-                          ("gnu" . "http://elpa.gnu.org/packages/")
-                          ("marmalade" . "http://marmalade-repo.org/packages/")))
-
-(condition-case nil
-    (require 'tex-site)
-  (error (message "** could not load auctex")))
-
-(condition-case nil
-    (require 'ess-site "~/.emacs.d/ess/lisp/ess-site")
-  (error (message "** could not load local ESS in ~/.emacs.d; trying system ESS")
-         (condition-case nil
-             (require 'ess-site)
-           (error (message "** could not load system ESS")))
-         )
-  )
-
 (add-hook 'ess-mode-hook
           '(lambda()
              (message "Loading ess-mode hooks")
@@ -242,9 +257,6 @@
              (flyspell-mode)
              )
           )
-
-(add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
-(require 'org-install)
 
 (add-hook 'org-mode-hook
           '(lambda ()
@@ -316,17 +328,7 @@
                    (org-add-entry "~/Dropbox/notes/todo.org"
                                   "\n** TODO <%Y-%m-%d %a>")))
 
-(condition-case nil
-    (require 'moinmoin-mode)
-  (error (message "** could not load moinmon-mode")))
-
-(autoload 'markdown-mode "markdown-mode.el"
-   "Major mode for editing Markdown files" t)
 (push '("\\.md" . markdown-mode) auto-mode-alist)
-
-(condition-case nil
-    (require 'edit-server)
-  (error (message "** could not load edit-server (chrome edit with emacs)")))
 
 (condition-case nil
     (edit-server-start)
@@ -353,10 +355,6 @@
 (push '("*.cgi" . python-mode) auto-mode-alist)
 
 (setq backward-delete-char-untabify-method "all")
-
-(add-to-list 'load-path "~/.emacs.d/python-pylint")
-(autoload 'python-pylint "~/.emacs.d/python-pylint")
-(autoload 'pylint "~/.emacs.d/python-pylint")
 
 (add-hook 'text-mode-hook
           '(lambda ()
@@ -468,6 +466,17 @@
              )
           )
 
+;; (add-hook 'dired-load-hook
+;;           (lambda ()
+;;             (load "dired-x")
+;;             ))
+;; (add-hook 'dired-mode-hook
+;;           (lambda ()
+;;             ;; Set dired-x buffer-local variables here.
+;;             (dired-omit-mode 1)
+;;             (setq dired-omit-extensions '(".pyc" ".git/"))
+;;             ))
+
 (require 'uniquify)
 
 (setq ido-enable-flex-matching t)
@@ -484,10 +493,6 @@
 
 (require 'vc-git)
 
-(add-to-list 'load-path "~/.emacs.d/magit")
-(condition-case nil
-    (require 'magit)
-  (error (message "** could not load magit")))
 (global-set-key (kbd "C-c m") 'magit-status)
 
 (setq sql-sqlite-program "sqlite3")
@@ -535,8 +540,8 @@ This is used to set `sql-alternate-buffer-name' within
 (setenv "GPG_AGENT_INFO" nil)
 
 (condition-case nil
-    (require 'rainbow-delimiters)
-  (error (message "** could not load rainbow-delimiters")))
+    (require 'wc)
+      (error (message "** could not load wc.el")))
 
 (defun copy-buffer-file-name ()
   "Add `buffer-file-name' to `kill-ring'"
