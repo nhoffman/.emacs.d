@@ -116,33 +116,45 @@ packages. It seems to be necessary to run 'M-x package-list-packages'
 first.
 
 #+BEGIN_SRC elisp :tangle init.el
-(defun package-installed-not-builtin-p (package &optional min-version)
-  "Return true if PACKAGE, of MIN-VERSION or newer, is installed, ignoring built in packages.
-MIN-VERSION should be a version list."
-  (let ((pkg-desc (assq package package-alist)))
-    (if pkg-desc
-        (version-list-<= min-version
-                         (package-desc-vers (cdr pkg-desc))))))
+  (defun package-installed-not-builtin-p (package &optional min-version)
+    "Return true if PACKAGE, of MIN-VERSION or newer, is installed, ignoring built in packages.
+  MIN-VERSION should be a version list."
+    (let ((pkg-desc (assq package package-alist)))
+      (if pkg-desc
+          (version-list-<= min-version
+                           (package-desc-vers (cdr pkg-desc))))))
 
-(defvar package-my-package-list
-  '(gist magit org python-pylint ess htmlize edit-server markdown-mode moinmoin-mode rainbow-delimiters))
+  (defvar package-my-package-list
+    '(
+  auctex
+  edit-server
+  ess
+  gist
+  htmlize
+  magit
+  markdown-mode
+  moinmoin-mode
+  org
+  python-pylint
+  rainbow-delimiters
+  ))
 
-(defun package-install-list (package-list)
-  ;; Install each package named in "package-list" using elpa if not
-  ;; already installed.
-  (while package-list
-    (setq pkg (car package-list))
-    (unless (package-installed-not-builtin-p pkg)
-      (cond ((yes-or-no-p (format "Install %s? " pkg))
-             (package-install pkg))))
-    (setq package-list (cdr package-list)))
-  (message "done installing packages.")
-)
+  (defun package-install-list (package-list)
+    ;; Install each package named in "package-list" using elpa if not
+    ;; already installed.
+    (while package-list
+      (setq pkg (car package-list))
+      (unless (package-installed-not-builtin-p pkg)
+        (cond ((yes-or-no-p (format "Install %s? " pkg))
+               (package-install pkg))))
+      (setq package-list (cdr package-list)))
+    (message "done installing packages.")
+  )
 
-(defun package-install-my-packages ()
-  ;; Interactively installs packages listed in global 'package-my-package-list'
-  (interactive)
-  (package-install-list package-my-package-list))
+  (defun package-install-my-packages ()
+    ;; Interactively installs packages listed in global 'package-my-package-list'
+    (interactive)
+    (package-install-list package-my-package-list))
 #+END_SRC
 
 * Various aliases and key bindings
@@ -475,11 +487,18 @@ http://snarfed.org/space/emacs%20font-lock%20faces%20for%20composing%20email
 
 * LaTeX
 
-Built in LaTeX major mode.
-
-(require 'tex-mode)
+Install AuxTeX from elpa.
 
 * ESS
+
+Installed using elpa, but seems to need =require= to be called
+explicitly.
+
+#+BEGIN_SRC elisp :tangle init.el
+(condition-case nil
+    (require 'ess-site)
+  (error (message "** could not load ESS")))
+#+END_SRC
 
 Hooks
 

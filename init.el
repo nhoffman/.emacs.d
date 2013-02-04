@@ -63,7 +63,19 @@ MIN-VERSION should be a version list."
                          (package-desc-vers (cdr pkg-desc))))))
 
 (defvar package-my-package-list
-  '(gist magit org python-pylint ess htmlize edit-server markdown-mode moinmoin-mode rainbow-delimiters))
+  '(
+auctex
+edit-server
+ess
+gist
+htmlize
+magit
+markdown-mode
+moinmoin-mode
+org
+python-pylint
+rainbow-delimiters
+))
 
 (defun package-install-list (package-list)
   ;; Install each package named in "package-list" using elpa if not
@@ -253,6 +265,10 @@ MIN-VERSION should be a version list."
                  (mail-mode))))
 
 (add-to-list 'load-path "~/.emacs.d/")
+
+(condition-case nil
+    (require 'ess-site)
+  (error (message "** could not load ESS")))
 
 (add-hook 'ess-mode-hook
           '(lambda()
