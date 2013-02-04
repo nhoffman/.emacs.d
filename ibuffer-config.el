@@ -57,6 +57,14 @@
 	       ("bioscons"
 	      	(filename . "/bioscons"))
 
+	       ;; deenurp
+	       ("deenurp-package"
+	      	(filename . "/deenurp/deenurp"))
+	       ("deenurp-tests"
+	      	(filename . "/deenurp/test"))
+	       ("deenurp"
+	      	(filename . "/deenurp"))
+
 	       ;; romperroom
 	       ("romperroom-subcommands"
 	      	(filename . "/romperroom/romperroom/subcommands/"))
