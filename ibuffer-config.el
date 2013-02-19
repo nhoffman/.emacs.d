@@ -401,6 +401,9 @@
 	       ("pppipeline-scons-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/site_scons/"))
 	       ("pppipeline-bin-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/bin/"))
 
+	       ;; genetics_pipeline
+	       ("genet_pipe" (filename . "genetics_pipeline/"))
+
 	       ;; anythin not otherwise caught
 	       ("MatsenGrp/working/nhoffman" (filename . "MatsenGrp/working/nhoffman"))
 
