@@ -382,11 +382,11 @@
 	       ("iontorrent" (filename . "MatsenGrp/working/nhoffman/iontorrent"))
 
 	       ;; ~validate
-	       ("~validate-subcommands" (filename . "nhoffman/working/validate/validate/subcommands/"))
-	       ("~validate-package" (filename . "nhoffman/working/validate/validate/"))
-	       ("~validate-experiments" (filename . "nhoffman/working/validate/experiments/"))
-	       ("~validate-bin" (filename . "nhoffman/working/validate/bin/"))
-	       ("~validate" (filename . "nhoffman/working/validate/"))
+	       ("~validate-subcommands" (filename . "working/nhoffman/validate/validate/subcommands/"))
+	       ("~validate-package" (filename . "working/nhoffman/validate/validate/"))
+	       ("~validate-experiments" (filename . "working/nhoffman/validate/experiments/"))
+	       ("~validate-bin" (filename . "working/nhoffman/validate/bin/"))
+	       ("~validate" (filename . "working/nhoffman/validate/"))
 
 	       ;; validate-pub
 	       ("validate-pub-subcommands" (filename . "MatsenGrp/micro_processing/validate/validate/subcommands/"))
@@ -401,7 +401,10 @@
 	       ("pppipeline-scons-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/site_scons/"))
 	       ("pppipeline-bin-mgw" (filename . "MatsenGrp/working/nhoffman/pplacer_pipeline/bin/"))
 
-	       ;; anythin not otherwise caught
+	       ;; classification_pipeline
+	       ("classification_pipeline" (filename . "/nhoffman/classification_pipeline/"))
+
+	       ;; anything in MatsenGrp/working/nhoffman not otherwise caught
 	       ("MatsenGrp/working/nhoffman" (filename . "MatsenGrp/working/nhoffman"))
 
 	       ("MatsenGrp/working/matsen" (filename . "MatsenGrp/working/matsen"))
