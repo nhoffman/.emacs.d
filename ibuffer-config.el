@@ -404,6 +404,9 @@
 	       ;; classification_pipeline
 	       ("classification_pipeline" (filename . "/nhoffman/classification_pipeline/"))
 
+	       ;; genetics_pipeline
+	       ("genet_pipe" (filename . "genetics_pipeline/"))
+
 	       ;; anything in MatsenGrp/working/nhoffman not otherwise caught
 	       ("MatsenGrp/working/nhoffman" (filename . "MatsenGrp/working/nhoffman"))
 
