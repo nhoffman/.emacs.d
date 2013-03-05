@@ -171,6 +171,12 @@ Function keys
 (global-set-key (kbd "<f8>") 'ns-toggle-fullscreen)
 #+END_SRC
 
+Various custom key bindings.
+
+#+BEGIN_SRC elisp :tangle init.el
+(global-set-key (kbd "C-c r") 'replace-string)
+#+END_SRC
+
 * Startup and general appearance
 
 Enable debugging

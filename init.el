@@ -100,6 +100,8 @@ rainbow-delimiters
 (global-set-key (kbd "<f7>") 'visual-line-mode)
 (global-set-key (kbd "<f8>") 'ns-toggle-fullscreen)
 
+(global-set-key (kbd "C-c r") 'replace-string)
+
 ;; (setq debug-on-error t)
 ;; (setq debug-on-signal t)
 
