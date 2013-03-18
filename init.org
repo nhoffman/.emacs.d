@@ -60,13 +60,13 @@ Convenience function to (re)load init.el
 Tangle and export html
 
 #+BEGIN_SRC elisp :tangle init.el
-  (defun init-compile ()
-    "Tangle init.org and export html"
-    (interactive)
-    (org-babel-tangle)
-    (org-export-as-html 3)
-    (copy-file "init.html" "../.emacs.d.ghpages/index.html" t)
-    )
+(defun init-compile ()
+  "Tangle init.org and export html"
+  (interactive)
+  (org-babel-tangle)
+  (org-export-as-html 3)
+  (copy-file "init.html" "../.emacs.d.ghpages/index.html" t)
+  )
 #+END_SRC
 
 Set up ghpages clone
@@ -129,6 +129,7 @@ first.
   auctex
   edit-server
   ess
+  flymake-cursor
   gist
   htmlize
   magit
@@ -220,6 +221,13 @@ see http://www.cs.cmu.edu/cgi-bin/info2www?(emacs)Reverting
 
 #+BEGIN_SRC elisp :tangle init.el
 (global-auto-revert-mode 1)
+#+END_SRC
+
+Add paths to 'exec-path' so that emacs can find executables not
+otherwise defined in PATH.
+
+#+BEGIN_SRC elisp :tangle init.el
+(add-to-list 'exec-path "~/.emacs.d/bin")
 #+END_SRC
 
 * Exiting and saving
@@ -690,6 +698,60 @@ deleting a single character.
 Installed using ELPA.
 
 Invoke with =M-x python-pylint RET=
+
+* flymake: check code dynamically
+
+Flymake can be used to check python code dynamically, for example
+using pyflakes and pep8. I found (and slightly modified) instructions
+here:
+https://astropy.readthedocs.org/en/v0.1/development/codeguide_emacs.html
+
+Requirements:
+- pep8 (via pip)
+- pyflakes (via pip)
+- flymake-cursor (via elpa)
+- "~/.emacs.d/bin/pychecker", a script that will execute pyflakes and
+  pep8 (note that "~/.emacs.d/bin" has been added to "exec-path"
+  above):
+#+BEGIN_SRC sh :exports both :results output
+cat ~/.emacs.d/bin/pychecker
+#+END_SRC
+
+#+RESULTS:
+: #!/bin/bash
+:
+: pyflakes "$1"
+: pep8 --ignore=E251 --repeat "$1"
+: true
+
+Error codes are listed here: http://pep8.readthedocs.org/en/latest/intro.html#error-codes
+
+
+And some configuration:
+#+BEGIN_SRC elisp :tangle init.el
+(require 'flymake)
+(load-library "flymake-cursor") ;; install from elpa
+
+;; 'pychecker' script above installed in ~/.emacs.d/bin
+(setq pycodechecker "pychecker")
+
+(when (load "flymake" t)
+  (defun flymake-pycodecheck-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list pycodechecker (list local-file))))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pycodecheck-init))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("SCons" flymake-pycodecheck-init)))
+
+;; (add-hook 'python-mode-hook 'flymake-mode)
+#+END_SRC
+
+
 
 * text-mode
 

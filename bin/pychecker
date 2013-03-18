@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pyflakes "$1"
+pep8 --ignore=E251 --repeat "$1"
+true

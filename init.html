@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="title" content="init.el for Noah Hoffman"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-04T11:52-0800"/>
+<meta name="generated" content="2013-03-18T10:24-0700"/>
 <meta name="author" content="Noah Hoffman"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -175,27 +175,28 @@ for the JavaScript code in this tag.
 <li><a href="#sec-23">23 chrome "edit with emacs"</a></li>
 <li><a href="#sec-24">24 Python</a></li>
 <li><a href="#sec-25">25 python-pylint</a></li>
-<li><a href="#sec-26">26 text-mode</a></li>
-<li><a href="#sec-27">27 rst-mode</a></li>
-<li><a href="#sec-28">28 tramp</a></li>
-<li><a href="#sec-29">29 ibuffer</a></li>
-<li><a href="#sec-30">30 dired</a></li>
-<li><a href="#sec-31">31 uniquify</a></li>
-<li><a href="#sec-32">32 ido-mode</a></li>
-<li><a href="#sec-33">33 git/magit</a></li>
-<li><a href="#sec-34">34 sql support</a></li>
-<li><a href="#sec-35">35 gpg</a></li>
-<li><a href="#sec-36">36 wc</a></li>
-<li><a href="#sec-37">37 Misc utilities</a>
+<li><a href="#sec-26">26 flymake: check code dynamically</a></li>
+<li><a href="#sec-27">27 text-mode</a></li>
+<li><a href="#sec-28">28 rst-mode</a></li>
+<li><a href="#sec-29">29 tramp</a></li>
+<li><a href="#sec-30">30 ibuffer</a></li>
+<li><a href="#sec-31">31 dired</a></li>
+<li><a href="#sec-32">32 uniquify</a></li>
+<li><a href="#sec-33">33 ido-mode</a></li>
+<li><a href="#sec-34">34 git/magit</a></li>
+<li><a href="#sec-35">35 sql support</a></li>
+<li><a href="#sec-36">36 gpg</a></li>
+<li><a href="#sec-37">37 wc</a></li>
+<li><a href="#sec-38">38 Misc utilities</a>
 <ul>
-<li><a href="#sec-37-1">37.1 copy-buffer-file-name</a></li>
-<li><a href="#sec-37-2">37.2 copy-and-comment</a></li>
-<li><a href="#sec-37-3">37.3 get-buffer-file-name</a></li>
-<li><a href="#sec-37-4">37.4 unfill-paragraph</a></li>
+<li><a href="#sec-38-1">38.1 copy-buffer-file-name</a></li>
+<li><a href="#sec-38-2">38.2 copy-and-comment</a></li>
+<li><a href="#sec-38-3">38.3 get-buffer-file-name</a></li>
+<li><a href="#sec-38-4">38.4 unfill-paragraph</a></li>
 </ul>
 </li>
-<li><a href="#sec-38">38 emacsclient</a></li>
-<li><a href="#sec-39">39 added by emacs</a></li>
+<li><a href="#sec-39">39 emacsclient</a></li>
+<li><a href="#sec-40">40 added by emacs</a></li>
 </ul>
 </div>
 </div>
@@ -373,6 +374,7 @@ first.
 auctex
 edit-server
 ess
+flymake-cursor
 gist
 htmlize
 magit
@@ -427,6 +429,16 @@ Function keys
 <pre class="src src-elisp">(global-set-key (kbd <span style="color: #8b2252;">"&lt;f6&gt;"</span>) 'linum-mode)
 (global-set-key (kbd <span style="color: #8b2252;">"&lt;f7&gt;"</span>) 'visual-line-mode)
 (global-set-key (kbd <span style="color: #8b2252;">"&lt;f8&gt;"</span>) 'ns-toggle-fullscreen)
+</pre>
+
+
+<p>
+Various custom key bindings.
+</p>
+
+
+
+<pre class="src src-elisp">(global-set-key (kbd <span style="color: #8b2252;">"C-c r"</span>) 'replace-string)
 </pre>
 
 
@@ -499,6 +511,17 @@ see <a href="http://www.cs.cmu.edu/cgi-bin/info2www?(emacs)">http://www.cs.cmu.e
 
 
 <pre class="src src-elisp">(global-auto-revert-mode 1)
+</pre>
+
+
+<p>
+Add paths to 'exec-path' so that emacs can find executables not
+otherwise defined in PATH.
+</p>
+
+
+
+<pre class="src src-elisp">(add-to-list 'exec-path <span style="color: #8b2252;">"~/.emacs.d/bin"</span>)
 </pre>
 
 
@@ -1315,8 +1338,94 @@ Invoke with <code>M-x python-pylint RET</code>
 </div>
 
 <div id="outline-container-26" class="outline-2">
-<h2 id="sec-26"><span class="section-number-2">26</span> text-mode</h2>
+<h2 id="sec-26"><span class="section-number-2">26</span> flymake: check code dynamically</h2>
 <div class="outline-text-2" id="text-26">
+
+
+<p>
+Flymake can be used to check python code dynamically, for example
+using pyflakes and pep8. I found (and slightly modified) instructions
+here:
+<a href="https://astropy.readthedocs.org/en/v0.1/development/codeguide_emacs.html">https://astropy.readthedocs.org/en/v0.1/development/codeguide_emacs.html</a>
+</p>
+<p>
+Requirements:
+</p><ul>
+<li>pep8 (via pip)
+</li>
+<li>pyflakes (via pip)
+</li>
+<li>flymake-cursor (via elpa)
+</li>
+<li>"~/.emacs.d/bin/pychecker", a script that will execute pyflakes and
+  pep8 (note that "~/.emacs.d/bin" has been added to "exec-path"
+  above):
+</li>
+</ul>
+
+
+
+
+<pre class="src src-sh">cat ~/.emacs.d/bin/pychecker
+</pre>
+
+
+<p>
+=#!/bin/bash
+</p>
+<p>
+pyflakes "$1"
+pep8 &ndash;ignore=E251 &ndash;repeat "$1"
+true
+=:
+</p><pre class="example">
+pyflakes "$1"
+pep8 --ignore=E251 --repeat "$1"
+true
+</pre>
+
+
+<p>
+Error codes are listed here: <a href="http://pep8.readthedocs.org/en/latest/intro.html#error-codes">http://pep8.readthedocs.org/en/latest/intro.html#error-codes</a>
+</p>
+
+<p>
+And some configuration:
+</p>
+
+
+<pre class="src src-elisp">(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">flymake</span>)
+(load-library <span style="color: #8b2252;">"flymake-cursor"</span>) <span style="color: #b22222;">;; </span><span style="color: #b22222;">install from elpa</span>
+
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">'pychecker' script above installed in ~/.emacs.d/bin</span>
+(setq pycodechecker <span style="color: #8b2252;">"pychecker"</span>)
+
+(<span style="color: #a020f0;">when</span> (load <span style="color: #8b2252;">"flymake"</span> t)
+  (<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">flymake-pycodecheck-init</span> ()
+    (<span style="color: #a020f0;">let*</span> ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list pycodechecker (list local-file))))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '(<span style="color: #8b2252;">"\\.py\\'"</span> flymake-pycodecheck-init))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '(<span style="color: #8b2252;">"SCons"</span> flymake-pycodecheck-init)))
+
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">(add-hook 'python-mode-hook 'flymake-mode)</span>
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-27" class="outline-2">
+<h2 id="sec-27"><span class="section-number-2">27</span> text-mode</h2>
+<div class="outline-text-2" id="text-27">
 
 
 
@@ -1335,9 +1444,9 @@ Invoke with <code>M-x python-pylint RET</code>
 
 </div>
 
-<div id="outline-container-27" class="outline-2">
-<h2 id="sec-27"><span class="section-number-2">27</span> rst-mode</h2>
-<div class="outline-text-2" id="text-27">
+<div id="outline-container-28" class="outline-2">
+<h2 id="sec-28"><span class="section-number-2">28</span> rst-mode</h2>
+<div class="outline-text-2" id="text-28">
 
 
 
@@ -1357,9 +1466,9 @@ Invoke with <code>M-x python-pylint RET</code>
 
 </div>
 
-<div id="outline-container-28" class="outline-2">
-<h2 id="sec-28"><span class="section-number-2">28</span> tramp</h2>
-<div class="outline-text-2" id="text-28">
+<div id="outline-container-29" class="outline-2">
+<h2 id="sec-29"><span class="section-number-2">29</span> tramp</h2>
+<div class="outline-text-2" id="text-29">
 
 
 <ul>
@@ -1382,9 +1491,9 @@ Invoke with <code>M-x python-pylint RET</code>
 
 </div>
 
-<div id="outline-container-29" class="outline-2">
-<h2 id="sec-29"><span class="section-number-2">29</span> ibuffer</h2>
-<div class="outline-text-2" id="text-29">
+<div id="outline-container-30" class="outline-2">
+<h2 id="sec-30"><span class="section-number-2">30</span> ibuffer</h2>
+<div class="outline-text-2" id="text-30">
 
 
 <ul>
@@ -1536,9 +1645,9 @@ Hooks
 
 </div>
 
-<div id="outline-container-30" class="outline-2">
-<h2 id="sec-30"><span class="section-number-2">30</span> dired</h2>
-<div class="outline-text-2" id="text-30">
+<div id="outline-container-31" class="outline-2">
+<h2 id="sec-31"><span class="section-number-2">31</span> dired</h2>
+<div class="outline-text-2" id="text-31">
 
 
 <p>
@@ -1570,9 +1679,9 @@ Omit uninteresting files.
 
 </div>
 
-<div id="outline-container-31" class="outline-2">
-<h2 id="sec-31"><span class="section-number-2">31</span> uniquify</h2>
-<div class="outline-text-2" id="text-31">
+<div id="outline-container-32" class="outline-2">
+<h2 id="sec-32"><span class="section-number-2">32</span> uniquify</h2>
+<div class="outline-text-2" id="text-32">
 
 
 <ul>
@@ -1592,9 +1701,9 @@ Omit uninteresting files.
 
 </div>
 
-<div id="outline-container-32" class="outline-2">
-<h2 id="sec-32"><span class="section-number-2">32</span> ido-mode</h2>
-<div class="outline-text-2" id="text-32">
+<div id="outline-container-33" class="outline-2">
+<h2 id="sec-33"><span class="section-number-2">33</span> ido-mode</h2>
+<div class="outline-text-2" id="text-33">
 
 
 <ul>
@@ -1632,9 +1741,9 @@ use recentf with ido - see <a href="http://wikemacs.org/wiki/Recentf">http://wik
 
 </div>
 
-<div id="outline-container-33" class="outline-2">
-<h2 id="sec-33"><span class="section-number-2">33</span> git/magit</h2>
-<div class="outline-text-2" id="text-33">
+<div id="outline-container-34" class="outline-2">
+<h2 id="sec-34"><span class="section-number-2">34</span> git/magit</h2>
+<div class="outline-text-2" id="text-34">
 
 
 
@@ -1658,9 +1767,9 @@ Magit is installed via ELPA.
 
 </div>
 
-<div id="outline-container-34" class="outline-2">
-<h2 id="sec-34"><span class="section-number-2">34</span> sql support</h2>
-<div class="outline-text-2" id="text-34">
+<div id="outline-container-35" class="outline-2">
+<h2 id="sec-35"><span class="section-number-2">35</span> sql support</h2>
+<div class="outline-text-2" id="text-35">
 
 
 <ul>
@@ -1728,9 +1837,9 @@ Preset connections
 
 </div>
 
-<div id="outline-container-35" class="outline-2">
-<h2 id="sec-35"><span class="section-number-2">35</span> gpg</h2>
-<div class="outline-text-2" id="text-35">
+<div id="outline-container-36" class="outline-2">
+<h2 id="sec-36"><span class="section-number-2">36</span> gpg</h2>
+<div class="outline-text-2" id="text-36">
 
 
 <ul>
@@ -1753,9 +1862,9 @@ Preset connections
 
 </div>
 
-<div id="outline-container-36" class="outline-2">
-<h2 id="sec-36"><span class="section-number-2">36</span> wc</h2>
-<div class="outline-text-2" id="text-36">
+<div id="outline-container-37" class="outline-2">
+<h2 id="sec-37"><span class="section-number-2">37</span> wc</h2>
+<div class="outline-text-2" id="text-37">
 
 
 <p>
@@ -1784,16 +1893,16 @@ wget http://www.emacswiki.org/emacs/download/wc.el
 
 </div>
 
-<div id="outline-container-37" class="outline-2">
-<h2 id="sec-37"><span class="section-number-2">37</span> Misc utilities</h2>
-<div class="outline-text-2" id="text-37">
+<div id="outline-container-38" class="outline-2">
+<h2 id="sec-38"><span class="section-number-2">38</span> Misc utilities</h2>
+<div class="outline-text-2" id="text-38">
 
 
 </div>
 
-<div id="outline-container-37-1" class="outline-3">
-<h3 id="sec-37-1"><span class="section-number-3">37.1</span> copy-buffer-file-name</h3>
-<div class="outline-text-3" id="text-37-1">
+<div id="outline-container-38-1" class="outline-3">
+<h3 id="sec-38-1"><span class="section-number-3">38.1</span> copy-buffer-file-name</h3>
+<div class="outline-text-3" id="text-38-1">
 
 
 
@@ -1811,9 +1920,9 @@ wget http://www.emacswiki.org/emacs/download/wc.el
 
 </div>
 
-<div id="outline-container-37-2" class="outline-3">
-<h3 id="sec-37-2"><span class="section-number-3">37.2</span> copy-and-comment</h3>
-<div class="outline-text-3" id="text-37-2">
+<div id="outline-container-38-2" class="outline-3">
+<h3 id="sec-38-2"><span class="section-number-3">38.2</span> copy-and-comment</h3>
+<div class="outline-text-3" id="text-38-2">
 
 
 
@@ -1829,9 +1938,9 @@ wget http://www.emacswiki.org/emacs/download/wc.el
 
 </div>
 
-<div id="outline-container-37-3" class="outline-3">
-<h3 id="sec-37-3"><span class="section-number-3">37.3</span> get-buffer-file-name</h3>
-<div class="outline-text-3" id="text-37-3">
+<div id="outline-container-38-3" class="outline-3">
+<h3 id="sec-38-3"><span class="section-number-3">38.3</span> get-buffer-file-name</h3>
+<div class="outline-text-3" id="text-38-3">
 
 
 
@@ -1846,9 +1955,9 @@ wget http://www.emacswiki.org/emacs/download/wc.el
 
 </div>
 
-<div id="outline-container-37-4" class="outline-3">
-<h3 id="sec-37-4"><span class="section-number-3">37.4</span> unfill-paragraph</h3>
-<div class="outline-text-3" id="text-37-4">
+<div id="outline-container-38-4" class="outline-3">
+<h3 id="sec-38-4"><span class="section-number-3">38.4</span> unfill-paragraph</h3>
+<div class="outline-text-3" id="text-38-4">
 
 
 <p>
@@ -1870,9 +1979,9 @@ from <a href="http://defindit.com/readme_files/emacs_hints_tricks.html">http://d
 
 </div>
 
-<div id="outline-container-38" class="outline-2">
-<h2 id="sec-38"><span class="section-number-2">38</span> emacsclient</h2>
-<div class="outline-text-2" id="text-38">
+<div id="outline-container-39" class="outline-2">
+<h2 id="sec-39"><span class="section-number-2">39</span> emacsclient</h2>
+<div class="outline-text-2" id="text-39">
 
 
 <p>
@@ -1889,9 +1998,9 @@ Buffers opened from command line don't create new frame
 
 </div>
 
-<div id="outline-container-39" class="outline-2">
-<h2 id="sec-39"><span class="section-number-2">39</span> added by emacs</h2>
-<div class="outline-text-2" id="text-39">
+<div id="outline-container-40" class="outline-2">
+<h2 id="sec-40"><span class="section-number-2">40</span> added by emacs</h2>
+<div class="outline-text-2" id="text-40">
 
 
 
