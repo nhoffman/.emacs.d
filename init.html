@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="title" content="init.el for Noah Hoffman"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-18T13:59-0700"/>
+<meta name="generated" content="2013-03-18T14:06-0700"/>
 <meta name="author" content="Noah Hoffman"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -1370,17 +1370,11 @@ Requirements:
 </pre>
 
 
-<p>
-=#!/bin/bash
-</p>
-<p>
+<pre class="example">
+#!/bin/bash
+
 pyflakes "$1"
-pep8 &ndash;ignore=E251,E123,E128 &ndash;repeat "$1"
-true
-=:
-</p><pre class="example">
-pyflakes "$1"
-pep8 --ignore=E251 --repeat "$1"
+pep8 --ignore=E251,E123,E128 --repeat "$1"
 true
 </pre>
 
@@ -1415,7 +1409,6 @@ And some configuration:
 
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">(add-hook 'python-mode-hook 'flymake-mode)</span>
 </pre>
-
 
 
 

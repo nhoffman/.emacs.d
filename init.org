@@ -717,15 +717,7 @@ Requirements:
 cat ~/.emacs.d/bin/pychecker
 #+END_SRC
 
-#+RESULTS:
-: #!/bin/bash
-:
-: pyflakes "$1"
-: pep8 --ignore=E251 --repeat "$1"
-: true
-
 Error codes are listed here: http://pep8.readthedocs.org/en/latest/intro.html#error-codes
-
 
 And some configuration:
 #+BEGIN_SRC elisp :tangle init.el
@@ -750,7 +742,6 @@ And some configuration:
 
 ;; (add-hook 'python-mode-hook 'flymake-mode)
 #+END_SRC
-
 
 
 * text-mode
