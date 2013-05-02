@@ -126,6 +126,19 @@ rainbow-delimiters
 
 (add-to-list 'exec-path "~/.emacs.d/bin")
 
+(defun ssh-refresh ()
+  ;; Reset the environment variable SSH_AUTH_SOCK.
+  (interactive)
+  (setq ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))
+  (setenv "SSH_AUTH_SOCK"
+          (car (split-string
+                (shell-command-to-string
+                 "ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2> /dev/null)"))))
+  (message
+   (format "SSH_AUTH_SOCK %s --> %s"
+           ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))
+  )
+
 (global-set-key [(control x) (control c)]
                 (function
                  (lambda () (interactive)
@@ -385,6 +398,25 @@ rainbow-delimiters
 (push '("*.cgi" . python-mode) auto-mode-alist)
 
 (setq backward-delete-char-untabify-method "all")
+
+(defadvice python-calculate-indentation (around outdent-closing-brackets)
+  "Handle lines beginning with a closing bracket and indent them so that
+  they line up with the line containing the corresponding opening bracket."
+  (save-excursion
+    (beginning-of-line)
+    (let ((syntax (syntax-ppss)))
+      (if (and (not (eq 'string (syntax-ppss-context syntax)))
+               (python-continuation-line-p)
+               (cadr syntax)
+               (skip-syntax-forward "-")
+               (looking-at "\\s)"))
+          (progn
+            (forward-char 1)
+            (ignore-errors (backward-sexp))
+            (setq ad-return-value (current-indentation)))
+        ad-do-it))))
+
+(ad-activate 'python-calculate-indentation)
 
 (require 'flymake)
 (load-library "flymake-cursor") ;; install from elpa
