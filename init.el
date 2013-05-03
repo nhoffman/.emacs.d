@@ -126,6 +126,19 @@ rainbow-delimiters
 
 (add-to-list 'exec-path "~/.emacs.d/bin")
 
+(defun ssh-refresh ()
+  ;; Reset the environment variable SSH_AUTH_SOCK.
+  (interactive)
+  (setq ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))
+  (setenv "SSH_AUTH_SOCK"
+          (car (split-string
+                (shell-command-to-string
+                 "ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2> /dev/null)"))))
+  (message
+   (format "SSH_AUTH_SOCK %s --> %s"
+           ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))
+  )
+
 (global-set-key [(control x) (control c)]
                 (function
                  (lambda () (interactive)
@@ -386,6 +399,25 @@ rainbow-delimiters
 
 (setq backward-delete-char-untabify-method "all")
 
+(defadvice python-calculate-indentation (around outdent-closing-brackets)
+  "Handle lines beginning with a closing bracket and indent them so that
+  they line up with the line containing the corresponding opening bracket."
+  (save-excursion
+    (beginning-of-line)
+    (let ((syntax (syntax-ppss)))
+      (if (and (not (eq 'string (syntax-ppss-context syntax)))
+               (python-continuation-line-p)
+               (cadr syntax)
+               (skip-syntax-forward "-")
+               (looking-at "\\s)"))
+          (progn
+            (forward-char 1)
+            (ignore-errors (backward-sexp))
+            (setq ad-return-value (current-indentation)))
+        ad-do-it))))
+
+(ad-activate 'python-calculate-indentation)
+
 (require 'flymake)
 (load-library "flymake-cursor") ;; install from elpa
 
@@ -593,6 +625,30 @@ This is used to set `sql-alternate-buffer-name' within
 (condition-case nil
     (require 'wc)
       (error (message "** could not load wc.el")))
+
+;; Outline-minor-mode key map
+(define-prefix-command 'cm-map nil "Outline-")
+;; HIDE
+(define-key cm-map "q" 'hide-sublevels)    ; Hide everything but the top-level headings
+(define-key cm-map "t" 'hide-body)         ; Hide everything but headings (all body lines)
+(define-key cm-map "o" 'hide-other)        ; Hide other branches
+(define-key cm-map "c" 'hide-entry)        ; Hide this entry's body
+(define-key cm-map "l" 'hide-leaves)       ; Hide body lines in this entry and sub-entries
+(define-key cm-map "d" 'hide-subtree)      ; Hide everything in this entry and sub-entries
+;; SHOW
+(define-key cm-map "a" 'show-all)          ; Show (expand) everything
+(define-key cm-map "e" 'show-entry)        ; Show this heading's body
+(define-key cm-map "i" 'show-children)     ; Show this heading's immediate child sub-headings
+(define-key cm-map "k" 'show-branches)     ; Show all sub-headings under this heading
+(define-key cm-map "s" 'show-subtree)      ; Show (expand) everything in this heading & below
+;; MOVE
+(define-key cm-map "u" 'outline-up-heading)                ; Up
+(define-key cm-map "n" 'outline-next-visible-heading)      ; Next
+(define-key cm-map "p" 'outline-previous-visible-heading)  ; Previous
+(define-key cm-map "f" 'outline-forward-same-level)        ; Forward - same level
+(define-key cm-map "b" 'outline-backward-same-level)       ; Backward - same level
+;; commands are prefixed with C-c o
+(global-set-key (kbd "C-c o") cm-map)
 
 (defun copy-buffer-file-name ()
   "Add `buffer-file-name' to `kill-ring'"
