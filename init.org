@@ -230,6 +230,33 @@ otherwise defined in PATH.
 (add-to-list 'exec-path "~/.emacs.d/bin")
 #+END_SRC
 
+* Environment
+
+** update SSH_AUTH_SOCK
+
+If you 1) forward ssh authentication (ie, ssh -A), 2) have a
+long-running emacs --daemon and 3) set an expiration on your ssh
+authentication, then you will lose the ability to perform ssh public
+key authentication once the authentication expires. So actions like
+pushing/pulling using magit will fail. This can be addressed by
+updating the value of the SSH_AUTH_SOCK environment variable. Here's a
+function to fix this.
+
+#+BEGIN_SRC elisp :tangle init.el
+  (defun ssh-refresh ()
+    ;; Reset the environment variable SSH_AUTH_SOCK.
+    (interactive)
+    (setq ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))
+    (setenv "SSH_AUTH_SOCK"
+            (car (split-string
+                  (shell-command-to-string
+                   "ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2> /dev/null)"))))
+    (message
+     (format "SSH_AUTH_SOCK %s --> %s"
+             ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))
+    )
+#+END_SRC
+
 * Exiting and saving
 
 Require prompt before exit on C-x C-c
@@ -692,6 +719,30 @@ deleting a single character.
 #+BEGIN_SRC elisp :tangle init.el
 (setq backward-delete-char-untabify-method "all")
 #+END_SRC
+
+Make indentation more compliant with pep8 (see http://stackoverflow.com/revisions/5361478/2)
+
+#+BEGIN_SRC elisp :tangle init.el
+  (defadvice python-calculate-indentation (around outdent-closing-brackets)
+    "Handle lines beginning with a closing bracket and indent them so that
+    they line up with the line containing the corresponding opening bracket."
+    (save-excursion
+      (beginning-of-line)
+      (let ((syntax (syntax-ppss)))
+        (if (and (not (eq 'string (syntax-ppss-context syntax)))
+                 (python-continuation-line-p)
+                 (cadr syntax)
+                 (skip-syntax-forward "-")
+                 (looking-at "\\s)"))
+            (progn
+              (forward-char 1)
+              (ignore-errors (backward-sexp))
+              (setq ad-return-value (current-indentation)))
+          ad-do-it))))
+
+  (ad-activate 'python-calculate-indentation)
+#+END_SRC
+
 
 * python-pylint
 

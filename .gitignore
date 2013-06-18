@@ -3,3 +3,4 @@ elpa
 image-dired
 tramp
 url
+.emacs.desktop*
