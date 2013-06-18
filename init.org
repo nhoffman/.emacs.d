@@ -722,6 +722,8 @@ Error codes are listed here: http://pep8.readthedocs.org/en/latest/intro.html#er
 And some configuration:
 #+BEGIN_SRC elisp :tangle init.el
 (require 'flymake)
+
+;; TODO - first check if flymake-cursor is installed
 (load-library "flymake-cursor") ;; install from elpa
 
 ;; 'pychecker' script above installed in ~/.emacs.d/bin
