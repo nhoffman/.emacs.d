@@ -281,9 +281,13 @@
 	      	(filename . "/refset/targets/clinical/"))
 	       ("refset/targets"
 	      	(filename . "/refset/targets/"))
-
 	       ("refset-top"
 	      	(filename . "/refset/"))
+
+	       ;; male microbiome refset
+	       ("male-denovo"
+	      	(or (filename . "/micro_refset/male-denovo/")
+		    (name . "male-denovo")))
 
 	       ;; pplacer-pipeline
 	       ("pp-pipeline-config"
