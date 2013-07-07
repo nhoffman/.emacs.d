@@ -57,6 +57,14 @@
 	       ("bioscons"
 	      	(filename . "/bioscons"))
 
+	       ;; genetics_db
+	       ("gendb-package"
+	      	(filename . "/genetics_db/genetics_db"))
+	       ("gendb-tests"
+	      	(filename . "/genetics_db/tests"))
+	       ("gendb"
+	      	(filename . "/genetics_db"))
+
 	       ;; deenurp
 	       ("deenurp-package"
 	      	(filename . "/deenurp/deenurp"))
