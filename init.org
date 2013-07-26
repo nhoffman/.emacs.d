@@ -893,7 +893,6 @@ Show/hide all filter groups
   )
 #+END_SRC
 
-
 From http://www.emacswiki.org/emacs/IbufferMode
 
 #+BEGIN_SRC elisp :tangle init.el
@@ -938,15 +937,19 @@ Hooks
 
 #+BEGIN_SRC elisp :tangle init.el
 (add-hook 'ibuffer-mode-hook
-	  '(lambda ()
-	     (ibuffer-auto-mode 1) ;; minor mode that keeps the buffer list up to date
-	     (ibuffer-switch-to-saved-filter-groups "default")
-	     (define-key ibuffer-mode-map (kbd "a") 'ibuffer-show-all-filter-groups)
-	     (define-key ibuffer-mode-map (kbd "z") 'ibuffer-hide-all-filter-groups)
-	     (define-key ibuffer-mode-map (kbd "e") 'ibuffer-ediff-marked-buffers)
-	     (my-ibuffer-sort-hook)
-	     )
-	  )
+          '(lambda ()
+             (ibuffer-auto-mode 1) ;; minor mode that keeps the buffer list up to date
+             (ibuffer-switch-to-saved-filter-groups "default")
+             (define-key ibuffer-mode-map (kbd "a") 'ibuffer-show-all-filter-groups)
+             (define-key ibuffer-mode-map (kbd "z") 'ibuffer-hide-all-filter-groups)
+             (define-key ibuffer-mode-map (kbd "e") 'ibuffer-ediff-marked-buffers)
+             (my-ibuffer-sort-hook)
+             ;; don't accidentally print; see http://irreal.org/blog/?p=2013
+             (defadvice ibuffer-do-print (before print-buffer-query activate)
+               (unless (y-or-n-p "Print buffer? ")
+                 (error "Cancelled")))
+             )
+          )
 #+END_SRC
 
 * dired
