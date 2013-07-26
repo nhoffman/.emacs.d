@@ -65,6 +65,14 @@
 	       ("gendb"
 	      	(filename . "/genetics_db"))
 
+	       ;; labreport
+	       ("labreport-package"
+	      	(filename . "/labreport/labreport"))
+	       ("labreport-tests"
+	      	(filename . "/labreport/tests"))
+	       ("labreport"
+	      	(filename . "/labreport"))
+
 	       ;; deenurp
 	       ("deenurp-package"
 	      	(filename . "/deenurp/deenurp"))
