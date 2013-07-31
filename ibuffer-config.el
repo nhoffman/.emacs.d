@@ -93,13 +93,13 @@
 
 	       ;; Seq
 	       ("Seq-tests"
-	      	(filename . "Seq/tests"))
+	      	(filename . "/Seq/tests"))
 	       ("Seq-taxonomy"
-	      	(filename . "Seq/taxonomy"))
+	      	(filename . "/Seq/taxonomy"))
 	       ("Seq-scripts"
-	      	(filename . "Seq/scripts"))
+	      	(filename . "/Seq/scripts"))
 	       ("Seq"
-	      	(filename . "Seq/"))
+	      	(filename . "/Seq/"))
 
 	       ;; taxtastic
 	       ("taxtastic-scripts"
@@ -495,6 +495,13 @@
 	      	(filename . "/deltas/"))
 	       ("papers"
 	      	(filename . "/papers/"))
+
+	       ;; ion_vs_miseq
+	       ("ivm-package"
+	      	(filename . "/ion_vs_miseq/ivm/"))
+	       ("ivm"
+	      	(filename . "/ion_vs_miseq/"))
+
 
 	       ;; stuff in Dropbox
 	       ("dropbox-career"
