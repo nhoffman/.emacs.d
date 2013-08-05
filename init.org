@@ -2,13 +2,15 @@
 #+AUTHOR: Noah Hoffman
 
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
 #+STYLE: <link rel="stylesheet" type="text/css" href="./worg.css" />
 #+BIND: org-export-html-postamble nil
 #+BABEL: :results output :exports both
 
 - The source for this page is available at https://github.com/nhoffman/.emacs.d
-- The html-exported version of this page is hosted at http://nhoffman.github.com/.emacs.d
+- The html-exported version of this page is hosted at http://nhoffman.github.io/.emacs.d
+
+#+TOC: headlines 3
 
 #+BEGIN_SRC elisp :tangle init.el
 (message "loading ~/.emacs.d/init.el")
@@ -126,19 +128,21 @@ first.
 
   (defvar package-my-package-list
     '(
-  auctex
-  edit-server
-  ess
-  flymake-cursor
-  gist
-  htmlize
-  magit
-  markdown-mode
-  moinmoin-mode
-  org
-  python-pylint
-  rainbow-delimiters
-  ))
+      auctex
+      edit-server
+      ess
+      ;; flymake-cursor
+      flycheck
+      flycheck-color-mode-line
+      gist
+      htmlize
+      magit
+      markdown-mode
+      moinmoin-mode
+      org
+      python-pylint
+      rainbow-delimiters
+      ))
 
   (defun package-install-list (package-list)
     ;; Install each package named in "package-list" using elpa if not
@@ -150,7 +154,7 @@ first.
                (package-install pkg))))
       (setq package-list (cdr package-list)))
     (message "done installing packages.")
-  )
+    )
 
   (defun package-install-my-packages ()
     ;; Interactively installs packages listed in global 'package-my-package-list'
@@ -231,7 +235,6 @@ otherwise defined in PATH.
 #+END_SRC
 
 * Environment
-
 ** update SSH_AUTH_SOCK
 
 If you 1) forward ssh authentication (ie, ssh -A), 2) have a
@@ -255,6 +258,17 @@ function to fix this.
      (format "SSH_AUTH_SOCK %s --> %s"
              ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))
     )
+#+END_SRC
+** exec-path-from-shell
+
+Initialize the PATH environment variable when starting up the Emacs
+app from the finder. Found this tip here: https://plus.google.com/104330705025733851532/posts/K6YPSVEB9Nx
+
+Commenting out for now, but seems promising....
+
+#+BEGIN_SRC elisp :tangle init.el
+  ;; (when (memq window-system '(mac ns))
+  ;;   (exec-path-from-shell-initialize))
 #+END_SRC
 
 * Exiting and saving
@@ -743,12 +757,28 @@ Make indentation more compliant with pep8 (see http://stackoverflow.com/revision
   (ad-activate 'python-calculate-indentation)
 #+END_SRC
 
-
 * python-pylint
 
 Installed using ELPA.
 
 Invoke with =M-x python-pylint RET=
+
+* flycheck
+
+An alternative to =flymake=. Install =flycheck= via elpa. For python,
+requires flask8 or pyflakes; flake8 is used preferentially if
+installed.
+
+See https://github.com/arcthur/.emacs.d/blob/master/extensions/init-flycheck.el
+
+#+BEGIN_SRC elisp :tangle init.el
+(add-hook 'flycheck-mode-hook
+          '(lambda ()
+             (setq flycheck-highlighting-mode 'lines)
+             (flycheck-color-mode-line-mode)
+             )
+          )
+#+END_SRC
 
 * flymake: check code dynamically
 

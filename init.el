@@ -64,19 +64,21 @@ MIN-VERSION should be a version list."
 
 (defvar package-my-package-list
   '(
-auctex
-edit-server
-ess
-flymake-cursor
-gist
-htmlize
-magit
-markdown-mode
-moinmoin-mode
-org
-python-pylint
-rainbow-delimiters
-))
+    auctex
+    edit-server
+    ess
+    ;; flymake-cursor
+    flycheck
+    flycheck-color-mode-line
+    gist
+    htmlize
+    magit
+    markdown-mode
+    moinmoin-mode
+    org
+    python-pylint
+    rainbow-delimiters
+    ))
 
 (defun package-install-list (package-list)
   ;; Install each package named in "package-list" using elpa if not
@@ -88,7 +90,7 @@ rainbow-delimiters
              (package-install pkg))))
     (setq package-list (cdr package-list)))
   (message "done installing packages.")
-)
+  )
 
 (defun package-install-my-packages ()
   ;; Interactively installs packages listed in global 'package-my-package-list'
@@ -138,6 +140,9 @@ rainbow-delimiters
    (format "SSH_AUTH_SOCK %s --> %s"
            ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))
   )
+
+;; (when (memq window-system '(mac ns))
+;;   (exec-path-from-shell-initialize))
 
 (global-set-key [(control x) (control c)]
                 (function
@@ -418,7 +423,16 @@ rainbow-delimiters
 
 (ad-activate 'python-calculate-indentation)
 
+(add-hook 'flycheck-mode-hook
+          '(lambda ()
+             (setq flycheck-highlighting-mode 'lines)
+             (flycheck-color-mode-line-mode)
+             )
+          )
+
 (require 'flymake)
+
+;; TODO - first check if flymake-cursor is installed
 (load-library "flymake-cursor") ;; install from elpa
 
 ;; 'pychecker' script above installed in ~/.emacs.d/bin
