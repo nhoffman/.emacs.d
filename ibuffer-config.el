@@ -305,6 +305,11 @@
 	      	(or (filename . "/micro_refset/male-denovo/")
 		    (name . "male-denovo")))
 
+	       ;; gut denovo
+	       ("gut-denovo-named"
+	      	(or (filename . "/micro_refset/gut_denovo_named/")
+		    (name . "gut_denovo_named")))
+
 	       ;; pplacer-pipeline
 	       ("pp-pipeline-config"
 	      	(filename . "/micro_processing/pplacer_pipeline/config/"))
