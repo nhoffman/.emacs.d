@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>init.el for Noah Hoffman</title>
-<!-- 2013-08-05 Mon 22:02 -->
+<!-- 2013-08-05 Mon 22:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
 <meta name="author" content="Noah Hoffman"/>
@@ -1597,7 +1597,6 @@ Show/hide all filter groups
 </pre>
 </div>
 
-
 <p>
 From <a href="http://www.emacswiki.org/emacs/IbufferMode">http://www.emacswiki.org/emacs/IbufferMode</a>
 </p>
@@ -1660,6 +1659,10 @@ Hooks
              (define-key ibuffer-mode-map (kbd <span style="font-style: italic;">"z"</span>) 'ibuffer-hide-all-filter-groups)
              (define-key ibuffer-mode-map (kbd <span style="font-style: italic;">"e"</span>) 'ibuffer-ediff-marked-buffers)
              (my-ibuffer-sort-hook)
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">don't accidentally print; see http://irreal.org/blog/?p=2013</span>
+             (<span style="font-weight: bold;">defadvice</span> <span style="font-weight: bold;">ibuffer-do-print</span> (before print-buffer-query activate)
+               (<span style="font-weight: bold;">unless</span> (y-or-n-p <span style="font-style: italic;">"Print buffer? "</span>)
+                 (<span style="font-weight: bold;">error</span> <span style="font-style: italic;">"Cancelled"</span>)))
              )
           )
 </pre>
@@ -2011,7 +2014,7 @@ Buffers opened from command line don't create new frame
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Noah Hoffman</p>
-<p class="date">Created: 2013-08-05 Mon 22:02</p>
+<p class="date">Created: 2013-08-05 Mon 22:11</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.1.1 (<a href="http://orgmode.org">Org</a> mode 8.0.5)</p>
 <p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a></p>
 </div>
