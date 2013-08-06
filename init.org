@@ -5,6 +5,7 @@
 #+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
 #+STYLE: <link rel="stylesheet" type="text/css" href="./worg.css" />
 #+BIND: org-export-html-postamble nil
+#+BIND: org-export-publishing-directory "./gh-pages"
 #+BABEL: :results output :exports both
 
 - The source for this page is available at https://github.com/nhoffman/.emacs.d
@@ -59,25 +60,37 @@ Convenience function to (re)load init.el
 (global-set-key (kbd "M-C-i") 'init-load)
 #+END_SRC
 
-Tangle and export html
+Tangle and export html.
 
 #+BEGIN_SRC elisp :tangle init.el
-(defun init-compile ()
-  "Tangle init.org and export html"
-  (interactive)
-  (org-babel-tangle)
-  (org-export-as-html 3)
-  (copy-file "init.html" "../.emacs.d.ghpages/index.html" t)
-  )
+  (defun init-compile ()
+    "Tangle init.org and export html"
+    (interactive)
+    (progn
+      (org-babel-tangle)
+      (org-html-export-as-html)
+      (write-file "gh-pages/index.html")
+      ))
 #+END_SRC
 
-Set up ghpages clone
+* Publishing to gh-pages
 
-#+begin_example
-git clone git@github.com:nhoffman/.emacs.d.git .emacs.d.ghpages
-cd .emacs.d.ghpages
-git checkout gh-pages
-#+end_example
+Here's how publication of the rendered version of this site to GitHub's gh-pages is set up.
+
+The gh-pages branch is added to the master branch as a submodule
+
+: git submodule add -b gh-pages git@github.com:nhoffman/.emacs.d.git gh-pages
+
+Note that in a new clone, the submodule needs to be initialized.
+
+: git submodule init
+
+A scons target pushes any new changes to the gh-pages branch on
+GitHub.
+
+#+BEGIN_SRC sh :results output :exports results
+grep -A 8 publish_log, SConstruct
+#+END_SRC
 
 * ELPA
 

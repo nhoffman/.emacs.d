@@ -33,10 +33,11 @@
 (defun init-compile ()
   "Tangle init.org and export html"
   (interactive)
-  (org-babel-tangle)
-  (org-export-as-html 3)
-  (copy-file "init.html" "../.emacs.d.ghpages/index.html" t)
-  )
+  (progn
+    (org-babel-tangle)
+    (org-html-export-as-html)
+    (write-file "gh-pages/index.html")
+    ))
 
 (when (>= emacs-major-version 24)
   (require 'package)
