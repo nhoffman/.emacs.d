@@ -561,6 +561,10 @@ MIN-VERSION should be a version list."
              (define-key ibuffer-mode-map (kbd "z") 'ibuffer-hide-all-filter-groups)
              (define-key ibuffer-mode-map (kbd "e") 'ibuffer-ediff-marked-buffers)
              (my-ibuffer-sort-hook)
+             ;; don't accidentally print; see http://irreal.org/blog/?p=2013
+             (defadvice ibuffer-do-print (before print-buffer-query activate)
+               (unless (y-or-n-p "Print buffer? ")
+                 (error "Cancelled")))
              )
           )
 
