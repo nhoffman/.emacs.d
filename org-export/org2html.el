@@ -116,7 +116,8 @@ MIN-VERSION should be a version list."
 
 (add-hook 'org-mode-hook
 	  '(lambda ()
-	     (turn-on-font-lock)
+	     ;; (turn-on-font-lock)
+	     (font-lock-mode)
 	     (setq org-src-fontify-natively t)
 	     (setq org-pygment-path "/usr/local/bin/pygmentize")
 	     (setq org-confirm-babel-evaluate nil)
