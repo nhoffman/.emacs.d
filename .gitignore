@@ -4,3 +4,4 @@ image-dired
 tramp
 url
 .emacs.desktop*
+.sconsign.dblite
