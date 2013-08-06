@@ -114,7 +114,7 @@ Add some extra package repositories. The default value of package-archives is
   (add-to-list 'package-archives
        '("elpa" . "http://tromey.com/elpa/") t)
   ;; User-contributed repository
-  ;; Marmalade is for packages that cannot be uploaded to s official ELPA repository.
+  ;; Marmalade is for packages that cannot be uploaded to the official ELPA repository.
   (add-to-list 'package-archives
        '("marmalade" . "http://marmalade-repo.org/packages/") t)
   (add-to-list 'package-archives
@@ -173,6 +173,17 @@ first.
     ;; Interactively installs packages listed in global 'package-my-package-list'
     (interactive)
     (package-install-list package-my-package-list))
+
+  ;; (defun package-install-if-missing (pkg)
+  ;;   (interactive)
+  ;;   (unless (package-installed-not-builtin-p pkg)
+  ;;     (cond ((yes-or-no-p (format "Install %s? " pkg))
+  ;;            (package-install pkg)))))
+
+  ;; (defun package-install-my-packages ()
+  ;;   ;; Interactively installs packages listed in global 'package-my-package-list'
+  ;;   (interactive)
+  ;;   (mapcar 'package-install-if-missing package-my-package-list))
 #+END_SRC
 
 * Various aliases and key bindings
