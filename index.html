@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>init.el for Noah Hoffman</title>
-<!-- 2013-08-05 Mon 21:50 -->
+<!-- 2013-08-05 Mon 22:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
 <meta name="author" content="Noah Hoffman"/>
@@ -85,6 +85,8 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" />
+<style type="text/css">.table {width: auto;}</style>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -132,7 +134,7 @@ for the JavaScript code in this tag.
 /*]]>*///-->
 </script>
 </head>
-<body>
+<body class="container">
 <div id="content">
 <h1 class="title">init.el for Noah Hoffman</h1>
 <ul class="org-ul">
@@ -219,7 +221,7 @@ for the JavaScript code in this tag.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(message <span style="color: #00ff00;">"loading ~/.emacs.d/init.el"</span>)
+<pre class="src src-elisp">(message <span style="font-style: italic;">"loading ~/.emacs.d/init.el"</span>)
 </pre>
 </div>
 
@@ -228,18 +230,18 @@ for the JavaScript code in this tag.
 <div class="outline-text-2" id="text-1">
 <div class="org-src-container">
 
-<pre class="src src-elisp"><span style="color: #ff0000;">;; </span><span style="color: #ff0000;">This program is free software: you can redistribute it and/or modify</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">it under the terms of the GNU General Public License as published by</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">the Free Software Foundation, either version 3 of the License, or</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(at your option) any later version.</span>
+<pre class="src src-elisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">This program is free software: you can redistribute it and/or modify</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">it under the terms of the GNU General Public License as published by</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">the Free Software Foundation, either version 3 of the License, or</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(at your option) any later version.</span>
 
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">This program is distributed in the hope that it will be useful,</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">GNU General Public License for more details.</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">This program is distributed in the hope that it will be useful,</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">GNU General Public License for more details.</span>
 
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">You should have received a copy of the GNU General Public License</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">along with this program.  If not, see <a href="http://www.gnu.org/licenses/">&lt;http://www.gnu.org/licenses/&gt;</a>.</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">You should have received a copy of the GNU General Public License</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</span>
 </pre>
 </div>
 </div>
@@ -247,7 +249,7 @@ for the JavaScript code in this tag.
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2"><span class="section-number-2">2</span> Using this file</h2>
 <div class="outline-text-2" id="text-2">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table class="table table-striped table-condensed table-bordered table-hover">
 
 
 <colgroup>
@@ -270,15 +272,15 @@ for the JavaScript code in this tag.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(setq init-file-name <span style="color: #00ff00;">"init.el"</span>)
-(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">init-insert-code-block</span> ()
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">Insert a code block that will be tangled into `init-file-name`</span>
+<pre class="src src-elisp">(setq init-file-name <span style="font-style: italic;">"init.el"</span>)
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">init-insert-code-block</span> ()
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Insert a code block that will be tangled into `init-file-name`</span>
   (interactive)
   (backward-paragraph)
-  (insert (format <span style="color: #00ff00;">"#+BEGIN_SRC elisp :tangle %s"</span> init-file-name))
+  (insert (format <span style="font-style: italic;">"#+BEGIN_SRC elisp :tangle %s"</span> init-file-name))
   (forward-paragraph)
-  (insert <span style="color: #00ff00;">"#+END_SRC\n"</span>))
-(global-set-key (kbd <span style="color: #00ff00;">"C-c i"</span>) 'init-insert-code-block)
+  (insert <span style="font-style: italic;">"#+END_SRC\n"</span>))
+(global-set-key (kbd <span style="font-style: italic;">"C-c i"</span>) 'init-insert-code-block)
 </pre>
 </div>
 
@@ -288,27 +290,27 @@ Convenience function to (re)load init.el
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">init-load</span> ()
-  <span style="color: #00ff00;">"Load ~/.emacs.d/init.el"</span>
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">init-load</span> ()
+  <span style="font-style: italic;">"Load ~/.emacs.d/init.el"</span>
   (interactive)
-  (load <span style="color: #00ff00;">"~/.emacs.d/init.el"</span>))
-(global-set-key (kbd <span style="color: #00ff00;">"M-C-i"</span>) 'init-load)
+  (load <span style="font-style: italic;">"~/.emacs.d/init.el"</span>))
+(global-set-key (kbd <span style="font-style: italic;">"M-C-i"</span>) 'init-load)
 </pre>
 </div>
 
 <p>
-Tangle and export html
+Tangle and export html.
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">init-compile</span> ()
-  <span style="color: #00ff00;">"Tangle init.org and export html"</span>
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">init-compile</span> ()
+  <span style="font-style: italic;">"Tangle init.org and export html"</span>
   (interactive)
-  (<span style="color: #00ffff; font-weight: bold;">progn</span>
+  (<span style="font-weight: bold;">progn</span>
     (org-babel-tangle)
     (org-html-export-as-html)
-    (write-file <span style="color: #00ff00;">"gh-pages/index.html"</span>)
+    (write-file <span style="font-style: italic;">"gh-pages/index.html"</span>)
     ))
 </pre>
 </div>
@@ -336,9 +338,26 @@ Note that in a new clone, the submodule needs to be initialized.
 <pre class="example">
 git submodule init
 </pre>
-</div>
-</div>
 
+<p>
+A scons target pushes any new changes to the gh-pages branch on
+GitHub.
+</p>
+
+<pre class="example">
+publish_log, = env.Command(
+    target='publish.log',
+    source='init.org',
+    action=('(cd gh-pages &amp;&amp; '
+            'git commit -a -m "update ghpages" &amp;&amp; '
+            'git push origin gh-pages) | '
+            'tee $TARGET')
+    )
+Alias('publish', publish_log)
+Depends(publish_log, [html])
+</pre>
+</div>
+</div>
 <div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4"><span class="section-number-2">4</span> ELPA</h2>
 <div class="outline-text-2" id="text-4">
@@ -350,7 +369,7 @@ Set up and initialize ELPA package manager.
 Some useful ELPA variables and functions:
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table class="table table-striped table-condensed table-bordered table-hover">
 
 
 <colgroup>
@@ -388,20 +407,20 @@ Add some extra package repositories. The default value of package-archives is
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">when</span> (&gt;= emacs-major-version 24)
-  (<span style="color: #00ffff; font-weight: bold;">require</span> '<span style="color: #ff00ff;">package</span>)
+<pre class="src src-elisp">(<span style="font-weight: bold;">when</span> (&gt;= emacs-major-version 24)
+  (<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">package</span>)
   (package-initialize)
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">Original Emacs Lisp Package Archive</span>
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Original Emacs Lisp Package Archive</span>
   (add-to-list 'package-archives
-       '(<span style="color: #00ff00;">"elpa"</span> . <span style="color: #00ff00;">"http://tromey.com/elpa/"</span>) t)
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">User-contributed repository</span>
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">Marmalade is for packages that cannot be uploaded to s official ELPA repository.</span>
+       '(<span style="font-style: italic;">"elpa"</span> . <span style="font-style: italic;">"http://tromey.com/elpa/"</span>) t)
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">User-contributed repository</span>
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Marmalade is for packages that cannot be uploaded to s official ELPA repository.</span>
   (add-to-list 'package-archives
-       '(<span style="color: #00ff00;">"marmalade"</span> . <span style="color: #00ff00;">"http://marmalade-repo.org/packages/"</span>) t)
+       '(<span style="font-style: italic;">"marmalade"</span> . <span style="font-style: italic;">"http://marmalade-repo.org/packages/"</span>) t)
   (add-to-list 'package-archives
-       '(<span style="color: #00ff00;">"melpa"</span> . <span style="color: #00ff00;">"http://melpa.milkbox.net/packages/"</span>) t)
+       '(<span style="font-style: italic;">"melpa"</span> . <span style="font-style: italic;">"http://melpa.milkbox.net/packages/"</span>) t)
   (add-to-list 'package-archives
-       '(<span style="color: #00ff00;">"org"</span> . <span style="color: #00ff00;">"http://orgmode.org/elpa/"</span>) t)
+       '(<span style="font-style: italic;">"org"</span> . <span style="font-style: italic;">"http://orgmode.org/elpa/"</span>) t)
   )
 </pre>
 </div>
@@ -416,20 +435,20 @@ first.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">package-installed-not-builtin-p</span> (package <span style="color: #00ff00;">&amp;optional</span> min-version)
-  <span style="color: #00ff00;">"Return true if PACKAGE, of MIN-VERSION or newer, is installed, ignoring built in packages.</span>
-<span style="color: #00ff00;">MIN-VERSION should be a version list."</span>
-  (<span style="color: #00ffff; font-weight: bold;">let</span> ((pkg-desc (assq package package-alist)))
-    (<span style="color: #00ffff; font-weight: bold;">if</span> pkg-desc
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">package-installed-not-builtin-p</span> (package <span style="font-weight: bold; text-decoration: underline;">&amp;optional</span> min-version)
+  <span style="font-style: italic;">"Return true if PACKAGE, of MIN-VERSION or newer, is installed, ignoring built in packages.</span>
+<span style="font-style: italic;">MIN-VERSION should be a version list."</span>
+  (<span style="font-weight: bold;">let</span> ((pkg-desc (assq package package-alist)))
+    (<span style="font-weight: bold;">if</span> pkg-desc
         (version-list-&lt;= min-version
                          (package-desc-vers (cdr pkg-desc))))))
 
-(<span style="color: #00ffff; font-weight: bold;">defvar</span> <span style="color: #ffff00;">package-my-package-list</span>
+(<span style="font-weight: bold;">defvar</span> <span style="font-weight: bold; font-style: italic;">package-my-package-list</span>
   '(
     auctex
     edit-server
     ess
-    <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">flymake-cursor</span>
+    <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">flymake-cursor</span>
     flycheck
     flycheck-color-mode-line
     gist
@@ -442,20 +461,20 @@ first.
     rainbow-delimiters
     ))
 
-(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">package-install-list</span> (package-list)
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">Install each package named in "package-list" using elpa if not</span>
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">already installed.</span>
-  (<span style="color: #00ffff; font-weight: bold;">while</span> package-list
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">package-install-list</span> (package-list)
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Install each package named in "package-list" using elpa if not</span>
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">already installed.</span>
+  (<span style="font-weight: bold;">while</span> package-list
     (setq pkg (car package-list))
-    (<span style="color: #00ffff; font-weight: bold;">unless</span> (package-installed-not-builtin-p pkg)
-      (<span style="color: #00ffff; font-weight: bold;">cond</span> ((yes-or-no-p (format <span style="color: #00ff00;">"Install %s? "</span> pkg))
+    (<span style="font-weight: bold;">unless</span> (package-installed-not-builtin-p pkg)
+      (<span style="font-weight: bold;">cond</span> ((yes-or-no-p (format <span style="font-style: italic;">"Install %s? "</span> pkg))
              (package-install pkg))))
     (setq package-list (cdr package-list)))
-  (message <span style="color: #00ff00;">"done installing packages."</span>)
+  (message <span style="font-style: italic;">"done installing packages."</span>)
   )
 
-(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">package-install-my-packages</span> ()
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">Interactively installs packages listed in global 'package-my-package-list'</span>
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">package-install-my-packages</span> ()
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Interactively installs packages listed in global 'package-my-package-list'</span>
   (interactive)
   (package-install-list package-my-package-list))
 </pre>
@@ -467,7 +486,7 @@ first.
 <div class="outline-text-2" id="text-5">
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defalias</span> '<span style="color: #0000ff; font-weight: bold;">dtw</span> 'delete-trailing-whitespace)
+<pre class="src src-elisp">(<span style="font-weight: bold;">defalias</span> '<span style="font-weight: bold;">dtw</span> 'delete-trailing-whitespace)
 </pre>
 </div>
 
@@ -477,9 +496,9 @@ Function keys
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(global-set-key (kbd <span style="color: #00ff00;">"&lt;f6&gt;"</span>) 'linum-mode)
-(global-set-key (kbd <span style="color: #00ff00;">"&lt;f7&gt;"</span>) 'visual-line-mode)
-(global-set-key (kbd <span style="color: #00ff00;">"&lt;f8&gt;"</span>) 'ns-toggle-fullscreen)
+<pre class="src src-elisp">(global-set-key (kbd <span style="font-style: italic;">"&lt;f6&gt;"</span>) 'linum-mode)
+(global-set-key (kbd <span style="font-style: italic;">"&lt;f7&gt;"</span>) 'visual-line-mode)
+(global-set-key (kbd <span style="font-style: italic;">"&lt;f8&gt;"</span>) 'ns-toggle-fullscreen)
 </pre>
 </div>
 
@@ -489,7 +508,7 @@ Various custom key bindings.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(global-set-key (kbd <span style="color: #00ff00;">"C-c r"</span>) 'replace-string)
+<pre class="src src-elisp">(global-set-key (kbd <span style="font-style: italic;">"C-c r"</span>) 'replace-string)
 </pre>
 </div>
 </div>
@@ -503,8 +522,8 @@ Enable debugging
 
 <div class="org-src-container">
 
-<pre class="src src-elisp"><span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(setq debug-on-error t)</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(setq debug-on-signal t)</span>
+<pre class="src src-elisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(setq debug-on-error t)</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(setq debug-on-signal t)</span>
 </pre>
 </div>
 
@@ -517,8 +536,8 @@ Startup appearance.
 <pre class="src src-elisp">(setq column-number-mode t)
 (setq inhibit-splash-screen t)
 (setq require-final-newline t)
-(setq make-backup-files nil) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">no backup files</span>
-(setq initial-scratch-message nil) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">no instructions in the *scratch* buffer</span>
+(setq make-backup-files nil) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">no backup files</span>
+(setq initial-scratch-message nil) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">no instructions in the *scratch* buffer</span>
 (setq suggest-key-bindings 4)
 (show-paren-mode 1)
 </pre>
@@ -543,8 +562,8 @@ File path in title bar. See <a href="http://stackoverflow.com/questions/3669511/
 <div class="org-src-container">
 
 <pre class="src src-elisp">(setq frame-title-format
-      (list (format <span style="color: #00ff00;">"%s %%S: %%j "</span> (system-name))
-        '(buffer-file-name <span style="color: #00ff00;">"%f"</span> (dired-directory dired-directory <span style="color: #00ff00;">"%b"</span>))))
+      (list (format <span style="font-style: italic;">"%s %%S: %%j "</span> (system-name))
+        '(buffer-file-name <span style="font-style: italic;">"%f"</span> (dired-directory dired-directory <span style="font-style: italic;">"%b"</span>))))
 </pre>
 </div>
 
@@ -566,7 +585,7 @@ otherwise defined in PATH.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(add-to-list 'exec-path <span style="color: #00ff00;">"~/.emacs.d/bin"</span>)
+<pre class="src src-elisp">(add-to-list 'exec-path <span style="font-style: italic;">"~/.emacs.d/bin"</span>)
 </pre>
 </div>
 </div>
@@ -589,17 +608,17 @@ function to fix this.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">ssh-refresh</span> ()
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">Reset the environment variable SSH_AUTH_SOCK.</span>
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">ssh-refresh</span> ()
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Reset the environment variable SSH_AUTH_SOCK.</span>
   (interactive)
-  (setq ssh-auth-sock-old (getenv <span style="color: #00ff00;">"SSH_AUTH_SOCK"</span>))
-  (setenv <span style="color: #00ff00;">"SSH_AUTH_SOCK"</span>
+  (setq ssh-auth-sock-old (getenv <span style="font-style: italic;">"SSH_AUTH_SOCK"</span>))
+  (setenv <span style="font-style: italic;">"SSH_AUTH_SOCK"</span>
           (car (split-string
                 (shell-command-to-string
-                 <span style="color: #00ff00;">"ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2&gt; /dev/null)"</span>))))
+                 <span style="font-style: italic;">"ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2&gt; /dev/null)"</span>))))
   (message
-   (format <span style="color: #00ff00;">"SSH_AUTH_SOCK %s --&gt; %s"</span>
-           ssh-auth-sock-old (getenv <span style="color: #00ff00;">"SSH_AUTH_SOCK"</span>)))
+   (format <span style="font-style: italic;">"SSH_AUTH_SOCK %s --&gt; %s"</span>
+           ssh-auth-sock-old (getenv <span style="font-style: italic;">"SSH_AUTH_SOCK"</span>)))
   )
 </pre>
 </div>
@@ -620,8 +639,8 @@ Commenting out for now, but seems promising&#x2026;.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp"><span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(when (memq window-system '(mac ns))</span>
-<span style="color: #ff0000;">;;   </span><span style="color: #ff0000;">(exec-path-from-shell-initialize))</span>
+<pre class="src src-elisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(when (memq window-system '(mac ns))</span>
+<span style="font-weight: bold; font-style: italic;">;;   </span><span style="font-weight: bold; font-style: italic;">(exec-path-from-shell-initialize))</span>
 </pre>
 </div>
 </div>
@@ -642,8 +661,8 @@ Require prompt before exit on C-x C-c
 
 <pre class="src src-elisp">(global-set-key [(control x) (control c)]
                 (function
-                 (<span style="color: #00ffff; font-weight: bold;">lambda</span> () (interactive)
-                   (<span style="color: #00ffff; font-weight: bold;">cond</span> ((y-or-n-p <span style="color: #00ff00;">"Quit? (save-buffers-kill-terminal) "</span>)
+                 (<span style="font-weight: bold;">lambda</span> () (interactive)
+                   (<span style="font-weight: bold;">cond</span> ((y-or-n-p <span style="font-style: italic;">"Quit? (save-buffers-kill-terminal) "</span>)
                           (save-buffers-kill-terminal))))))
 </pre>
 </div>
@@ -667,50 +686,50 @@ Detect platform and window system and set up fonts accordingly
 </p>
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">fix-frame</span> ()
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">fix-frame</span> ()
   (interactive)
-  (menu-bar-mode -1) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">hide menu bar</span>
-  (tool-bar-mode -1) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">hide tool bar</span>
-  (<span style="color: #00ffff; font-weight: bold;">cond</span> ((string= <span style="color: #00ff00;">"ns"</span> window-system) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">cocoa</span>
-         (<span style="color: #00ffff; font-weight: bold;">progn</span> (message (format <span style="color: #00ff00;">"** running %s windowing system"</span> window-system))
-         <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">key bindings for mac - see</span>
-         <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">http://stuff-things.net/2009/01/06/emacs-on-the-mac/</span>
-         <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">http://osx.iusethis.com/app/carbonemacspackage</span>
+  (menu-bar-mode -1) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">hide menu bar</span>
+  (tool-bar-mode -1) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">hide tool bar</span>
+  (<span style="font-weight: bold;">cond</span> ((string= <span style="font-style: italic;">"ns"</span> window-system) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">cocoa</span>
+         (<span style="font-weight: bold;">progn</span> (message (format <span style="font-style: italic;">"** running %s windowing system"</span> window-system))
+         <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">key bindings for mac - see</span>
+         <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">http://stuff-things.net/2009/01/06/emacs-on-the-mac/</span>
+         <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">http://osx.iusethis.com/app/carbonemacspackage</span>
          (set-keyboard-coding-system 'mac-roman)
          (setq mac-option-modifier 'meta)
          (setq mac-command-key-is-meta nil)
-         (setq my-default-font <span style="color: #00ff00;">"Bitstream Vera Sans Mono-14"</span>)
+         (setq my-default-font <span style="font-style: italic;">"Bitstream Vera Sans Mono-14"</span>)
          ))
-        ((string= <span style="color: #00ff00;">"x"</span> window-system)
-         (<span style="color: #00ffff; font-weight: bold;">progn</span>
-           (message (format <span style="color: #00ff00;">"** running %s windowing system"</span> window-system))
-           (setq my-default-font <span style="color: #00ff00;">"Liberation Mono-10"</span>)
-           <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">M-w or C-w copies to system clipboard</span>
-           <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html</span>
+        ((string= <span style="font-style: italic;">"x"</span> window-system)
+         (<span style="font-weight: bold;">progn</span>
+           (message (format <span style="font-style: italic;">"** running %s windowing system"</span> window-system))
+           (setq my-default-font <span style="font-style: italic;">"Liberation Mono-10"</span>)
+           <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">M-w or C-w copies to system clipboard</span>
+           <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html</span>
            (setq x-select-enable-clipboard t)
-           <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(set-scroll-bar-mode -1) ;; hide scroll bar</span>
-           (scroll-bar-mode -1) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">hide scroll bar</span>
+           <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(set-scroll-bar-mode -1) ;; hide scroll bar</span>
+           (scroll-bar-mode -1) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">hide scroll bar</span>
            ))
         (t
-         (<span style="color: #00ffff; font-weight: bold;">progn</span>
-         (message <span style="color: #00ff00;">"** running unknown windowing system"</span>)
+         (<span style="font-weight: bold;">progn</span>
+         (message <span style="font-style: italic;">"** running unknown windowing system"</span>)
          (setq my-default-font nil)
-         (scroll-bar-mode -1) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">hide scroll bar</span>
+         (scroll-bar-mode -1) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">hide scroll bar</span>
          ))
         )
 
-  (<span style="color: #00ffff; font-weight: bold;">unless</span> (equal window-system nil)
-    (message (format <span style="color: #00ff00;">"** setting default font to %s"</span> my-default-font))
-    (<span style="color: #00ffff; font-weight: bold;">condition-case</span> nil
+  (<span style="font-weight: bold;">unless</span> (equal window-system nil)
+    (message (format <span style="font-style: italic;">"** setting default font to %s"</span> my-default-font))
+    (<span style="font-weight: bold;">condition-case</span> nil
         (set-default-font my-default-font)
-      (<span style="color: #ff0000;">error</span> (message (format <span style="color: #00ff00;">"** could not set to font %s"</span> my-default-font))))
+      (<span style="font-weight: bold;">error</span> (message (format <span style="font-style: italic;">"** could not set to font %s"</span> my-default-font))))
     )
   )
 
-(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">font-dejavu</span> ()
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">set default font to dejavu sans mono-11</span>
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">font-dejavu</span> ()
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">set default font to dejavu sans mono-11</span>
   (interactive)
-  (set-default-font <span style="color: #00ff00;">"dejavu sans mono-11"</span>)
+  (set-default-font <span style="font-style: italic;">"dejavu sans mono-11"</span>)
   )
 </pre>
 </div>
@@ -749,12 +768,12 @@ See <a href="http://www.emacswiki.org/emacs/SmoothScrolling">http://www.emacswik
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">number of lines at a time</span>
-(setq mouse-wheel-progressive-speed nil) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">don't accelerate scrolling</span>
-(setq mouse-wheel-follow-mosue 't) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">scroll window under mouse</span>
-(setq scroll-step 1) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">keyboard scroll one line at a time</span>
-(setq scroll-conservatively 1) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">scroll by one line to follow cursor off screen</span>
-(setq scroll-margin 2) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">Start scrolling when 2 lines from top/bottom</span>
+<pre class="src src-elisp">(setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">number of lines at a time</span>
+(setq mouse-wheel-progressive-speed nil) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">don't accelerate scrolling</span>
+(setq mouse-wheel-follow-mosue 't) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">scroll window under mouse</span>
+(setq scroll-step 1) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">keyboard scroll one line at a time</span>
+(setq scroll-conservatively 1) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">scroll by one line to follow cursor off screen</span>
+(setq scroll-margin 2) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Start scrolling when 2 lines from top/bottom</span>
 </pre>
 </div>
 </div>
@@ -764,9 +783,9 @@ See <a href="http://www.emacswiki.org/emacs/SmoothScrolling">http://www.emacswik
 <div class="outline-text-2" id="text-11">
 <div class="org-src-container">
 
-<pre class="src src-elisp">(transient-mark-mode 1) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">highlight active region - default in emacs 23.1+</span>
-(global-set-key (kbd <span style="color: #00ff00;">"M-C-t"</span>) 'transient-mark-mode)
-(global-set-key (kbd <span style="color: #00ff00;">"C-x C-b"</span>) 'electric-buffer-list)
+<pre class="src src-elisp">(transient-mark-mode 1) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">highlight active region - default in emacs 23.1+</span>
+(global-set-key (kbd <span style="font-style: italic;">"M-C-t"</span>) 'transient-mark-mode)
+(global-set-key (kbd <span style="font-style: italic;">"C-x C-b"</span>) 'electric-buffer-list)
 </pre>
 </div>
 </div>
@@ -776,7 +795,7 @@ See <a href="http://www.emacswiki.org/emacs/SmoothScrolling">http://www.emacswik
 <div class="outline-text-2" id="text-12">
 <div class="org-src-container">
 
-<pre class="src src-elisp">(set-cursor-color <span style="color: #00ff00;">"red"</span>)
+<pre class="src src-elisp">(set-cursor-color <span style="font-style: italic;">"red"</span>)
 (blink-cursor-mode 1)
 </pre>
 </div>
@@ -800,7 +819,7 @@ See <a href="http://www.emacswiki.org/emacs/KeyboardMacros">http://www.emacswiki
 note that default bindings for macros are:
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table class="table table-striped table-condensed table-bordered table-hover">
 
 
 <colgroup>
@@ -832,7 +851,7 @@ Some additional keyboard macro bindings.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(global-set-key (kbd <span style="color: #00ff00;">"&lt;f5&gt;"</span>) 'call-last-kbd-macro)
+<pre class="src src-elisp">(global-set-key (kbd <span style="font-style: italic;">"&lt;f5&gt;"</span>) 'call-last-kbd-macro)
 </pre>
 </div>
 </div>
@@ -852,7 +871,7 @@ References:
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">require</span> '<span style="color: #ff00ff;">desktop</span>)
+<pre class="src src-elisp">(<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">desktop</span>)
 </pre>
 </div>
 
@@ -864,9 +883,9 @@ started with <code>--no-desktop</code>
 <div class="org-src-container">
 
 <pre class="src src-elisp">(desktop-save-mode 1)
-(<span style="color: #00ffff; font-weight: bold;">if</span> (and desktop-save-mode (not (member <span style="color: #00ff00;">"--no-desktop"</span> command-line-args)))
-    (<span style="color: #00ffff; font-weight: bold;">progn</span>
-      (message <span style="color: #00ff00;">"Enabling desktop auto-save"</span>)
+(<span style="font-weight: bold;">if</span> (and desktop-save-mode (not (member <span style="font-style: italic;">"--no-desktop"</span> command-line-args)))
+    (<span style="font-weight: bold;">progn</span>
+      (message <span style="font-style: italic;">"Enabling desktop auto-save"</span>)
       (add-hook 'auto-save-hook 'desktop-save-in-desktop-dir)))
 </pre>
 </div>
@@ -885,11 +904,11 @@ Move line up
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">move-line-up</span> ()
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">move-line-up</span> ()
   (interactive)
   (transpose-lines 1)
   (previous-line 2))
-(global-set-key (kbd <span style="color: #00ff00;">"M-&lt;up&gt;"</span>) 'move-line-up)
+(global-set-key (kbd <span style="font-style: italic;">"M-&lt;up&gt;"</span>) 'move-line-up)
 </pre>
 </div>
 
@@ -899,12 +918,12 @@ Move line down.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">move-line-down</span> ()
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">move-line-down</span> ()
   (interactive)
   (next-line 1)
   (transpose-lines 1)
   (previous-line 1))
-(global-set-key (kbd <span style="color: #00ff00;">"M-&lt;down&gt;"</span>) 'move-line-down)
+(global-set-key (kbd <span style="font-style: italic;">"M-&lt;down&gt;"</span>) 'move-line-down)
 </pre>
 </div>
 </div>
@@ -921,11 +940,11 @@ Note that other-window is bound by default to <code>C-x o</code>
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">back-window</span> ()
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">back-window</span> ()
   (interactive)
   (other-window -1))
-(global-set-key (kbd <span style="color: #00ff00;">"C-&lt;right&gt;"</span>) 'other-window)
-(global-set-key (kbd <span style="color: #00ff00;">"C-&lt;left&gt;"</span>) 'back-window)
+(global-set-key (kbd <span style="font-style: italic;">"C-&lt;right&gt;"</span>) 'other-window)
+(global-set-key (kbd <span style="font-style: italic;">"C-&lt;left&gt;"</span>) 'back-window)
 </pre>
 </div>
 </div>
@@ -942,20 +961,20 @@ Note that other-window is bound by default to <code>C-x o</code>
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">transpose-buffers</span> (arg)
-  <span style="color: #00ff00;">"Transpose the buffers shown in two windows."</span>
-  (interactive <span style="color: #00ff00;">"p"</span>)
-  (<span style="color: #00ffff; font-weight: bold;">let</span> ((selector (<span style="color: #00ffff; font-weight: bold;">if</span> (&gt;= arg 0) 'next-window 'previous-window)))
-    (<span style="color: #00ffff; font-weight: bold;">while</span> (/= arg 0)
-      (<span style="color: #00ffff; font-weight: bold;">let</span> ((this-win (window-buffer))
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">transpose-buffers</span> (arg)
+  <span style="font-style: italic;">"Transpose the buffers shown in two windows."</span>
+  (interactive <span style="font-style: italic;">"p"</span>)
+  (<span style="font-weight: bold;">let</span> ((selector (<span style="font-weight: bold;">if</span> (&gt;= arg 0) 'next-window 'previous-window)))
+    (<span style="font-weight: bold;">while</span> (/= arg 0)
+      (<span style="font-weight: bold;">let</span> ((this-win (window-buffer))
             (next-win (window-buffer (funcall selector))))
         (set-window-buffer (selected-window) next-win)
         (set-window-buffer (funcall selector) this-win)
         (select-window (funcall selector)))
-      <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(setq arg (if (plusp arg) (1- arg) (1+ arg)))</span>
-      (setq arg (<span style="color: #00ffff; font-weight: bold;">if</span> (&gt;= arg 0) (1- arg) (1+ arg)))
+      <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(setq arg (if (plusp arg) (1- arg) (1+ arg)))</span>
+      (setq arg (<span style="font-weight: bold;">if</span> (&gt;= arg 0) (1- arg) (1+ arg)))
       )))
-(global-set-key (kbd <span style="color: #00ff00;">"C-x 4"</span>) 'transpose-buffers)
+(global-set-key (kbd <span style="font-style: italic;">"C-x 4"</span>) 'transpose-buffers)
 </pre>
 </div>
 </div>
@@ -969,10 +988,10 @@ Also from <a href="http://www.emacswiki.org/emacs/SwitchingBuffers">http://www.e
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">switch-buffers-between-frames</span> ()
-  <span style="color: #00ff00;">"switch-buffers-between-frames switches the buffers between the two last frames"</span>
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">switch-buffers-between-frames</span> ()
+  <span style="font-style: italic;">"switch-buffers-between-frames switches the buffers between the two last frames"</span>
   (interactive)
-  (<span style="color: #00ffff; font-weight: bold;">let</span> ((this-frame-buffer nil)
+  (<span style="font-weight: bold;">let</span> ((this-frame-buffer nil)
         (other-frame-buffer nil))
     (setq this-frame-buffer (car (frame-parameter nil 'buffer-list)))
     (other-frame 1)
@@ -980,7 +999,7 @@ Also from <a href="http://www.emacswiki.org/emacs/SwitchingBuffers">http://www.e
     (switch-to-buffer this-frame-buffer)
     (other-frame 1)
     (switch-to-buffer other-frame-buffer)))
-(global-set-key (kbd <span style="color: #00ff00;">"C-x 5"</span>) 'switch-buffers-between-frames)
+(global-set-key (kbd <span style="font-style: italic;">"C-x 5"</span>) 'switch-buffers-between-frames)
 </pre>
 </div>
 </div>
@@ -995,8 +1014,8 @@ Use aspell instead of ispell
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(setq-default ispell-program-name <span style="color: #00ff00;">"aspell"</span>)
-(setq ispell-dictionary <span style="color: #00ff00;">"en"</span>)
+<pre class="src src-elisp">(setq-default ispell-program-name <span style="font-style: italic;">"aspell"</span>)
+(setq ispell-dictionary <span style="font-style: italic;">"en"</span>)
 </pre>
 </div>
 
@@ -1006,8 +1025,8 @@ Enable on-the-fly spell-check
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(autoload 'flyspell-mode <span style="color: #00ff00;">"flyspell"</span> <span style="color: #00ff00;">"On-the-fly spelling checker."</span> t)
-(setq flyspell-issue-welcome-flag nil) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">fix error message</span>
+<pre class="src src-elisp">(autoload 'flyspell-mode <span style="font-style: italic;">"flyspell"</span> <span style="font-style: italic;">"On-the-fly spelling checker."</span> t)
+(setq flyspell-issue-welcome-flag nil) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">fix error message</span>
 </pre>
 </div>
 </div>
@@ -1022,9 +1041,9 @@ Enable on-the-fly spell-check
 <div class="org-src-container">
 
 <pre class="src src-elisp">(add-hook 'find-file-hooks
-          '(<span style="color: #00ffff; font-weight: bold;">lambda</span> ()
-             (<span style="color: #00ffff; font-weight: bold;">if</span> (equal <span style="color: #00ff00;">"pico."</span> (substring (buffer-name (current-buffer)) 0 5))
-                 <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(message "** running hook for pine/alpine")</span>
+          '(<span style="font-weight: bold;">lambda</span> ()
+             (<span style="font-weight: bold;">if</span> (equal <span style="font-style: italic;">"pico."</span> (substring (buffer-name (current-buffer)) 0 5))
+                 <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(message "** running hook for pine/alpine")</span>
                  (mail-mode))))
 </pre>
 </div>
@@ -1035,7 +1054,7 @@ Enable on-the-fly spell-check
 <div class="outline-text-2" id="text-20">
 <div class="org-src-container">
 
-<pre class="src src-elisp">(add-to-list 'load-path <span style="color: #00ff00;">"~/.emacs.d/"</span>)
+<pre class="src src-elisp">(add-to-list 'load-path <span style="font-style: italic;">"~/.emacs.d/"</span>)
 </pre>
 </div>
 </div>
@@ -1058,9 +1077,9 @@ explicitly.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">condition-case</span> nil
-    (<span style="color: #00ffff; font-weight: bold;">require</span> '<span style="color: #ff00ff;">ess-site</span>)
-  (<span style="color: #ff0000;">error</span> (message <span style="color: #00ff00;">"** could not load ESS"</span>)))
+<pre class="src src-elisp">(<span style="font-weight: bold;">condition-case</span> nil
+    (<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">ess-site</span>)
+  (<span style="font-weight: bold;">error</span> (message <span style="font-style: italic;">"** could not load ESS"</span>)))
 </pre>
 </div>
 
@@ -1071,13 +1090,13 @@ Hooks
 <div class="org-src-container">
 
 <pre class="src src-elisp">(add-hook 'ess-mode-hook
-          '(<span style="color: #00ffff; font-weight: bold;">lambda</span>()
-             (message <span style="color: #00ff00;">"Loading ess-mode hooks"</span>)
-             <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">leave my underscore key alone!</span>
-             (setq ess-S-assign <span style="color: #00ff00;">"_"</span>)
-             <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(ess-toggle-underscore nil)</span>
-             <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">set ESS indentation style</span>
-             <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">choose from GNU, BSD, K&amp;R, CLB, and C++</span>
+          '(<span style="font-weight: bold;">lambda</span>()
+             (message <span style="font-style: italic;">"Loading ess-mode hooks"</span>)
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">leave my underscore key alone!</span>
+             (setq ess-S-assign <span style="font-style: italic;">"_"</span>)
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(ess-toggle-underscore nil)</span>
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">set ESS indentation style</span>
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">choose from GNU, BSD, K&amp;R, CLB, and C++</span>
              (ess-set-style 'GNU 'quiet)
              (flyspell-mode)
              )
@@ -1096,18 +1115,18 @@ org-mode hooks
 <div class="org-src-container">
 
 <pre class="src src-elisp">(add-hook 'org-mode-hook
-          '(<span style="color: #00ffff; font-weight: bold;">lambda</span> ()
-             (message <span style="color: #00ff00;">"Loading org-mode hooks"</span>)
+          '(<span style="font-weight: bold;">lambda</span> ()
+             (message <span style="font-style: italic;">"Loading org-mode hooks"</span>)
              (turn-on-font-lock)
-             (define-key org-mode-map (kbd <span style="color: #00ff00;">"M-&lt;right&gt;"</span>) 'forward-word)
-             (define-key org-mode-map (kbd <span style="color: #00ff00;">"M-&lt;left&gt;"</span>) 'backward-word)
-             <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">provides key mapping for the above; replaces default</span>
-             <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">key bindings for org-promote/demote-subtree</span>
-             (define-key org-mode-map (kbd <span style="color: #00ff00;">"M-S-&lt;right&gt;"</span>) 'org-do-demote)
-             (define-key org-mode-map (kbd <span style="color: #00ff00;">"M-S-&lt;left&gt;"</span>) 'org-do-promote)
+             (define-key org-mode-map (kbd <span style="font-style: italic;">"M-&lt;right&gt;"</span>) 'forward-word)
+             (define-key org-mode-map (kbd <span style="font-style: italic;">"M-&lt;left&gt;"</span>) 'backward-word)
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">provides key mapping for the above; replaces default</span>
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">key bindings for org-promote/demote-subtree</span>
+             (define-key org-mode-map (kbd <span style="font-style: italic;">"M-S-&lt;right&gt;"</span>) 'org-do-demote)
+             (define-key org-mode-map (kbd <span style="font-style: italic;">"M-S-&lt;left&gt;"</span>) 'org-do-promote)
              (org-indent-mode)
              (visual-line-mode)
-             <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">org-babel</span>
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">org-babel</span>
              (org-babel-do-load-languages
               'org-babel-load-languages
               '((R . t)
@@ -1125,12 +1144,12 @@ org-mode hooks
  '(org-confirm-babel-evaluate nil)
  '(org-src-fontify-natively t))
 
-(setq org-agenda-files (list <span style="color: #00ff00;">"~/Dropbox/notes/index.org"</span>
-                             <span style="color: #00ff00;">"~/Dropbox/fredross/notes/plans.org"</span>
+(setq org-agenda-files (list <span style="font-style: italic;">"~/Dropbox/notes/index.org"</span>
+                             <span style="font-style: italic;">"~/Dropbox/fredross/notes/plans.org"</span>
                              ))
 
-(push '(<span style="color: #00ff00;">"\\.org\\'"</span> . org-mode) auto-mode-alist)
-(push '(<span style="color: #00ff00;">"\\.org\\.txt\\'"</span> . org-mode) auto-mode-alist)
+(push '(<span style="font-style: italic;">"\\.org\\'"</span> . org-mode) auto-mode-alist)
+(push '(<span style="font-style: italic;">"\\.org\\.txt\\'"</span> . org-mode) auto-mode-alist)
 </pre>
 </div>
 </div>
@@ -1161,11 +1180,11 @@ Requires <code>(setq org-babel-load-languages (quote (pygment . t)))</code> abov
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">condition-case</span> nil
-    (<span style="color: #00ffff; font-weight: bold;">progn</span>
-      (<span style="color: #00ffff; font-weight: bold;">require</span> '<span style="color: #ff00ff;">ob-pygment</span>)
-      (setq org-pygment-path <span style="color: #00ff00;">"/usr/local/bin/pygmentize"</span>))
-  (<span style="color: #ff0000;">error</span> (message <span style="color: #00ff00;">"** could not load ob-pygment"</span>)))
+<pre class="src src-elisp">(<span style="font-weight: bold;">condition-case</span> nil
+    (<span style="font-weight: bold;">progn</span>
+      (<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">ob-pygment</span>)
+      (setq org-pygment-path <span style="font-style: italic;">"/usr/local/bin/pygmentize"</span>))
+  (<span style="font-weight: bold;">error</span> (message <span style="font-style: italic;">"** could not load ob-pygment"</span>)))
 </pre>
 </div>
 </div>
@@ -1175,23 +1194,23 @@ Requires <code>(setq org-babel-load-languages (quote (pygment . t)))</code> abov
 <div class="outline-text-3" id="text-23-2">
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">insert-date</span> ()
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">Insert today's timestamp in format "&lt;%Y-%m-%d %a&gt;"</span>
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">insert-date</span> ()
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Insert today's timestamp in format "&lt;%Y-%m-%d %a&gt;"</span>
   (interactive)
-  (insert (format-time-string <span style="color: #00ff00;">"&lt;%Y-%m-%d %a&gt;"</span>)))
-(global-set-key (kbd <span style="color: #00ff00;">"C-c d"</span>) 'insert-date)
+  (insert (format-time-string <span style="font-style: italic;">"&lt;%Y-%m-%d %a&gt;"</span>)))
+(global-set-key (kbd <span style="font-style: italic;">"C-c d"</span>) 'insert-date)
 </pre>
 </div>
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">org-add-entry</span> (filename time-format)
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">Add an entry to an org-file with today's timestamp.</span>
-  (interactive <span style="color: #00ff00;">"FFile: "</span>)
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">org-add-entry</span> (filename time-format)
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Add an entry to an org-file with today's timestamp.</span>
+  (interactive <span style="font-style: italic;">"FFile: "</span>)
   (find-file filename)
   (end-of-buffer)
   (delete-blank-lines)
-  <span style="color: #ff0000;">;;</span><span style="color: #ff0000;">(insert "\n* ")</span>
+  <span style="font-weight: bold; font-style: italic;">;;</span><span style="font-weight: bold; font-style: italic;">(insert "\n* ")</span>
   (insert (format-time-string time-format))
   (beginning-of-line)
   (forward-char 2))
@@ -1205,9 +1224,9 @@ Add a new entry to main notes file.
 <div class="org-src-container">
 
 <pre class="src src-elisp">(global-set-key
- (kbd <span style="color: #00ff00;">"C-x C-n"</span>) (<span style="color: #00ffff; font-weight: bold;">lambda</span> () (interactive)
-                   (org-add-entry <span style="color: #00ff00;">"~/Dropbox/notes/index.org"</span>
-                                  <span style="color: #00ff00;">"\n* &lt;%Y-%m-%d %a&gt;"</span>)))
+ (kbd <span style="font-style: italic;">"C-x C-n"</span>) (<span style="font-weight: bold;">lambda</span> () (interactive)
+                   (org-add-entry <span style="font-style: italic;">"~/Dropbox/notes/index.org"</span>
+                                  <span style="font-style: italic;">"\n* &lt;%Y-%m-%d %a&gt;"</span>)))
 </pre>
 </div>
 
@@ -1218,9 +1237,9 @@ Add an entry to todo file.
 <div class="org-src-container">
 
 <pre class="src src-elisp">(global-set-key
- (kbd <span style="color: #00ff00;">"C-x C-m"</span>) (<span style="color: #00ffff; font-weight: bold;">lambda</span> () (interactive)
-                   (org-add-entry <span style="color: #00ff00;">"~/Dropbox/notes/todo.org"</span>
-                                  <span style="color: #00ff00;">"\n** TODO &lt;%Y-%m-%d %a&gt;"</span>)))
+ (kbd <span style="font-style: italic;">"C-x C-m"</span>) (<span style="font-weight: bold;">lambda</span> () (interactive)
+                   (org-add-entry <span style="font-style: italic;">"~/Dropbox/notes/todo.org"</span>
+                                  <span style="font-style: italic;">"\n** TODO &lt;%Y-%m-%d %a&gt;"</span>)))
 </pre>
 </div>
 </div>
@@ -1235,7 +1254,7 @@ Installed using elpa.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(push '(<span style="color: #00ff00;">"\\.md"</span> . markdown-mode) auto-mode-alist)
+<pre class="src src-elisp">(push '(<span style="font-style: italic;">"\\.md"</span> . markdown-mode) auto-mode-alist)
 </pre>
 </div>
 </div>
@@ -1249,9 +1268,9 @@ Installed using elpa.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">condition-case</span> nil
+<pre class="src src-elisp">(<span style="font-weight: bold;">condition-case</span> nil
     (edit-server-start)
-  (<span style="color: #ff0000;">error</span> (message <span style="color: #00ff00;">"** could not start edit-server (chrome edit with emacs)"</span>)))
+  (<span style="font-weight: bold;">error</span> (message <span style="font-style: italic;">"** could not start edit-server (chrome edit with emacs)"</span>)))
 </pre>
 </div>
 </div>
@@ -1271,18 +1290,18 @@ Hooks
 <div class="org-src-container">
 
 <pre class="src src-elisp">(add-hook 'python-mode-hook
-          '(<span style="color: #00ffff; font-weight: bold;">lambda</span> ()
-             (message <span style="color: #00ff00;">"Loading python-mode hooks"</span>)
+          '(<span style="font-weight: bold;">lambda</span> ()
+             (message <span style="font-style: italic;">"Loading python-mode hooks"</span>)
              (setq indent-tabs-mode nil)
              (setq tab-width 4)
              (setq py-indent-offset tab-width)
              (setq py-smart-indentation t)
-             (define-key python-mode-map <span style="color: #00ff00;">"\C-m"</span> 'newline-and-indent)
-             <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(hs-minor-mode)</span>
-             <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">add function index to menu bar</span>
-             <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(imenu-add-menubar-index)</span>
-             <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(python-mode-untabify)</span>
-             <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(linum-mode)</span>
+             (define-key python-mode-map <span style="font-style: italic;">"\C-m"</span> 'newline-and-indent)
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(hs-minor-mode)</span>
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">add function index to menu bar</span>
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(imenu-add-menubar-index)</span>
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(python-mode-untabify)</span>
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(linum-mode)</span>
              )
           )
 </pre>
@@ -1294,9 +1313,9 @@ File name mappings
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(push '(<span style="color: #00ff00;">"SConstruct"</span> . python-mode) auto-mode-alist)
-(push '(<span style="color: #00ff00;">"SConscript"</span> . python-mode) auto-mode-alist)
-(push '(<span style="color: #00ff00;">"*.cgi"</span> . python-mode) auto-mode-alist)
+<pre class="src src-elisp">(push '(<span style="font-style: italic;">"SConstruct"</span> . python-mode) auto-mode-alist)
+(push '(<span style="font-style: italic;">"SConscript"</span> . python-mode) auto-mode-alist)
+(push '(<span style="font-style: italic;">"*.cgi"</span> . python-mode) auto-mode-alist)
 </pre>
 </div>
 
@@ -1307,7 +1326,7 @@ deleting a single character.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(setq backward-delete-char-untabify-method <span style="color: #00ff00;">"all"</span>)
+<pre class="src src-elisp">(setq backward-delete-char-untabify-method <span style="font-style: italic;">"all"</span>)
 </pre>
 </div>
 
@@ -1317,20 +1336,20 @@ Make indentation more compliant with pep8 (see <a href="http://stackoverflow.com
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defadvice</span> <span style="color: #0000ff; font-weight: bold;">python-calculate-indentation</span> (around outdent-closing-brackets)
-  <span style="color: #00ff00;">"Handle lines beginning with a closing bracket and indent them so that</span>
-<span style="color: #00ff00;">  they line up with the line containing the corresponding opening bracket."</span>
-  (<span style="color: #00ffff; font-weight: bold;">save-excursion</span>
+<pre class="src src-elisp">(<span style="font-weight: bold;">defadvice</span> <span style="font-weight: bold;">python-calculate-indentation</span> (around outdent-closing-brackets)
+  <span style="font-style: italic;">"Handle lines beginning with a closing bracket and indent them so that</span>
+<span style="font-style: italic;">  they line up with the line containing the corresponding opening bracket."</span>
+  (<span style="font-weight: bold;">save-excursion</span>
     (beginning-of-line)
-    (<span style="color: #00ffff; font-weight: bold;">let</span> ((syntax (syntax-ppss)))
-      (<span style="color: #00ffff; font-weight: bold;">if</span> (and (not (eq 'string (syntax-ppss-context syntax)))
+    (<span style="font-weight: bold;">let</span> ((syntax (syntax-ppss)))
+      (<span style="font-weight: bold;">if</span> (and (not (eq 'string (syntax-ppss-context syntax)))
                (python-continuation-line-p)
                (cadr syntax)
-               (skip-syntax-forward <span style="color: #00ff00;">"-"</span>)
-               (looking-at <span style="color: #00ff00;">"\\s)"</span>))
-          (<span style="color: #00ffff; font-weight: bold;">progn</span>
+               (skip-syntax-forward <span style="font-style: italic;">"-"</span>)
+               (looking-at <span style="font-style: italic;">"\\s)"</span>))
+          (<span style="font-weight: bold;">progn</span>
             (forward-char 1)
-            (<span style="color: #00ffff; font-weight: bold;">ignore-errors</span> (backward-sexp))
+            (<span style="font-weight: bold;">ignore-errors</span> (backward-sexp))
             (setq ad-return-value (current-indentation)))
         ad-do-it))))
 
@@ -1367,7 +1386,7 @@ See <a href="https://github.com/arcthur/.emacs.d/blob/master/extensions/init-fly
 <div class="org-src-container">
 
 <pre class="src src-elisp">(add-hook 'flycheck-mode-hook
-          '(<span style="color: #00ffff; font-weight: bold;">lambda</span> ()
+          '(<span style="font-weight: bold;">lambda</span> ()
              (setq flycheck-highlighting-mode 'lines)
              (flycheck-color-mode-line-mode)
              )
@@ -1424,28 +1443,28 @@ And some configuration:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">require</span> '<span style="color: #ff00ff;">flymake</span>)
+<pre class="src src-elisp">(<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">flymake</span>)
 
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">TODO - first check if flymake-cursor is installed</span>
-(load-library <span style="color: #00ff00;">"flymake-cursor"</span>) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">install from elpa</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">TODO - first check if flymake-cursor is installed</span>
+(load-library <span style="font-style: italic;">"flymake-cursor"</span>) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">install from elpa</span>
 
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">'pychecker' script above installed in ~/.emacs.d/bin</span>
-(setq pycodechecker <span style="color: #00ff00;">"pychecker"</span>)
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">'pychecker' script above installed in ~/.emacs.d/bin</span>
+(setq pycodechecker <span style="font-style: italic;">"pychecker"</span>)
 
-(<span style="color: #00ffff; font-weight: bold;">when</span> (load <span style="color: #00ff00;">"flymake"</span> t)
-  (<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">flymake-pycodecheck-init</span> ()
-    (<span style="color: #00ffff; font-weight: bold;">let*</span> ((temp-file (flymake-init-create-temp-buffer-copy
+(<span style="font-weight: bold;">when</span> (load <span style="font-style: italic;">"flymake"</span> t)
+  (<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">flymake-pycodecheck-init</span> ()
+    (<span style="font-weight: bold;">let*</span> ((temp-file (flymake-init-create-temp-buffer-copy
                        'flymake-create-temp-inplace))
            (local-file (file-relative-name
                         temp-file
                         (file-name-directory buffer-file-name))))
       (list pycodechecker (list local-file))))
   (add-to-list 'flymake-allowed-file-name-masks
-               '(<span style="color: #00ff00;">"\\.py\\'"</span> flymake-pycodecheck-init))
+               '(<span style="font-style: italic;">"\\.py\\'"</span> flymake-pycodecheck-init))
   (add-to-list 'flymake-allowed-file-name-masks
-               '(<span style="color: #00ff00;">"SCons"</span> flymake-pycodecheck-init)))
+               '(<span style="font-style: italic;">"SCons"</span> flymake-pycodecheck-init)))
 
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(add-hook 'python-mode-hook 'flymake-mode)</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(add-hook 'python-mode-hook 'flymake-mode)</span>
 </pre>
 </div>
 </div>
@@ -1456,8 +1475,8 @@ And some configuration:
 <div class="org-src-container">
 
 <pre class="src src-elisp">(add-hook 'text-mode-hook
-          '(<span style="color: #00ffff; font-weight: bold;">lambda</span> ()
-             <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(longlines-mode)</span>
+          '(<span style="font-weight: bold;">lambda</span> ()
+             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(longlines-mode)</span>
              (flyspell-mode)
              )
           )
@@ -1471,10 +1490,10 @@ And some configuration:
 <div class="org-src-container">
 
 <pre class="src src-elisp">(add-hook 'rst-mode-hook
-          '(<span style="color: #00ffff; font-weight: bold;">lambda</span> ()
-             (message <span style="color: #00ff00;">"Loading rst-mode hooks"</span>)
+          '(<span style="font-weight: bold;">lambda</span> ()
+             (message <span style="font-style: italic;">"Loading rst-mode hooks"</span>)
              (flyspell-mode)
-             (define-key rst-mode-map (kbd <span style="color: #00ff00;">"C-c C-a"</span>) 'rst-adjust)
+             (define-key rst-mode-map (kbd <span style="font-style: italic;">"C-c C-a"</span>) 'rst-adjust)
              )
           )
 </pre>
@@ -1491,10 +1510,10 @@ And some configuration:
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">condition-case</span> nil
-    (<span style="color: #00ffff; font-weight: bold;">require</span> '<span style="color: #ff00ff;">tramp</span>)
-  (setq tramp-default-method <span style="color: #00ff00;">"scp"</span>)
-  (<span style="color: #ff0000;">error</span> (message <span style="color: #00ff00;">"** could not load tramp"</span>)))
+<pre class="src src-elisp">(<span style="font-weight: bold;">condition-case</span> nil
+    (<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">tramp</span>)
+  (setq tramp-default-method <span style="font-style: italic;">"scp"</span>)
+  (<span style="font-weight: bold;">error</span> (message <span style="font-style: italic;">"** could not load tramp"</span>)))
 </pre>
 </div>
 </div>
@@ -1509,9 +1528,9 @@ And some configuration:
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">require</span> '<span style="color: #ff00ff;">ibuffer</span>)
-(global-set-key (kbd <span style="color: #00ff00;">"C-x C-g"</span>) 'ibuffer)
-(global-set-key (kbd <span style="color: #00ff00;">"C-x M-g"</span>) 'ibuffer-switch-to-saved-filter-groups)
+<pre class="src src-elisp">(<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">ibuffer</span>)
+(global-set-key (kbd <span style="font-style: italic;">"C-x C-g"</span>) 'ibuffer)
+(global-set-key (kbd <span style="font-style: italic;">"C-x M-g"</span>) 'ibuffer-switch-to-saved-filter-groups)
 (setq ibuffer-show-empty-filter-groups nil)
 </pre>
 </div>
@@ -1522,17 +1541,17 @@ Function to load config file. Load on starup.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(setq ibuffer-config-file <span style="color: #00ff00;">"~/.emacs.d/ibuffer-config.el"</span>)
+<pre class="src src-elisp">(setq ibuffer-config-file <span style="font-style: italic;">"~/.emacs.d/ibuffer-config.el"</span>)
 
-(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">ibuffer-load-config</span> ()
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">load the ibuffer config file</span>
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">ibuffer-load-config</span> ()
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">load the ibuffer config file</span>
   (interactive)
-  (<span style="color: #00ffff; font-weight: bold;">condition-case</span> nil
-      (<span style="color: #00ffff; font-weight: bold;">progn</span>
-        (message (format <span style="color: #00ff00;">"** loading ibuffer config in %s"</span> ibuffer-config-file))
+  (<span style="font-weight: bold;">condition-case</span> nil
+      (<span style="font-weight: bold;">progn</span>
+        (message (format <span style="font-style: italic;">"** loading ibuffer config in %s"</span> ibuffer-config-file))
         (load ibuffer-config-file)
         )
-    (<span style="color: #ff0000;">error</span> (message (format <span style="color: #00ff00;">"** could not load %s"</span> ibuffer-config-file))))
+    (<span style="font-weight: bold;">error</span> (message (format <span style="font-style: italic;">"** could not load %s"</span> ibuffer-config-file))))
   )
 
 (ibuffer-load-config)
@@ -1545,14 +1564,14 @@ Show/hide all filter groups
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">ibuffer-show-all-filter-groups</span> ()
-  <span style="color: #00ff00;">"Show all filter groups"</span>
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">ibuffer-show-all-filter-groups</span> ()
+  <span style="font-style: italic;">"Show all filter groups"</span>
   (interactive)
   (setq ibuffer-hidden-filter-groups nil)
   (ibuffer-update nil t))
 
-(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">ibuffer-hide-all-filter-groups</span> ()
-  <span style="color: #00ff00;">"Hide all filter groups"</span>
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">ibuffer-hide-all-filter-groups</span> ()
+  <span style="font-style: italic;">"Hide all filter groups"</span>
   (interactive)
   (setq ibuffer-hidden-filter-groups
         (delete-dups
@@ -1567,8 +1586,8 @@ Show/hide all filter groups
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">ibuffer-reload</span> ()
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">kill ibuffer, reload the config file, and return to ibuffer</span>
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">ibuffer-reload</span> ()
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">kill ibuffer, reload the config file, and return to ibuffer</span>
   (interactive)
   (ibuffer)
   (kill-buffer)
@@ -1585,26 +1604,26 @@ From <a href="http://www.emacswiki.org/emacs/IbufferMode">http://www.emacswiki.o
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">my-ibuffer-sort-hook</span> ()
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">add another sorting method for ibuffer (allow the grouping of</span>
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">filenames and dired buffers</span>
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">my-ibuffer-sort-hook</span> ()
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">add another sorting method for ibuffer (allow the grouping of</span>
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">filenames and dired buffers</span>
   (define-ibuffer-sorter filename-or-dired
-    <span style="color: #00ff00;">"Sort the buffers by their pathname."</span>
-    (<span style="color: #0000ff; font-weight: bold;">:description</span> <span style="color: #00ff00;">"filenames plus dired"</span>)
+    <span style="font-style: italic;">"Sort the buffers by their pathname."</span>
+    (<span style="font-weight: bold;">:description</span> <span style="font-style: italic;">"filenames plus dired"</span>)
     (string-lessp
-     (<span style="color: #00ffff; font-weight: bold;">with-current-buffer</span> (car a)
+     (<span style="font-weight: bold;">with-current-buffer</span> (car a)
        (or buffer-file-name
-           (<span style="color: #00ffff; font-weight: bold;">if</span> (eq major-mode 'dired-mode)
+           (<span style="font-weight: bold;">if</span> (eq major-mode 'dired-mode)
                (expand-file-name dired-directory))
-           <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">so that all non pathnames are at the end</span>
-           <span style="color: #00ff00;">"~"</span>))
-     (<span style="color: #00ffff; font-weight: bold;">with-current-buffer</span> (car b)
+           <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">so that all non pathnames are at the end</span>
+           <span style="font-style: italic;">"~"</span>))
+     (<span style="font-weight: bold;">with-current-buffer</span> (car b)
        (or buffer-file-name
-           (<span style="color: #00ffff; font-weight: bold;">if</span> (eq major-mode 'dired-mode)
+           (<span style="font-weight: bold;">if</span> (eq major-mode 'dired-mode)
                (expand-file-name dired-directory))
-           <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">so that all non pathnames are at the end</span>
-           <span style="color: #00ff00;">"~"</span>))))
-  (define-key ibuffer-mode-map (kbd <span style="color: #00ff00;">"s p"</span>)     'ibuffer-do-sort-by-filename-or-dired)
+           <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">so that all non pathnames are at the end</span>
+           <span style="font-style: italic;">"~"</span>))))
+  (define-key ibuffer-mode-map (kbd <span style="font-style: italic;">"s p"</span>)     'ibuffer-do-sort-by-filename-or-dired)
   )
 </pre>
 </div>
@@ -1615,14 +1634,14 @@ From <a href="http://curiousprogrammer.wordpress.com/2009/04/02/ibuffer/">http:/
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">ibuffer-ediff-marked-buffers</span> ()
-  <span style="color: #00ff00;">"Compare two marked buffers using ediff"</span>
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">ibuffer-ediff-marked-buffers</span> ()
+  <span style="font-style: italic;">"Compare two marked buffers using ediff"</span>
   (interactive)
-  (<span style="color: #00ffff; font-weight: bold;">let*</span> ((marked-buffers (ibuffer-get-marked-buffers))
+  (<span style="font-weight: bold;">let*</span> ((marked-buffers (ibuffer-get-marked-buffers))
          (len (length marked-buffers)))
-    (<span style="color: #00ffff; font-weight: bold;">unless</span> (= 2 len)
-      (<span style="color: #ff0000;">error</span> (format <span style="color: #00ff00;">"%s buffer%s been marked (needs to be 2)"</span>
-                     len (<span style="color: #00ffff; font-weight: bold;">if</span> (= len 1) <span style="color: #00ff00;">" has"</span> <span style="color: #00ff00;">"s have"</span>))))
+    (<span style="font-weight: bold;">unless</span> (= 2 len)
+      (<span style="font-weight: bold;">error</span> (format <span style="font-style: italic;">"%s buffer%s been marked (needs to be 2)"</span>
+                     len (<span style="font-weight: bold;">if</span> (= len 1) <span style="font-style: italic;">" has"</span> <span style="font-style: italic;">"s have"</span>))))
     (ediff-buffers (car marked-buffers) (cadr marked-buffers))))
 </pre>
 </div>
@@ -1634,12 +1653,12 @@ Hooks
 <div class="org-src-container">
 
 <pre class="src src-elisp">(add-hook 'ibuffer-mode-hook
-          '(<span style="color: #00ffff; font-weight: bold;">lambda</span> ()
-             (ibuffer-auto-mode 1) <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">minor mode that keeps the buffer list up to date</span>
-             (ibuffer-switch-to-saved-filter-groups <span style="color: #00ff00;">"default"</span>)
-             (define-key ibuffer-mode-map (kbd <span style="color: #00ff00;">"a"</span>) 'ibuffer-show-all-filter-groups)
-             (define-key ibuffer-mode-map (kbd <span style="color: #00ff00;">"z"</span>) 'ibuffer-hide-all-filter-groups)
-             (define-key ibuffer-mode-map (kbd <span style="color: #00ff00;">"e"</span>) 'ibuffer-ediff-marked-buffers)
+          '(<span style="font-weight: bold;">lambda</span> ()
+             (ibuffer-auto-mode 1) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">minor mode that keeps the buffer list up to date</span>
+             (ibuffer-switch-to-saved-filter-groups <span style="font-style: italic;">"default"</span>)
+             (define-key ibuffer-mode-map (kbd <span style="font-style: italic;">"a"</span>) 'ibuffer-show-all-filter-groups)
+             (define-key ibuffer-mode-map (kbd <span style="font-style: italic;">"z"</span>) 'ibuffer-hide-all-filter-groups)
+             (define-key ibuffer-mode-map (kbd <span style="font-style: italic;">"e"</span>) 'ibuffer-ediff-marked-buffers)
              (my-ibuffer-sort-hook)
              )
           )
@@ -1661,16 +1680,16 @@ Omit uninteresting files.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp"><span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(add-hook 'dired-load-hook</span>
-<span style="color: #ff0000;">;;           </span><span style="color: #ff0000;">(lambda ()</span>
-<span style="color: #ff0000;">;;             </span><span style="color: #ff0000;">(load "dired-x")</span>
-<span style="color: #ff0000;">;;             </span><span style="color: #ff0000;">))</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(add-hook 'dired-mode-hook</span>
-<span style="color: #ff0000;">;;           </span><span style="color: #ff0000;">(lambda ()</span>
-<span style="color: #ff0000;">;;             </span><span style="color: #ff0000;">;; Set dired-x buffer-local variables here.</span>
-<span style="color: #ff0000;">;;             </span><span style="color: #ff0000;">(dired-omit-mode 1)</span>
-<span style="color: #ff0000;">;;             </span><span style="color: #ff0000;">(setq dired-omit-extensions '(".pyc" ".git/"))</span>
-<span style="color: #ff0000;">;;             </span><span style="color: #ff0000;">))</span>
+<pre class="src src-elisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(add-hook 'dired-load-hook</span>
+<span style="font-weight: bold; font-style: italic;">;;           </span><span style="font-weight: bold; font-style: italic;">(lambda ()</span>
+<span style="font-weight: bold; font-style: italic;">;;             </span><span style="font-weight: bold; font-style: italic;">(load "dired-x")</span>
+<span style="font-weight: bold; font-style: italic;">;;             </span><span style="font-weight: bold; font-style: italic;">))</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(add-hook 'dired-mode-hook</span>
+<span style="font-weight: bold; font-style: italic;">;;           </span><span style="font-weight: bold; font-style: italic;">(lambda ()</span>
+<span style="font-weight: bold; font-style: italic;">;;             </span><span style="font-weight: bold; font-style: italic;">;; Set dired-x buffer-local variables here.</span>
+<span style="font-weight: bold; font-style: italic;">;;             </span><span style="font-weight: bold; font-style: italic;">(dired-omit-mode 1)</span>
+<span style="font-weight: bold; font-style: italic;">;;             </span><span style="font-weight: bold; font-style: italic;">(setq dired-omit-extensions '(".pyc" ".git/"))</span>
+<span style="font-weight: bold; font-style: italic;">;;             </span><span style="font-weight: bold; font-style: italic;">))</span>
 </pre>
 </div>
 </div>
@@ -1685,7 +1704,7 @@ Omit uninteresting files.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">require</span> '<span style="color: #ff00ff;">uniquify</span>)
+<pre class="src src-elisp">(<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">uniquify</span>)
 </pre>
 </div>
 </div>
@@ -1714,11 +1733,11 @@ use recentf with ido - see <a href="http://wikemacs.org/wiki/Recentf">http://wik
 <div class="org-src-container">
 
 <pre class="src src-elisp">(recentf-mode 1)
-(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">ido-choose-from-recentf</span> ()
-  <span style="color: #00ff00;">"Use ido to select a recently visited file from the `</span><span style="color: #00ff00;">recentf-list</span><span style="color: #00ff00;">'"</span>
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">ido-choose-from-recentf</span> ()
+  <span style="font-style: italic;">"Use ido to select a recently visited file from the `</span><span style="font-weight: bold; font-style: italic; text-decoration: underline;">recentf-list</span><span style="font-style: italic;">'"</span>
   (interactive)
-  (find-file (ido-completing-read <span style="color: #00ff00;">"Open file: "</span> recentf-list nil t)))
-(global-set-key (kbd <span style="color: #00ff00;">"C-c f"</span>) 'ido-choose-from-recentf)
+  (find-file (ido-completing-read <span style="font-style: italic;">"Open file: "</span> recentf-list nil t)))
+(global-set-key (kbd <span style="font-style: italic;">"C-c f"</span>) 'ido-choose-from-recentf)
 </pre>
 </div>
 </div>
@@ -1728,7 +1747,7 @@ use recentf with ido - see <a href="http://wikemacs.org/wiki/Recentf">http://wik
 <div class="outline-text-2" id="text-37">
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">require</span> '<span style="color: #ff00ff;">vc-git</span>)
+<pre class="src src-elisp">(<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">vc-git</span>)
 </pre>
 </div>
 
@@ -1738,7 +1757,7 @@ Magit is installed via ELPA.
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(global-set-key (kbd <span style="color: #00ff00;">"C-c m"</span>) 'magit-status)
+<pre class="src src-elisp">(global-set-key (kbd <span style="font-style: italic;">"C-c m"</span>) 'magit-status)
 </pre>
 </div>
 </div>
@@ -1757,7 +1776,7 @@ Use sqlite3
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(setq sql-sqlite-program <span style="color: #00ff00;">"sqlite3"</span>)
+<pre class="src src-elisp">(setq sql-sqlite-program <span style="font-style: italic;">"sqlite3"</span>)
 </pre>
 </div>
 
@@ -1770,37 +1789,37 @@ Preset connections
 <pre class="src src-elisp">(setq sql-connection-alist
       '((filemaker-sps
          (sql-product 'mysql)
-         (sql-server <span style="color: #00ff00;">"1.2.3.4"</span>)
-         (sql-user <span style="color: #00ff00;">"me"</span>)
-         (sql-password <span style="color: #00ff00;">"mypassword"</span>)
-         (sql-database <span style="color: #00ff00;">"thedb"</span>)
+         (sql-server <span style="font-style: italic;">"1.2.3.4"</span>)
+         (sql-user <span style="font-style: italic;">"me"</span>)
+         (sql-password <span style="font-style: italic;">"mypassword"</span>)
+         (sql-database <span style="font-style: italic;">"thedb"</span>)
          (sql-port 3307))))
 
-(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">sql-connect-preset</span> (name)
-  <span style="color: #00ff00;">"Connect to a predefined SQL connection listed in `</span><span style="color: #00ff00;">sql-connection-alist</span><span style="color: #00ff00;">'"</span>
-  (eval `(<span style="color: #00ffff; font-weight: bold;">let</span> ,(cdr (assoc name sql-connection-alist))
-    (<span style="color: #00ffff; font-weight: bold;">flet</span> ((sql-get-login (<span style="color: #00ff00;">&amp;rest</span> what)))
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">sql-connect-preset</span> (name)
+  <span style="font-style: italic;">"Connect to a predefined SQL connection listed in `</span><span style="font-weight: bold; font-style: italic; text-decoration: underline;">sql-connection-alist</span><span style="font-style: italic;">'"</span>
+  (eval `(<span style="font-weight: bold;">let</span> ,(cdr (assoc name sql-connection-alist))
+    (<span style="font-weight: bold;">flet</span> ((sql-get-login (<span style="font-weight: bold; text-decoration: underline;">&amp;rest</span> what)))
       (sql-product-interactive sql-product)))))
 
-(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">sql-mastermu</span> ()
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">sql-mastermu</span> ()
   (interactive)
   (sql-connect-preset 'mastermu))
 
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">buffer naming</span>
-(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">sql-make-smart-buffer-name</span> ()
-  <span style="color: #00ff00;">"Return a string that can be used to rename a SQLi buffer.</span>
-<span style="color: #00ff00;">This is used to set `</span><span style="color: #00ff00;">sql-alternate-buffer-name</span><span style="color: #00ff00;">' within</span>
-<span style="color: #00ff00;">`</span><span style="color: #00ff00;">sql-interactive-mode</span><span style="color: #00ff00;">'."</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">buffer naming</span>
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">sql-make-smart-buffer-name</span> ()
+  <span style="font-style: italic;">"Return a string that can be used to rename a SQLi buffer.</span>
+<span style="font-style: italic;">This is used to set `</span><span style="font-weight: bold; font-style: italic; text-decoration: underline;">sql-alternate-buffer-name</span><span style="font-style: italic;">' within</span>
+<span style="font-style: italic;">`</span><span style="font-weight: bold; font-style: italic; text-decoration: underline;">sql-interactive-mode</span><span style="font-style: italic;">'."</span>
   (or (and (boundp 'sql-name) sql-name)
-      (concat (<span style="color: #00ffff; font-weight: bold;">if</span> (not(string= <span style="color: #00ff00;">""</span> sql-server))
+      (concat (<span style="font-weight: bold;">if</span> (not(string= <span style="font-style: italic;">""</span> sql-server))
                   (concat
-                   (or (and (string-match <span style="color: #00ff00;">"[0-9.]+"</span> sql-server) sql-server)
-                       (car (split-string sql-server <span style="color: #00ff00;">"\\."</span>)))
-                   <span style="color: #00ff00;">"/"</span>))
+                   (or (and (string-match <span style="font-style: italic;">"[0-9.]+"</span> sql-server) sql-server)
+                       (car (split-string sql-server <span style="font-style: italic;">"\\."</span>)))
+                   <span style="font-style: italic;">"/"</span>))
               sql-database)))
 
 (add-hook 'sql-interactive-mode-hook
-          (<span style="color: #00ffff; font-weight: bold;">lambda</span> ()
+          (<span style="font-weight: bold;">lambda</span> ()
             (setq sql-alternate-buffer-name (sql-make-smart-buffer-name))
             (sql-rename-buffer)))
 </pre>
@@ -1817,10 +1836,10 @@ Preset connections
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">require</span> '<span style="color: #ff00ff;">epa-file</span>)
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">(epa-file-enable)</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">suppress graphical passphrase prompt</span>
-(setenv <span style="color: #00ff00;">"GPG_AGENT_INFO"</span> nil)
+<pre class="src src-elisp">(<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">epa-file</span>)
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(epa-file-enable)</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">suppress graphical passphrase prompt</span>
+(setenv <span style="font-style: italic;">"GPG_AGENT_INFO"</span> nil)
 </pre>
 </div>
 </div>
@@ -1843,9 +1862,9 @@ wget http://www.emacswiki.org/emacs/download/wc.el
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">condition-case</span> nil
-    (<span style="color: #00ffff; font-weight: bold;">require</span> '<span style="color: #ff00ff;">wc</span>)
-      (<span style="color: #ff0000;">error</span> (message <span style="color: #00ff00;">"** could not load wc.el"</span>)))
+<pre class="src src-elisp">(<span style="font-weight: bold;">condition-case</span> nil
+    (<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">wc</span>)
+      (<span style="font-weight: bold;">error</span> (message <span style="font-style: italic;">"** could not load wc.el"</span>)))
 </pre>
 </div>
 </div>
@@ -1861,29 +1880,29 @@ via emacswiki (<a href="http://emacswiki.org/emacs/OutlineMinorMode">http://emac
 
 <div class="org-src-container">
 
-<pre class="src src-elisp"><span style="color: #ff0000;">;; </span><span style="color: #ff0000;">Outline-minor-mode key map</span>
-(define-prefix-command 'cm-map nil <span style="color: #00ff00;">"Outline-"</span>)
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">HIDE</span>
-(define-key cm-map <span style="color: #00ff00;">"q"</span> 'hide-sublevels)    <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Hide everything but the top-level headings</span>
-(define-key cm-map <span style="color: #00ff00;">"t"</span> 'hide-body)         <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Hide everything but headings (all body lines)</span>
-(define-key cm-map <span style="color: #00ff00;">"o"</span> 'hide-other)        <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Hide other branches</span>
-(define-key cm-map <span style="color: #00ff00;">"c"</span> 'hide-entry)        <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Hide this entry's body</span>
-(define-key cm-map <span style="color: #00ff00;">"l"</span> 'hide-leaves)       <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Hide body lines in this entry and sub-entries</span>
-(define-key cm-map <span style="color: #00ff00;">"d"</span> 'hide-subtree)      <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Hide everything in this entry and sub-entries</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">SHOW</span>
-(define-key cm-map <span style="color: #00ff00;">"a"</span> 'show-all)          <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Show (expand) everything</span>
-(define-key cm-map <span style="color: #00ff00;">"e"</span> 'show-entry)        <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Show this heading's body</span>
-(define-key cm-map <span style="color: #00ff00;">"i"</span> 'show-children)     <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Show this heading's immediate child sub-headings</span>
-(define-key cm-map <span style="color: #00ff00;">"k"</span> 'show-branches)     <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Show all sub-headings under this heading</span>
-(define-key cm-map <span style="color: #00ff00;">"s"</span> 'show-subtree)      <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Show (expand) everything in this heading &amp; below</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">MOVE</span>
-(define-key cm-map <span style="color: #00ff00;">"u"</span> 'outline-up-heading)                <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Up</span>
-(define-key cm-map <span style="color: #00ff00;">"n"</span> 'outline-next-visible-heading)      <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Next</span>
-(define-key cm-map <span style="color: #00ff00;">"p"</span> 'outline-previous-visible-heading)  <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Previous</span>
-(define-key cm-map <span style="color: #00ff00;">"f"</span> 'outline-forward-same-level)        <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Forward - same level</span>
-(define-key cm-map <span style="color: #00ff00;">"b"</span> 'outline-backward-same-level)       <span style="color: #ff0000;">; </span><span style="color: #ff0000;">Backward - same level</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">commands are prefixed with C-c o</span>
-(global-set-key (kbd <span style="color: #00ff00;">"C-c o"</span>) cm-map)
+<pre class="src src-elisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Outline-minor-mode key map</span>
+(define-prefix-command 'cm-map nil <span style="font-style: italic;">"Outline-"</span>)
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">HIDE</span>
+(define-key cm-map <span style="font-style: italic;">"q"</span> 'hide-sublevels)    <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Hide everything but the top-level headings</span>
+(define-key cm-map <span style="font-style: italic;">"t"</span> 'hide-body)         <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Hide everything but headings (all body lines)</span>
+(define-key cm-map <span style="font-style: italic;">"o"</span> 'hide-other)        <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Hide other branches</span>
+(define-key cm-map <span style="font-style: italic;">"c"</span> 'hide-entry)        <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Hide this entry's body</span>
+(define-key cm-map <span style="font-style: italic;">"l"</span> 'hide-leaves)       <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Hide body lines in this entry and sub-entries</span>
+(define-key cm-map <span style="font-style: italic;">"d"</span> 'hide-subtree)      <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Hide everything in this entry and sub-entries</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">SHOW</span>
+(define-key cm-map <span style="font-style: italic;">"a"</span> 'show-all)          <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Show (expand) everything</span>
+(define-key cm-map <span style="font-style: italic;">"e"</span> 'show-entry)        <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Show this heading's body</span>
+(define-key cm-map <span style="font-style: italic;">"i"</span> 'show-children)     <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Show this heading's immediate child sub-headings</span>
+(define-key cm-map <span style="font-style: italic;">"k"</span> 'show-branches)     <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Show all sub-headings under this heading</span>
+(define-key cm-map <span style="font-style: italic;">"s"</span> 'show-subtree)      <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Show (expand) everything in this heading &amp; below</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">MOVE</span>
+(define-key cm-map <span style="font-style: italic;">"u"</span> 'outline-up-heading)                <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Up</span>
+(define-key cm-map <span style="font-style: italic;">"n"</span> 'outline-next-visible-heading)      <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Next</span>
+(define-key cm-map <span style="font-style: italic;">"p"</span> 'outline-previous-visible-heading)  <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Previous</span>
+(define-key cm-map <span style="font-style: italic;">"f"</span> 'outline-forward-same-level)        <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Forward - same level</span>
+(define-key cm-map <span style="font-style: italic;">"b"</span> 'outline-backward-same-level)       <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">Backward - same level</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">commands are prefixed with C-c o</span>
+(global-set-key (kbd <span style="font-style: italic;">"C-c o"</span>) cm-map)
 </pre>
 </div>
 </div>
@@ -1896,8 +1915,8 @@ via emacswiki (<a href="http://emacswiki.org/emacs/OutlineMinorMode">http://emac
 <div class="outline-text-3" id="text-42-1">
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">copy-buffer-file-name</span> ()
-  <span style="color: #00ff00;">"Add `</span><span style="color: #00ff00;">buffer-file-name</span><span style="color: #00ff00;">' to `</span><span style="color: #00ff00;">kill-ring</span><span style="color: #00ff00;">'"</span>
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">copy-buffer-file-name</span> ()
+  <span style="font-style: italic;">"Add `</span><span style="font-weight: bold; font-style: italic; text-decoration: underline;">buffer-file-name</span><span style="font-style: italic;">' to `</span><span style="font-weight: bold; font-style: italic; text-decoration: underline;">kill-ring</span><span style="font-style: italic;">'"</span>
   (interactive)
   (kill-new buffer-file-name t)
 )
@@ -1911,8 +1930,8 @@ via emacswiki (<a href="http://emacswiki.org/emacs/OutlineMinorMode">http://emac
 <div class="org-src-container">
 
 <pre class="src src-elisp">(fset 'copy-and-comment
-   <span style="color: #00ff00;">"\367\C-x\C-x\273"</span>)
-(global-set-key (kbd <span style="color: #00ff00;">"M-C-;"</span>) 'copy-and-comment)
+   <span style="font-style: italic;">"\367\C-x\C-x\273"</span>)
+(global-set-key (kbd <span style="font-style: italic;">"M-C-;"</span>) 'copy-and-comment)
 </pre>
 </div>
 </div>
@@ -1923,7 +1942,7 @@ via emacswiki (<a href="http://emacswiki.org/emacs/OutlineMinorMode">http://emac
 <div class="org-src-container">
 
 <pre class="src src-elisp">(fset 'get-buffer-file-name
-   <span style="color: #00ff00;">"\C-hvbuffer-file-name\C-m"</span>)
+   <span style="font-style: italic;">"\C-hvbuffer-file-name\C-m"</span>)
 </pre>
 </div>
 </div>
@@ -1937,11 +1956,11 @@ from <a href="http://defindit.com/readme_files/emacs_hints_tricks.html">http://d
 
 <div class="org-src-container">
 
-<pre class="src src-elisp">(<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #0000ff; font-weight: bold;">unfill-paragraph</span> ()
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">unfill-paragraph</span> ()
   (interactive)
-  (<span style="color: #00ffff; font-weight: bold;">let</span> ((fill-column (point-max)))
+  (<span style="font-weight: bold;">let</span> ((fill-column (point-max)))
   (fill-paragraph nil)))
-(global-set-key (kbd <span style="color: #00ff00;">"M-C-q"</span>) 'unfill-paragraph)
+(global-set-key (kbd <span style="font-style: italic;">"M-C-q"</span>) 'unfill-paragraph)
 </pre>
 </div>
 </div>
@@ -1966,24 +1985,24 @@ Buffers opened from command line don't create new frame
 <div class="outline-text-2" id="text-44">
 <div class="org-src-container">
 
-<pre class="src src-elisp"><span style="color: #ff0000;">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
-<span style="color: #ff0000;">;; </span><span style="color: #ff0000;">content below was added by emacs ;;;;;;</span>
-<span style="color: #ff0000;">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
+<pre class="src src-elisp"><span style="font-weight: bold; font-style: italic;">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">content below was added by emacs ;;;;;;</span>
+<span style="font-weight: bold; font-style: italic;">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (custom-set-variables
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">custom-set-variables was added by Custom.</span>
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">If you edit it by hand, you could mess it up, so be careful.</span>
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">Your init file should contain only one such instance.</span>
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">If there is more than one, they won't work right.</span>
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">custom-set-variables was added by Custom.</span>
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">If you edit it by hand, you could mess it up, so be careful.</span>
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Your init file should contain only one such instance.</span>
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">If there is more than one, they won't work right.</span>
  '(safe-local-variable-values (quote ((toggle-read-only . t))))
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify)))
 (custom-set-faces
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">custom-set-faces was added by Custom.</span>
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">If you edit it by hand, you could mess it up, so be careful.</span>
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">Your init file should contain only one such instance.</span>
-  <span style="color: #ff0000;">;; </span><span style="color: #ff0000;">If there is more than one, they won't work right.</span>
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">custom-set-faces was added by Custom.</span>
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">If you edit it by hand, you could mess it up, so be careful.</span>
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Your init file should contain only one such instance.</span>
+  <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">If there is more than one, they won't work right.</span>
  )
 </pre>
 </div>
@@ -1992,8 +2011,8 @@ Buffers opened from command line don't create new frame
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Noah Hoffman</p>
-<p class="date">Created: 2013-08-05 Mon 21:50</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.1.1 (<a href="http://orgmode.org">Org</a> mode 8.0.7)</p>
+<p class="date">Created: 2013-08-05 Mon 22:02</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.1.1 (<a href="http://orgmode.org">Org</a> mode 8.0.5)</p>
 <p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a></p>
 </div>
 </body>
