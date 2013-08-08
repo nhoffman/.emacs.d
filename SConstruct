@@ -30,6 +30,7 @@ publish_log, = env.Command(
     target='publish.log',
     source='init.org',
     action=('(cd gh-pages && '
+            'git checkout gh-pages && '
             'git commit -a -m "update ghpages" && '
             'git push origin gh-pages) | '
             'tee $TARGET')
