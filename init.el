@@ -61,7 +61,7 @@
   '(auctex
     edit-server
     ess
-    ;; flymake-cursor
+    flymake-cursor
     flycheck
     flycheck-color-mode-line
     gist
