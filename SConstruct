@@ -17,6 +17,7 @@ el, = env.Command(
     source='init.org',
     action='$emacs -script org-export/org-tangle.el -infile $SOURCE'
 )
+Alias('el', el)
 
 html, = env.Command(
     target='gh-pages/index.html',

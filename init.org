@@ -8,6 +8,8 @@
 #+BIND: org-export-publishing-directory "./gh-pages"
 #+BABEL: :results output :exports both
 
+In a fit of literate programming yak-shaving, I have implemented my emacs configuration as an org-mode file.
+
 - The source for this page is available at https://github.com/nhoffman/.emacs.d
 - The html-exported version of this page is hosted at http://nhoffman.github.io/.emacs.d
 
@@ -17,26 +19,12 @@
 (message "loading ~/.emacs.d/init.el")
 #+END_SRC
 
-* License
-#+BEGIN_SRC elisp :tangle init.el
-;; This program is free software: you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#+END_SRC
-
 * Using this file
 
 | C-c i     | markup paragraph at point as a code block |
 | C-c C-v t | tangle this file                          |
+
+Wrap text in an elisp code block to be tangled into init.el.
 
 #+BEGIN_SRC elisp :tangle init.el
   (setq init-file-name "init.el")
@@ -50,7 +38,7 @@
   (global-set-key (kbd "C-c i") 'init-insert-code-block)
 #+END_SRC
 
-Convenience function to (re)load init.el
+(re)load init.el
 
 #+BEGIN_SRC elisp :tangle init.el
 (defun init-load ()
@@ -60,22 +48,21 @@ Convenience function to (re)load init.el
 (global-set-key (kbd "M-C-i") 'init-load)
 #+END_SRC
 
-Tangle and export html.
+Tangle to =./init.el= and export html to =gh-pages/index.html=
 
 #+BEGIN_SRC elisp :tangle init.el
-  (defun init-compile ()
-    "Tangle init.org and export html"
-    (interactive)
-    (progn
-      (org-babel-tangle)
-      (org-html-export-as-html)
-      (write-file "gh-pages/index.html")
-      ))
+(defun init-compile ()
+  "Tangle init.org and export html"
+  (interactive)
+  (progn
+    (org-babel-tangle)
+    (org-html-export-as-html)
+    (write-file "gh-pages/index.html")))
 #+END_SRC
-
 * Publishing to gh-pages
 
-Here's how publication of the rendered version of this site to GitHub's gh-pages is set up.
+Here's how publication of the rendered version of this site to
+GitHub's gh-pages is set up.
 
 The gh-pages branch is added to the master branch as a submodule
 
@@ -124,27 +111,36 @@ Add some extra package repositories. The default value of package-archives is
   )
 #+END_SRC
 
-I didn't see any obvious way to configure which packages to install,
-so here are some functions to do so. Call
-'package-install-my-packages' interactively to install any missing
-packages. It seems to be necessary to run 'M-x package-list-packages'
-first.
+I could not find an obvious way to define a list of packages to
+automatically install, so here are some functions to do so. Execute
+=M-x package-install-my-packages= interactively to install any missing
+packages. It seems to be necessary to run =M-x package-list-packages=
+first. Note that when installing org-mode from elpa for the first
+time, you must be sure that the builtin version of org-mode has not
+been loaded since emacs was first started.
 
 #+BEGIN_SRC elisp :tangle init.el
   (defun package-installed-not-builtin-p (package &optional min-version)
-    "Return true if PACKAGE, of MIN-VERSION or newer, is installed, ignoring built in packages.
-  MIN-VERSION should be a version list."
+    "Return true if PACKAGE, of MIN-VERSION or newer, is installed,
+    ignoring built in packages.  MIN-VERSION should be a version list."
     (let ((pkg-desc (assq package package-alist)))
       (if pkg-desc
-          (version-list-<= min-version
-                           (package-desc-vers (cdr pkg-desc))))))
+          (version-list-<= min-version (package-desc-vers (cdr pkg-desc))))))
+
+  (defun package-install-list (pkg-list)
+    ;; Install each package in pkg-list if necessary.
+    (mapcar
+     (lambda (pkg)
+       (unless (package-installed-not-builtin-p pkg)
+         (package-install pkg)))
+     pkg-list)
+    (message "done installing packages"))
 
   (defvar package-my-package-list
-    '(
-      auctex
+    '(auctex
       edit-server
       ess
-      ;; flymake-cursor
+      flymake-cursor
       flycheck
       flycheck-color-mode-line
       gist
@@ -154,36 +150,12 @@ first.
       moinmoin-mode
       org
       python-pylint
-      rainbow-delimiters
-      ))
-
-  (defun package-install-list (package-list)
-    ;; Install each package named in "package-list" using elpa if not
-    ;; already installed.
-    (while package-list
-      (setq pkg (car package-list))
-      (unless (package-installed-not-builtin-p pkg)
-        (cond ((yes-or-no-p (format "Install %s? " pkg))
-               (package-install pkg))))
-      (setq package-list (cdr package-list)))
-    (message "done installing packages.")
-    )
+      rainbow-delimiters))
 
   (defun package-install-my-packages ()
-    ;; Interactively installs packages listed in global 'package-my-package-list'
+    ;; Install packages listed in global 'package-my-package-list'
     (interactive)
     (package-install-list package-my-package-list))
-
-  ;; (defun package-install-if-missing (pkg)
-  ;;   (interactive)
-  ;;   (unless (package-installed-not-builtin-p pkg)
-  ;;     (cond ((yes-or-no-p (format "Install %s? " pkg))
-  ;;            (package-install pkg)))))
-
-  ;; (defun package-install-my-packages ()
-  ;;   ;; Interactively installs packages listed in global 'package-my-package-list'
-  ;;   (interactive)
-  ;;   (mapcar 'package-install-if-missing package-my-package-list))
 #+END_SRC
 
 * Various aliases and key bindings
@@ -259,6 +231,12 @@ otherwise defined in PATH.
 #+END_SRC
 
 * Environment
+** update load path
+
+#+BEGIN_SRC elisp :tangle init.el
+(add-to-list 'load-path "~/.emacs.d/")
+#+END_SRC
+
 ** update SSH_AUTH_SOCK
 
 If you 1) forward ssh authentication (ie, ssh -A), 2) have a
@@ -318,51 +296,49 @@ Delete trailing whitespace before save.
 
 Detect platform and window system and set up fonts accordingly
 #+BEGIN_SRC elisp :tangle init.el
-(defun fix-frame ()
-  (interactive)
-  (menu-bar-mode -1) ;; hide menu bar
-  (tool-bar-mode -1) ;; hide tool bar
-  (cond ((string= "ns" window-system) ;; cocoa
-	 (progn (message (format "** running %s windowing system" window-system))
-	 ;; key bindings for mac - see
-	 ;; http://stuff-things.net/2009/01/06/emacs-on-the-mac/
-	 ;; http://osx.iusethis.com/app/carbonemacspackage
-	 (set-keyboard-coding-system 'mac-roman)
-	 (setq mac-option-modifier 'meta)
-	 (setq mac-command-key-is-meta nil)
-	 (setq my-default-font "Bitstream Vera Sans Mono-14")
-	 ))
-	((string= "x" window-system)
-	 (progn
-	   (message (format "** running %s windowing system" window-system))
-	   (setq my-default-font "Liberation Mono-10")
-	   ;; M-w or C-w copies to system clipboard
-	   ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
-	   (setq x-select-enable-clipboard t)
-	   ;; (set-scroll-bar-mode -1) ;; hide scroll bar
-	   (scroll-bar-mode -1) ;; hide scroll bar
-	   ))
-	(t
-	 (progn
-	 (message "** running unknown windowing system")
-	 (setq my-default-font nil)
-	 (scroll-bar-mode -1) ;; hide scroll bar
-	 ))
-	)
+  (defun fix-frame ()
+    (interactive)
+    (menu-bar-mode -1) ;; hide menu bar
+    (tool-bar-mode -1) ;; hide tool bar
+    (scroll-bar-mode -1) ;; hide scroll bar
+    (cond ((string= "ns" window-system) ;; cocoa
+           (progn (message (format "** running %s windowing system" window-system))
+           ;; key bindings for mac - see
+           ;; http://stuff-things.net/2009/01/06/emacs-on-the-mac/
+           ;; http://osx.iusethis.com/app/carbonemacspackage
+           (set-keyboard-coding-system 'mac-roman)
+           (setq mac-option-modifier 'meta)
+           (setq mac-command-key-is-meta nil)
+           (setq my-default-font "Bitstream Vera Sans Mono-14")
+           ))
+          ((string= "x" window-system)
+           (progn
+             (message (format "** running %s windowing system" window-system))
+             (setq my-default-font "Liberation Mono-10")
+             ;; M-w or C-w copies to system clipboard
+             ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
+             (setq x-select-enable-clipboard t)
+             ))
+          (t
+           (progn
+           (message "** running unknown windowing system")
+           (setq my-default-font nil)
+           ))
+          )
 
-  (unless (equal window-system nil)
-    (message (format "** setting default font to %s" my-default-font))
-    (condition-case nil
-	(set-default-font my-default-font)
-      (error (message (format "** could not set to font %s" my-default-font))))
+    (unless (equal window-system nil)
+      (message (format "** setting default font to %s" my-default-font))
+      (condition-case nil
+          (set-default-font my-default-font)
+        (error (message (format "** could not set to font %s" my-default-font))))
+      )
     )
-  )
 
-(defun font-dejavu ()
-  ;; set default font to dejavu sans mono-11
-  (interactive)
-  (set-default-font "dejavu sans mono-11")
-  )
+  (defun font-dejavu ()
+    ;; set default font to dejavu sans mono-11
+    (interactive)
+    (set-default-font "dejavu sans mono-11")
+    )
 
 #+END_SRC
 
@@ -556,12 +532,6 @@ http://snarfed.org/space/emacs%20font-lock%20faces%20for%20composing%20email
                (if (equal "pico." (substring (buffer-name (current-buffer)) 0 5))
                    ;; (message "** running hook for pine/alpine")
                    (mail-mode))))
-#+END_SRC
-
-* general load path
-
-#+BEGIN_SRC elisp :tangle init.el
-(add-to-list 'load-path "~/.emacs.d/")
 #+END_SRC
 
 * LaTeX
@@ -826,28 +796,30 @@ Error codes are listed here: http://pep8.readthedocs.org/en/latest/intro.html#er
 
 And some configuration:
 #+BEGIN_SRC elisp :tangle init.el
-(require 'flymake)
+  (require 'flymake)
 
-;; TODO - first check if flymake-cursor is installed
-(load-library "flymake-cursor") ;; install from elpa
+  ;; TODO - first check if flymake-cursor is installed
+  (condition-case nil
+      (load-library "flymake-cursor") ;; install from elpa
+        (error (message "** flymake-cursor not installed")))
 
-;; 'pychecker' script above installed in ~/.emacs.d/bin
-(setq pycodechecker "pychecker")
+  ;; 'pychecker' script above installed in ~/.emacs.d/bin
+  (setq pycodechecker "pychecker")
 
-(when (load "flymake" t)
-  (defun flymake-pycodecheck-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list pycodechecker (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pycodecheck-init))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("SCons" flymake-pycodecheck-init)))
+  (when (load "flymake" t)
+    (defun flymake-pycodecheck-init ()
+      (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                         'flymake-create-temp-inplace))
+             (local-file (file-relative-name
+                          temp-file
+                          (file-name-directory buffer-file-name))))
+        (list pycodechecker (list local-file))))
+    (add-to-list 'flymake-allowed-file-name-masks
+                 '("\\.py\\'" flymake-pycodecheck-init))
+    (add-to-list 'flymake-allowed-file-name-masks
+                 '("SCons" flymake-pycodecheck-init)))
 
-;; (add-hook 'python-mode-hook 'flymake-mode)
+  ;; (add-hook 'python-mode-hook 'flymake-mode)
 #+END_SRC
 
 * text-mode
@@ -1216,6 +1188,16 @@ from http://defindit.com/readme_files/emacs_hints_tricks.html
 (global-set-key (kbd "M-C-q") 'unfill-paragraph)
 #+END_SRC
 
+* elisp-format
+
+Written by Andy Stewart and available on emacswiki: http://www.emacswiki.org/emacs/elisp-format.el
+
+#+BEGIN_SRC elisp :tangle init.el
+(condition-case nil
+    (require 'elisp-format)
+  (error (message "** could not load elisp-format")))
+#+END_SRC
+
 * emacsclient
 
 Buffers opened from command line don't create new frame
@@ -1246,4 +1228,19 @@ Buffers opened from command line don't create new frame
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
+#+END_SRC
+* License
+#+BEGIN_SRC elisp :tangle init.el
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #+END_SRC
