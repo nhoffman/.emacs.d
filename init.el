@@ -130,6 +130,9 @@ defun ssh-refresh ()
 ;; (when (memq window-system '(mac ns))
 ;;   (exec-path-from-shell-initialize))
 
+;; (when (memq window-system '(mac ns))
+;;   (exec-path-from-shell-initialize))
+
 (global-set-key [(control x) (control c)]
                 (function
                  (lambda () (interactive)

@@ -275,6 +275,17 @@ Commenting out for now, but seems promising....
   ;; (when (memq window-system '(mac ns))
   ;;   (exec-path-from-shell-initialize))
 #+END_SRC
+** exec-path-from-shell
+
+Initialize the PATH environment variable when starting up the Emacs
+app from the finder. Found this tip here: https://plus.google.com/104330705025733851532/posts/K6YPSVEB9Nx
+
+Commenting out for now, but seems promising....
+
+#+BEGIN_SRC elisp :tangle init.el
+  ;; (when (memq window-system '(mac ns))
+  ;;   (exec-path-from-shell-initialize))
+#+END_SRC
 
 * Exiting and saving
 
