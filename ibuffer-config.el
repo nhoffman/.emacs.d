@@ -93,13 +93,13 @@
 
 	       ;; Seq
 	       ("Seq-tests"
-	      	(filename . "Seq/tests"))
+	      	(filename . "/Seq/tests"))
 	       ("Seq-taxonomy"
-	      	(filename . "Seq/taxonomy"))
+	      	(filename . "/Seq/taxonomy"))
 	       ("Seq-scripts"
-	      	(filename . "Seq/scripts"))
+	      	(filename . "/Seq/scripts"))
 	       ("Seq"
-	      	(filename . "Seq/"))
+	      	(filename . "/Seq/"))
 
 	       ;; taxtastic
 	       ("taxtastic-scripts"
@@ -305,6 +305,11 @@
 	      	(or (filename . "/micro_refset/male-denovo/")
 		    (name . "male-denovo")))
 
+	       ;; gut denovo
+	       ("gut-denovo-named"
+	      	(or (filename . "/micro_refset/gut_denovo_named/")
+		    (name . "gut_denovo_named")))
+
 	       ;; pplacer-pipeline
 	       ("pp-pipeline-config"
 	      	(filename . "/micro_processing/pplacer_pipeline/config/"))
@@ -495,6 +500,13 @@
 	      	(filename . "/deltas/"))
 	       ("papers"
 	      	(filename . "/papers/"))
+
+	       ;; ion_vs_miseq
+	       ("ivm-package"
+	      	(filename . "/ion_vs_miseq/ivm/"))
+	       ("ivm"
+	      	(filename . "/ion_vs_miseq/"))
+
 
 	       ;; stuff in Dropbox
 	       ("dropbox-career"

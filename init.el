@@ -1,19 +1,6 @@
 
 (message "loading ~/.emacs.d/init.el")
 
-;; This program is free software: you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 (setq init-file-name "init.el")
 (defun init-insert-code-block ()
   ;; Insert a code block that will be tangled into `init-file-name`
@@ -33,10 +20,10 @@
 (defun init-compile ()
   "Tangle init.org and export html"
   (interactive)
-  (org-babel-tangle)
-  (org-export-as-html 3)
-  (copy-file "init.html" "../.emacs.d.ghpages/index.html" t)
-  )
+  (progn
+    (org-babel-tangle)
+    (org-html-export-as-html)
+    (write-file "gh-pages/index.html")))
 
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -45,7 +32,7 @@
   (add-to-list 'package-archives
        '("elpa" . "http://tromey.com/elpa/") t)
   ;; User-contributed repository
-  ;; Marmalade is for packages that cannot be uploaded to s official ELPA repository.
+  ;; Marmalade is for packages that cannot be uploaded to the official ELPA repository.
   (add-to-list 'package-archives
        '("marmalade" . "http://marmalade-repo.org/packages/") t)
   (add-to-list 'package-archives
@@ -55,43 +42,39 @@
   )
 
 (defun package-installed-not-builtin-p (package &optional min-version)
-  "Return true if PACKAGE, of MIN-VERSION or newer, is installed, ignoring built in packages.
-MIN-VERSION should be a version list."
+  "Return true if PACKAGE, of MIN-VERSION or newer, is installed,
+  ignoring built in packages.  MIN-VERSION should be a version list."
   (let ((pkg-desc (assq package package-alist)))
     (if pkg-desc
-        (version-list-<= min-version
-                         (package-desc-vers (cdr pkg-desc))))))
+        (version-list-<= min-version (package-desc-vers (cdr pkg-desc))))))
+
+(defun package-install-list (pkg-list)
+  ;; Install each package in pkg-list if necessary.
+  (mapcar
+   (lambda (pkg)
+     (unless (package-installed-not-builtin-p pkg)
+       (package-install pkg)))
+   pkg-list)
+  (message "done installing packages"))
 
 (defvar package-my-package-list
-  '(
-auctex
-edit-server
-ess
-flymake-cursor
-gist
-htmlize
-magit
-markdown-mode
-moinmoin-mode
-org
-python-pylint
-rainbow-delimiters
-))
-
-(defun package-install-list (package-list)
-  ;; Install each package named in "package-list" using elpa if not
-  ;; already installed.
-  (while package-list
-    (setq pkg (car package-list))
-    (unless (package-installed-not-builtin-p pkg)
-      (cond ((yes-or-no-p (format "Install %s? " pkg))
-             (package-install pkg))))
-    (setq package-list (cdr package-list)))
-  (message "done installing packages.")
-)
+  '(auctex
+    edit-server
+    ess
+    flymake-cursor
+    flycheck
+    flycheck-color-mode-line
+    gist
+    htmlize
+    magit
+    markdown-mode
+    moinmoin-mode
+    org
+    python-pylint
+    rainbow-delimiters))
 
 (defun package-install-my-packages ()
-  ;; Interactively installs packages listed in global 'package-my-package-list'
+  ;; Install packages listed in global 'package-my-package-list'
   (interactive)
   (package-install-list package-my-package-list))
 
@@ -126,18 +109,26 @@ rainbow-delimiters
 
 (add-to-list 'exec-path "~/.emacs.d/bin")
 
-(defun ssh-refresh ()
-  ;; Reset the environment variable SSH_AUTH_SOCK.
-  (interactive)
-  (setq ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))
-  (setenv "SSH_AUTH_SOCK"
-          (car (split-string
-                (shell-command-to-string
-                 "ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2> /dev/null)"))))
-  (message
-   (format "SSH_AUTH_SOCK %s --> %s"
-           ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))
-  )
+(add-to-list 'load-path "~/.emacs.d/")
+
+defun ssh-refresh ()
+ ;; Reset the environment variable SSH_AUTH_SOCK.
+ (interactive)
+ (setq ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))
+ (setenv "SSH_AUTH_SOCK"
+         (car (split-string
+               (shell-command-to-string
+                (if (eq system-type 'darwin)
+                    "ls -t $(find /tmp/* -user $USER -name Listeners 2> /dev/null)"
+                  "ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2> /dev/null)"
+                  )))))
+ (message
+  (format "SSH_AUTH_SOCK %s --> %s"
+          ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))
+ )
+
+;; (when (memq window-system '(mac ns))
+;;   (exec-path-from-shell-initialize))
 
 (global-set-key [(control x) (control c)]
                 (function
@@ -151,6 +142,7 @@ rainbow-delimiters
   (interactive)
   (menu-bar-mode -1) ;; hide menu bar
   (tool-bar-mode -1) ;; hide tool bar
+  (scroll-bar-mode -1) ;; hide scroll bar
   (cond ((string= "ns" window-system) ;; cocoa
          (progn (message (format "** running %s windowing system" window-system))
          ;; key bindings for mac - see
@@ -168,14 +160,11 @@ rainbow-delimiters
            ;; M-w or C-w copies to system clipboard
            ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
            (setq x-select-enable-clipboard t)
-           ;; (set-scroll-bar-mode -1) ;; hide scroll bar
-           (scroll-bar-mode -1) ;; hide scroll bar
            ))
         (t
          (progn
          (message "** running unknown windowing system")
          (setq my-default-font nil)
-         (scroll-bar-mode -1) ;; hide scroll bar
          ))
         )
 
@@ -281,8 +270,6 @@ rainbow-delimiters
              (if (equal "pico." (substring (buffer-name (current-buffer)) 0 5))
                  ;; (message "** running hook for pine/alpine")
                  (mail-mode))))
-
-(add-to-list 'load-path "~/.emacs.d/")
 
 (condition-case nil
     (require 'ess-site)
@@ -418,10 +405,19 @@ rainbow-delimiters
 
 (ad-activate 'python-calculate-indentation)
 
+(add-hook 'flycheck-mode-hook
+          '(lambda ()
+             (setq flycheck-highlighting-mode 'lines)
+             (flycheck-color-mode-line-mode)
+             )
+          )
+
 (require 'flymake)
 
 ;; TODO - first check if flymake-cursor is installed
-(load-library "flymake-cursor") ;; install from elpa
+(condition-case nil
+    (load-library "flymake-cursor") ;; install from elpa
+      (error (message "** flymake-cursor not installed")))
 
 ;; 'pychecker' script above installed in ~/.emacs.d/bin
 (setq pycodechecker "pychecker")
@@ -675,6 +671,10 @@ This is used to set `sql-alternate-buffer-name' within
   (fill-paragraph nil)))
 (global-set-key (kbd "M-C-q") 'unfill-paragraph)
 
+(condition-case nil
+    (require 'elisp-format)
+  (error (message "** could not load elisp-format")))
+
 (setq ns-pop-up-frames nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -696,3 +696,16 @@ This is used to set `sql-alternate-buffer-name' within
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
