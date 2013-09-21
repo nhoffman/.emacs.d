@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>init.el for Noah Hoffman</title>
-<!-- 2013-09-20 Fri 22:58 -->
+<!-- 2013-09-20 Fri 23:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
 <meta name="author" content="Noah Hoffman"/>
@@ -190,7 +190,7 @@ In a fit of literate programming yak-shaving, I have implemented my emacs config
 <li><a href="#sec-21-2">21.2. org-mode utilities</a></li>
 </ul>
 </li>
-<li><a href="#sec-22">22. markdown</a></li>
+<li><a href="#sec-22">22. markdown-mode</a></li>
 <li><a href="#sec-23">23. chrome "edit with emacs"</a></li>
 <li><a href="#sec-24">24. Python</a></li>
 <li><a href="#sec-25">25. python-pylint</a></li>
@@ -1194,10 +1194,7 @@ org-mode hooks
  '(org-confirm-babel-evaluate nil)
  '(org-src-fontify-natively t))
 
-(setq org-agenda-files (list <span style="font-style: italic;">"~/Dropbox/notes/index.org"</span>
-                             <span style="font-style: italic;">"~/Dropbox/fredross/notes/plans.org"</span>
-                             ))
-
+(setq org-agenda-files (list <span style="font-style: italic;">"~/Dropbox/notes/index.org"</span>))
 (push '(<span style="font-style: italic;">"\\.org\\'"</span> . org-mode) auto-mode-alist)
 (push '(<span style="font-style: italic;">"\\.org\\.txt\\'"</span> . org-mode) auto-mode-alist)
 </pre>
@@ -1295,8 +1292,9 @@ Add an entry to todo file.
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-22" class="outline-2">
-<h2 id="sec-22"><span class="section-number-2">22</span> markdown</h2>
+<h2 id="sec-22"><span class="section-number-2">22</span> markdown-mode</h2>
 <div class="outline-text-2" id="text-22">
 <p>
 Installed using elpa.
@@ -1347,13 +1345,7 @@ Hooks
              (setq py-indent-offset tab-width)
              (setq py-smart-indentation t)
              (define-key python-mode-map <span style="font-style: italic;">"\C-m"</span> 'newline-and-indent)
-             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(hs-minor-mode)</span>
-             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">add function index to menu bar</span>
-             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(imenu-add-menubar-index)</span>
-             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(python-mode-untabify)</span>
-             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(linum-mode)</span>
-             )
-          )
+             ))
 </pre>
 </div>
 
@@ -2130,7 +2122,7 @@ Buffers opened from command line don't create new frame
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Noah Hoffman</p>
-<p class="date">Created: 2013-09-20 Fri 22:58</p>
+<p class="date">Created: 2013-09-20 Fri 23:05</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.0.7)</p>
 <p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a></p>
 </div>
