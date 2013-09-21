@@ -801,6 +801,26 @@ http://www.masteringemacs.org/articles/2011/10/19/executing-shell-commands-emacs
      t))                     ;; show error buffer?
 #+END_SRC
 
+Instead of simply replacing the current buffer, use ediff to compare
+it to the output of autopep8.
+
+#+BEGIN_SRC elisp :tangle init.el
+  (defun p8-and-ediff ()
+    "Compare the current buffer to the output of autopep8 using ediff"
+    (interactive)
+    (let ((p8-output
+           (get-buffer-create (format "* %s autopep8 *" (buffer-name)))))
+      (shell-command-on-region
+       (point-min) (point-max)    ;; beginning and end of buffer
+       "autopep8 -"               ;; command and parameters
+       p8-output                  ;; output buffer
+       nil                        ;; replace?
+       "*autopep8 errors*"        ;; name of the error buffer
+       t)                         ;; show error buffer?
+      (ediff-buffers (current-buffer) p8-output)
+      ))
+#+END_SRC
+
 * flycheck
 
 An alternative to =flymake=. Install =flycheck= via elpa. For python,

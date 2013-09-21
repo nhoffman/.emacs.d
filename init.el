@@ -410,6 +410,21 @@
    "*autopep8 errors*"     ;; name of the error buffer
    t))                     ;; show error buffer?
 
+(defun p8-and-ediff ()
+  "Compare the current buffer to the output of autopep8 using ediff"
+  (interactive)
+  (let ((p8-output
+         (get-buffer-create (format "* %s autopep8 *" (buffer-name)))))
+    (shell-command-on-region
+     (point-min) (point-max)    ;; beginning and end of buffer
+     "autopep8 -"               ;; command and parameters
+     p8-output                  ;; output buffer
+     nil                        ;; replace?
+     "*autopep8 errors*"        ;; name of the error buffer
+     t)                         ;; show error buffer?
+    (ediff-buffers (current-buffer) p8-output)
+    ))
+
 (add-hook 'flycheck-mode-hook
           '(lambda ()
              (setq flycheck-highlighting-mode 'lines)
