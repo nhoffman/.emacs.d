@@ -19,10 +19,26 @@ In a fit of literate programming yak-shaving, I have implemented my emacs config
 (message "loading ~/.emacs.d/init.el")
 #+END_SRC
 
-* Using this file
+* Maintaining and using this file
 
-| C-c i     | markup paragraph at point as a code block |
-| C-c C-v t | tangle this file                          |
+All changes to the configuration should be made within code blocks in
+this file. After any changes, this file must be "tangled" to produce
+=init.el=. The elisp version of the configuration is committed to the
+git repository (even though it is a derived file) to make it easier to
+get started when first cloning the repository onto a new system. An
+html-exported version of this file is also published to gh-pages. All
+of this is automated using =scons=. So, to tangle, export, and publish, all that should be required is to type
+
+: scons
+
+I've also defined some functions to help out:
+
+| shortcut  | function               |                                           |
+|-----------+------------------------+-------------------------------------------|
+| C-c i     | init-insert-code-block | markup paragraph at point as a code block |
+| M-C-i     | init-load              | reload init.el                            |
+|           | init-compile           | tangle and export html                    |
+| C-c C-v t | (defined in org-mode)  | tangle this file                          |
 
 Wrap text in an elisp code block to be tangled into init.el.
 
@@ -71,12 +87,16 @@ The gh-pages branch is added to the master branch as a submodule
 Note that in a new clone, the submodule needs to be initialized.
 
 : git submodule init
+: git submodule update
 
-A scons target pushes any new changes to the gh-pages branch on
-GitHub.
+Ok, I'll say it: git submodules are a pain. The only way I can
+reliably automate the export and publication of the html version of
+this org-mode file is first to fetch the remote gh-pages branch and
+force a reset of the gh-pages submodule before exporting. Then I can
+commit and push. Here's how it looks in the SConstruct file:
 
 #+BEGIN_SRC sh :results output :exports results
-grep -A 8 publish_log, SConstruct
+grep -A 30 pull, SConstruct
 #+END_SRC
 
 * ELPA
@@ -601,10 +621,7 @@ org-mode hooks
  '(org-confirm-babel-evaluate nil)
  '(org-src-fontify-natively t))
 
-(setq org-agenda-files (list "~/Dropbox/notes/index.org"
-			     "~/Dropbox/fredross/notes/plans.org"
-			     ))
-
+(setq org-agenda-files (list "~/Dropbox/notes/index.org"))
 (push '("\\.org\\'" . org-mode) auto-mode-alist)
 (push '("\\.org\\.txt\\'" . org-mode) auto-mode-alist)
 #+END_SRC
@@ -670,8 +687,7 @@ Add an entry to todo file.
 		   (org-add-entry "~/Dropbox/notes/todo.org"
 				  "\n** TODO <%Y-%m-%d %a>")))
 #+END_SRC
-
-* markdown
+* markdown-mode
 
 Installed using elpa.
 
@@ -696,21 +712,15 @@ Installed using elpa.
 Hooks
 
 #+BEGIN_SRC elisp :tangle init.el
-(add-hook 'python-mode-hook
-	  '(lambda ()
-	     (message "Loading python-mode hooks")
-	     (setq indent-tabs-mode nil)
-	     (setq tab-width 4)
-	     (setq py-indent-offset tab-width)
-	     (setq py-smart-indentation t)
-	     (define-key python-mode-map "\C-m" 'newline-and-indent)
-	     ;; (hs-minor-mode)
-	     ;; add function index to menu bar
-	     ;; (imenu-add-menubar-index)
-	     ;; (python-mode-untabify)
-	     ;; (linum-mode)
-	     )
-	  )
+  (add-hook 'python-mode-hook
+            '(lambda ()
+               (message "Loading python-mode hooks")
+               (setq indent-tabs-mode nil)
+               (setq tab-width 4)
+               (setq py-indent-offset tab-width)
+               (setq py-smart-indentation t)
+               (define-key python-mode-map "\C-m" 'newline-and-indent)
+               ))
 #+END_SRC
 
 File name mappings
@@ -756,6 +766,26 @@ Make indentation more compliant with pep8 (see http://stackoverflow.com/revision
 Installed using ELPA.
 
 Invoke with =M-x python-pylint RET=
+
+* autopep8
+
+Apply =autopep8= (https://github.com/hhatto/autopep8) to the current
+buffer. You may notice an uncanny resemblance of the function below to
+one in this excellent post about executing shell commands from *Mastering Emacs*:
+http://www.masteringemacs.org/articles/2011/10/19/executing-shell-commands-emacs/
+
+#+BEGIN_SRC elisp :tangle init.el
+  (defun p8 ()
+    "Apply autopep8 to the current buffer"
+    (interactive)
+    (shell-command-on-region
+     (point-min) (point-max) ;; beginning and end of buffer
+     "autopep8 -"            ;; command and parameters
+     (current-buffer)        ;; output buffer
+     t                       ;; replace?
+     "*autopep8 errors*"     ;; name of the error buffer
+     t))                     ;; show error buffer?
+#+END_SRC
 
 * flycheck
 

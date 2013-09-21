@@ -315,10 +315,7 @@
  '(org-confirm-babel-evaluate nil)
  '(org-src-fontify-natively t))
 
-(setq org-agenda-files (list "~/Dropbox/notes/index.org"
-                             "~/Dropbox/fredross/notes/plans.org"
-                             ))
-
+(setq org-agenda-files (list "~/Dropbox/notes/index.org"))
 (push '("\\.org\\'" . org-mode) auto-mode-alist)
 (push '("\\.org\\.txt\\'" . org-mode) auto-mode-alist)
 
@@ -369,13 +366,7 @@
              (setq py-indent-offset tab-width)
              (setq py-smart-indentation t)
              (define-key python-mode-map "\C-m" 'newline-and-indent)
-             ;; (hs-minor-mode)
-             ;; add function index to menu bar
-             ;; (imenu-add-menubar-index)
-             ;; (python-mode-untabify)
-             ;; (linum-mode)
-             )
-          )
+             ))
 
 (push '("SConstruct" . python-mode) auto-mode-alist)
 (push '("SConscript" . python-mode) auto-mode-alist)
@@ -401,6 +392,17 @@
         ad-do-it))))
 
 (ad-activate 'python-calculate-indentation)
+
+(defun p8 ()
+  "Apply autopep8 to the current buffer"
+  (interactive)
+  (shell-command-on-region
+   (point-min) (point-max) ;; beginning and end of buffer
+   "autopep8 -"            ;; command and parameters
+   (current-buffer)        ;; output buffer
+   t                       ;; replace?
+   "*autopep8 errors*"     ;; name of the error buffer
+   t))                     ;; show error buffer?
 
 (add-hook 'flycheck-mode-hook
           '(lambda ()

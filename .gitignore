@@ -6,3 +6,4 @@ tramp
 url
 .emacs.desktop*
 .sconsign.dblite
+.*-ghpages

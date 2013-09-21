@@ -19,15 +19,28 @@ el, = env.Command(
 )
 Alias('el', el)
 
+pull, = env.Command(
+    target='.pull-ghpages',
+    source='init.org',
+    action=('(cd gh-pages && '
+            'git checkout gh-pages && '
+            'git fetch && '
+            'git reset --hard origin/gh-pages) | '
+            'tee $TARGET')
+    )
+Alias('pull-ghpages', pull)
+
 html, = env.Command(
     target='gh-pages/index.html',
     source='init.org',
     action=('$emacs -script org-export/org2html.el '
             '-infile $SOURCE -outfile $TARGET')
 )
+Alias('html', html)
+Depends(html, pull)
 
-publish_log, = env.Command(
-    target='publish.log',
+push, = env.Command(
+    target='.push-ghpages',
     source='init.org',
     action=('(cd gh-pages && '
             'git checkout gh-pages && '
@@ -35,5 +48,5 @@ publish_log, = env.Command(
             'git push origin gh-pages) | '
             'tee $TARGET')
     )
-Alias('publish', publish_log)
-Depends(publish_log, [html])
+Alias('push-ghpages', push)
+Depends(push, [html])
