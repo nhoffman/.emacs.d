@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>init.el for Noah Hoffman</title>
-<!-- 2013-09-20 Fri 23:39 -->
+<!-- 2013-09-22 Sun 21:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
 <meta name="author" content="Noah Hoffman"/>
@@ -1442,23 +1442,24 @@ Invoke with <code>M-x python-pylint RET</code>
 <div class="outline-text-2" id="text-26">
 <p>
 Apply <code>autopep8</code> (<a href="https://github.com/hhatto/autopep8">https://github.com/hhatto/autopep8</a>) to the current
-buffer. You may notice an uncanny resemblance of the function below to
-one in this excellent post about executing shell commands from <b>Mastering Emacs</b>:
+buffer. Reference: <b>Mastering Emacs</b>:
 <a href="http://www.masteringemacs.org/articles/2011/10/19/executing-shell-commands-emacs/">http://www.masteringemacs.org/articles/2011/10/19/executing-shell-commands-emacs/</a>
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">p8</span> ()
-  <span style="font-style: italic;">"Apply autopep8 to the current buffer"</span>
+  <span style="font-style: italic;">"Apply autopep8 to the current region or buffer"</span>
   (interactive)
+  (<span style="font-weight: bold;">unless</span> (region-active-p)
+    (mark-whole-buffer))
   (shell-command-on-region
-   (point-min) (point-max) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">beginning and end of buffer</span>
-   <span style="font-style: italic;">"autopep8 -"</span>            <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">command and parameters</span>
-   (current-buffer)        <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">output buffer</span>
-   t                       <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">replace?</span>
-   <span style="font-style: italic;">"*autopep8 errors*"</span>     <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">name of the error buffer</span>
-   t))                     <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">show error buffer?</span>
+   (region-beginning) (region-end) <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">beginning and end of region or buffer</span>
+   <span style="font-style: italic;">"autopep8 -"</span>                    <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">command and parameters</span>
+   (current-buffer)                <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">output buffer</span>
+   t                               <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">replace?</span>
+   <span style="font-style: italic;">"*autopep8 errors*"</span>             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">name of the error buffer</span>
+   t))                             <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">show error buffer?</span>
 </pre>
 </div>
 
@@ -2171,7 +2172,7 @@ Buffers opened from command line don't create new frame
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Noah Hoffman</p>
-<p class="date">Created: 2013-09-20 Fri 23:39</p>
+<p class="date">Created: 2013-09-22 Sun 21:45</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.0.7)</p>
 <p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a></p>
 </div>
