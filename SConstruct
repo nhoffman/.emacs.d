@@ -24,7 +24,7 @@ pull, = env.Command(
     source='init.org',
     action=('(cd gh-pages && '
             'git checkout gh-pages && '
-            'git fetch && '
+            'git fetch origin gh-pages && '
             'git reset --hard origin/gh-pages) | '
             'tee $TARGET')
     )
