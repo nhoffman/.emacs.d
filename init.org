@@ -784,21 +784,22 @@ Invoke with =M-x python-pylint RET=
 * autopep8
 
 Apply =autopep8= (https://github.com/hhatto/autopep8) to the current
-buffer. You may notice an uncanny resemblance of the function below to
-one in this excellent post about executing shell commands from *Mastering Emacs*:
+buffer. Reference: *Mastering Emacs*:
 http://www.masteringemacs.org/articles/2011/10/19/executing-shell-commands-emacs/
 
 #+BEGIN_SRC elisp :tangle init.el
   (defun p8 ()
-    "Apply autopep8 to the current buffer"
+    "Apply autopep8 to the current region or buffer"
     (interactive)
+    (unless (region-active-p)
+      (mark-whole-buffer))
     (shell-command-on-region
-     (point-min) (point-max) ;; beginning and end of buffer
-     "autopep8 -"            ;; command and parameters
-     (current-buffer)        ;; output buffer
-     t                       ;; replace?
-     "*autopep8 errors*"     ;; name of the error buffer
-     t))                     ;; show error buffer?
+     (region-beginning) (region-end) ;; beginning and end of region or buffer
+     "autopep8 -"                    ;; command and parameters
+     (current-buffer)                ;; output buffer
+     t                               ;; replace?
+     "*autopep8 errors*"             ;; name of the error buffer
+     t))                             ;; show error buffer?
 #+END_SRC
 
 Instead of simply replacing the current buffer, use ediff to compare
