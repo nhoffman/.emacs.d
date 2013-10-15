@@ -71,7 +71,8 @@
     moinmoin-mode
     org
     python-pylint
-    rainbow-delimiters))
+    rainbow-delimiters
+    yaml-mode))
 
 (defun package-install-my-packages ()
   ;; Install packages listed in global 'package-my-package-list'
