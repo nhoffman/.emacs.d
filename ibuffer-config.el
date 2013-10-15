@@ -45,9 +45,9 @@
 	       ("qdashboard"
 	      	(filename . "/qdashboard/"))
 
-	       ;; sconstools
-	       ("sconstools"
-	      	(filename . "/src/sconstools"))
+	       ;; ansible_scripts
+	       ("ansible_scripts"
+	      	(filename . "/ansble_scripts/"))
 
 	       ;; bioscons
 	       ("bioscons-package"
