@@ -57,6 +57,10 @@
 	       ("bioscons"
 	      	(filename . "/bioscons"))
 
+	       ;; ansible-scripts
+	       ("ansible_scripts"
+	      	(filename . "/ansible_scripts/"))
+
 	       ;; genetics_db
 	       ("gendb-package"
 	      	(filename . "/genetics_db/genetics_db"))
