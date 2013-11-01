@@ -512,6 +512,14 @@
 	      	(filename . "/ion_vs_miseq/"))
 
 
+	       ;; ion_cfstudy
+	       ("cfstudy-pipeline"
+	      	(filename . "/ion_cfstudy/ion_pipeline/"))
+	       ("cfstudy-package"
+	      	(filename . "/ion_cfstudy/cfstudy/"))
+	       ("cfstudy"
+	      	(filename . "/ion_cfstudy/"))
+
 	       ;; stuff in Dropbox
 	       ("dropbox-career"
 	      	(filename . "Dropbox/career"))
