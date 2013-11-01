@@ -45,9 +45,9 @@
 	       ("qdashboard"
 	      	(filename . "/qdashboard/"))
 
-	       ;; sconstools
-	       ("sconstools"
-	      	(filename . "/src/sconstools"))
+	       ;; ansible_scripts
+	       ("ansible_scripts"
+	      	(filename . "/ansble_scripts/"))
 
 	       ;; bioscons
 	       ("bioscons-package"
@@ -56,6 +56,10 @@
 	      	(filename . "/bioscons/tests"))
 	       ("bioscons"
 	      	(filename . "/bioscons"))
+
+	       ;; ansible-scripts
+	       ("ansible_scripts"
+	      	(filename . "/ansible_scripts/"))
 
 	       ;; genetics_db
 	       ("gendb-package"

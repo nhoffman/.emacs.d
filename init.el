@@ -71,7 +71,8 @@
     moinmoin-mode
     org
     python-pylint
-    rainbow-delimiters))
+    rainbow-delimiters
+    yaml-mode))
 
 (defun package-install-my-packages ()
   ;; Install packages listed in global 'package-my-package-list'
@@ -112,17 +113,23 @@
 (add-to-list 'load-path "~/.emacs.d/")
 
 (defun ssh-refresh ()
-  ;; Reset the environment variable SSH_AUTH_SOCK.
-  (interactive)
-  (setq ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))
-  (setenv "SSH_AUTH_SOCK"
-          (car (split-string
-                (shell-command-to-string
-                 "ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2> /dev/null)"))))
-  (message
-   (format "SSH_AUTH_SOCK %s --> %s"
-           ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))
-  )
+ ;; Reset the environment variable SSH_AUTH_SOCK.
+ (interactive)
+ (setq ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))
+ (setenv "SSH_AUTH_SOCK"
+         (car (split-string
+               (shell-command-to-string
+                (if (eq system-type 'darwin)
+                    "ls -t $(find /tmp/* -user $USER -name Listeners 2> /dev/null)"
+                  "ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2> /dev/null)"
+                  )))))
+ (message
+  (format "SSH_AUTH_SOCK %s --> %s"
+          ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))
+ )
+
+;; (when (memq window-system '(mac ns))
+;;   (exec-path-from-shell-initialize))
 
 ;; (when (memq window-system '(mac ns))
 ;;   (exec-path-from-shell-initialize))
@@ -315,10 +322,7 @@
  '(org-confirm-babel-evaluate nil)
  '(org-src-fontify-natively t))
 
-(setq org-agenda-files (list "~/Dropbox/notes/index.org"
-                             "~/Dropbox/fredross/notes/plans.org"
-                             ))
-
+(setq org-agenda-files (list "~/Dropbox/notes/index.org"))
 (push '("\\.org\\'" . org-mode) auto-mode-alist)
 (push '("\\.org\\.txt\\'" . org-mode) auto-mode-alist)
 
@@ -369,13 +373,7 @@
              (setq py-indent-offset tab-width)
              (setq py-smart-indentation t)
              (define-key python-mode-map "\C-m" 'newline-and-indent)
-             ;; (hs-minor-mode)
-             ;; add function index to menu bar
-             ;; (imenu-add-menubar-index)
-             ;; (python-mode-untabify)
-             ;; (linum-mode)
-             )
-          )
+             ))
 
 (push '("SConstruct" . python-mode) auto-mode-alist)
 (push '("SConscript" . python-mode) auto-mode-alist)
@@ -401,6 +399,34 @@
         ad-do-it))))
 
 (ad-activate 'python-calculate-indentation)
+
+(defun p8 ()
+  "Apply autopep8 to the current region or buffer"
+  (interactive)
+  (unless (region-active-p)
+    (mark-whole-buffer))
+  (shell-command-on-region
+   (region-beginning) (region-end) ;; beginning and end of region or buffer
+   "autopep8 -"                    ;; command and parameters
+   (current-buffer)                ;; output buffer
+   t                               ;; replace?
+   "*autopep8 errors*"             ;; name of the error buffer
+   t))                             ;; show error buffer?
+
+(defun p8-and-ediff ()
+  "Compare the current buffer to the output of autopep8 using ediff"
+  (interactive)
+  (let ((p8-output
+         (get-buffer-create (format "* %s autopep8 *" (buffer-name)))))
+    (shell-command-on-region
+     (point-min) (point-max)    ;; beginning and end of buffer
+     "autopep8 -"               ;; command and parameters
+     p8-output                  ;; output buffer
+     nil                        ;; replace?
+     "*autopep8 errors*"        ;; name of the error buffer
+     t)                         ;; show error buffer?
+    (ediff-buffers (current-buffer) p8-output)
+    ))
 
 (add-hook 'flycheck-mode-hook
           '(lambda ()
