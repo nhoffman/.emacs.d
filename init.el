@@ -302,7 +302,6 @@
              ;; key bindings for org-promote/demote-subtree
              (define-key org-mode-map (kbd "M-S-<right>") 'org-do-demote)
              (define-key org-mode-map (kbd "M-S-<left>") 'org-do-promote)
-             (org-indent-mode)
              (visual-line-mode)
              ;; org-babel
              (org-babel-do-load-languages
