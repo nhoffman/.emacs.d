@@ -113,7 +113,7 @@
 (add-to-list 'load-path "~/.emacs.d/")
 
 (defun ssh-refresh ()
- ;; Reset the environment variable SSH_AUTH_SOCK.
+ "Reset the environment variable SSH_AUTH_SOCK"
  (interactive)
  (setq ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))
  (setenv "SSH_AUTH_SOCK"
