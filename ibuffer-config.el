@@ -511,7 +511,7 @@
 	       ("ivm-ion"
 	      	(filename . "/ion_vs_miseq/ion_pipeline/"))
 	       ("ivm-miseq"
-	      	(filename . "/ion_vs_miseq/ion_pipeline/"))
+	      	(filename . "/ion_vs_miseq/miseq_pipeline/"))
 	       ("ivm"
 	      	(filename . "/ion_vs_miseq/"))
 
