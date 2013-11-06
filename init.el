@@ -3,10 +3,11 @@
 
 (setq init-file-name "init.el")
 (defun init-insert-code-block ()
-  ;; Insert a code block that will be tangled into `init-file-name`
+  ;; Insert a code block surrounding the paragraph at point that will
+  ;; be tangled into `init-file-name`.
   (interactive)
   (backward-paragraph)
-  (insert (format "#+BEGIN_SRC elisp :tangle %s" init-file-name))
+  (insert (format "\n#+BEGIN_SRC elisp :tangle %s" init-file-name))
   (forward-paragraph)
   (insert "#+END_SRC\n"))
 (global-set-key (kbd "C-c i") 'init-insert-code-block)
@@ -276,6 +277,8 @@ Assumes that the frame is only split into two."
     (switch-to-buffer nil))) ; restore the original window in this part of the frame
 
 (global-set-key (kbd "C-x 6") 'toggle-frame-split)
+
+(setq split-height-threshold nil)
 
 (setq-default ispell-program-name "aspell")
 (setq ispell-dictionary "en")
