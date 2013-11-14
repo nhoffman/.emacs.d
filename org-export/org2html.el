@@ -188,6 +188,9 @@ MIN-VERSION should be a version list."
 (while (search-forward "<body>" nil t)
   (replace-match "<body class=\"container\">"))
 
+(while (search-forward "<table>" nil t)
+  (replace-match "<table class=\"table table-striped table-bordered table-condensed\">"))
+
 (write-file outfile)
 
 ;; clean up
