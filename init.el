@@ -331,6 +331,9 @@ Assumes that the frame is only split into two."
                 (sqlite . t)
                 (pygment . t)
                 ))
+             (defun org-with-silent-modifications(&rest args)
+               ;; replaces function causing error on org-export
+               (message "Using fake 'org-with-silent-modifications'"))
              )
           )
 
