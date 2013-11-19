@@ -332,8 +332,12 @@ Assumes that the frame is only split into two."
                 (pygment . t)
                 ))
              (defun org-with-silent-modifications(&rest args)
-               ;; replaces function causing error on org-export
+               "Replaces function causing error on org-export"
                (message "Using fake 'org-with-silent-modifications'"))
+             (defadvice org-todo-list (after org-todo-list-bottom ())
+               "Move to bottom of page after entering org-todo-list"
+               (end-of-buffer))
+             (ad-activate 'org-todo-list)
              )
           )
 
@@ -344,6 +348,8 @@ Assumes that the frame is only split into two."
 (setq org-agenda-files (list "~/Dropbox/notes/index.org"))
 (push '("\\.org\\'" . org-mode) auto-mode-alist)
 (push '("\\.org\\.txt\\'" . org-mode) auto-mode-alist)
+
+(global-set-key (kbd "C-c a") 'org-agenda)
 
 (condition-case nil
     (progn
