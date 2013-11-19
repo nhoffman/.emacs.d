@@ -336,7 +336,7 @@ Assumes that the frame is only split into two."
                (message "Using fake 'org-with-silent-modifications'"))
              (defadvice org-todo-list (after org-todo-list-bottom ())
                "Move to bottom of page after entering org-todo-list"
-               (end-of-buffer))
+               (progn (end-of-buffer) (recenter-top-bottom)))
              (ad-activate 'org-todo-list)
              )
           )
