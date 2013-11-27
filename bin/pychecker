@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# see http://pep8.readthedocs.org/en/latest/intro.html#error-codes
+
 pyflakes "$1"
-pep8 --ignore=E251,E123,E128 --max-line-length=99 --repeat "$1"
+pep8 --ignore=E123,E128 --max-line-length=99 --repeat "$1"
 true
