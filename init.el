@@ -379,11 +379,6 @@ Assumes that the frame is only split into two."
                    (org-add-entry "~/Dropbox/notes/index.org"
                                   "\n* <%Y-%m-%d %a>")))
 
-(global-set-key
- (kbd "C-x C-m") (lambda () (interactive)
-                   (org-add-entry "~/Dropbox/notes/todo.org"
-                                  "\n** TODO <%Y-%m-%d %a>")))
-
 (push '("\\.md" . markdown-mode) auto-mode-alist)
 
 (condition-case nil
