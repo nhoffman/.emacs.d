@@ -67,6 +67,7 @@
     flycheck-color-mode-line
     gist
     htmlize
+    jinja2-mode
     magit
     markdown-mode
     moinmoin-mode
