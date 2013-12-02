@@ -284,8 +284,7 @@ function to fix this.
                     )))))
    (message
     (format "SSH_AUTH_SOCK %s --> %s"
-            ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))
-   )
+            ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))))
 #+END_SRC
 ** exec-path-from-shell
 
@@ -1206,11 +1205,10 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
 ** copy-buffer-file-name
 
 #+BEGIN_SRC elisp :tangle init.el
-(defun copy-buffer-file-name ()
-  "Add `buffer-file-name' to `kill-ring'"
-  (interactive)
-  (kill-new buffer-file-name t)
-)
+  (defun copy-buffer-file-name ()
+    "Add `buffer-file-name' to `kill-ring'"
+    (interactive)
+    (kill-new buffer-file-name t))
 #+END_SRC
 
 ** copy-and-comment
@@ -1220,8 +1218,12 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
     "Comment active region and paste uncommented text on the
   following line."
     (interactive)
-    (kill-new (buffer-substring (region-beginning) (region-end)))
-    (comment-region (region-beginning) (region-end))
+    (kill-new
+     (buffer-substring
+      (region-beginning)
+      (region-end)))
+    (comment-region (region-beginning)
+                    (region-end))
     (goto-char (region-end))
     (delete-blank-lines)
     (newline 2)
