@@ -298,17 +298,6 @@ Commenting out for now, but seems promising....
   ;; (when (memq window-system '(mac ns))
   ;;   (exec-path-from-shell-initialize))
 #+END_SRC
-** exec-path-from-shell
-
-Initialize the PATH environment variable when starting up the Emacs
-app from the finder. Found this tip here: https://plus.google.com/104330705025733851532/posts/K6YPSVEB9Nx
-
-Commenting out for now, but seems promising....
-
-#+BEGIN_SRC elisp :tangle init.el
-  ;; (when (memq window-system '(mac ns))
-  ;;   (exec-path-from-shell-initialize))
-#+END_SRC
 
 * Exiting and saving
 
@@ -326,6 +315,7 @@ Require prompt before exit on C-x C-c
 Delete trailing whitespace before save.
 
 #+BEGIN_SRC elisp :tangle init.el
+(setq delete-trailing-lines nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
@@ -340,14 +330,14 @@ Detect platform and window system and set up fonts accordingly
     (scroll-bar-mode -1) ;; hide scroll bar
     (cond ((string= "ns" window-system) ;; cocoa
            (progn (message (format "** running %s windowing system" window-system))
-           ;; key bindings for mac - see
-           ;; http://stuff-things.net/2009/01/06/emacs-on-the-mac/
-           ;; http://osx.iusethis.com/app/carbonemacspackage
-           (set-keyboard-coding-system 'mac-roman)
-           (setq mac-option-modifier 'meta)
-           (setq mac-command-key-is-meta nil)
-           (setq my-default-font "Bitstream Vera Sans Mono-14")
-           ))
+                  ;; key bindings for mac - see
+                  ;; http://stuff-things.net/2009/01/06/emacs-on-the-mac/
+                  ;; http://osx.iusethis.com/app/carbonemacspackage
+                  (set-keyboard-coding-system 'mac-roman)
+                  (setq mac-option-modifier 'meta)
+                  (setq mac-command-key-is-meta nil)
+                  (setq my-default-font "Bitstream Vera Sans Mono-14")
+                  ))
           ((string= "x" window-system)
            (progn
              (message (format "** running %s windowing system" window-system))
@@ -358,9 +348,9 @@ Detect platform and window system and set up fonts accordingly
              ))
           (t
            (progn
-           (message "** running unknown windowing system")
-           (setq my-default-font nil)
-           ))
+             (message "** running unknown windowing system")
+             (setq my-default-font nil)
+             ))
           )
 
     (unless (equal window-system nil)
@@ -399,19 +389,11 @@ See http://www.emacswiki.org/emacs/SmoothScrolling
 
 #+BEGIN_SRC elisp :tangle init.el
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; number of lines at a time
-(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-(setq mouse-wheel-follow-mosue 't) ;; scroll window under mouse
-(setq scroll-step 1) ;; keyboard scroll one line at a time
-(setq scroll-conservatively 1) ;; scroll by one line to follow cursor off screen
-(setq scroll-margin 2) ;; Start scrolling when 2 lines from top/bottom
-#+END_SRC
-
-* Marking
-
-#+BEGIN_SRC elisp :tangle init.el
-(transient-mark-mode 1) ;; highlight active region - default in emacs 23.1+
-(global-set-key (kbd "M-C-t") 'transient-mark-mode)
-(global-set-key (kbd "C-x C-b") 'electric-buffer-list)
+(setq mouse-wheel-progressive-speed nil)            ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mosue 't)                  ;; scroll window under mouse
+(setq scroll-step 1)                                ;; keyboard scroll one line at a time
+(setq scroll-conservatively 1)                      ;; scroll by one line to follow cursor off screen
+(setq scroll-margin 2)                              ;; Start scrolling when 2 lines from top/bottom
 #+END_SRC
 
 * Cursor Appearance.
@@ -419,12 +401,6 @@ See http://www.emacswiki.org/emacs/SmoothScrolling
 #+BEGIN_SRC elisp :tangle init.el
 (set-cursor-color "red")
 (blink-cursor-mode 1)
-#+END_SRC
-
-* iswitchb mode
-
-#+BEGIN_SRC elisp :tangle init.el
-(iswitchb-mode 1)
 #+END_SRC
 
 * Keyboard macros
@@ -489,6 +465,20 @@ Move line down.
 #+END_SRC
 
 * Buffers and windows
+** Use =iswitchb=
+
+#+BEGIN_SRC elisp :tangle init.el
+(iswitchb-mode 1)
+#+END_SRC
+
+** Use =electric-buffer-list=
+
+Replace default =list-buffers= with =electric-buffer-list= for buffer
+selection.
+
+#+BEGIN_SRC elisp :tangle init.el
+(global-set-key (kbd "C-x C-b") 'electric-buffer-list)
+#+END_SRC
 ** Switch windows with arrow keys
 
 Note that other-window is bound by default to =C-x o=
@@ -1077,31 +1067,13 @@ Hooks
           )
 #+END_SRC
 
-* dired
-
-Omit uninteresting files.
-
-- http://www.gnu.org/software/emacs/manual/html_node/dired-x/Omitting-Files-in-Dired.html
-
-#+BEGIN_SRC elisp :tangle init.el
-  ;; (add-hook 'dired-load-hook
-  ;;           (lambda ()
-  ;;             (load "dired-x")
-  ;;             ))
-  ;; (add-hook 'dired-mode-hook
-  ;;           (lambda ()
-  ;;             ;; Set dired-x buffer-local variables here.
-  ;;             (dired-omit-mode 1)
-  ;;             (setq dired-omit-extensions '(".pyc" ".git/"))
-  ;;             ))
-#+END_SRC
-
 * uniquify
 
 - http://www.emacswiki.org/emacs/uniquify
 
 #+BEGIN_SRC elisp :tangle init.el
 (require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward)
 #+END_SRC
 
 * ido-mode
@@ -1195,27 +1167,8 @@ This is used to set `sql-alternate-buffer-name' within
 
 #+BEGIN_SRC elisp :tangle init.el
 (require 'epa-file)
-;; (epa-file-enable)
-;; suppress graphical passphrase prompt
-(setenv "GPG_AGENT_INFO" nil)
+(setenv "GPG_AGENT_INFO" nil) ;; suppress graphical passphrase prompt
 #+END_SRC
-
-* wc
-
-From http://emacswiki.org/emacs/wc.el
-
-To install:
-
-: cd ~/.emacs.d
-: wget http://www.emacswiki.org/emacs/download/wc.el
-
-#+BEGIN_SRC elisp :tangle init.el
-  (condition-case nil
-      (require 'wc)
-        (error (message "** could not load wc.el")))
-
-#+END_SRC
-
 * Outline minor mode
 
 The default key bindings for outline-minor-mode start with 'C-c @ C-',
@@ -1263,16 +1216,18 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
 ** copy-and-comment
 
 #+BEGIN_SRC elisp :tangle init.el
-(fset 'copy-and-comment
-   "\367\C-x\C-x\273")
-(global-set-key (kbd "M-C-;") 'copy-and-comment)
-#+END_SRC
+  (defun copy-and-comment ()
+    "Comment active region and paste uncommented text on the
+  following line."
+    (interactive)
+    (kill-new (buffer-substring (region-beginning) (region-end)))
+    (comment-region (region-beginning) (region-end))
+    (goto-char (region-end))
+    (delete-blank-lines)
+    (newline 2)
+    (yank))
 
-** get-buffer-file-name
-
-#+BEGIN_SRC elisp :tangle init.el
-(fset 'get-buffer-file-name
-   "\C-hvbuffer-file-name\C-m")
+  (global-set-key (kbd "M-C-;") 'copy-and-comment)
 #+END_SRC
 
 ** unfill-paragraph
@@ -1305,29 +1260,14 @@ Buffers opened from command line don't create new frame
 (setq ns-pop-up-frames nil)
 #+END_SRC
 
-* added by emacs
+* enable commands
 
 #+BEGIN_SRC elisp :tangle init.el
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; content below was added by emacs ;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(safe-local-variable-values (quote ((toggle-read-only . t))))
- '(uniquify-buffer-name-style (quote post-forward) nil (uniquify)))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
 #+END_SRC
+
 * License
 #+BEGIN_SRC elisp :tangle init.el
 ;; This program is free software: you can redistribute it and/or modify
@@ -1343,3 +1283,6 @@ Buffers opened from command line don't create new frame
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #+END_SRC
+
+
+
