@@ -133,15 +133,13 @@
 ;; (when (memq window-system '(mac ns))
 ;;   (exec-path-from-shell-initialize))
 
-;; (when (memq window-system '(mac ns))
-;;   (exec-path-from-shell-initialize))
-
 (global-set-key [(control x) (control c)]
                 (function
                  (lambda () (interactive)
                    (cond ((y-or-n-p "Quit? (save-buffers-kill-terminal) ")
                           (save-buffers-kill-terminal))))))
 
+(setq delete-trailing-lines nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (defun fix-frame ()
@@ -151,14 +149,14 @@
   (scroll-bar-mode -1) ;; hide scroll bar
   (cond ((string= "ns" window-system) ;; cocoa
          (progn (message (format "** running %s windowing system" window-system))
-         ;; key bindings for mac - see
-         ;; http://stuff-things.net/2009/01/06/emacs-on-the-mac/
-         ;; http://osx.iusethis.com/app/carbonemacspackage
-         (set-keyboard-coding-system 'mac-roman)
-         (setq mac-option-modifier 'meta)
-         (setq mac-command-key-is-meta nil)
-         (setq my-default-font "Bitstream Vera Sans Mono-14")
-         ))
+                ;; key bindings for mac - see
+                ;; http://stuff-things.net/2009/01/06/emacs-on-the-mac/
+                ;; http://osx.iusethis.com/app/carbonemacspackage
+                (set-keyboard-coding-system 'mac-roman)
+                (setq mac-option-modifier 'meta)
+                (setq mac-command-key-is-meta nil)
+                (setq my-default-font "Bitstream Vera Sans Mono-14")
+                ))
         ((string= "x" window-system)
          (progn
            (message (format "** running %s windowing system" window-system))
@@ -169,9 +167,9 @@
            ))
         (t
          (progn
-         (message "** running unknown windowing system")
-         (setq my-default-font nil)
-         ))
+           (message "** running unknown windowing system")
+           (setq my-default-font nil)
+           ))
         )
 
   (unless (equal window-system nil)
@@ -193,20 +191,14 @@
 (add-hook 'server-visit-hook 'fix-frame)
 
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; number of lines at a time
-(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-(setq mouse-wheel-follow-mosue 't) ;; scroll window under mouse
-(setq scroll-step 1) ;; keyboard scroll one line at a time
-(setq scroll-conservatively 1) ;; scroll by one line to follow cursor off screen
-(setq scroll-margin 2) ;; Start scrolling when 2 lines from top/bottom
-
-(transient-mark-mode 1) ;; highlight active region - default in emacs 23.1+
-(global-set-key (kbd "M-C-t") 'transient-mark-mode)
-(global-set-key (kbd "C-x C-b") 'electric-buffer-list)
+(setq mouse-wheel-progressive-speed nil)            ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mosue 't)                  ;; scroll window under mouse
+(setq scroll-step 1)                                ;; keyboard scroll one line at a time
+(setq scroll-conservatively 1)                      ;; scroll by one line to follow cursor off screen
+(setq scroll-margin 2)                              ;; Start scrolling when 2 lines from top/bottom
 
 (set-cursor-color "red")
 (blink-cursor-mode 1)
-
-(iswitchb-mode 1)
 
 (global-set-key (kbd "<f5>") 'call-last-kbd-macro)
 
@@ -230,6 +222,10 @@
   (transpose-lines 1)
   (previous-line 1))
 (global-set-key (kbd "M-<down>") 'move-line-down)
+
+(iswitchb-mode 1)
+
+(global-set-key (kbd "C-x C-b") 'electric-buffer-list)
 
 (defun back-window ()
   (interactive)
@@ -595,18 +591,8 @@ Assumes that the frame is only split into two."
              )
           )
 
-;; (add-hook 'dired-load-hook
-;;           (lambda ()
-;;             (load "dired-x")
-;;             ))
-;; (add-hook 'dired-mode-hook
-;;           (lambda ()
-;;             ;; Set dired-x buffer-local variables here.
-;;             (dired-omit-mode 1)
-;;             (setq dired-omit-extensions '(".pyc" ".git/"))
-;;             ))
-
 (require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward)
 
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
@@ -664,13 +650,7 @@ This is used to set `sql-alternate-buffer-name' within
             (sql-rename-buffer)))
 
 (require 'epa-file)
-;; (epa-file-enable)
-;; suppress graphical passphrase prompt
-(setenv "GPG_AGENT_INFO" nil)
-
-(condition-case nil
-    (require 'wc)
-      (error (message "** could not load wc.el")))
+(setenv "GPG_AGENT_INFO" nil) ;; suppress graphical passphrase prompt
 
 ;; Outline-minor-mode key map
 (define-prefix-command 'cm-map nil "Outline-")
@@ -702,12 +682,18 @@ This is used to set `sql-alternate-buffer-name' within
   (kill-new buffer-file-name t)
 )
 
-(fset 'copy-and-comment
-   "\367\C-x\C-x\273")
-(global-set-key (kbd "M-C-;") 'copy-and-comment)
+(defun copy-and-comment ()
+  "Comment active region and paste uncommented text on the
+following line."
+  (interactive)
+  (kill-new (buffer-substring (region-beginning) (region-end)))
+  (comment-region (region-beginning) (region-end))
+  (goto-char (region-end))
+  (delete-blank-lines)
+  (newline 2)
+  (yank))
 
-(fset 'get-buffer-file-name
-   "\C-hvbuffer-file-name\C-m")
+(global-set-key (kbd "M-C-;") 'copy-and-comment)
 
 (defun unfill-paragraph ()
   (interactive)
@@ -721,25 +707,9 @@ This is used to set `sql-alternate-buffer-name' within
 
 (setq ns-pop-up-frames nil)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; content below was added by emacs ;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(safe-local-variable-values (quote ((toggle-read-only . t))))
- '(uniquify-buffer-name-style (quote post-forward) nil (uniquify)))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
