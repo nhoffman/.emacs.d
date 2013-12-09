@@ -67,6 +67,7 @@
     flycheck-color-mode-line
     gist
     htmlize
+    jedi
     jinja2-mode
     magit
     markdown-mode
@@ -127,8 +128,7 @@
                   )))))
  (message
   (format "SSH_AUTH_SOCK %s --> %s"
-          ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))
- )
+          ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))))
 
 ;; (when (memq window-system '(mac ns))
 ;;   (exec-path-from-shell-initialize))
@@ -477,6 +477,10 @@ Assumes that the frame is only split into two."
 
 ;; (add-hook 'python-mode-hook 'flymake-mode)
 
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:setup-keys t)
+(setq jedi:complete-on-dot t)
+
 (add-hook 'text-mode-hook
           '(lambda ()
              ;; (longlines-mode)
@@ -679,15 +683,18 @@ This is used to set `sql-alternate-buffer-name' within
 (defun copy-buffer-file-name ()
   "Add `buffer-file-name' to `kill-ring'"
   (interactive)
-  (kill-new buffer-file-name t)
-)
+  (kill-new buffer-file-name t))
 
 (defun copy-and-comment ()
   "Comment active region and paste uncommented text on the
 following line."
   (interactive)
-  (kill-new (buffer-substring (region-beginning) (region-end)))
-  (comment-region (region-beginning) (region-end))
+  (kill-new
+   (buffer-substring
+    (region-beginning)
+    (region-end)))
+  (comment-region (region-beginning)
+                  (region-end))
   (goto-char (region-end))
   (delete-blank-lines)
   (newline 2)

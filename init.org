@@ -166,6 +166,7 @@ been loaded since emacs was first started.
       flycheck-color-mode-line
       gist
       htmlize
+      jedi
       jinja2-mode
       magit
       markdown-mode
@@ -798,13 +799,13 @@ Make indentation more compliant with pep8 (see http://stackoverflow.com/revision
   (ad-activate 'python-calculate-indentation)
 #+END_SRC
 
-* python-pylint
+** python-pylint
 
 Installed using ELPA.
 
 Invoke with =M-x python-pylint RET=
 
-* autopep8
+** autopep8
 
 Apply =autopep8= (https://github.com/hhatto/autopep8) to the current
 buffer. Reference: *Mastering Emacs*:
@@ -845,7 +846,7 @@ it to the output of autopep8.
       ))
 #+END_SRC
 
-* flycheck
+** flycheck
 
 An alternative to =flymake=. Install =flycheck= via elpa. For python,
 requires flask8 or pyflakes; flake8 is used preferentially if
@@ -862,7 +863,7 @@ See https://github.com/arcthur/.emacs.d/blob/master/extensions/init-flycheck.el
           )
 #+END_SRC
 
-* flymake: check code dynamically
+** flymake: check code dynamically
 
 Flymake can be used to check python code dynamically, for example
 using pyflakes and pep8. I found (and slightly modified) instructions
@@ -908,6 +909,22 @@ And some configuration:
                  '("SCons" flymake-pycodecheck-init)))
 
   ;; (add-hook 'python-mode-hook 'flymake-mode)
+#+END_SRC
+
+** jedi
+
+Python auto-completion with Jedi (http://tkf.github.io/emacs-jedi/)
+
+Install =jedi.el= via elpa.
+
+Install python requirements:
+
+: pip install -r $(ls .emacs.d/elpa/jedi-*/requirements.txt)
+
+#+BEGIN_SRC elisp :tangle init.el
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:setup-keys t)
+(setq jedi:complete-on-dot t)
 #+END_SRC
 
 * text-mode
