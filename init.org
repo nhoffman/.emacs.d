@@ -1254,13 +1254,11 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
 from http://defindit.com/readme_files/emacs_hints_tricks.html
 
 #+BEGIN_SRC elisp :tangle init.el
-
-#+BEGIN_SRC elisp :tangle init.el(defun unfill-paragraph ()
+(defun unfill-paragraph ()
   (interactive)
   (let ((fill-column (point-max)))
   (fill-paragraph nil)))
 (global-set-key (kbd "M-C-q") 'unfill-paragraph)
-#+END_SRC
 #+END_SRC
 
 ** occur-region

@@ -702,7 +702,7 @@ following line."
 
 (global-set-key (kbd "M-C-;") 'copy-and-comment)
 
-#+BEGIN_SRC elisp :tangle init.el(defun unfill-paragraph ()
+(defun unfill-paragraph ()
   (interactive)
   (let ((fill-column (point-max)))
   (fill-paragraph nil)))
