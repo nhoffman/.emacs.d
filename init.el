@@ -702,11 +702,17 @@ following line."
 
 (global-set-key (kbd "M-C-;") 'copy-and-comment)
 
-(defun unfill-paragraph ()
+#+BEGIN_SRC elisp :tangle init.el(defun unfill-paragraph ()
   (interactive)
   (let ((fill-column (point-max)))
   (fill-paragraph nil)))
 (global-set-key (kbd "M-C-q") 'unfill-paragraph)
+
+(defun occur-region () (interactive)
+  "Run `occur` using the current region."
+  (occur
+   (buffer-substring (region-beginning) (region-end))))
+(global-set-key (kbd "M-s r") 'occur-region)
 
 (condition-case nil
     (require 'elisp-format)

@@ -1254,11 +1254,25 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
 from http://defindit.com/readme_files/emacs_hints_tricks.html
 
 #+BEGIN_SRC elisp :tangle init.el
-(defun unfill-paragraph ()
+
+#+BEGIN_SRC elisp :tangle init.el(defun unfill-paragraph ()
   (interactive)
   (let ((fill-column (point-max)))
   (fill-paragraph nil)))
 (global-set-key (kbd "M-C-q") 'unfill-paragraph)
+#+END_SRC
+#+END_SRC
+
+** occur-region
+
+Note that occur can be executed using "M-s o"
+
+#+BEGIN_SRC elisp :tangle init.el
+(defun occur-region () (interactive)
+  "Run `occur` using the current region."
+  (occur
+   (buffer-substring (region-beginning) (region-end))))
+(global-set-key (kbd "M-s r") 'occur-region)
 #+END_SRC
 
 * elisp-format
