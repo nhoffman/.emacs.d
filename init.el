@@ -74,6 +74,7 @@
     moinmoin-mode
     org
     python-pylint
+    projectile
     rainbow-delimiters
     yaml-mode))
 
@@ -597,6 +598,9 @@ Assumes that the frame is only split into two."
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
+
+(if (package-installed-p 'projectile)
+    (projectile-global-mode))
 
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
