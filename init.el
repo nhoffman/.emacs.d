@@ -74,6 +74,7 @@
     moinmoin-mode
     org
     python-pylint
+    projectile
     rainbow-delimiters
     yaml-mode))
 
@@ -598,6 +599,9 @@ Assumes that the frame is only split into two."
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 
+(if (package-installed-p 'projectile)
+    (projectile-global-mode))
+
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (setq ido-use-virtual-buffers t)
@@ -707,6 +711,12 @@ following line."
   (let ((fill-column (point-max)))
   (fill-paragraph nil)))
 (global-set-key (kbd "M-C-q") 'unfill-paragraph)
+
+(defun occur-region () (interactive)
+  "Run `occur` using the current region."
+  (occur
+   (buffer-substring (region-beginning) (region-end))))
+(global-set-key (kbd "M-s r") 'occur-region)
 
 (condition-case nil
     (require 'elisp-format)

@@ -173,6 +173,7 @@ been loaded since emacs was first started.
       moinmoin-mode
       org
       python-pylint
+      projectile
       rainbow-delimiters
       yaml-mode))
 
@@ -1092,6 +1093,25 @@ Hooks
 (setq uniquify-buffer-name-style 'post-forward)
 #+END_SRC
 
+* projectile
+
+Project-centric file and directory navigation - see
+https://github.com/bbatsov/projectile
+
+Installed using ELPA.
+
+Basic key bindings (see the url above for a complete list).
+
+| keybinding | description                                       |
+| C-c p C-h  | Help with projectile key bindings                 |
+| C-c p f    | Display a list of all files in the project.       |
+| C-c p d    | Display a list of all directories in the project. |
+
+#+BEGIN_SRC elisp :tangle init.el
+(if (package-installed-p 'projectile)
+    (projectile-global-mode))
+#+END_SRC
+
 * ido-mode
 
 - http://www.masteringemacs.org/articles/2010/10/10/introduction-to-ido-mode/
@@ -1259,6 +1279,18 @@ from http://defindit.com/readme_files/emacs_hints_tricks.html
   (let ((fill-column (point-max)))
   (fill-paragraph nil)))
 (global-set-key (kbd "M-C-q") 'unfill-paragraph)
+#+END_SRC
+
+** occur-region
+
+Note that occur can be executed using "M-s o"
+
+#+BEGIN_SRC elisp :tangle init.el
+(defun occur-region () (interactive)
+  "Run `occur` using the current region."
+  (occur
+   (buffer-substring (region-beginning) (region-end))))
+(global-set-key (kbd "M-s r") 'occur-region)
 #+END_SRC
 
 * elisp-format
