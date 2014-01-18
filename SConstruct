@@ -45,7 +45,7 @@ push, = env.Command(
     action=('(cd gh-pages && '
             'git checkout gh-pages && '
             'git commit -a -m "update ghpages" && '
-            'git push origin gh-pages) | '
+            'git push --force origin gh-pages) | '
             'tee $TARGET')
     )
 Alias('push-ghpages', push)
