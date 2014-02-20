@@ -1,9 +1,11 @@
-init.html
+.*-ghpages
+.emacs.desktop*
+.sconsign.dblite
+ac-comphist.dat
 auto-save-list
 elpa
 image-dired
+init.html
+projectile-bookmarks.eld
 tramp
 url
-.emacs.desktop*
-.sconsign.dblite
-.*-ghpages
