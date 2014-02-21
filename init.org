@@ -433,11 +433,17 @@ Save desktop periodically instead of just on exit, but not if emacs is
 started with =--no-desktop=
 
 #+BEGIN_SRC elisp :tangle init.el
-(desktop-save-mode 1)
-(if (and desktop-save-mode (not (member "--no-desktop" command-line-args)))
-    (progn
-      (message "Enabling desktop auto-save")
-      (add-hook 'auto-save-hook 'desktop-save-in-desktop-dir)))
+  (defun desktop-save-no-p ()
+    "Save desktop without prompting (replaces `desktop-save-in-desktop-dir')"
+    (interactive)
+    (message (format "Saving desktop in %s" desktop-dirname))
+    (desktop-save desktop-dirname))
+
+  (if (not (member "--no-desktop" command-line-args))
+      (progn
+        (desktop-save-mode 1)
+        (message "Enabling desktop auto-save")
+        (add-hook 'auto-save-hook 'desktop-save-no-p)))
 #+END_SRC
 
 * Move lines up and down with arrow keys

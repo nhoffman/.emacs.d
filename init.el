@@ -205,11 +205,17 @@
 
 (require 'desktop)
 
-(desktop-save-mode 1)
-(if (and desktop-save-mode (not (member "--no-desktop" command-line-args)))
+(defun desktop-save-no-p ()
+  "Save desktop without prompting (replaces `desktop-save-in-desktop-dir')"
+  (interactive)
+  (message (format "Saving desktop in %s" desktop-dirname))
+  (desktop-save desktop-dirname))
+
+(if (not (member "--no-desktop" command-line-args))
     (progn
+      (desktop-save-mode 1)
       (message "Enabling desktop auto-save")
-      (add-hook 'auto-save-hook 'desktop-save-in-desktop-dir)))
+      (add-hook 'auto-save-hook 'desktop-save-no-p)))
 
 (defun move-line-up ()
   (interactive)
