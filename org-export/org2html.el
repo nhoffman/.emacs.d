@@ -49,7 +49,7 @@
 ;; package data
 (setq user-emacs-directory (get-option args "package-dir" "~/.org-export"))
 (setq css-url
-      (get-option args "css-url" "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"))
+      (get-option args "css-url" "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"))
 
 (message (format "using packages in %s" user-emacs-directory))
 
