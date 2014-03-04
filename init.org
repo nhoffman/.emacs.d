@@ -732,6 +732,17 @@ Add a new entry to main notes file.
 				  "\n* <%Y-%m-%d %a>")))
 #+END_SRC
 
+Add a new entry to my journal.
+
+Add a new entry to main notes file.
+
+#+BEGIN_SRC elisp :tangle init.el
+(global-set-key
+ (kbd "C-x C-j") (lambda () (interactive)
+                   (org-add-entry "~/Dropbox/journal/journal.org"
+                                  "\n* %A, %B %d, %Y")))
+#+END_SRC
+
 * markdown-mode
 
 Installed using elpa.

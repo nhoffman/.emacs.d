@@ -383,6 +383,11 @@ Assumes that the frame is only split into two."
                    (org-add-entry "~/Dropbox/notes/index.org"
                                   "\n* <%Y-%m-%d %a>")))
 
+(global-set-key
+ (kbd "C-x C-j") (lambda () (interactive)
+                   (org-add-entry "~/Dropbox/journal/journal.org"
+                                  "\n* %A, %B %d, %Y")))
+
 (push '("\\.md" . markdown-mode) auto-mode-alist)
 
 (condition-case nil
