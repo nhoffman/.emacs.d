@@ -12,6 +12,7 @@
   ;; return true if string looks like a command line option
   (string-equal (substring str 0 1) "-"))
 
+;; TODO - make optional without requiring a default
 (defun get-option (args opt &optional default)
   ;; Return the value of "opt" from "args"; if there is no value for
   ;; "opt" return "default" if provided, otherwise raise an error.
@@ -50,6 +51,9 @@
 (setq user-emacs-directory (get-option args "package-dir" "~/.org-export"))
 (setq css-url
       (get-option args "css-url" "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"))
+
+;; optional name of file to embed in output file
+(setq css-file (get-option args "css-file" ""))
 
 (message (format "using packages in %s" user-emacs-directory))
 
@@ -185,11 +189,26 @@ MIN-VERSION should be a version list."
 ;; org-mode configuration...
 
 ;; required for bootstrap
+(beginning-of-buffer)
 (while (search-forward "<body>" nil t)
   (replace-match "<body class=\"container\">"))
 
+(beginning-of-buffer)
 (while (search-forward "<table>" nil t)
   (replace-match "<table class=\"table table-striped table-bordered table-condensed\">"))
+
+;; embed contents of css-file if provided
+(unless (string= css-file "")
+    (let ((script-start "<script type=\"text/javascript\">")
+	  (css-file-contents (with-temp-buffer
+			       (insert-file-contents css-file)
+			       (buffer-string))))
+      (beginning-of-buffer)
+      (while (search-forward script-start nil t)
+	(replace-match
+	 (concat "<style type=\"text/css\">\n"
+		 css-file-contents "</style>\n" script-start) t t)
+	)))
 
 (write-file outfile)
 
