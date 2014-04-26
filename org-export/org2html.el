@@ -1,4 +1,4 @@
-#!emacs --script
+#!/usr/bin/env emacs --script
 
 ;; Export an org-mode file to html
 ;;
@@ -9,18 +9,18 @@
 ;; functions for processing command line arguments
 ;; http://ergoemacs.org/emacs/elisp_hash_table.html
 (defun is-option (str)
-  ;; return true if string looks like a command line option
+  "Return true if string looks like a command line option"
   (string-equal (substring str 0 1) "-"))
 
 ;; TODO - make optional without requiring a default
 (defun get-option (args opt &optional default)
-  ;; Return the value of "opt" from "args"; if there is no value for
-  ;; "opt" return "default" if provided, otherwise raise an error.
+  "Return the value of 'opt' from 'args'; if there is no value for
+  'opt' return 'default' if provided, otherwise raise an error."
   (or (or (gethash opt args) default)
       (error (format "Error: option -%s is required" opt))))
 
 (defun replace-all (from-str to-str)
-  ;; replace all occurrences of from-str with to-str
+  "Replace all occurrences of from-str with to-str"
   (progn
     (beginning-of-buffer)
     (while (search-forward from-str nil t)
@@ -50,7 +50,7 @@
 ;; package data
 (setq user-emacs-directory (get-option args "package-dir" "~/.org-export"))
 (setq css-url
-      (get-option args "css-url" "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"))
+      (get-option args "css-url" "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"))
 
 ;; optional name of file to embed in output file
 (setq css-file (get-option args "css-file" ""))
@@ -68,8 +68,8 @@
 	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
 
 (defun package-installed-not-builtin-p (package &optional min-version)
-  "Return true if PACKAGE, of MIN-VERSION or newer, is installed, ignoring built in packages.
-MIN-VERSION should be a version list."
+  "Return true if PACKAGE, of MIN-VERSION or newer, is installed,
+   ignoring built in packages.  MIN-VERSION should be a version list."
   (let ((pkg-desc (assq package package-alist)))
     (if pkg-desc
         (version-list-<= min-version
@@ -79,8 +79,8 @@ MIN-VERSION should be a version list."
 (defvar package-my-package-list '(ess htmlize org))
 
 (defun package-install-list (package-list)
-  ;; Install each package named in "package-list" using elpa if not
-  ;; already installed.
+  "Install each package named in 'package-list' using elpa if not
+  already installed."
   (while package-list
     (setq pkg (car package-list))
     (unless (package-installed-not-builtin-p pkg)
@@ -88,10 +88,10 @@ MIN-VERSION should be a version list."
       (package-install pkg))
     (setq package-list (cdr package-list)))
   ;; (message "done installing packages")
-)
+  )
 
 (defun package-install-my-packages ()
-  ;; Interactively installs packages listed in global 'package-my-package-list'
+  "Interactively installs packages listed in global 'package-my-package-list'"
   (interactive)
   (package-list-packages-no-fetch)
   (package-install-list package-my-package-list))
@@ -189,26 +189,22 @@ MIN-VERSION should be a version list."
 ;; org-mode configuration...
 
 ;; required for bootstrap
-(beginning-of-buffer)
-(while (search-forward "<body>" nil t)
-  (replace-match "<body class=\"container\">"))
-
-(beginning-of-buffer)
-(while (search-forward "<table>" nil t)
-  (replace-match "<table class=\"table table-striped table-bordered table-condensed\">"))
+(replace-all "<body>" "<body class=\"container\">")
+(replace-all
+ "<table>"
+ "<table class=\"table table-striped table-bordered table-condensed\"
+         style=\"width: auto;\">")
 
 ;; embed contents of css-file if provided
 (unless (string= css-file "")
-    (let ((script-start "<script type=\"text/javascript\">")
-	  (css-file-contents (with-temp-buffer
-			       (insert-file-contents css-file)
-			       (buffer-string))))
-      (beginning-of-buffer)
-      (while (search-forward script-start nil t)
-	(replace-match
-	 (concat "<style type=\"text/css\">\n"
-		 css-file-contents "</style>\n" script-start) t t)
-	)))
+  (let ((script-start "<script type=\"text/javascript\">")
+	(css-file-contents (with-temp-buffer
+			     (insert-file-contents css-file)
+			     (buffer-string))))
+    (replace-all script-start
+		 (concat
+		  "<style type=\"text/css\">\n" css-file-contents "</style>\n"
+		  script-start))))
 
 (write-file outfile)
 
