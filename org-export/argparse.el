@@ -1,76 +1,88 @@
 (setq lexical-binding t)
 (provide 'argparse)
 
-;; TODO - make optional without requiring a default
-(defun get-option (args opt &optional default)
-  "Return the value of 'opt' from 'args'; if there is no value for
-  'opt' return 'default' if provided, otherwise raise an error."
-  (or (or (gethash opt args) default)
-      (error (format "Error: option -%s is required" opt))))
-
-(print command-line-args)
-
 (defun argparse-do-nothing () t)
 
 (defun argparse-option-p (str)
   "Return t if str is not nil and starts with '--'"
-  (string-equal (substring str 0 2) "--"))
+  (and str (string-equal (substring str 0 2) "--")))
 
 (defun argparse-get-name (str)
   "Return the option name (strips leading '--')"
   (substring str 2 nil))
 
-(defun argparse-parse-args (options-alist)
-  ;; allow arbitrary command line arguments by defining
-  ;; `command-line-functions` globally (Warning: side effect!)
+(defun argparse-required-p (optdef)
+  "Return t if the option defined in `optdef` (an element of
+`options-alist') is required."
+  (eq (length optdef) 2)
+  )
+
+(defun argparse-parse-args (options-alist &optional arguments)
+  "Parses a list of arguments according to the specifiction
+provided by `options-alist' and returns a hashmap of option names
+to values. Arguments are read from `command-line-args' unless an
+optional list `arguments' is provided.
+
+`options-alist' is of the form
+
+'((required-option help-text)
+  (option help-text default-value)
+  (boolean-option help_text nil))
+
+Each option must be a string beginning with '--'. If
+default-value is not provided, the option is required and an
+error will be raised if it is missing.
+
+Arguments are of the form '--option <value>'. If 'value' is
+missing and a default value is defined, 'option' will be given a
+value of t (this is useful for defining boolean command line
+parameters).
+
+Note that this function has a side effect: arbitrary command line
+arguments are allowed by assigning `command-line-functions` a
+value of `argparse-do-nothing'.
+"
+
   (setq command-line-functions '(argparse-do-nothing))
-  (let ((clargs command-line-args)
+  (let ((clargs (or arguments command-line-args))
 	(args (make-hash-table :test 'equal))
 	(opt nil)
 	(optname nil)
-	(val nil))
+	(optiondef nil)
+	(val nil)
+	(hashval nil))
 
     ;; set defaults
     (mapc #'(lambda (optdef)
-	      (if (nth 2 optdef)
+	      (if (eq (length optdef) 3)
 		  (puthash (argparse-get-name (car optdef)) (nth 2 optdef) args))
 	      ) options-alist)
 
-    ;; define options from command line arguments
+    ;; set options from command line arguments
     (while clargs
       (setq opt (car clargs))
       (setq optname (if (argparse-option-p opt) (argparse-get-name opt)))
-      (setq val (car (cdr clargs)))
       (if optname
 	  (progn
-	    ;; unless instead of or?
-	    (unless (assoc opt options-alist)
-		(error (format "Error: option '%s' is not defined" opt)))
-	    (puthash
-	     optname (if (or (eq val nil) (argparse-option-p val)) t val) args)))
+	    (setq optiondef (assoc opt options-alist))
+	    (if optiondef
+		;; If val is provided, add it to args. Otherwise,
+		;; store a value of t unless the option is required.
+		(progn
+		  (unless (argparse-option-p (nth 1 clargs)) (setq val (nth 1 clargs)))
+		  (if (not (argparse-required-p optiondef)) (setq val (or val t)))
+		  (puthash optname val args))
+	      (error (format "Error: the option '%s' is not defined." opt)))
+	    ))
       (setq clargs (cdr clargs)))
 
     ;; check for required arguments
     (mapc #'(lambda (optdef)
-	      (unless (gethash (argparse-get-name (car optdef)) args)
-		(error (format "Error: option '%s' is required" (car optdef))))
+	      (setq hashval (gethash (argparse-get-name (car optdef)) args))
+	      (if (and (eq (length optdef) 2) (not hashval))
+		  (error (format "Error: a value for the option '%s' is required."
+				 (car optdef))))
 	      ) options-alist)
 
     args
     ))
-
-;; (setq argmap (argparse-parse-args))
-
-;; store option, value pairs in hash-map `args`
-;; http://ergoemacs.org/emacs/elisp_hash_table.html
-;; (defvar args (make-hash-table :test 'equal))
-
-;; process command-line-args
-;; (setq clargs command-line-args)
-;; (while clargs
-;;   (setq opt (car clargs))
-;;   (setq val (car (cdr clargs)))
-;;   (if (and (is-option opt) (not (is-option val)))
-;;       (puthash (substring opt 1 nil) val args))
-;;   (setq clargs (cdr clargs)))
-
