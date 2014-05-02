@@ -7,11 +7,15 @@
 ;; (print args)
 
 (setq options-alist
-      '(("infile" "foo")
-	("--outfile" "bar")
-	("--buh"))
+      '(("--infile" "input file")
+	("--outfile" "output file")
+	("--foo" "an argument named foo" "bar"))
       )
 
-(print options-alist)
-(print (cdr (assoc "--outfile" options-alist)))
-(print (assoc "--buh" options-alist))
+;; (print options-alist)
+;; (print (cdr (assoc "--outfile" options-alist)))
+;; (print (assoc "--buh" options-alist))
+
+(print (argparse-parse-args options-alist))
+
+

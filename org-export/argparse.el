@@ -16,20 +16,24 @@
 
 (defun argparse-do-nothing () t)
 
-(defun argparse-parse-args ()
+(defun argparse-parse-args (options-alist)
   ;; allow arbitrary command line arguments by defining
-  ;; `command-line-functions` globally. (side effect warning!)
+  ;; `command-line-functions` globally (Warning: side effect!)
   (setq command-line-functions '(argparse-do-nothing))
   (let ((clargs command-line-args)
 	(args (make-hash-table :test 'equal))
 	(opt nil)
-	(val nil))
+	(val nil)
+	(argdef nil))
     (while clargs
       (setq opt (car clargs))
       (setq val (car (cdr clargs)))
       (if (is-option opt)
-	  (puthash
-	   (substring opt 2 nil) (if (or (equal val nil) (is-option val)) t val) args))
+	  (progn
+	    (setq argdef (or (assoc opt options-alist)
+		(error (format "Error: option %s is not defined" opt))))
+	    (puthash
+	     (substring opt 2 nil) (if (or (eq val nil) (is-option val)) t val) args)))
       (setq clargs (cdr clargs)))
     args
     ))
