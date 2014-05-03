@@ -1,6 +1,6 @@
-(require 'argparse (concat (file-name-directory load-file-name) "argparse.el"))
+(require 'cli (concat (file-name-directory load-file-name) "cli.el"))
 
-(byte-compile-file (concat (file-name-directory load-file-name) "argparse.el"))
+(byte-compile-file (concat (file-name-directory load-file-name) "cli.el"))
 
 ;; get command line options
 ;; (setq infile (get-option args "infile"))
@@ -16,10 +16,11 @@
 	("--baz" "make baz true" nil)
 	))
 
-;; (print (describe-function 'argparse-parse-args))
+;; (print (describe-function 'cli-parse-args))
 
-(print (argparse-parse-args options-alist))
-;; (print (argparse-parse-args options-alist '("--infile" "FOO" "--outfile" "BAR")))
+(setq args (cli-parse-args options-alist))
+(print args)
+;; (print (cli-parse-args options-alist '("--infile" "FOO" "--outfile" "BAR")))
 
 
 

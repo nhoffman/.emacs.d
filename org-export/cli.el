@@ -1,23 +1,23 @@
 (setq lexical-binding t)
-(provide 'argparse)
+(provide 'cli)
 
-(defun argparse-do-nothing () t)
+(defun cli-do-nothing () t)
 
-(defun argparse-option-p (str)
+(defun cli-option-p (str)
   "Return t if str is not nil and starts with '--'"
   (and str (string-equal (substring str 0 2) "--")))
 
-(defun argparse-get-name (str)
+(defun cli-get-name (str)
   "Return the option name (strips leading '--')"
   (substring str 2 nil))
 
-(defun argparse-required-p (optdef)
+(defun cli-required-p (optdef)
   "Return t if the option defined in `optdef` (an element of
 `options-alist') is required."
   (eq (length optdef) 2)
   )
 
-(defun argparse-parse-args (options-alist &optional arguments)
+(defun cli-parse-args (options-alist &optional arguments)
   "Parses a list of arguments according to the specifiction
 provided by `options-alist' and returns a hashmap of option names
 to values. Arguments are read from `command-line-args' unless an
@@ -40,10 +40,10 @@ parameters).
 
 Note that this function has a side effect: arbitrary command line
 arguments are allowed by assigning `command-line-functions` a
-value of `argparse-do-nothing'.
+value of `cli-do-nothing'.
 "
 
-  (setq command-line-functions '(argparse-do-nothing))
+  (setq command-line-functions '(cli-do-nothing))
   (let ((clargs (or arguments command-line-args))
 	(args (make-hash-table :test 'equal))
 	(opt nil)
@@ -55,13 +55,13 @@ value of `argparse-do-nothing'.
     ;; set defaults
     (mapc #'(lambda (optdef)
 	      (if (eq (length optdef) 3)
-		  (puthash (argparse-get-name (car optdef)) (nth 2 optdef) args))
+		  (puthash (cli-get-name (car optdef)) (nth 2 optdef) args))
 	      ) options-alist)
 
     ;; set options from command line arguments
     (while clargs
       (setq opt (car clargs))
-      (setq optname (if (argparse-option-p opt) (argparse-get-name opt)))
+      (setq optname (if (cli-option-p opt) (cli-get-name opt)))
       (if optname
 	  (progn
 	    (setq optiondef (assoc opt options-alist))
@@ -69,8 +69,8 @@ value of `argparse-do-nothing'.
 		;; If val is provided, add it to args. Otherwise,
 		;; store a value of t unless the option is required.
 		(progn
-		  (unless (argparse-option-p (nth 1 clargs)) (setq val (nth 1 clargs)))
-		  (if (not (argparse-required-p optiondef)) (setq val (or val t)))
+		  (unless (cli-option-p (nth 1 clargs)) (setq val (nth 1 clargs)))
+		  (if (not (cli-required-p optiondef)) (setq val (or val t)))
 		  (puthash optname val args))
 	      (error (format "Error: the option '%s' is not defined." opt)))
 	    ))
@@ -78,7 +78,7 @@ value of `argparse-do-nothing'.
 
     ;; check for required arguments
     (mapc #'(lambda (optdef)
-	      (setq hashval (gethash (argparse-get-name (car optdef)) args))
+	      (setq hashval (gethash (cli-get-name (car optdef)) args))
 	      (if (and (eq (length optdef) 2) (not hashval))
 		  (error (format "Error: a value for the option '%s' is required."
 				 (car optdef))))
