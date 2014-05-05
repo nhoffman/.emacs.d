@@ -126,3 +126,8 @@ already installed."
 	(package-menu-execute)))
   (cli-install-packages package-list))
 
+(defun cli-replace-all (from-str to-str)
+  "Replace all occurrences of from-str with to-str in current buffer"
+  (beginning-of-buffer)
+  (while (search-forward from-str nil t)
+    (replace-match to-str nil t)))

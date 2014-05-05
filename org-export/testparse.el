@@ -1,10 +1,6 @@
-(require 'cli (concat (file-name-directory load-file-name) "cli.el"))
+#!/usr/bin/env emacs --script
 
-(defun replace-all (from-str to-str)
-  "Replace all occurrences of from-str with to-str in current buffer"
-  (beginning-of-buffer)
-  (while (search-forward from-str nil t)
-    (replace-match to-str nil t)))
+(require 'cli (concat (file-name-directory load-file-name) "cli.el"))
 
 ;; (byte-compile-file (concat (file-name-directory load-file-name) "cli.el"))
 (setq options-alist
@@ -74,8 +70,8 @@
 	     (setq org-confirm-babel-evaluate nil)
 	     (setq org-export-allow-BIND 1)
 	     ;; (setq org-export-preserve-breaks t)
-	     (setq org-export-with-sub-superscripts nil)
-	     (setq org-export-with-section-numbers nil)
+	     ;; (setq org-export-with-sub-superscripts nil)
+	     ;; (setq org-export-with-section-numbers nil)
 	     (setq org-html-doctype "html5")
 	     (setq org-html-head my-html-head)
 	     ;; (setq org-html-head-extra my-html-head-extra)
@@ -124,8 +120,8 @@
 ;; replacement as necessary.
 (if (getopt "bootstrap")
     (progn
-      (replace-all "<body>" "<body class=\"container\">")
-      (replace-all
+      (cli-replace-all "<body>" "<body class=\"container\">")
+      (cli-replace-all
        "<table>"
        "<table class=\"table table-striped table-bordered table-condensed\"
          style=\"width: auto;\">")))
