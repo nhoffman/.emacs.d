@@ -1328,6 +1328,26 @@ Buffers opened from command line don't create new frame
 (setq ns-pop-up-frames nil)
 #+END_SRC
 
+* lockstep
+
+Lockstep is a package for pair programming in Emacs. See https://github.com/tjim/lockstep
+
+Installation:
+
+#+BEGIN_SRC sh :eval no
+wget -N https://github.com/tjim/lockstep/archive/master.zip
+unzip master.zip lockstep-master/lockstep.el
+mv lockstep-master/lockstep.el .
+rm -r lockstep-master master.zip
+#+END_SRC
+
+#+BEGIN_SRC elisp :tangle init.el
+(require 'lockstep)
+#+END_SRC
+
+To use, attach emacsclient to a running emacs server and evaluate =M-x lockstep=.
+After this, a second user can do the same.
+
 * enable commands
 
 #+BEGIN_SRC elisp :tangle init.el
