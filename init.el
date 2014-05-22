@@ -493,6 +493,14 @@ Assumes that the frame is only split into two."
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
 
+(defun scons-insert-command ()
+  (interactive)
+  (insert "output, = env.Command(
+    target=,
+    source=,
+    action=('')
+)"))
+
 (add-hook 'text-mode-hook
           '(lambda ()
              ;; (longlines-mode)
@@ -734,6 +742,8 @@ following line."
   (error (message "** could not load elisp-format")))
 
 (setq ns-pop-up-frames nil)
+
+(require 'lockstep)
 
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)

@@ -945,6 +945,20 @@ Install python requirements:
 (setq jedi:complete-on-dot t)
 #+END_SRC
 
+* scons
+
+I should really start using a snippet package, but for now:
+
+#+BEGIN_SRC elisp :tangle init.el
+(defun scons-insert-command ()
+  (interactive)
+  (insert "output, = env.Command(
+    target=,
+    source=,
+    action=('')
+)"))
+#+END_SRC
+
 * text-mode
 
 #+BEGIN_SRC elisp :tangle init.el
