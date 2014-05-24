@@ -748,7 +748,7 @@ following line."
 (autoload
   'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode"
   t)
-(define-key global-map (kbd "M-C-'") 'ace-jump-mode)
+(define-key global-map (kbd "M-'") 'ace-jump-mode)
 
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)

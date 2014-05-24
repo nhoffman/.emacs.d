@@ -1364,7 +1364,7 @@ After this, a second user can do the same.
 
 * ace-jump-mode
 
-A quick cursor location minor mode for emacs. I picked =M-C-'= as the
+A quick cursor location minor mode for emacs. I picked =M-'= as the
 key combo for activation.
 
 Installation (not on ELPA, alas):
@@ -1380,7 +1380,7 @@ Activation
 (autoload
   'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode"
   t)
-(define-key global-map (kbd "M-C-'") 'ace-jump-mode)
+(define-key global-map (kbd "M-'") 'ace-jump-mode)
 #+END_SRC
 
 * enable commands
