@@ -745,9 +745,9 @@ following line."
 
 (require 'lockstep)
 
-(autoload
-  'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode"
-  t)
+;; (autoload
+;;   'ace-jump-mode "~/.emacs.d/ace-jump-mode.el" "Emacs quick move minor mode" t)
+(require 'ace-jump-mode)
 (define-key global-map (kbd "M-'") 'ace-jump-mode)
 
 (put 'downcase-region 'disabled nil)

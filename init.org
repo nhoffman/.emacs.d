@@ -1370,16 +1370,14 @@ key combo for activation.
 Installation (not on ELPA, alas):
 
 #+BEGIN_SRC sh :eval no :exports code
-wget -q \ https://raw.githubusercontent.com/winterTTr/ace-jump-mode/master/ace-jump-mode.el \
--O ~/.emacs.d/ace-jump-mode.el
+wget -q https://raw.githubusercontent.com/winterTTr/ace-jump-mode/master/ace-jump-mode.el -O ~/.emacs.d/ace-jump-mode.el
 #+END_SRC
 
 Activation
 
 #+BEGIN_SRC elisp :tangle init.el
 (autoload
-  'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode"
-  t)
+  'ace-jump-mode "~/.emacs.d/ace-jump-mode.el" "Emacs quick move minor mode" t)
 (define-key global-map (kbd "M-'") 'ace-jump-mode)
 #+END_SRC
 
