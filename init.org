@@ -129,6 +129,8 @@ Add some extra package repositories. The default value of package-archives is
        '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (add-to-list 'package-archives
        '("org" . "http://orgmode.org/elpa/") t)
+  (add-to-list 'package-archives
+       '("elpy" . "http://jorgenschaefer.github.io/packages/") t)
   )
 #+END_SRC
 
@@ -160,20 +162,21 @@ been loaded since emacs was first started.
   (defvar package-my-package-list
     '(auctex
       edit-server
+      elpy
       ess
-      flymake-cursor
-      flycheck
-      flycheck-color-mode-line
+      ;; flymake-cursor
+      ;; flycheck
+      ;; flycheck-color-mode-line
       gist
       htmlize
-      jedi
+      ;; jedi
       jinja2-mode
       magit
       markdown-mode
       moinmoin-mode
       org
-      python-pylint
-      projectile
+      ;; python-pylint
+      ;; projectile
       rainbow-delimiters
       yaml-mode))
 
@@ -796,7 +799,7 @@ deleting a single character.
 
 Make indentation more compliant with pep8 (see http://stackoverflow.com/revisions/5361478/2)
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp :tangle inactive.el
   (defadvice python-calculate-indentation (around outdent-closing-brackets)
     "Handle lines beginning with a closing bracket and indent them so that
     they line up with the line containing the corresponding opening bracket."
@@ -872,7 +875,7 @@ installed.
 
 See https://github.com/arcthur/.emacs.d/blob/master/extensions/init-flycheck.el
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp :tangle inactive.el
 (add-hook 'flycheck-mode-hook
           '(lambda ()
              (setq flycheck-highlighting-mode 'lines)
@@ -902,7 +905,7 @@ cat ~/.emacs.d/bin/pychecker
 Error codes are listed here: http://pep8.readthedocs.org/en/latest/intro.html#error-codes
 
 And some configuration:
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp :tangle inactive.el
   (require 'flymake)
 
   ;; TODO - first check if flymake-cursor is installed
@@ -929,6 +932,22 @@ And some configuration:
   ;; (add-hook 'python-mode-hook 'flymake-mode)
 #+END_SRC
 
+** elpy
+
+- Installation :: https://github.com/jorgenschaefer/elpy/wiki/Installation
+
+#+BEGIN_SRC elisp :tangle init.el
+(elpy-enable)
+#+END_SRC
+
+** Quick and dirty installation of all python dependencies
+
+#+BEGIN_SRC sh :eval no
+pip install -U -r <(curl https://raw.githubusercontent.com/jorgenschaefer/elpy/master/requirements.txt)
+pip install -U elpy
+pip install -U autopep8
+#+END_SRC
+
 ** jedi
 
 Python auto-completion with Jedi (http://tkf.github.io/emacs-jedi/)
@@ -939,7 +958,7 @@ Install python requirements:
 
 : pip install -r $(ls .emacs.d/elpa/jedi-*/requirements.txt)
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp :tangle inactive.el
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
@@ -1138,7 +1157,7 @@ Basic key bindings (see the url above for a complete list).
 | C-c p f    | Display a list of all files in the project.       |
 | C-c p d    | Display a list of all directories in the project. |
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp :tangle inactive.el
 (if (package-installed-p 'projectile)
     (projectile-global-mode))
 #+END_SRC

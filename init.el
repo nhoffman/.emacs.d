@@ -40,6 +40,8 @@
        '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (add-to-list 'package-archives
        '("org" . "http://orgmode.org/elpa/") t)
+  (add-to-list 'package-archives
+       '("elpy" . "http://jorgenschaefer.github.io/packages/") t)
   )
 
 (defun package-installed-not-builtin-p (package &optional min-version)
@@ -61,20 +63,21 @@
 (defvar package-my-package-list
   '(auctex
     edit-server
+    elpy
     ess
-    flymake-cursor
-    flycheck
-    flycheck-color-mode-line
+    ;; flymake-cursor
+    ;; flycheck
+    ;; flycheck-color-mode-line
     gist
     htmlize
-    jedi
+    ;; jedi
     jinja2-mode
     magit
     markdown-mode
     moinmoin-mode
     org
-    python-pylint
-    projectile
+    ;; python-pylint
+    ;; projectile
     rainbow-delimiters
     yaml-mode))
 
@@ -410,25 +413,6 @@ Assumes that the frame is only split into two."
 
 (setq backward-delete-char-untabify-method "all")
 
-(defadvice python-calculate-indentation (around outdent-closing-brackets)
-  "Handle lines beginning with a closing bracket and indent them so that
-  they line up with the line containing the corresponding opening bracket."
-  (save-excursion
-    (beginning-of-line)
-    (let ((syntax (syntax-ppss)))
-      (if (and (not (eq 'string (syntax-ppss-context syntax)))
-               (python-continuation-line-p)
-               (cadr syntax)
-               (skip-syntax-forward "-")
-               (looking-at "\\s)"))
-          (progn
-            (forward-char 1)
-            (ignore-errors (backward-sexp))
-            (setq ad-return-value (current-indentation)))
-        ad-do-it))))
-
-(ad-activate 'python-calculate-indentation)
-
 (defun p8 ()
   "Apply autopep8 to the current region or buffer"
   (interactive)
@@ -457,41 +441,7 @@ Assumes that the frame is only split into two."
     (ediff-buffers (current-buffer) p8-output)
     ))
 
-(add-hook 'flycheck-mode-hook
-          '(lambda ()
-             (setq flycheck-highlighting-mode 'lines)
-             (flycheck-color-mode-line-mode)
-             )
-          )
-
-(require 'flymake)
-
-;; TODO - first check if flymake-cursor is installed
-(condition-case nil
-    (load-library "flymake-cursor") ;; install from elpa
-      (error (message "** flymake-cursor not installed")))
-
-;; 'pychecker' script above installed in ~/.emacs.d/bin
-(setq pycodechecker "pychecker")
-
-(when (load "flymake" t)
-  (defun flymake-pycodecheck-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list pycodechecker (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pycodecheck-init))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("SCons" flymake-pycodecheck-init)))
-
-;; (add-hook 'python-mode-hook 'flymake-mode)
-
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:setup-keys t)
-(setq jedi:complete-on-dot t)
+(elpy-enable)
 
 (defun scons-insert-command ()
   (interactive)
@@ -618,9 +568,6 @@ Assumes that the frame is only split into two."
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 
-(if (package-installed-p 'projectile)
-    (projectile-global-mode))
-
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (setq ido-use-virtual-buffers t)
@@ -745,9 +692,8 @@ following line."
 
 (require 'lockstep)
 
-;; (autoload
-;;   'ace-jump-mode "~/.emacs.d/ace-jump-mode.el" "Emacs quick move minor mode" t)
-(require 'ace-jump-mode)
+(autoload
+  'ace-jump-mode "~/.emacs.d/ace-jump-mode.el" "Emacs quick move minor mode" t)
 (define-key global-map (kbd "M-'") 'ace-jump-mode)
 
 (put 'downcase-region 'disabled nil)
