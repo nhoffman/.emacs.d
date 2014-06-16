@@ -441,7 +441,9 @@ Assumes that the frame is only split into two."
     (ediff-buffers (current-buffer) p8-output)
     ))
 
-(elpy-enable)
+(condition-case nil
+    (elpy-enable)
+  (error (message "** could not enable elpy")))
 
 (defun scons-insert-command ()
   (interactive)

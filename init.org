@@ -937,15 +937,17 @@ And some configuration:
 - Installation :: https://github.com/jorgenschaefer/elpy/wiki/Installation
 
 #+BEGIN_SRC elisp :tangle init.el
-(elpy-enable)
+  (condition-case nil
+      (elpy-enable)
+    (error (message "** could not enable elpy")))
 #+END_SRC
 
 ** Quick and dirty installation of all python dependencies
 
 #+BEGIN_SRC sh :eval no
-pip install -U -r <(curl https://raw.githubusercontent.com/jorgenschaefer/elpy/master/requirements.txt)
-pip install -U elpy
-pip install -U autopep8
+pip install -U -r \
+<(curl --silent https://raw.githubusercontent.com/jorgenschaefer/elpy/master/requirements.txt && \
+cat requirements.txt)
 #+END_SRC
 
 ** jedi
