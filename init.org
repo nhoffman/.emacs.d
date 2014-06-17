@@ -937,7 +937,9 @@ And some configuration:
 - Installation :: https://github.com/jorgenschaefer/elpy/wiki/Installation
 
 #+BEGIN_SRC elisp :tangle init.el
-(elpy-enable)
+(condition-case nil
+    (elpy-enable) ;; install from elpa
+  (error (message "** could not enable elpy")))
 #+END_SRC
 
 ** Quick and dirty installation of all python dependencies
