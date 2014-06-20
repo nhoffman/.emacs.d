@@ -768,7 +768,7 @@ Installed using elpa.
 
 - http://jesselegg.com/archives/2010/02/25/emacs-python-programmers-part-1/
 
-Hooks
+** hooks
 
 #+BEGIN_SRC elisp :tangle init.el
   (add-hook 'python-mode-hook
@@ -779,6 +779,7 @@ Hooks
                (setq py-indent-offset tab-width)
                (setq py-smart-indentation t)
                (define-key python-mode-map "\C-m" 'newline-and-indent)
+               (setq python-check-command "~/.emacs.d/bin/pychecker")
                ))
 #+END_SRC
 
@@ -898,6 +899,7 @@ Requirements:
 - "~/.emacs.d/bin/pychecker", a script that will execute pyflakes and
   pep8 (note that "~/.emacs.d/bin" has been added to "exec-path"
   above):
+
 #+BEGIN_SRC sh :exports both :results output
 cat ~/.emacs.d/bin/pychecker
 #+END_SRC
@@ -935,6 +937,7 @@ And some configuration:
 ** elpy
 
 - Installation :: https://github.com/jorgenschaefer/elpy/wiki/Installation
+- note that =python-check-command= (set in python hooks above) defines the program used by =elpy-check=
 
 #+BEGIN_SRC elisp :tangle init.el
 (elpy-enable)
