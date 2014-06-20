@@ -405,6 +405,7 @@ Assumes that the frame is only split into two."
              (setq py-indent-offset tab-width)
              (setq py-smart-indentation t)
              (define-key python-mode-map "\C-m" 'newline-and-indent)
+             (setq python-check-command "~/.emacs.d/bin/pychecker")
              ))
 
 (push '("SConstruct" . python-mode) auto-mode-alist)
