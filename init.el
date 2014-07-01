@@ -192,7 +192,9 @@
 
 (fix-frame)
 
-(add-hook 'server-visit-hook 'fix-frame)
+(add-hook 'server-visit-hook
+          '(lambda ()
+             (fix-frame)))
 
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; number of lines at a time
 (setq mouse-wheel-progressive-speed nil)            ;; don't accelerate scrolling
@@ -319,7 +321,9 @@ Assumes that the frame is only split into two."
 (add-hook 'org-mode-hook
           '(lambda ()
              (message "Loading org-mode hooks")
-             (turn-on-font-lock)
+             ;; (font-lock-mode)
+             (setq org-confirm-babel-evaluate nil)
+             (setq org-src-fontify-natively t)
              (define-key org-mode-map (kbd "M-<right>") 'forward-word)
              (define-key org-mode-map (kbd "M-<left>") 'backward-word)
              ;; provides key mapping for the above; replaces default
@@ -338,19 +342,15 @@ Assumes that the frame is only split into two."
                 (sqlite . t)
                 (pygment . t)
                 ))
-             (defun org-with-silent-modifications(&rest args)
-               "Replaces function causing error on org-export"
-               (message "Using fake 'org-with-silent-modifications'"))
+             ;; (defun org-with-silent-modifications(&rest args)
+             ;;   "Replaces function causing error on org-export"
+             ;;   (message "Using fake 'org-with-silent-modifications'"))
              (defadvice org-todo-list (after org-todo-list-bottom ())
                "Move to bottom of page after entering org-todo-list"
                (progn (end-of-buffer) (recenter-top-bottom)))
              (ad-activate 'org-todo-list)
              )
           )
-
-(custom-set-variables
- '(org-confirm-babel-evaluate nil)
- '(org-src-fontify-natively t))
 
 (setq org-agenda-files (list "~/Dropbox/notes/index.org"))
 (push '("\\.org\\'" . org-mode) auto-mode-alist)
@@ -702,6 +702,9 @@ following line."
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+
+(custom-set-variables
+  '(safe-local-variable-values (quote ((toggle-read-only . t)))))
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
