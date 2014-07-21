@@ -384,7 +384,9 @@ Apply above settings on startup
 TODO - not sure why this doesn't seem to take effect on frame creation
 
 #+BEGIN_SRC elisp :tangle init.el
-(add-hook 'server-visit-hook 'fix-frame)
+  (add-hook 'server-visit-hook
+            '(lambda ()
+               (fix-frame)))
 #+END_SRC
 
 * Scrolling
@@ -638,7 +640,9 @@ org-mode hooks
   (add-hook 'org-mode-hook
             '(lambda ()
                (message "Loading org-mode hooks")
-               (turn-on-font-lock)
+               ;; (font-lock-mode)
+               (setq org-confirm-babel-evaluate nil)
+               (setq org-src-fontify-natively t)
                (define-key org-mode-map (kbd "M-<right>") 'forward-word)
                (define-key org-mode-map (kbd "M-<left>") 'backward-word)
                ;; provides key mapping for the above; replaces default
@@ -657,19 +661,15 @@ org-mode hooks
                   (sqlite . t)
                   (pygment . t)
                   ))
-               (defun org-with-silent-modifications(&rest args)
-                 "Replaces function causing error on org-export"
-                 (message "Using fake 'org-with-silent-modifications'"))
+               ;; (defun org-with-silent-modifications(&rest args)
+               ;;   "Replaces function causing error on org-export"
+               ;;   (message "Using fake 'org-with-silent-modifications'"))
                (defadvice org-todo-list (after org-todo-list-bottom ())
                  "Move to bottom of page after entering org-todo-list"
                  (progn (end-of-buffer) (recenter-top-bottom)))
                (ad-activate 'org-todo-list)
                )
             )
-
-  (custom-set-variables
-   '(org-confirm-babel-evaluate nil)
-   '(org-src-fontify-natively t))
 
   (setq org-agenda-files (list "~/Dropbox/notes/index.org"))
   (push '("\\.org\\'" . org-mode) auto-mode-alist)
@@ -768,7 +768,7 @@ Installed using elpa.
 
 - http://jesselegg.com/archives/2010/02/25/emacs-python-programmers-part-1/
 
-Hooks
+** hooks
 
 #+BEGIN_SRC elisp :tangle init.el
   (add-hook 'python-mode-hook
@@ -779,6 +779,7 @@ Hooks
                (setq py-indent-offset tab-width)
                (setq py-smart-indentation t)
                (define-key python-mode-map "\C-m" 'newline-and-indent)
+               (setq python-check-command "~/.emacs.d/bin/pychecker")
                ))
 #+END_SRC
 
@@ -898,6 +899,7 @@ Requirements:
 - "~/.emacs.d/bin/pychecker", a script that will execute pyflakes and
   pep8 (note that "~/.emacs.d/bin" has been added to "exec-path"
   above):
+
 #+BEGIN_SRC sh :exports both :results output
 cat ~/.emacs.d/bin/pychecker
 #+END_SRC
@@ -935,11 +937,12 @@ And some configuration:
 ** elpy
 
 - Installation :: https://github.com/jorgenschaefer/elpy/wiki/Installation
+- note that =python-check-command= (set in python hooks above) defines the program used by =elpy-check=
 
 #+BEGIN_SRC elisp :tangle init.el
-  (condition-case nil
-      (elpy-enable)
-    (error (message "** could not enable elpy")))
+(condition-case nil
+    (elpy-enable) ;; install from elpa
+  (error (message "** could not enable elpy")))
 #+END_SRC
 
 ** Quick and dirty installation of all python dependencies
@@ -1408,6 +1411,15 @@ Activation
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+#+END_SRC
+* custom-set-variables
+
+Emacs modifies this statement if you use the interactive "customize"
+function, so don't do that.
+
+#+BEGIN_SRC elisp :tangle init.el
+(custom-set-variables
+  '(safe-local-variable-values (quote ((toggle-read-only . t)))))
 #+END_SRC
 
 * License
