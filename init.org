@@ -77,17 +77,6 @@ Wrap text in an elisp code block to be tangled into init.el.
 (global-set-key (kbd "M-C-i") 'init-load)
 #+END_SRC
 
-Tangle to =./init.el= and export html to =gh-pages/index.html=
-
-#+BEGIN_SRC elisp :tangle init.el
-(defun init-compile ()
-  "Tangle init.org and export html"
-  (interactive)
-  (progn
-    (org-babel-tangle)
-    (org-html-export-as-html)
-    (write-file "gh-pages/index.html")))
-#+END_SRC
 * Publishing to gh-pages
 
 Here's how publication of the rendered version of this site to
