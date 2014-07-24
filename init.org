@@ -19,6 +19,18 @@ In a fit of literate programming yak-shaving, I have implemented my emacs config
 (message "loading ~/.emacs.d/init.el")
 #+END_SRC
 
+This will only work with emacs 24.x
+
+#+BEGIN_SRC elisp :tangle init.el
+(unless (= emacs-major-version 24)
+  (error "Emacs version 24 is required"))
+#+END_SRC
+
+* Initial setup
+
+After cloning the repository into your home directory, just a bit of
+setup is required before use.
+
 * Maintaining and using this file
 
 All changes to the configuration should be made within code blocks in
