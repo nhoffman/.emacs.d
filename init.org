@@ -5,7 +5,8 @@
 #+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
 #+STYLE: <link rel="stylesheet" type="text/css" href="./worg.css" />
 #+BIND: org-export-html-postamble nil
-#+BABEL: :results output :exports both
+#+PROPERTY: header-args:elisp :tangle init.el
+#+PROPERTY: header-args:sh :eval no :exports code
 
 In a fit of literate programming yak-shaving, I have implemented my emacs configuration as an org-mode file.
 
@@ -14,7 +15,7 @@ In a fit of literate programming yak-shaving, I have implemented my emacs config
 
 #+TOC: headlines 1
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (message "loading ~/.emacs.d/init.el")
 #+END_SRC
 
@@ -33,7 +34,7 @@ setup is required before first use.
 ** set up a shell environment
 
 This configuration provides some shell functions and aliases (tested
-with bash and zsh) that are useful for using emacs from the shell. In
+with bash and zsh) that are useful for using Emacs from the shell. In
 particular, if you are on a mac and have installed [[http://emacsformacosx.com/][Emacs for OS X]] or
 compiled the Cocoa version, Emacs will be installed to
 =/Applications/Emacs.app/Contents/MacOS/Emacs= and =emacsclient= is
@@ -44,9 +45,9 @@ aliased to =emacs= and =emacsclient=, respectively.
 In addition, there are some functions that simplify running and using
 Emacs in server mode:
 
-- edaemon :: launch the emacs server daemon, removing any locked desktop files.
-- ec :: attach to the emacs server in GUI mode (=emacsclient -c=) in the background.
-- enw :: attach to the emacs server in terminal mode in place (=emacsclient -nw=).
+- edaemon :: launch the Emacs server daemon, removing any locked desktop files.
+- ec :: attach to the Emacs server in GUI mode (=emacsclient -c=) in the background.
+- enw :: attach to the Emacs server in terminal mode in place (=emacsclient -nw=).
 - e :: open a file in an already open window (=emacsclient -n=).
 
 The above functions attempt to use the virtualenv that we'll create in
@@ -69,12 +70,12 @@ fi
 The only required step to use this configuration is to install
 packages from EPLA, the Emacs Lisp Package Archive. See the "ELPA"
 section below for a list of packages installed by this
-configuration. First, launch emacs; I'd recommend launching without
+configuration. First, launch Emacs; I'd recommend launching without
 emacs-desktop, for example =emacs -nw --no-desktop=. From within
-emacs, fetch the list of packages with =M-x
+Emacs, fetch the list of packages with =M-x
 package-list-packages=. Finally, install the specified packages with
 =M-x package-install-my-packages=. At this point it's usually a good
-idea to quit and relaunch emacs.
+idea to quit and relaunch Emacs.
 
 ** create virtualenv
 
@@ -110,67 +111,28 @@ this file. After any changes, this file must be "tangled" to produce
 =init.el=. The elisp version of the configuration is committed to the
 git repository (even though it is a derived file) to make it easier to
 get started when first cloning the repository onto a new system. An
-html-exported version of this file is also published to gh-pages. All
-of this is automated using =scons=. So, to tangle, export, and publish, all that should be required is to type
+html-exported version of this file is also published to GitHub
+pages. All of this is automated using =scons=. The default target is
+=init.el=, so after changing this file, you can compile =init.el= by
+simply typing
 
 : scons
 
-I've also defined some functions to help out:
+If you'd rather tangle the file interactively, use =C-c C-v t=
+(=org-babel-tangle=).
 
-| shortcut  | function               |                                           |
-|-----------+------------------------+-------------------------------------------|
-| C-c i     | init-insert-code-block | markup paragraph at point as a code block |
-| M-C-i     | init-load              | reload init.el                            |
-|           | init-compile           | tangle and export html                    |
-| C-c C-v t | (defined in org-mode)  | tangle this file                          |
+Additional targets include =scons html= to compile =html/index.html=
+and =scons publish= to update the =gh-pages= branch of the repo on
+GitHub.
 
-Wrap text in an elisp code block to be tangled into init.el.
+If you want to reload the init file after a change, here's a function to do so:
 
-#+BEGIN_SRC elisp :tangle init.el
-  (setq init-file-name "init.el")
-  (defun init-insert-code-block ()
-    ;; Insert a code block surrounding the paragraph at point that will
-    ;; be tangled into `init-file-name`.
-    (interactive)
-    (backward-paragraph)
-    (insert (format "\n#+BEGIN_SRC elisp :tangle %s" init-file-name))
-    (forward-paragraph)
-    (insert "#+END_SRC\n"))
-  (global-set-key (kbd "C-c i") 'init-insert-code-block)
-#+END_SRC
-
-(re)load init.el
-
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun init-load ()
   "Load ~/.emacs.d/init.el"
   (interactive)
   (load "~/.emacs.d/init.el"))
 (global-set-key (kbd "M-C-i") 'init-load)
-#+END_SRC
-
-* Publishing to gh-pages
-
-Here's how publication of the rendered version of this site to
-GitHub's gh-pages is set up.
-
-The gh-pages branch is added to the master branch as a submodule
-
-: git submodule add -b gh-pages git@github.com:nhoffman/.emacs.d.git gh-pages
-
-Note that in a new clone, the submodule needs to be initialized.
-
-: git submodule init
-: git submodule update
-
-Ok, I'll say it: git submodules are a pain. The only way I can
-reliably automate the export and publication of the html version of
-this org-mode file is first to fetch the remote gh-pages branch and
-force a reset of the gh-pages submodule before exporting. Then I can
-commit and push. Here's how it looks in the SConstruct file:
-
-#+BEGIN_SRC sh :results output :exports results
-grep -A 30 pull, SConstruct
 #+END_SRC
 
 * ELPA
@@ -179,15 +141,15 @@ Set up and initialize ELPA package manager.
 
 Some useful ELPA variables and functions:
 
-| M-x package-list-packages | open list of packages                                                 |
-| package-activated-list    | variable containing list of the names of currently activated packages |
-| package-install           | install a package                                                     |
-| package-installed-p       | return true if package is installed                                   |
+| =M-x package-list-packages= | open list of packages                                                 |
+| =package-activated-list=    | variable containing list of the names of currently activated packages |
+| =package-install=           | install a package                                                     |
+| =package-installed-p=       | return true if package is installed                                   |
 
 Add some extra package repositories. The default value of package-archives is
 =(("gnu" . "http://elpa.gnu.org/packages/"))=
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
@@ -215,7 +177,7 @@ first. Note that when installing org-mode from elpa for the first
 time, you must be sure that the builtin version of org-mode has not
 been loaded since emacs was first started.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   (defun package-installed-not-builtin-p (package &optional min-version)
     "Return true if PACKAGE, of MIN-VERSION or newer, is installed,
     ignoring built in packages.  MIN-VERSION should be a version list."
@@ -261,13 +223,13 @@ been loaded since emacs was first started.
 
 * Various aliases and key bindings
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defalias 'dtw 'delete-trailing-whitespace)
 #+END_SRC
 
 Function keys
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (global-set-key (kbd "<f6>") 'linum-mode)
 (global-set-key (kbd "<f7>") 'visual-line-mode)
 (global-set-key (kbd "<f8>") 'ns-toggle-fullscreen)
@@ -275,7 +237,7 @@ Function keys
 
 Various custom key bindings.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (global-set-key (kbd "C-c r") 'replace-string)
 #+END_SRC
 
@@ -283,7 +245,7 @@ Various custom key bindings.
 
 Enable debugging
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 ;; (setq debug-on-error t)
 ;; (setq debug-on-signal t)
 
@@ -291,7 +253,7 @@ Enable debugging
 
 Startup appearance.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (setq column-number-mode t)
 (setq inhibit-splash-screen t)
 (setq require-final-newline t)
@@ -303,7 +265,7 @@ Startup appearance.
 
 Date and time in status bar. See http://efod.se/writings/linuxbook/html/date-and-time.html
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (setq display-time-day-and-date t
       display-time-24hr-format t)
 (display-time)
@@ -311,7 +273,7 @@ Date and time in status bar. See http://efod.se/writings/linuxbook/html/date-and
 
 File path in title bar. See http://stackoverflow.com/questions/3669511/the-function-to-show-current-files-full-path-in-mini-buffer
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
         '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
@@ -320,21 +282,21 @@ File path in title bar. See http://stackoverflow.com/questions/3669511/the-funct
 automatically refresh buffers from disk (default is every 5 sec)
 see http://www.cs.cmu.edu/cgi-bin/info2www?(emacs)Reverting
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (global-auto-revert-mode 1)
 #+END_SRC
 
 Add paths to 'exec-path' so that emacs can find executables not
 otherwise defined in PATH.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (add-to-list 'exec-path "~/.emacs.d/bin")
 #+END_SRC
 
 * Environment
 ** update load path
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (add-to-list 'load-path "~/.emacs.d/")
 #+END_SRC
 
@@ -348,7 +310,7 @@ pushing/pulling using magit will fail. This can be addressed by
 updating the value of the SSH_AUTH_SOCK environment variable. Here's a
 function to fix this.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   (defun ssh-refresh ()
    "Reset the environment variable SSH_AUTH_SOCK"
    (interactive)
@@ -371,7 +333,7 @@ app from the finder. Found this tip here: https://plus.google.com/10433070502573
 
 Commenting out for now, but seems promising....
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   ;; (when (memq window-system '(mac ns))
   ;;   (exec-path-from-shell-initialize))
 #+END_SRC
@@ -381,7 +343,7 @@ Commenting out for now, but seems promising....
 Require prompt before exit on C-x C-c
 - http://www.dotemacs.de/dotfiles/KilianAFoth.emacs.html
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (global-set-key [(control x) (control c)]
 		(function
 		 (lambda () (interactive)
@@ -391,7 +353,7 @@ Require prompt before exit on C-x C-c
 
 Delete trailing whitespace before save.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (setq delete-trailing-lines nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
@@ -399,7 +361,7 @@ Delete trailing whitespace before save.
 * Platform and display-specific settings
 
 Detect platform and window system and set up fonts accordingly
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   (defun fix-frame ()
     (interactive)
     (menu-bar-mode -1) ;; hide menu bar
@@ -448,7 +410,7 @@ Detect platform and window system and set up fonts accordingly
 
 Apply above settings on startup
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (fix-frame)
 #+END_SRC
 
@@ -456,7 +418,7 @@ Apply above settings on startup
 
 TODO - not sure why this doesn't seem to take effect on frame creation
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   (add-hook 'server-visit-hook
             '(lambda ()
                (fix-frame)))
@@ -466,7 +428,7 @@ TODO - not sure why this doesn't seem to take effect on frame creation
 
 See http://www.emacswiki.org/emacs/SmoothScrolling
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; number of lines at a time
 (setq mouse-wheel-progressive-speed nil)            ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mosue 't)                  ;; scroll window under mouse
@@ -477,7 +439,7 @@ See http://www.emacswiki.org/emacs/SmoothScrolling
 
 * Cursor Appearance.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (set-cursor-color "red")
 (blink-cursor-mode 1)
 #+END_SRC
@@ -493,7 +455,7 @@ note that default bindings for macros are:
 
 Some additional keyboard macro bindings.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (global-set-key (kbd "<f5>") 'call-last-kbd-macro)
 #+END_SRC
 
@@ -503,14 +465,14 @@ References:
 - http://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html
 - http://www.emacswiki.org/emacs/DeskTop
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (require 'desktop)
 #+END_SRC
 
 Save desktop periodically instead of just on exit, but not if emacs is
 started with =--no-desktop=
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   (defun desktop-save-no-p ()
     "Save desktop without prompting (replaces `desktop-save-in-desktop-dir')"
     (interactive)
@@ -530,7 +492,7 @@ See http://stackoverflow.com/questions/2423834/move-line-region-up-and-down-in-e
 
 Move line up
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun move-line-up ()
   (interactive)
   (transpose-lines 1)
@@ -540,7 +502,7 @@ Move line up
 
 Move line down.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun move-line-down ()
   (interactive)
   (next-line 1)
@@ -552,7 +514,7 @@ Move line down.
 * Buffers and windows
 ** Use =iswitchb=
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (iswitchb-mode 1)
 #+END_SRC
 
@@ -561,14 +523,14 @@ Move line down.
 Replace default =list-buffers= with =electric-buffer-list= for buffer
 selection.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list)
 #+END_SRC
 ** Switch windows with arrow keys
 
 Note that other-window is bound by default to =C-x o=
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun back-window ()
   (interactive)
   (other-window -1))
@@ -581,7 +543,7 @@ Note that other-window is bound by default to =C-x o=
 - see http://www.emacswiki.org/emacs/SwitchingBuffers
 - note that original code used function 'plusp', which seems not to be defined in recent versions of emacs
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun transpose-buffers (arg)
   "Transpose the buffers shown in two windows."
   (interactive "p")
@@ -602,7 +564,7 @@ Note that other-window is bound by default to =C-x o=
 
 Also from http://www.emacswiki.org/emacs/SwitchingBuffers
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun switch-buffers-between-frames ()
   "switch-buffers-between-frames switches the buffers between the two last frames"
   (interactive)
@@ -623,7 +585,7 @@ Toggles between a horizontal and vertical split (two frames only).
 
 Copied from http://www.emacswiki.org/emacs/ToggleWindowSplit (submitted by Wilfred).
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   (defun toggle-frame-split ()
     "If the frame is split vertically, split it horizontally or vice versa.
   Assumes that the frame is only split into two."
@@ -641,7 +603,7 @@ Copied from http://www.emacswiki.org/emacs/ToggleWindowSplit (submitted by Wilfr
 
 ** Force horizontal splits
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (setq split-height-threshold nil)
 #+END_SRC
 
@@ -649,14 +611,14 @@ Copied from http://www.emacswiki.org/emacs/ToggleWindowSplit (submitted by Wilfr
 
 Use aspell instead of ispell
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (setq-default ispell-program-name "aspell")
 (setq ispell-dictionary "en")
 #+END_SRC
 
 Enable on-the-fly spell-check
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
 (setq flyspell-issue-welcome-flag nil) ;; fix error message
 #+END_SRC
@@ -665,7 +627,7 @@ Enable on-the-fly spell-check
 
 http://snarfed.org/space/emacs%20font-lock%20faces%20for%20composing%20email
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   (add-hook 'find-file-hooks
             '(lambda ()
                (if (equal "pico." (substring (buffer-name (current-buffer)) 0 5))
@@ -682,7 +644,7 @@ Install AuxTeX from elpa.
 Installed using elpa, but seems to need =require= to be called
 explicitly.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (condition-case nil
     (require 'ess-site)
   (error (message "** could not load ESS")))
@@ -690,7 +652,7 @@ explicitly.
 
 Hooks
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (add-hook 'ess-mode-hook
 	  '(lambda()
 	     (message "Loading ess-mode hooks")
@@ -709,7 +671,7 @@ Hooks
 
 org-mode hooks
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   (add-hook 'org-mode-hook
             '(lambda ()
                (message "Loading org-mode hooks")
@@ -751,34 +713,13 @@ org-mode hooks
 
 Custom key bindings
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (global-set-key (kbd "C-c a") 'org-agenda)
-#+END_SRC
-
-** pygments
-
-Syntax highlighting using =pygments= (http://pygments.org/).
-
-http://oompiller.wordpress.com/2011/07/05/syntax-highlighting-using-pygment-in-org-mode/
-
-Install with
-
-: cd ~/.emacs.d
-: wget https://raw.github.com/jianingy/org-babel-plugins/master/ob-pygment.el
-
-Requires =(setq org-babel-load-languages (quote (pygment . t)))= above
-
-#+BEGIN_SRC elisp :tangle init.el
-(condition-case nil
-    (progn
-      (require 'ob-pygment)
-      (setq org-pygment-path "/usr/local/bin/pygmentize"))
-  (error (message "** could not load ob-pygment")))
 #+END_SRC
 
 ** org-mode utilities
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
   (interactive)
@@ -786,7 +727,7 @@ Requires =(setq org-babel-load-languages (quote (pygment . t)))= above
 (global-set-key (kbd "C-c d") 'insert-date)
 #+END_SRC
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun org-add-entry (filename time-format)
   ;; Add an entry to an org-file with today's timestamp.
   (interactive "FFile: ")
@@ -801,7 +742,7 @@ Requires =(setq org-babel-load-languages (quote (pygment . t)))= above
 
 Add a new entry to main notes file.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (global-set-key
  (kbd "C-x C-n") (lambda () (interactive)
 		   (org-add-entry "~/Dropbox/notes/index.org"
@@ -812,7 +753,7 @@ Add a new entry to my journal.
 
 Add a new entry to main notes file.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (global-set-key
  (kbd "C-x C-j") (lambda () (interactive)
                    (org-add-entry "~/Dropbox/journal/journal.org"
@@ -823,7 +764,7 @@ Add a new entry to main notes file.
 
 Installed using elpa.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (push '("\\.md" . markdown-mode) auto-mode-alist)
 #+END_SRC
 
@@ -831,7 +772,7 @@ Installed using elpa.
 
 'edit-server' is initialized by elpa, but we need to start the server.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (condition-case nil
     (edit-server-start)
   (error (message "** could not start edit-server (chrome edit with emacs)")))
@@ -843,7 +784,7 @@ Installed using elpa.
 
 ** hooks
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   (add-hook 'python-mode-hook
             '(lambda ()
                (message "Loading python-mode hooks")
@@ -858,7 +799,7 @@ Installed using elpa.
 
 File name mappings
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (push '("SConstruct" . python-mode) auto-mode-alist)
 (push '("SConscript" . python-mode) auto-mode-alist)
 (push '("*.cgi" . python-mode) auto-mode-alist)
@@ -867,7 +808,7 @@ File name mappings
 Default 'untabify converts a tab to equivalent number of spaces before
 deleting a single character.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (setq backward-delete-char-untabify-method "all")
 #+END_SRC
 
@@ -906,7 +847,7 @@ Apply =autopep8= (https://github.com/hhatto/autopep8) to the current
 buffer. Reference: *Mastering Emacs*:
 http://www.masteringemacs.org/articles/2011/10/19/executing-shell-commands-emacs/
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   (defun p8 ()
     "Apply autopep8 to the current region or buffer"
     (interactive)
@@ -924,7 +865,7 @@ http://www.masteringemacs.org/articles/2011/10/19/executing-shell-commands-emacs
 Instead of simply replacing the current buffer, use ediff to compare
 it to the output of autopep8.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   (defun p8-and-ediff ()
     "Compare the current buffer to the output of autopep8 using ediff"
     (interactive)
@@ -1012,7 +953,7 @@ And some configuration:
 - Installation :: https://github.com/jorgenschaefer/elpy/wiki/Installation
 - note that =python-check-command= (set in python hooks above) defines the program used by =elpy-check=
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (condition-case nil
     (elpy-enable) ;; install from elpa
   (error (message "** could not enable elpy")))
@@ -1046,7 +987,7 @@ Install python requirements:
 
 I should really start using a snippet package, but for now:
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun scons-insert-command ()
   (interactive)
   (insert "output, = env.Command(
@@ -1058,7 +999,7 @@ I should really start using a snippet package, but for now:
 
 * text-mode
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (add-hook 'text-mode-hook
 	  '(lambda ()
 	     ;; (longlines-mode)
@@ -1069,7 +1010,7 @@ I should really start using a snippet package, but for now:
 
 * rst-mode
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (add-hook 'rst-mode-hook
 	  '(lambda ()
 	     (message "Loading rst-mode hooks")
@@ -1083,7 +1024,7 @@ I should really start using a snippet package, but for now:
 
 - http://www.gnu.org/software/tramp/
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (condition-case nil
     (require 'tramp)
   (setq tramp-default-method "scp")
@@ -1094,7 +1035,7 @@ I should really start using a snippet package, but for now:
 
 - http://emacs-fu.blogspot.com/2010/02/dealing-with-many-buffers-ibuffer.html
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (require 'ibuffer)
 (global-set-key (kbd "C-x C-g") 'ibuffer)
 (global-set-key (kbd "C-x M-g") 'ibuffer-switch-to-saved-filter-groups)
@@ -1103,7 +1044,7 @@ I should really start using a snippet package, but for now:
 
 Function to load config file. Load on starup.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (setq ibuffer-config-file "~/.emacs.d/ibuffer-config.el")
 
 (defun ibuffer-load-config ()
@@ -1122,7 +1063,7 @@ Function to load config file. Load on starup.
 
 Show/hide all filter groups
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun ibuffer-show-all-filter-groups ()
   "Show all filter groups"
   (interactive)
@@ -1142,7 +1083,7 @@ Show/hide all filter groups
   (ibuffer-update nil t))
 #+END_SRC
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun ibuffer-reload ()
   ;; kill ibuffer, reload the config file, and return to ibuffer
   (interactive)
@@ -1155,7 +1096,7 @@ Show/hide all filter groups
 
 From http://www.emacswiki.org/emacs/IbufferMode
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun my-ibuffer-sort-hook ()
   ;; add another sorting method for ibuffer (allow the grouping of
   ;; filenames and dired buffers
@@ -1181,7 +1122,7 @@ From http://www.emacswiki.org/emacs/IbufferMode
 
 From http://curiousprogrammer.wordpress.com/2009/04/02/ibuffer/
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun ibuffer-ediff-marked-buffers ()
   "Compare two marked buffers using ediff"
   (interactive)
@@ -1195,7 +1136,7 @@ From http://curiousprogrammer.wordpress.com/2009/04/02/ibuffer/
 
 Hooks
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (add-hook 'ibuffer-mode-hook
           '(lambda ()
              (ibuffer-auto-mode 1) ;; minor mode that keeps the buffer list up to date
@@ -1216,7 +1157,7 @@ Hooks
 
 - http://www.emacswiki.org/emacs/uniquify
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 #+END_SRC
@@ -1244,7 +1185,7 @@ Basic key bindings (see the url above for a complete list).
 
 - http://www.masteringemacs.org/articles/2010/10/10/introduction-to-ido-mode/
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (setq ido-use-virtual-buffers t)
@@ -1253,7 +1194,7 @@ Basic key bindings (see the url above for a complete list).
 
 use recentf with ido - see http://wikemacs.org/wiki/Recentf
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (recentf-mode 1)
 (defun ido-choose-from-recentf ()
   "Use ido to select a recently visited file from the `recentf-list'"
@@ -1264,13 +1205,13 @@ use recentf with ido - see http://wikemacs.org/wiki/Recentf
 
 * git/magit
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (require 'vc-git)
 #+END_SRC
 
 Magit is installed via ELPA.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (global-set-key (kbd "C-c m") 'magit-status)
 #+END_SRC
 
@@ -1280,13 +1221,13 @@ Magit is installed via ELPA.
 
 Use sqlite3
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (setq sql-sqlite-program "sqlite3")
 #+END_SRC
 
 Preset connections
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (setq sql-connection-alist
       '((filemaker-sps
          (sql-product 'mysql)
@@ -1329,7 +1270,7 @@ This is used to set `sql-alternate-buffer-name' within
 
 - http://www.emacswiki.org/emacs/EasyPG
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (require 'epa-file)
 (setenv "GPG_AGENT_INFO" nil) ;; suppress graphical passphrase prompt
 #+END_SRC
@@ -1339,7 +1280,7 @@ The default key bindings for outline-minor-mode start with 'C-c @ C-',
 which is... awkward. Use alternative bindings courtesy of Sue D. Nymme
 via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   ;; Outline-minor-mode key map
   (define-prefix-command 'cm-map nil "Outline-")
   ;; HIDE
@@ -1369,7 +1310,7 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
 * Misc utilities
 ** copy-buffer-file-name
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   (defun copy-buffer-file-name ()
     "Add `buffer-file-name' to `kill-ring'"
     (interactive)
@@ -1378,7 +1319,7 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
 
 ** copy-and-comment
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
   (defun copy-and-comment ()
     "Comment active region and paste uncommented text on the
   following line."
@@ -1401,7 +1342,7 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
 
 from http://defindit.com/readme_files/emacs_hints_tricks.html
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun unfill-paragraph ()
   (interactive)
   (let ((fill-column (point-max)))
@@ -1413,7 +1354,7 @@ from http://defindit.com/readme_files/emacs_hints_tricks.html
 
 Note that occur can be executed using "M-s o"
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (defun occur-region () (interactive)
   "Run `occur` using the current region."
   (occur
@@ -1425,7 +1366,7 @@ Note that occur can be executed using "M-s o"
 
 Written by Andy Stewart and available on emacswiki: http://www.emacswiki.org/emacs/elisp-format.el
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (condition-case nil
     (require 'elisp-format)
   (error (message "** could not load elisp-format")))
@@ -1435,7 +1376,7 @@ Written by Andy Stewart and available on emacswiki: http://www.emacswiki.org/ema
 
 Buffers opened from command line don't create new frame
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (setq ns-pop-up-frames nil)
 #+END_SRC
 
@@ -1452,7 +1393,7 @@ mv lockstep-master/lockstep.el .
 rm -r lockstep-master master.zip
 #+END_SRC
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (require 'lockstep)
 #+END_SRC
 
@@ -1472,7 +1413,7 @@ wget -q https://raw.githubusercontent.com/winterTTr/ace-jump-mode/master/ace-jum
 
 Activation
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (autoload
   'ace-jump-mode "~/.emacs.d/ace-jump-mode.el" "Emacs quick move minor mode" t)
 (define-key global-map (kbd "M-'") 'ace-jump-mode)
@@ -1480,7 +1421,7 @@ Activation
 
 * enable commands
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -1490,13 +1431,13 @@ Activation
 Emacs modifies this statement if you use the interactive "customize"
 function, so don't do that.
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (custom-set-variables
   '(safe-local-variable-values (quote ((toggle-read-only . t)))))
 #+END_SRC
 
 * License
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or

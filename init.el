@@ -4,17 +4,6 @@
 (unless (= emacs-major-version 24)
   (error "Emacs version 24 is required"))
 
-(setq init-file-name "init.el")
-(defun init-insert-code-block ()
-  ;; Insert a code block surrounding the paragraph at point that will
-  ;; be tangled into `init-file-name`.
-  (interactive)
-  (backward-paragraph)
-  (insert (format "\n#+BEGIN_SRC elisp :tangle %s" init-file-name))
-  (forward-paragraph)
-  (insert "#+END_SRC\n"))
-(global-set-key (kbd "C-c i") 'init-insert-code-block)
-
 (defun init-load ()
   "Load ~/.emacs.d/init.el"
   (interactive)
@@ -352,12 +341,6 @@ Assumes that the frame is only split into two."
 (push '("\\.org\\.txt\\'" . org-mode) auto-mode-alist)
 
 (global-set-key (kbd "C-c a") 'org-agenda)
-
-(condition-case nil
-    (progn
-      (require 'ob-pygment)
-      (setq org-pygment-path "/usr/local/bin/pygmentize"))
-  (error (message "** could not load ob-pygment")))
 
 (defun insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
