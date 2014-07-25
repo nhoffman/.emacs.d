@@ -1,14 +1,14 @@
 
-(message "loading ~/.emacs.d/init.el")
-
-(unless (= emacs-major-version 24)
-  (error "Emacs version 24 is required"))
-
 (defun init-load ()
   "Load ~/.emacs.d/init.el"
   (interactive)
   (load "~/.emacs.d/init.el"))
 (global-set-key (kbd "M-C-i") 'init-load)
+
+(unless (= emacs-major-version 24)
+  (error "Emacs version 24 is required"))
+
+(message "loading ~/.emacs.d/init.el")
 
 (when (>= emacs-major-version 24)
   (require 'package)

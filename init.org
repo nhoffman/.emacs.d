@@ -15,17 +15,6 @@ In a fit of literate programming yak-shaving, I have implemented my emacs config
 
 #+TOC: headlines 1
 
-#+BEGIN_SRC elisp
-(message "loading ~/.emacs.d/init.el")
-#+END_SRC
-
-This will only work with emacs 24.x
-
-#+BEGIN_SRC elisp :tangle init.el
-(unless (= emacs-major-version 24)
-  (error "Emacs version 24 is required"))
-#+END_SRC
-
 * Initial setup
 
 After cloning the repository into your home directory, just a bit of
@@ -96,13 +85,35 @@ useful.
 ** initialize org-export submodule (optional)
 
 If you want to compile =init.org= to html using the provided build
-script, you'll need to initialize the git submodule containing the
-=org-export= project (https://github.com/nhoffman/org-export):
+script, you'll need to initialize and update the git [[http://git-scm.com/book/en/Git-Tools-Submodules][submodule]]
+containing the =org-export= project
+(https://github.com/nhoffman/org-export). This only needs to be done
+once after checking out this repository:
 
-#+BEGIN_SRC sh :eval no
-git submodule init
+#+BEGIN_SRC sh
+git submodule update --init
+#+END_SRC
+
+To update the =org-export= repository, first try
+
+#+BEGIN_SRC sh
 git submodule update
 #+END_SRC
+
+This will update to whatever commit is associated with the project, eg
+
+#+BEGIN_SRC sh :eval yes :results output :exports both
+git submodule status
+#+END_SRC
+
+If this doesn't do anything, try
+
+#+BEGIN_SRC sh
+(cd org-export && git checkout org-export && git pull origin master)
+#+END_SRC
+
+If there were any changes, you'll need to make a commit in
+=.emacs.d=. Ugh, submodules.
 
 * Maintaining and using this file
 
@@ -133,6 +144,19 @@ If you want to reload the init file after a change, here's a function to do so:
   (interactive)
   (load "~/.emacs.d/init.el"))
 (global-set-key (kbd "M-C-i") 'init-load)
+#+END_SRC
+
+* Startup
+
+This will only work with emacs 24.x
+
+#+BEGIN_SRC elisp :tangle init.el
+(unless (= emacs-major-version 24)
+  (error "Emacs version 24 is required"))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(message "loading ~/.emacs.d/init.el")
 #+END_SRC
 
 * ELPA
