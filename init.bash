@@ -2,6 +2,7 @@ if [[ $(uname) == 'Darwin' ]]; then
     EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
     EMACSCLIENT=/Applications/Emacs.app/Contents/MacOS/bin/emacsclient
     alias emacs="$EMACS"
+    alias emacsclient="$EMACSCLIENT"
 else
     EMACS=emacs
     EMACSCLIENT=emacsclient

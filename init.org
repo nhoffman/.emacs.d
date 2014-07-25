@@ -5,7 +5,6 @@
 #+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
 #+STYLE: <link rel="stylesheet" type="text/css" href="./worg.css" />
 #+BIND: org-export-html-postamble nil
-#+BIND: org-export-publishing-directory "./gh-pages"
 #+BABEL: :results output :exports both
 
 In a fit of literate programming yak-shaving, I have implemented my emacs configuration as an org-mode file.
@@ -13,7 +12,7 @@ In a fit of literate programming yak-shaving, I have implemented my emacs config
 - The source for this page is available at https://github.com/nhoffman/.emacs.d
 - The html-exported version of this page is hosted at http://nhoffman.github.io/.emacs.d
 
-#+TOC: headlines 3
+#+TOC: headlines 1
 
 #+BEGIN_SRC elisp :tangle init.el
 (message "loading ~/.emacs.d/init.el")
@@ -31,7 +30,52 @@ This will only work with emacs 24.x
 After cloning the repository into your home directory, just a bit of
 setup is required before first use.
 
-** update packages from ELPA
+** set up a shell environment
+
+This configuration provides some shell functions and aliases (tested
+with bash and zsh) that are useful for using emacs from the shell. In
+particular, if you are on a mac and have installed [[http://emacsformacosx.com/][Emacs for OS X]] or
+compiled the Cocoa version, Emacs will be installed to
+=/Applications/Emacs.app/Contents/MacOS/Emacs= and =emacsclient= is
+found in
+=/Applications/Emacs.app/Contents/MacOS/bin/emacsclient=. These are
+aliased to =emacs= and =emacsclient=, respectively.
+
+In addition, there are some functions that simplify running and using
+Emacs in server mode:
+
+- edaemon :: launch the emacs server daemon, removing any locked desktop files.
+- ec :: attach to the emacs server in GUI mode (=emacsclient -c=) in the background.
+- enw :: attach to the emacs server in terminal mode in place (=emacsclient -nw=).
+- e :: open a file in an already open window (=emacsclient -n=).
+
+The above functions attempt to use the virtualenv that we'll create in
+=~/.emacs.d= (see below) so that, for example, =elpy= can find its
+python dependencies.
+
+Rather than copying the functions defined in =init.bash= elsewhere,
+I'd recommend sourcing it instead. For example, just place the
+following in your =.profile= or =.zshrc= or whatever (depending on
+your shell):
+
+#+BEGIN_SRC sh :eval no
+if [[ -f ~/.emacs.d/init.bash ]]; then
+    source ~/.emacs.d/init.bash
+fi
+#+END_SRC
+
+** install packages from ELPA
+
+The only required step to use this configuration is to install
+packages from EPLA, the Emacs Lisp Package Archive. See the "ELPA"
+section below for a list of packages installed by this
+configuration. First, launch emacs; I'd recommend launching without
+emacs-desktop, for example =emacs -nw --no-desktop=. From within
+emacs, fetch the list of packages with =M-x
+package-list-packages=. Finally, install the specified packages with
+=M-x package-install-my-packages=. At this point it's usually a good
+idea to quit and relaunch emacs.
+
 ** create virtualenv
 
 The packages used here (particularly =elpy=) require some python
@@ -50,9 +94,9 @@ useful.
 
 ** initialize org-export submodule (optional)
 
-If you want to compile =init.org= to html, you'll need to initialize
-the git submodule containing the =org-export= project
-(https://github.com/nhoffman/org-export):
+If you want to compile =init.org= to html using the provided build
+script, you'll need to initialize the git submodule containing the
+=org-export= project (https://github.com/nhoffman/org-export):
 
 #+BEGIN_SRC sh :eval no
 git submodule init
