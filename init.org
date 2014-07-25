@@ -29,7 +29,35 @@ This will only work with emacs 24.x
 * Initial setup
 
 After cloning the repository into your home directory, just a bit of
-setup is required before use.
+setup is required before first use.
+
+** update packages from ELPA
+** create virtualenv
+
+The packages used here (particularly =elpy=) require some python
+bits. The easiest way to provide them is to install them in a
+virtualenv. There's a script to do this - just run:
+
+#+BEGIN_SRC sh :eval no
+bin/venv.sh
+#+END_SRC
+
+This will create =~/.emacs.d/emacs-env=. If =scons= isn't installed,
+this will add that, too. In this case, you'll need to activate the
+virtualenv (=source emacs-env/bin/activate=) to use the version of
+=scons= installed there. I'll explain later why having =scons= is
+useful.
+
+** initialize org-export submodule (optional)
+
+If you want to compile =init.org= to html, you'll need to initialize
+the git submodule containing the =org-export= project
+(https://github.com/nhoffman/org-export):
+
+#+BEGIN_SRC sh :eval no
+git submodule init
+git submodule update
+#+END_SRC
 
 * Maintaining and using this file
 

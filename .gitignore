@@ -5,8 +5,10 @@ ac-comphist.dat
 auto-save-list
 elpa
 image-dired
-init.html
 projectile-bookmarks.eld
 tramp
 url
 emacs-env
+ghp-import.log
+html/
+inactive.el

@@ -1,6 +1,9 @@
 
 (message "loading ~/.emacs.d/init.el")
 
+(unless (= emacs-major-version 24)
+  (error "Emacs version 24 is required"))
+
 (setq init-file-name "init.el")
 (defun init-insert-code-block ()
   ;; Insert a code block surrounding the paragraph at point that will
@@ -17,14 +20,6 @@
   (interactive)
   (load "~/.emacs.d/init.el"))
 (global-set-key (kbd "M-C-i") 'init-load)
-
-(defun init-compile ()
-  "Tangle init.org and export html"
-  (interactive)
-  (progn
-    (org-babel-tangle)
-    (org-html-export-as-html)
-    (write-file "gh-pages/index.html")))
 
 (when (>= emacs-major-version 24)
   (require 'package)

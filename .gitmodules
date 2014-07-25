@@ -1,0 +1,3 @@
+[submodule "org-export"]
+	path = org-export
+	url = https://github.com/nhoffman/org-export.git
