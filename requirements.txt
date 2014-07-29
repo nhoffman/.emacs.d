@@ -1,3 +1,4 @@
 elpy
 autopep8
+jedi
 ghp-import
