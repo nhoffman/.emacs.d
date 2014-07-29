@@ -424,6 +424,12 @@ Assumes that the frame is only split into two."
     (elpy-enable) ;; install from elpa
   (error (message "** could not enable elpy")))
 
+(defvar default-venv "~/.emacs.d/emacs-env")
+(defun use-default-venv ()
+  (interactive)
+  (pyvenv-activate default-venv)
+  (elpy-rpc-restart))
+
 (defun scons-insert-command ()
   (interactive)
   (insert "output, = env.Command(

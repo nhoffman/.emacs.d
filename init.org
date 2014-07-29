@@ -983,12 +983,14 @@ And some configuration:
   (error (message "** could not enable elpy")))
 #+END_SRC
 
-** Quick and dirty installation of all python dependencies
+Assuming elpy dependencies are installed in ~/.emacs.d/emacs-env
 
-#+BEGIN_SRC sh :eval no
-pip install -U -r \
-<(curl --silent https://raw.githubusercontent.com/jorgenschaefer/elpy/master/requirements.txt && \
-cat requirements.txt)
+#+BEGIN_SRC elisp
+(defvar default-venv "~/.emacs.d/emacs-env")
+(defun use-default-venv ()
+  (interactive)
+  (pyvenv-activate default-venv)
+  (elpy-rpc-restart))
 #+END_SRC
 
 ** jedi

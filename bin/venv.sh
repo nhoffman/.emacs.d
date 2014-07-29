@@ -12,8 +12,8 @@ if [[ -n "$VIRTUAL_ENV" ]]; then
     echo "Error: virtualenv $VIRTUAL_ENV is already active"
 fi
 
+# usage: check_version module version-string
 check_version(){
-    # usage: check_version module version-string
     "$PYTHON" <<EOF 2> /dev/null
 import $1
 from distutils.version import LooseVersion
