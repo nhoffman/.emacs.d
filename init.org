@@ -986,11 +986,43 @@ And some configuration:
 Assuming elpy dependencies are installed in ~/.emacs.d/emacs-env
 
 #+BEGIN_SRC elisp
-(defvar default-venv "~/.emacs.d/emacs-env")
-(defun use-default-venv ()
+(defvar my/venv-default "~/.emacs.d/emacs-env")
+(defun my/activate-venv-default ()
   (interactive)
-  (pyvenv-activate default-venv)
+  (pyvenv-activate my/venv-default)
   (elpy-rpc-restart))
+#+END_SRC
+
+Here's a function that tries to activate a virtualenv in the current
+project.
+
+#+BEGIN_SRC elisp
+(defun my/activate-venv ()
+  "Activate a virtualenv if one can be found in the current
+project; otherwise activate the virtualenv defined in
+`my/venv-default'. Also restarts the elpy rpc process."
+  (interactive)
+  (let ((venv nil)
+	(find-pattern "find %s -path '*bin/activate' -maxdepth 4")
+	(msg ""))
+
+    (if elpy-project-root
+	(setq venv
+	      (replace-regexp-in-string
+	       "/bin/activate[ \t\n]*" ""
+	       (shell-command-to-string
+		(format find-pattern elpy-project-root)))))
+
+    (if (< (length venv) 1)
+	(progn
+	  (setq venv my/venv-default)
+	  (setq msg "(cound not find a virtualenv here) ")))
+
+    (if (y-or-n-p (format "%sActivate %s?" msg venv))
+	(progn
+	  (pyvenv-activate venv)
+	  (elpy-rpc-restart)
+	  (message "Using %s" pyvenv-virtual-env)))))
 #+END_SRC
 
 ** jedi
