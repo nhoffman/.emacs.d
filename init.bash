@@ -19,21 +19,16 @@ emacs-venv-activate(){
 }
 
 edaemon(){
-    # launch the emacs daemon in the emacs virtualenv
     rm -f ~/.emacs.desktop.lock ~/.emacs.d/.emacs.desktop.lock
-    (cd ~
-	emacs-venv-activate
-	"$EMACS" --daemon)
+    (cd ~ && "$EMACS" --daemon)
 }
 
 ec(){
-    (emacs-venv-activate
-	"$EMACSCLIENT" -c "$@") &
+    "$EMACSCLIENT" -c "$@" &
 }
 
 enw(){
-    (emacs-venv-activate
-	"$EMACSCLIENT" -nw "$@")
+    "$EMACSCLIENT" -nw "$@"
 }
 
 e(){
