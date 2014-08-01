@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>init.el for Noah Hoffman</title>
-<!-- 2014-07-31 Thu 22:34 -->
+<!-- 2014-08-01 Fri 10:29 -->
 <meta  charset="utf-8">
 <meta  name="generator" content="Org-mode">
 <meta  name="author" content="Noah Hoffman">
@@ -88,14 +88,14 @@
 </style>
 <style type="text/css">
 HTTP/1.1 200 OK
-Date: Fri, 01 Aug 2014 05:34:14 GMT
+Date: Fri, 01 Aug 2014 17:29:47 GMT
 Content-Type: text/css
 Content-Length: 99961
 Connection: keep-alive
 Last-Modified: Thu, 13 Feb 2014 17:33:55 GMT
 ETag: "8a7442ca6bedd62cec4881040b9a9e83"
 Server: NetDNA-cache/2.2
-Expires: Mon, 27 Jul 2015 05:34:14 GMT
+Expires: Mon, 27 Jul 2015 17:29:47 GMT
 Cache-Control: max-age=31104000
 Vary: Accept-Encoding
 Access-Control-Allow-Origin: *
@@ -365,7 +365,7 @@ This will update to whatever commit is associated with the project, eg
 </div>
 
 <pre class="example">
-+45da08a1eba17320f95d466209cb7f898e5f47df org-export (heads/master)
+3b6193d06dbaab1128f23dd47a84a229aae54833 org-export (heads/master)
 </pre>
 
 <p>
@@ -1739,6 +1739,38 @@ project.
           (message <span style="color: #dd1144;">"Using %s"</span> pyvenv-virtual-env)))))
 </pre>
 </div>
+
+<p>
+Unfortunately, each virtualenv must have elpy's requirements
+installed. This function installs these requirements from within
+Emacs.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="color: #990000;">my/elpy-install-requirements</span> ()
+  <span style="color: #dd1144;">"Install `</span><span style="color: #990073;">elpy</span><span style="color: #dd1144;">' and `</span><span style="color: #990073;">jedi</span><span style="color: #dd1144;">' to the current virtualenv. The</span>
+<span style="color: #dd1144;">version of the `</span><span style="color: #990073;">elpy</span><span style="color: #dd1144;">' python package is forced to match the</span>
+<span style="color: #dd1144;">version of the elisp package, upgrading or downgrading as</span>
+<span style="color: #dd1144;">necessary."</span>
+  (interactive)
+  (<span style="font-weight: bold;">unless</span> pyvenv-virtual-env
+    (<span style="font-weight: bold;">error</span> <span style="color: #dd1144;">"Error: no virtualenv is active"</span>))
+  (<span style="font-weight: bold;">unless</span> elpy-version
+    (<span style="font-weight: bold;">error</span> <span style="color: #dd1144;">"Error: elpy version not defined"</span>))
+  (<span style="font-weight: bold;">let</span> ((dest <span style="color: #dd1144;">"*my/elpy-install-requirements-output*"</span>)
+        (install-cmd (format <span style="color: #dd1144;">"%s/bin/pip install --force '%%s'"</span> pyvenv-virtual-env))
+        (deps `(,(format <span style="color: #dd1144;">"elpy==%s"</span> elpy-version) <span style="color: #dd1144;">"jedi"</span>)))
+    (generate-new-buffer dest)
+    (mapcar
+     '(<span style="font-weight: bold;">lambda</span> (pkg)
+        (message (format install-cmd pkg))
+        (call-process-shell-command (format install-cmd pkg) nil dest)) deps)
+    (call-process-shell-command (format <span style="color: #dd1144;">"%s/bin/pip freeze"</span> pyvenv-virtual-env) nil dest)
+    (switch-to-buffer dest)
+    ))
+</pre>
+</div>
 </div>
 </div>
 
@@ -2478,7 +2510,7 @@ function, so don't do that.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Noah Hoffman</p>
-<p class="date">Created: 2014-07-31 Thu 22:34</p>
+<p class="date">Created: 2014-08-01 Fri 10:29</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7b)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
