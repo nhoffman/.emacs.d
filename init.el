@@ -457,6 +457,28 @@ project; otherwise activate the virtualenv defined in
           (elpy-rpc-restart)
           (message "Using %s" pyvenv-virtual-env)))))
 
+(defun my/elpy-install-requirements ()
+  "Install `elpy' and `jedi' to the current virtualenv. The
+version of the `elpy' python package is forced to match the
+version of the elisp package, upgrading or downgrading as
+necessary."
+  (interactive)
+  (unless pyvenv-virtual-env
+    (error "Error: no virtualenv is active"))
+  (unless elpy-version
+    (error "Error: elpy version not defined"))
+  (let ((dest "*my/elpy-install-requirements-output*")
+        (install-cmd (format "%s/bin/pip install --force '%%s'" pyvenv-virtual-env))
+        (deps `(,(format "elpy==%s" elpy-version) "jedi")))
+    (generate-new-buffer dest)
+    (mapcar
+     '(lambda (pkg)
+        (message (format install-cmd pkg))
+        (call-process-shell-command (format install-cmd pkg) nil dest)) deps)
+    (call-process-shell-command (format "%s/bin/pip freeze" pyvenv-virtual-env) nil dest)
+    (switch-to-buffer dest)
+    ))
+
 (defun scons-insert-command ()
   (interactive)
   (insert "output, = env.Command(
