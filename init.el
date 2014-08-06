@@ -439,12 +439,12 @@ project; otherwise activate the virtualenv defined in
         (find-pattern "find %s -path '*bin/activate' -maxdepth 4")
         (msg ""))
 
-    (if elpy-project-root
+    (if (elpy-project-root)
         (setq venv
               (replace-regexp-in-string
                "/bin/activate[ \t\n]*" ""
                (shell-command-to-string
-                (format find-pattern elpy-project-root)))))
+                (format find-pattern (elpy-project-root))))))
 
     (if (< (length venv) 1)
         (progn
@@ -465,11 +465,10 @@ necessary."
   (interactive)
   (unless pyvenv-virtual-env
     (error "Error: no virtualenv is active"))
-  (unless elpy-version
-    (error "Error: elpy version not defined"))
   (let ((dest "*my/elpy-install-requirements-output*")
         (install-cmd (format "%s/bin/pip install --force '%%s'" pyvenv-virtual-env))
-        (deps `(,(format "elpy==%s" elpy-version) "jedi")))
+        ;; (deps `(,(format "elpy==%s" elpy-version) "jedi")))
+        (deps '("jedi")))
     (generate-new-buffer dest)
     (mapcar
      '(lambda (pkg)
@@ -478,6 +477,14 @@ necessary."
     (call-process-shell-command (format "%s/bin/pip freeze" pyvenv-virtual-env) nil dest)
     (switch-to-buffer dest)
     ))
+
+(add-hook 'elpy-mode-hook
+'(lambda ()
+   (define-key elpy-mode-map (kbd "C-<right>") nil)
+   (setq elpy-rpc-backend "jedi")
+   (add-to-list 'elpy-project-ignored-directories "src")
+   (add-to-list 'elpy-project-ignored-directories "*-env")))
+   (my/activate-venv-default)
 
 (defun scons-insert-command ()
   (interactive)

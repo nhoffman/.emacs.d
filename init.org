@@ -39,10 +39,6 @@ Emacs in server mode:
 - enw :: attach to the Emacs server in terminal mode in place (=emacsclient -nw=).
 - e :: open a file in an already open window (=emacsclient -n=).
 
-The above functions attempt to use the virtualenv that we'll create in
-=~/.emacs.d= (see below) so that, for example, =elpy= can find its
-python dependencies.
-
 Rather than copying the functions defined in =init.bash= elsewhere,
 I'd recommend sourcing it instead. For example, just place the
 following in your =.profile= or =.zshrc= or whatever (depending on
@@ -983,7 +979,10 @@ And some configuration:
   (error (message "** could not enable elpy")))
 #+END_SRC
 
-Assuming elpy dependencies are installed in ~/.emacs.d/emacs-env
+As of version 1.5.0, the elpy python package is distributed with the
+elpa elisp package, but other dependencies (such as jedi) still need
+to be available. Assuming elpy dependencies are installed in
+~/.emacs.d/emacs-env
 
 #+BEGIN_SRC elisp
 (defvar my/venv-default "~/.emacs.d/emacs-env")
@@ -1006,12 +1005,12 @@ project; otherwise activate the virtualenv defined in
 	(find-pattern "find %s -path '*bin/activate' -maxdepth 4")
 	(msg ""))
 
-    (if elpy-project-root
+    (if (elpy-project-root)
 	(setq venv
 	      (replace-regexp-in-string
 	       "/bin/activate[ \t\n]*" ""
 	       (shell-command-to-string
-		(format find-pattern elpy-project-root)))))
+		(format find-pattern (elpy-project-root))))))
 
     (if (< (length venv) 1)
 	(progn
@@ -1025,9 +1024,8 @@ project; otherwise activate the virtualenv defined in
 	  (message "Using %s" pyvenv-virtual-env)))))
 #+END_SRC
 
-Unfortunately, each virtualenv must have elpy's requirements
-installed. This function installs these requirements from within
-Emacs.
+This function installs python dependencies to the current virtualenv
+from within Emacs.
 
 #+BEGIN_SRC elisp
 (defun my/elpy-install-requirements ()
@@ -1038,11 +1036,10 @@ necessary."
   (interactive)
   (unless pyvenv-virtual-env
     (error "Error: no virtualenv is active"))
-  (unless elpy-version
-    (error "Error: elpy version not defined"))
   (let ((dest "*my/elpy-install-requirements-output*")
         (install-cmd (format "%s/bin/pip install --force '%%s'" pyvenv-virtual-env))
-        (deps `(,(format "elpy==%s" elpy-version) "jedi")))
+        ;; (deps `(,(format "elpy==%s" elpy-version) "jedi")))
+        (deps '("jedi")))
     (generate-new-buffer dest)
     (mapcar
      '(lambda (pkg)
@@ -1051,6 +1048,18 @@ necessary."
     (call-process-shell-command (format "%s/bin/pip freeze" pyvenv-virtual-env) nil dest)
     (switch-to-buffer dest)
     ))
+#+END_SRC
+
+=elpy-mode= hooks
+
+#+BEGIN_SRC elisp
+(add-hook 'elpy-mode-hook
+'(lambda ()
+   (define-key elpy-mode-map (kbd "C-<right>") nil)
+   (setq elpy-rpc-backend "jedi")
+   (add-to-list 'elpy-project-ignored-directories "src")
+   (add-to-list 'elpy-project-ignored-directories "*-env")))
+   (my/activate-venv-default)
 #+END_SRC
 
 ** jedi
