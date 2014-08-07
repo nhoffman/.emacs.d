@@ -216,6 +216,7 @@ been loaded since emacs was first started.
 
 (defvar package-my-package-list
   '(ace-jump-mode
+    ace-jump-buffer
     auctex
     edit-server
     elpy
@@ -241,6 +242,20 @@ been loaded since emacs was first started.
   ;; Install packages listed in global 'package-my-package-list'
   (interactive)
   (package-install-list package-my-package-list))
+#+END_SRC
+
+* smex
+
+See https://github.com/nonsequitur/smex - Ido extension for previously
+used extended commands. Installed using elpa.
+
+#+BEGIN_SRC elisp
+(if (package-installed-p 'smex)
+    (progn
+      (global-set-key (kbd "M-x") 'smex)
+      (global-set-key (kbd "C-M-x") 'smex-major-mode-commands)
+      ;; This is your old M-x.
+      (global-set-key (kbd "C-c M-x") 'execute-extended-command)))
 #+END_SRC
 
 * Various aliases and key bindings
@@ -459,7 +474,18 @@ See http://www.emacswiki.org/emacs/SmoothScrolling
 (setq scroll-margin 2)                              ;; Start scrolling when 2 lines from top/bottom
 #+END_SRC
 
-* Cursor Appearance.
+* Cursor movement and appearance.
+
+** ace-jump-mode
+
+A quick cursor location minor mode for emacs. I picked =M-'= as the
+key combo for activation. Installed from ELPA.
+
+#+BEGIN_SRC elisp
+(define-key global-map (kbd "M-'") 'ace-jump-mode)
+#+END_SRC
+
+** Prettier cursor
 
 #+BEGIN_SRC elisp
 (set-cursor-color "red")
@@ -548,6 +574,7 @@ selection.
 #+BEGIN_SRC elisp
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list)
 #+END_SRC
+
 ** Switch windows with arrow keys
 
 Note that other-window is bound by default to =C-x o=
@@ -627,6 +654,15 @@ Copied from http://www.emacswiki.org/emacs/ToggleWindowSplit (submitted by Wilfr
 
 #+BEGIN_SRC elisp
 (setq split-height-threshold nil)
+#+END_SRC
+
+** ace-jump-buffer
+
+Quickly jump to another buffer by selecting a letter from a pop-up
+menu (bind to =M-"=).
+
+#+BEGIN_SRC elisp
+(define-key global-map (kbd "M-\"") 'ace-jump-buffer)
 #+END_SRC
 
 * spelling
@@ -1504,15 +1540,6 @@ rm -r lockstep-master master.zip
 
 To use, attach emacsclient to a running emacs server and evaluate =M-x lockstep=.
 After this, a second user can do the same.
-
-* ace-jump-mode
-
-A quick cursor location minor mode for emacs. I picked =M-'= as the
-key combo for activation. Installed from ELPA.
-
-#+BEGIN_SRC elisp
-(define-key global-map (kbd "M-'") 'ace-jump-mode)
-#+END_SRC
 
 * enable commands
 

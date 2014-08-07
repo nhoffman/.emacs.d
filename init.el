@@ -46,6 +46,7 @@
 
 (defvar package-my-package-list
   '(ace-jump-mode
+    ace-jump-buffer
     auctex
     edit-server
     elpy
@@ -71,6 +72,13 @@
   ;; Install packages listed in global 'package-my-package-list'
   (interactive)
   (package-install-list package-my-package-list))
+
+(if (package-installed-p 'smex)
+    (progn
+      (global-set-key (kbd "M-x") 'smex)
+      (global-set-key (kbd "C-M-x") 'smex-major-mode-commands)
+      ;; This is your old M-x.
+      (global-set-key (kbd "C-c M-x") 'execute-extended-command)))
 
 (defalias 'dtw 'delete-trailing-whitespace)
 
@@ -189,6 +197,8 @@
 (setq scroll-conservatively 1)                      ;; scroll by one line to follow cursor off screen
 (setq scroll-margin 2)                              ;; Start scrolling when 2 lines from top/bottom
 
+(define-key global-map (kbd "M-'") 'ace-jump-mode)
+
 (set-cursor-color "red")
 (blink-cursor-mode 1)
 
@@ -274,6 +284,8 @@ Assumes that the frame is only split into two."
 (global-set-key (kbd "C-x 6") 'toggle-frame-split)
 
 (setq split-height-threshold nil)
+
+(define-key global-map (kbd "M-\"") 'ace-jump-buffer)
 
 (setq-default ispell-program-name "aspell")
 (setq ispell-dictionary "en")
@@ -742,8 +754,6 @@ following line."
 (setq ns-pop-up-frames nil)
 
 (require 'lockstep)
-
-(define-key global-map (kbd "M-'") 'ace-jump-mode)
 
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
