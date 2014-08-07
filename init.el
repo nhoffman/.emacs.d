@@ -76,9 +76,9 @@
 (if (package-installed-p 'smex)
     (progn
       (global-set-key (kbd "M-x") 'smex)
-      (global-set-key (kbd "C-M-x") 'smex-major-mode-commands)
+      (global-set-key (kbd "C-c M-x") 'smex-major-mode-commands)
       ;; This is your old M-x.
-      (global-set-key (kbd "C-c M-x") 'execute-extended-command)))
+      (global-set-key (kbd "C-x M-x") 'execute-extended-command)))
 
 (defalias 'dtw 'delete-trailing-whitespace)
 
