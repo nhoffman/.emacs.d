@@ -503,7 +503,6 @@ necessary."
    (setq elpy-rpc-backend "jedi")
    (add-to-list 'elpy-project-ignored-directories "src")
    (add-to-list 'elpy-project-ignored-directories "*-env")
-   (my/activate-venv-default)
 ))
 
 (defun scons-insert-command ()
