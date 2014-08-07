@@ -481,10 +481,17 @@ necessary."
 (add-hook 'elpy-mode-hook
 '(lambda ()
    (define-key elpy-mode-map (kbd "C-<right>") nil)
+   (define-key elpy-mode-map (kbd "C-<left>") nil)
+   (define-key elpy-mode-map (kbd "M-<right>") nil)
+   (define-key elpy-mode-map (kbd "M-<left>") nil)
+   (define-key elpy-mode-map (kbd "M-<right>") nil)
+   (define-key elpy-mode-map (kbd "M-C-]") 'elpy-nav-move-iblock-right)
+   (define-key elpy-mode-map (kbd "M-C-[") 'elpy-nav-move-iblock-left)
    (setq elpy-rpc-backend "jedi")
    (add-to-list 'elpy-project-ignored-directories "src")
-   (add-to-list 'elpy-project-ignored-directories "*-env")))
+   (add-to-list 'elpy-project-ignored-directories "*-env")
    (my/activate-venv-default)
+))
 
 (defun scons-insert-command ()
   (interactive)
