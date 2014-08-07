@@ -198,47 +198,49 @@ time, you must be sure that the builtin version of org-mode has not
 been loaded since emacs was first started.
 
 #+BEGIN_SRC elisp
-  (defun package-installed-not-builtin-p (package &optional min-version)
-    "Return true if PACKAGE, of MIN-VERSION or newer, is installed,
-    ignoring built in packages.  MIN-VERSION should be a version list."
-    (let ((pkg-desc (assq package package-alist)))
-      (if pkg-desc
-          (version-list-<= min-version (package-desc-vers (cdr pkg-desc))))))
+(defun package-installed-not-builtin-p (package &optional min-version)
+  "Return true if PACKAGE, of MIN-VERSION or newer, is installed,
+  ignoring built in packages.  MIN-VERSION should be a version list."
+  (let ((pkg-desc (assq package package-alist)))
+    (if pkg-desc
+        (version-list-<= min-version (package-desc-vers (cdr pkg-desc))))))
 
-  (defun package-install-list (pkg-list)
-    ;; Install each package in pkg-list if necessary.
-    (mapcar
-     (lambda (pkg)
-       (unless (package-installed-not-builtin-p pkg)
-         (package-install pkg)))
-     pkg-list)
-    (message "done installing packages"))
+(defun package-install-list (pkg-list)
+  ;; Install each package in pkg-list if necessary.
+  (mapcar
+   (lambda (pkg)
+     (unless (package-installed-not-builtin-p pkg)
+       (package-install pkg)))
+   pkg-list)
+  (message "done installing packages"))
 
-  (defvar package-my-package-list
-    '(auctex
-      edit-server
-      elpy
-      ess
-      ;; flymake-cursor
-      ;; flycheck
-      ;; flycheck-color-mode-line
-      gist
-      htmlize
-      ;; jedi
-      jinja2-mode
-      magit
-      markdown-mode
-      moinmoin-mode
-      org
-      ;; python-pylint
-      ;; projectile
-      rainbow-delimiters
-      yaml-mode))
+(defvar package-my-package-list
+  '(ace-jump-mode
+    auctex
+    edit-server
+    elpy
+    ess
+    ;; flymake-cursor
+    ;; flycheck
+    ;; flycheck-color-mode-line
+    gist
+    git-timemachine
+    htmlize
+    ;; jedi
+    jinja2-mode
+    magit
+    markdown-mode
+    moinmoin-mode
+    org
+    ;; python-pylint
+    ;; projectile
+    rainbow-delimiters
+    yaml-mode))
 
-  (defun package-install-my-packages ()
-    ;; Install packages listed in global 'package-my-package-list'
-    (interactive)
-    (package-install-list package-my-package-list))
+(defun package-install-my-packages ()
+  ;; Install packages listed in global 'package-my-package-list'
+  (interactive)
+  (package-install-list package-my-package-list))
 #+END_SRC
 
 * Various aliases and key bindings
@@ -714,7 +716,6 @@ org-mode hooks
                   (sh . t)
                   (sql . t)
                   (sqlite . t)
-                  (pygment . t)
                   ))
                ;; (defun org-with-silent-modifications(&rest args)
                ;;   "Replaces function causing error on org-export"
@@ -1507,19 +1508,9 @@ After this, a second user can do the same.
 * ace-jump-mode
 
 A quick cursor location minor mode for emacs. I picked =M-'= as the
-key combo for activation.
-
-Installation (not on ELPA, alas):
-
-#+BEGIN_SRC sh :eval no :exports code
-wget -q https://raw.githubusercontent.com/winterTTr/ace-jump-mode/master/ace-jump-mode.el -O ~/.emacs.d/ace-jump-mode.el
-#+END_SRC
-
-Activation
+key combo for activation. Installed from ELPA.
 
 #+BEGIN_SRC elisp
-(autoload
-  'ace-jump-mode "~/.emacs.d/ace-jump-mode.el" "Emacs quick move minor mode" t)
 (define-key global-map (kbd "M-'") 'ace-jump-mode)
 #+END_SRC
 

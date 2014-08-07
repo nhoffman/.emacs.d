@@ -45,7 +45,8 @@
   (message "done installing packages"))
 
 (defvar package-my-package-list
-  '(auctex
+  '(ace-jump-mode
+    auctex
     edit-server
     elpy
     ess
@@ -53,6 +54,7 @@
     ;; flycheck
     ;; flycheck-color-mode-line
     gist
+    git-timemachine
     htmlize
     ;; jedi
     jinja2-mode
@@ -324,7 +326,6 @@ Assumes that the frame is only split into two."
                 (sh . t)
                 (sql . t)
                 (sqlite . t)
-                (pygment . t)
                 ))
              ;; (defun org-with-silent-modifications(&rest args)
              ;;   "Replaces function causing error on org-export"
@@ -742,8 +743,6 @@ following line."
 
 (require 'lockstep)
 
-(autoload
-  'ace-jump-mode "~/.emacs.d/ace-jump-mode.el" "Emacs quick move minor mode" t)
 (define-key global-map (kbd "M-'") 'ace-jump-mode)
 
 (put 'downcase-region 'disabled nil)
