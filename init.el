@@ -322,6 +322,7 @@ Assumes that the frame is only split into two."
              ;; (font-lock-mode)
              (setq org-confirm-babel-evaluate nil)
              (setq org-src-fontify-natively t)
+             (setq org-edit-src-content-indentation 0)
              (define-key org-mode-map (kbd "M-<right>") 'forward-word)
              (define-key org-mode-map (kbd "M-<left>") 'backward-word)
              ;; provides key mapping for the above; replaces default
@@ -346,8 +347,7 @@ Assumes that the frame is only split into two."
                "Move to bottom of page after entering org-todo-list"
                (progn (end-of-buffer) (recenter-top-bottom)))
              (ad-activate 'org-todo-list)
-             )
-          )
+             ))
 
 (setq org-agenda-files (list "~/Dropbox/notes/index.org"))
 (push '("\\.org\\'" . org-mode) auto-mode-alist)

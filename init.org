@@ -730,42 +730,42 @@ Hooks
 org-mode hooks
 
 #+BEGIN_SRC elisp
-  (add-hook 'org-mode-hook
-            '(lambda ()
-               (message "Loading org-mode hooks")
-               ;; (font-lock-mode)
-               (setq org-confirm-babel-evaluate nil)
-               (setq org-src-fontify-natively t)
-               (define-key org-mode-map (kbd "M-<right>") 'forward-word)
-               (define-key org-mode-map (kbd "M-<left>") 'backward-word)
-               ;; provides key mapping for the above; replaces default
-               ;; key bindings for org-promote/demote-subtree
-               (define-key org-mode-map (kbd "M-S-<right>") 'org-do-demote)
-               (define-key org-mode-map (kbd "M-S-<left>") 'org-do-promote)
-               (visual-line-mode)
-               ;; org-babel
-               (org-babel-do-load-languages
-                'org-babel-load-languages
-                '((R . t)
-                  (latex . t)
-                  (python . t)
-                  (sh . t)
-                  (sql . t)
-                  (sqlite . t)
-                  ))
-               ;; (defun org-with-silent-modifications(&rest args)
-               ;;   "Replaces function causing error on org-export"
-               ;;   (message "Using fake 'org-with-silent-modifications'"))
-               (defadvice org-todo-list (after org-todo-list-bottom ())
-                 "Move to bottom of page after entering org-todo-list"
-                 (progn (end-of-buffer) (recenter-top-bottom)))
-               (ad-activate 'org-todo-list)
-               )
-            )
+(add-hook 'org-mode-hook
+          '(lambda ()
+             (message "Loading org-mode hooks")
+             ;; (font-lock-mode)
+             (setq org-confirm-babel-evaluate nil)
+             (setq org-src-fontify-natively t)
+             (setq org-edit-src-content-indentation 0)
+             (define-key org-mode-map (kbd "M-<right>") 'forward-word)
+             (define-key org-mode-map (kbd "M-<left>") 'backward-word)
+             ;; provides key mapping for the above; replaces default
+             ;; key bindings for org-promote/demote-subtree
+             (define-key org-mode-map (kbd "M-S-<right>") 'org-do-demote)
+             (define-key org-mode-map (kbd "M-S-<left>") 'org-do-promote)
+             (visual-line-mode)
+             ;; org-babel
+             (org-babel-do-load-languages
+              'org-babel-load-languages
+              '((R . t)
+                (latex . t)
+                (python . t)
+                (sh . t)
+                (sql . t)
+                (sqlite . t)
+                ))
+             ;; (defun org-with-silent-modifications(&rest args)
+             ;;   "Replaces function causing error on org-export"
+             ;;   (message "Using fake 'org-with-silent-modifications'"))
+             (defadvice org-todo-list (after org-todo-list-bottom ())
+               "Move to bottom of page after entering org-todo-list"
+               (progn (end-of-buffer) (recenter-top-bottom)))
+             (ad-activate 'org-todo-list)
+             ))
 
-  (setq org-agenda-files (list "~/Dropbox/notes/index.org"))
-  (push '("\\.org\\'" . org-mode) auto-mode-alist)
-  (push '("\\.org\\.txt\\'" . org-mode) auto-mode-alist)
+(setq org-agenda-files (list "~/Dropbox/notes/index.org"))
+(push '("\\.org\\'" . org-mode) auto-mode-alist)
+(push '("\\.org\\.txt\\'" . org-mode) auto-mode-alist)
 #+END_SRC
 
 Custom key bindings
