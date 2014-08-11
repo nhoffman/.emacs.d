@@ -186,10 +186,6 @@
 
 (fix-frame)
 
-(add-hook 'server-visit-hook
-          '(lambda ()
-             (fix-frame)))
-
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; number of lines at a time
 (setq mouse-wheel-progressive-speed nil)            ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mosue 't)                  ;; scroll window under mouse
