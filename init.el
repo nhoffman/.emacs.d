@@ -484,10 +484,11 @@ necessary."
         (deps '("jedi")))
     (generate-new-buffer dest)
     (mapcar
-     '(lambda (pkg)
-        (message (format install-cmd pkg))
-        (call-process-shell-command (format install-cmd pkg) nil dest)) deps)
-    (call-process-shell-command (format "%s/bin/pip freeze" pyvenv-virtual-env) nil dest)
+     #'(lambda (pkg)
+         (message (format install-cmd pkg))
+         (call-process-shell-command (format install-cmd pkg) nil dest)) deps)
+    (call-process-shell-command
+     (format "%s/bin/pip freeze" pyvenv-virtual-env) nil dest)
     (switch-to-buffer dest)
     ))
 

@@ -22,7 +22,7 @@ el, = env.Command(
     source=org_file,
     action=('$emacs --batch --eval '
             '\'(progn (require (quote package))(package-initialize)'
-            '(find-file "$SOURCE")(org-mode)(org-babel-tangle))\'')
+            '(find-file "$SOURCE")(org-mode)(print org-version)(org-babel-tangle))\'')
 )
 Alias('tangle', el)
 Default(el)
