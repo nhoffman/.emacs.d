@@ -66,6 +66,7 @@
     ;; python-pylint
     ;; projectile
     rainbow-delimiters
+    smex
     yaml-mode))
 
 (defun package-install-my-packages ()

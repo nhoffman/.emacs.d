@@ -236,6 +236,7 @@ been loaded since emacs was first started.
     ;; python-pylint
     ;; projectile
     rainbow-delimiters
+    smex
     yaml-mode))
 
 (defun package-install-my-packages ()
