@@ -66,7 +66,9 @@
     ;; python-pylint
     ;; projectile
     rainbow-delimiters
-    yaml-mode))
+    smex
+    yaml-mode
+    yas-jit))
 
 (defun package-install-my-packages ()
   ;; Install packages listed in global 'package-my-package-list'
