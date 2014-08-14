@@ -67,8 +67,12 @@
     ;; projectile
     rainbow-delimiters
     smex
+<<<<<<< HEAD
     yaml-mode
     yas-jit))
+=======
+    yaml-mode))
+>>>>>>> 04bcfddadd1a9c931b8cea5d70966bb39a9ab69c
 
 (defun package-install-my-packages ()
   ;; Install packages listed in global 'package-my-package-list'
