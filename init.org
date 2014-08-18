@@ -59,7 +59,7 @@ configuration. First, launch Emacs; I'd recommend launching without
 emacs-desktop, for example =emacs -nw --no-desktop=. From within
 Emacs, fetch the list of packages with =M-x
 package-list-packages=. Finally, install the specified packages with
-=M-x package-install-my-packages=. At this point it's usually a good
+=M-x my/install-packages=. At this point it's usually a good
 idea to quit and relaunch Emacs.
 
 ** create virtualenv
@@ -135,11 +135,11 @@ GitHub.
 If you want to reload the init file after a change, here's a function to do so:
 
 #+BEGIN_SRC elisp
-(defun init-load ()
+(defun my/init-load ()
   "Load ~/.emacs.d/init.el"
   (interactive)
   (load "~/.emacs.d/init.el"))
-(global-set-key (kbd "M-C-i") 'init-load)
+(global-set-key (kbd "M-C-i") 'my/init-load)
 #+END_SRC
 
 * Startup
@@ -191,30 +191,30 @@ Add some extra package repositories. The default value of package-archives is
 
 I could not find an obvious way to define a list of packages to
 automatically install, so here are some functions to do so. Execute
-=M-x package-install-my-packages= interactively to install any missing
+=M-x my/install-packages= interactively to install any missing
 packages. It seems to be necessary to run =M-x package-list-packages=
 first. Note that when installing org-mode from elpa for the first
 time, you must be sure that the builtin version of org-mode has not
 been loaded since emacs was first started.
 
 #+BEGIN_SRC elisp
-(defun package-installed-not-builtin-p (package &optional min-version)
+(defun my/package-installed-not-builtin-p (package &optional min-version)
   "Return true if PACKAGE, of MIN-VERSION or newer, is installed,
   ignoring built in packages.  MIN-VERSION should be a version list."
   (let ((pkg-desc (assq package package-alist)))
     (if pkg-desc
         (version-list-<= min-version (package-desc-vers (cdr pkg-desc))))))
 
-(defun package-install-list (pkg-list)
+(defun my/package-install-list (pkg-list)
   ;; Install each package in pkg-list if necessary.
   (mapcar
    (lambda (pkg)
-     (unless (package-installed-not-builtin-p pkg)
+     (unless (my/package-installed-not-builtin-p pkg)
        (package-install pkg)))
    pkg-list)
   (message "done installing packages"))
 
-(defvar package-my-package-list
+(defvar my-package-list
   '(ace-jump-mode
     ace-jump-buffer
     auctex
@@ -240,10 +240,10 @@ been loaded since emacs was first started.
     yaml-mode
     yas-jit))
 
-(defun package-install-my-packages ()
-  ;; Install packages listed in global 'package-my-package-list'
+(defun my/install-packages ()
+  ;; Install packages listed in global 'my-package-list'
   (interactive)
-  (package-install-list package-my-package-list))
+  (my/package-install-list my-package-list))
 #+END_SRC
 
 * smex
@@ -513,17 +513,17 @@ Save desktop periodically instead of just on exit, but not if emacs is
 started with =--no-desktop=
 
 #+BEGIN_SRC elisp
-  (defun desktop-save-no-p ()
-    "Save desktop without prompting (replaces `desktop-save-in-desktop-dir')"
-    (interactive)
-    (message (format "Saving desktop in %s" desktop-dirname))
-    (desktop-save desktop-dirname))
+(defun desktop-save-no-p ()
+  "Save desktop without prompting (replaces `desktop-save-in-desktop-dir')"
+  (interactive)
+  (message (format "Saving desktop in %s" desktop-dirname))
+  (desktop-save desktop-dirname))
 
-  (if (not (member "--no-desktop" command-line-args))
-      (progn
-        (desktop-save-mode 1)
-        (message "Enabling desktop auto-save")
-        (add-hook 'auto-save-hook 'desktop-save-no-p)))
+(if (not (member "--no-desktop" command-line-args))
+    (progn
+      (desktop-save-mode 1)
+      (message "Enabling desktop auto-save")
+      (add-hook 'auto-save-hook 'desktop-save-no-p)))
 #+END_SRC
 
 * Move lines up and down with arrow keys
@@ -769,11 +769,11 @@ Custom key bindings
 ** org-mode utilities
 
 #+BEGIN_SRC elisp
-(defun insert-date ()
+(defun my/insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
   (interactive)
   (insert (format-time-string "<%Y-%m-%d %a>")))
-(global-set-key (kbd "C-c d") 'insert-date)
+(global-set-key (kbd "C-c d") 'my/insert-date)
 #+END_SRC
 
 #+BEGIN_SRC elisp
@@ -1453,22 +1453,22 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
 ** copy-and-comment
 
 #+BEGIN_SRC elisp
-  (defun copy-and-comment ()
-    "Comment active region and paste uncommented text on the
-  following line."
-    (interactive)
-    (kill-new
-     (buffer-substring
-      (region-beginning)
-      (region-end)))
-    (comment-region (region-beginning)
-                    (region-end))
-    (goto-char (region-end))
-    (delete-blank-lines)
-    (newline 2)
-    (yank))
+(defun my/copy-and-comment ()
+  "Comment active region and paste uncommented text on the
+following line."
+  (interactive)
+  (kill-new
+   (buffer-substring
+    (region-beginning)
+    (region-end)))
+  (comment-region (region-beginning)
+                  (region-end))
+  (goto-char (region-end))
+  (delete-blank-lines)
+  (newline 2)
+  (yank))
 
-  (global-set-key (kbd "M-C-;") 'copy-and-comment)
+(global-set-key (kbd "M-C-;") 'my/copy-and-comment)
 #+END_SRC
 
 ** unfill-paragraph
@@ -1476,23 +1476,23 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
 from http://defindit.com/readme_files/emacs_hints_tricks.html
 
 #+BEGIN_SRC elisp
-(defun unfill-paragraph ()
+(defun my/unfill-paragraph ()
   (interactive)
   (let ((fill-column (point-max)))
   (fill-paragraph nil)))
-(global-set-key (kbd "M-C-q") 'unfill-paragraph)
+(global-set-key (kbd "M-C-q") 'my/unfill-paragraph)
 #+END_SRC
 
 ** occur-region
 
-Note that occur can be executed using "M-s o"
+Note that =occur= can be executed using "M-s o"
 
 #+BEGIN_SRC elisp
-(defun occur-region () (interactive)
+(defun my/occur-region () (interactive)
   "Run `occur` using the current region."
   (occur
    (buffer-substring (region-beginning) (region-end))))
-(global-set-key (kbd "M-s r") 'occur-region)
+(global-set-key (kbd "M-s r") 'my/occur-region)
 #+END_SRC
 
 * elisp-format
