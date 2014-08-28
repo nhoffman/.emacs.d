@@ -1,9 +1,9 @@
 
-(defun init-load ()
+(defun my/init-load ()
   "Load ~/.emacs.d/init.el"
   (interactive)
   (load "~/.emacs.d/init.el"))
-(global-set-key (kbd "M-C-i") 'init-load)
+(global-set-key (kbd "M-C-i") 'my/init-load)
 
 (unless (= emacs-major-version 24)
   (error "Emacs version 24 is required"))
@@ -28,23 +28,23 @@
        '("elpy" . "http://jorgenschaefer.github.io/packages/") t)
   )
 
-(defun package-installed-not-builtin-p (package &optional min-version)
+(defun my/package-installed-not-builtin-p (package &optional min-version)
   "Return true if PACKAGE, of MIN-VERSION or newer, is installed,
   ignoring built in packages.  MIN-VERSION should be a version list."
   (let ((pkg-desc (assq package package-alist)))
     (if pkg-desc
         (version-list-<= min-version (package-desc-vers (cdr pkg-desc))))))
 
-(defun package-install-list (pkg-list)
+(defun my/package-install-list (pkg-list)
   ;; Install each package in pkg-list if necessary.
   (mapcar
    (lambda (pkg)
-     (unless (package-installed-not-builtin-p pkg)
+     (unless (my/package-installed-not-builtin-p pkg)
        (package-install pkg)))
    pkg-list)
   (message "done installing packages"))
 
-(defvar package-my-package-list
+(defvar my-package-list
   '(ace-jump-mode
     ace-jump-buffer
     auctex
@@ -67,12 +67,13 @@
     ;; projectile
     rainbow-delimiters
     smex
-    yaml-mode))
+    yaml-mode
+    yas-jit))
 
-(defun package-install-my-packages ()
-  ;; Install packages listed in global 'package-my-package-list'
+(defun my/install-packages ()
+  ;; Install packages listed in global 'my-package-list'
   (interactive)
-  (package-install-list package-my-package-list))
+  (my/package-install-list my-package-list))
 
 (if (package-installed-p 'smex)
     (progn
@@ -352,11 +353,11 @@ Assumes that the frame is only split into two."
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 
-(defun insert-date ()
+(defun my/insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
   (interactive)
   (insert (format-time-string "<%Y-%m-%d %a>")))
-(global-set-key (kbd "C-c d") 'insert-date)
+(global-set-key (kbd "C-c d") 'my/insert-date)
 
 (defun org-add-entry (filename time-format)
   ;; Add an entry to an org-file with today's timestamp.
@@ -715,7 +716,7 @@ This is used to set `sql-alternate-buffer-name' within
   (interactive)
   (kill-new buffer-file-name t))
 
-(defun copy-and-comment ()
+(defun my/copy-and-comment ()
   "Comment active region and paste uncommented text on the
 following line."
   (interactive)
@@ -730,19 +731,19 @@ following line."
   (newline 2)
   (yank))
 
-(global-set-key (kbd "M-C-;") 'copy-and-comment)
+(global-set-key (kbd "M-C-;") 'my/copy-and-comment)
 
-(defun unfill-paragraph ()
+(defun my/unfill-paragraph ()
   (interactive)
   (let ((fill-column (point-max)))
   (fill-paragraph nil)))
-(global-set-key (kbd "M-C-q") 'unfill-paragraph)
+(global-set-key (kbd "M-C-q") 'my/unfill-paragraph)
 
-(defun occur-region () (interactive)
+(defun my/occur-region () (interactive)
   "Run `occur` using the current region."
   (occur
    (buffer-substring (region-beginning) (region-end))))
-(global-set-key (kbd "M-s r") 'occur-region)
+(global-set-key (kbd "M-s r") 'my/occur-region)
 
 (condition-case nil
     (require 'elisp-format)
