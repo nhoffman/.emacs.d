@@ -50,6 +50,60 @@ if [[ -f ~/.emacs.d/init.bash ]]; then
 fi
 #+END_SRC
 
+** option as Meta on a Mac
+
+I use Emacs from a variety of terminal types on my machines running OS
+X:
+
+- the Cocoa version when working locally
+- X11 when working remotely over a fast connection
+- a terminal application when working remotely over a slow connection
+
+I have done my best to configure all three to provide an experience
+that's as comparable as possible. Here are some configuration
+suggestions to use the option key as Meta (as opposed to Esc, which is
+just insane).
+
+*** Cocoa
+
+I just download it from http://emacsformacosx.com/ - as far as I can
+tell, option is used as Meta by default.
+
+*** X11
+
+I use [[http://xquartz.macosforge.org/downloads/SL/XQuartz-2.7.7.dmg][XQuartz]]
+
+Create the file ~/.Xmodmap as follows to use option as Meta in X11
+(you'll need to quit X11 for the changes to take effect):
+
+#+BEGIN_SRC sh
+cat > ~/.Xmodmap <<EOF
+clear Mod1
+clear Mod2
+keycode 63 = Mode_switch
+keycode 66 = Meta_L
+add Mod1 = Meta_L
+add Mod2 = Mode_switch
+EOF
+#+END_SRC
+
+[[http://tylerkieft.com/archives/2006/10/05/redefine-the-x11-meta-key-in-mac-os-x/][This post]] has more information on configuring X11.
+
+*** Terminal
+
+I prefer [[http://iterm2.com/][iTerm2]] over Terminal.app
+
+Head over to Preferences --> Profiles --> Keys and do these things:
+
+- select "Left/right option key acts as": +Esc (to use option as Meta)
+- + --> Keyboard shortcut "OPT+<left arrow>": Send Escape sequence "b"
+- + --> Keyboard shortcut "OPT+<right arrow>": Send Escape sequence "f"
+
+The last two items cause option plus the right and left arrows to
+perform the same actions as =M-f= (=forward-word=) and =M-b=
+(=backward-word=) in both Emacs and in contexts that support default
+readline key bindings (which is [[https://coderwall.com/p/usc8qg][just about everywhere]]).
+
 ** install packages from ELPA
 
 The only required step to use this configuration is to install
