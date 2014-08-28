@@ -73,6 +73,7 @@
 (defun my/install-packages ()
   ;; Install packages listed in global 'my-package-list'
   (interactive)
+  (package-list-packages)
   (my/package-install-list my-package-list))
 
 (if (package-installed-p 'smex)
@@ -93,11 +94,14 @@
 ;; (setq debug-on-error t)
 ;; (setq debug-on-signal t)
 
+(menu-bar-mode -1) ;; hide menu bar
+(tool-bar-mode -1) ;; hide tool bar
+(scroll-bar-mode -1) ;; hide scroll bar
 (setq column-number-mode t)
 (setq inhibit-splash-screen t)
 (setq require-final-newline t)
-(setq make-backup-files nil) ;; no backup files
-(setq initial-scratch-message nil) ;; no instructions in the *scratch* buffer
+(setq make-backup-files nil)
+(setq initial-scratch-message nil)
 (setq suggest-key-bindings 4)
 (show-paren-mode 1)
 
@@ -107,7 +111,7 @@
 
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
-        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+            '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
 (global-auto-revert-mode 1)
 
@@ -115,20 +119,20 @@
 
 (add-to-list 'load-path "~/.emacs.d/")
 
-(defun ssh-refresh ()
- "Reset the environment variable SSH_AUTH_SOCK"
- (interactive)
- (setq ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))
- (setenv "SSH_AUTH_SOCK"
-         (car (split-string
-               (shell-command-to-string
-                (if (eq system-type 'darwin)
-                    "ls -t $(find /tmp/* -user $USER -name Listeners 2> /dev/null)"
-                  "ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2> /dev/null)"
-                  )))))
- (message
-  (format "SSH_AUTH_SOCK %s --> %s"
-          ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))))
+(defun my/ssh-refresh ()
+  "Reset the environment variable SSH_AUTH_SOCK"
+  (interactive)
+  (setq ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))
+  (setenv "SSH_AUTH_SOCK"
+          (car (split-string
+                (shell-command-to-string
+                 (if (eq system-type 'darwin)
+                     "ls -t $(find /tmp/* -user $USER -name Listeners 2> /dev/null)"
+                   "ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2> /dev/null)"
+                   )))))
+  (message
+   (format "SSH_AUTH_SOCK %s --> %s"
+           ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))))
 
 ;; (when (memq window-system '(mac ns))
 ;;   (exec-path-from-shell-initialize))
@@ -142,51 +146,37 @@
 (setq delete-trailing-lines nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(defun fix-frame ()
+(defun my/set-default-font-verbosely (font-name)
   (interactive)
-  (menu-bar-mode -1) ;; hide menu bar
-  (tool-bar-mode -1) ;; hide tool bar
-  (scroll-bar-mode -1) ;; hide scroll bar
+  (message (format "** setting default font to %s" font-name))
+  (condition-case nil
+      (set-default-font font-name)
+    (error (message (format "** could not set to font %s" font-name)))))
+
+(defun my/fix-frame ()
+  "Apply platform-specific settings."
+  (interactive)
   (cond ((string= "ns" window-system) ;; cocoa
-         (progn (message (format "** running %s windowing system" window-system))
-                ;; key bindings for mac - see
-                ;; http://stuff-things.net/2009/01/06/emacs-on-the-mac/
-                ;; http://osx.iusethis.com/app/carbonemacspackage
-                (set-keyboard-coding-system 'mac-roman)
-                (setq mac-option-modifier 'meta)
-                (setq mac-command-key-is-meta nil)
-                (setq my-default-font "Bitstream Vera Sans Mono-14")
-                ))
+         (progn
+           (message (format "** running %s windowing system" window-system))
+           ;; key bindings for mac - see
+           ;; http://stuff-things.net/2009/01/06/emacs-on-the-mac/
+           ;; http://osx.iusethis.com/app/carbonemacspackage
+           (set-keyboard-coding-system 'mac-roman)
+           (setq mac-option-modifier 'meta)
+           (setq mac-command-key-is-meta nil)
+           (my/set-default-font-verbosely "Bitstream Vera Sans Mono-14")))
         ((string= "x" window-system)
          (progn
            (message (format "** running %s windowing system" window-system))
-           (setq my-default-font "Liberation Mono-10")
+           (my/set-default-font-verbosely "Liberation Mono-10")
            ;; M-w or C-w copies to system clipboard
            ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
-           (setq x-select-enable-clipboard t)
-           ))
+           (setq x-select-enable-clipboard t)))
         (t
-         (progn
-           (message "** running unknown windowing system")
-           (setq my-default-font nil)
-           ))
-        )
+         (message "** running in terminal mode"))))
 
-  (unless (equal window-system nil)
-    (message (format "** setting default font to %s" my-default-font))
-    (condition-case nil
-        (set-default-font my-default-font)
-      (error (message (format "** could not set to font %s" my-default-font))))
-    )
-  )
-
-(defun font-dejavu ()
-  ;; set default font to dejavu sans mono-11
-  (interactive)
-  (set-default-font "dejavu sans mono-11")
-  )
-
-(fix-frame)
+(my/fix-frame)
 
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; number of lines at a time
 (setq mouse-wheel-progressive-speed nil)            ;; don't accelerate scrolling
@@ -648,7 +638,7 @@ necessary."
 (setq sql-sqlite-program "sqlite3")
 
 (setq sql-connection-alist
-      '((filemaker-sps
+      '((some-server
          (sql-product 'mysql)
          (sql-server "1.2.3.4")
          (sql-user "me")
@@ -711,7 +701,7 @@ This is used to set `sql-alternate-buffer-name' within
 ;; commands are prefixed with C-c o
 (global-set-key (kbd "C-c o") cm-map)
 
-(defun copy-buffer-file-name ()
+(defun my/copy-buffer-file-name ()
   "Add `buffer-file-name' to `kill-ring'"
   (interactive)
   (kill-new buffer-file-name t))
