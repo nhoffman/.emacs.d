@@ -94,9 +94,6 @@
 ;; (setq debug-on-error t)
 ;; (setq debug-on-signal t)
 
-(menu-bar-mode -1) ;; hide menu bar
-(tool-bar-mode -1) ;; hide tool bar
-(scroll-bar-mode -1) ;; hide scroll bar
 (setq column-number-mode t)
 (setq inhibit-splash-screen t)
 (setq require-final-newline t)
@@ -153,9 +150,12 @@
       (set-default-font font-name)
     (error (message (format "** could not set to font %s" font-name)))))
 
-(defun my/fix-frame ()
+(defun my/fix-frame (&optional frame)
   "Apply platform-specific settings."
   (interactive)
+  (menu-bar-mode -1)    ;; hide menu bar
+  (tool-bar-mode -1)    ;; hide tool bar
+  (scroll-bar-mode -1)  ;; hide scroll bar
   (cond ((string= "ns" window-system) ;; cocoa
          (progn
            (message (format "** running %s windowing system" window-system))
@@ -177,6 +177,11 @@
          (message "** running in terminal mode"))))
 
 (my/fix-frame)
+
+;; invoked when emacsclient is called with file as an argument
+(add-hook 'server-visit-hook
+          '(lambda ()
+            (my/fix-frame)))
 
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; number of lines at a time
 (setq mouse-wheel-progressive-speed nil)            ;; don't accelerate scrolling
