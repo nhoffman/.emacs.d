@@ -532,17 +532,17 @@ necessary."
 (global-set-key (kbd "C-x M-g") 'ibuffer-switch-to-saved-filter-groups)
 (setq ibuffer-show-empty-filter-groups nil)
 
-(setq ibuffer-config-file "~/.emacs.d/ibuffer-config.el")
+(defvar my-ibuffer-config-file "~/.emacs.d/ibuffer-config.el")
 
 (defun ibuffer-load-config ()
   ;; load the ibuffer config file
   (interactive)
   (condition-case nil
       (progn
-        (message (format "** loading ibuffer config in %s" ibuffer-config-file))
-        (load ibuffer-config-file)
+        (message (format "** loading ibuffer config in %s" my-ibuffer-config-file))
+        (load my-ibuffer-config-file)
         )
-    (error (message (format "** could not load %s" ibuffer-config-file))))
+    (error (message (format "** could not load %s" my-ibuffer-config-file))))
   )
 
 (ibuffer-load-config)
