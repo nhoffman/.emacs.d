@@ -376,11 +376,24 @@ see http://www.cs.cmu.edu/cgi-bin/info2www?(emacs)Reverting
 (global-auto-revert-mode 1)
 #+END_SRC
 
-Add paths to 'exec-path' so that emacs can find executables not
+Add paths to 'exec-path' so that Emacs can find executables not
 otherwise defined in PATH.
 
 #+BEGIN_SRC elisp
 (add-to-list 'exec-path "~/.emacs.d/bin")
+#+END_SRC
+
+Also update the =$PATH= environment variable inherited by shell
+commands run from within Emacs.
+
+#+BEGIN_SRC elisp
+(defun my/prepend-path (path)
+  "Add `path' to the beginning of $PATH unless already present."
+  (interactive)
+  (unless (string-match path (getenv "PATH"))
+    (setenv "PATH" (concat path ":" (getenv "PATH")))))
+
+(my/prepend-path "~/.emacs.d/bin")
 #+END_SRC
 
 * Environment
@@ -878,16 +891,16 @@ Installed using elpa.
 ** hooks
 
 #+BEGIN_SRC elisp
-  (add-hook 'python-mode-hook
-            '(lambda ()
-               (message "Loading python-mode hooks")
-               (setq indent-tabs-mode nil)
-               (setq tab-width 4)
-               (setq py-indent-offset tab-width)
-               (setq py-smart-indentation t)
-               (define-key python-mode-map "\C-m" 'newline-and-indent)
-               (setq python-check-command "~/.emacs.d/bin/pychecker")
-               ))
+(add-hook 'python-mode-hook
+          '(lambda ()
+             (message "Loading python-mode hooks")
+             (setq indent-tabs-mode nil)
+             (setq tab-width 4)
+             (setq py-indent-offset tab-width)
+             (setq py-smart-indentation t)
+             (define-key python-mode-map "\C-m" 'newline-and-indent)
+             (setq python-check-command "~/.emacs.d/bin/pychecker")
+             ))
 #+END_SRC
 
 File name mappings
@@ -1015,30 +1028,29 @@ Error codes are listed here: http://pep8.readthedocs.org/en/latest/intro.html#er
 
 And some configuration:
 #+BEGIN_SRC elisp :tangle inactive.el
-  (require 'flymake)
+(require 'flymake)
 
-  ;; TODO - first check if flymake-cursor is installed
-  (condition-case nil
-      (load-library "flymake-cursor") ;; install from elpa
-        (error (message "** flymake-cursor not installed")))
+;; TODO - first check if flymake-cursor is installed
+(condition-case nil
+    (load-library "flymake-cursor") ;; install from elpa
+      (error (message "** flymake-cursor not installed")))
 
-  ;; 'pychecker' script above installed in ~/.emacs.d/bin
-  (setq pycodechecker "pychecker")
+;; 'pychecker' script above installed in ~/.emacs.d/bin
+(setq pycodechecker "pychecker")
 
-  (when (load "flymake" t)
-    (defun flymake-pycodecheck-init ()
-      (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                         'flymake-create-temp-inplace))
-             (local-file (file-relative-name
-                          temp-file
-                          (file-name-directory buffer-file-name))))
-        (list pycodechecker (list local-file))))
-    (add-to-list 'flymake-allowed-file-name-masks
-                 '("\\.py\\'" flymake-pycodecheck-init))
-    (add-to-list 'flymake-allowed-file-name-masks
-                 '("SCons" flymake-pycodecheck-init)))
-
-  ;; (add-hook 'python-mode-hook 'flymake-mode)
+(when (load "flymake" t)
+  (defun flymake-pycodecheck-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list pycodechecker (list local-file))))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pycodecheck-init))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("SCons" flymake-pycodecheck-init)))
+;; (add-hook 'python-mode-hook 'flymake-mode)
 #+END_SRC
 
 ** elpy
@@ -1063,6 +1075,12 @@ to be available. Assuming elpy dependencies are installed in
   (interactive)
   (pyvenv-activate my/venv-default)
   (elpy-rpc-restart))
+#+END_SRC
+
+Also add executables in the default virtualenv to =$PATH=
+
+#+BEGIN_SRC elisp
+(my/prepend-path "~/.emacs.d/emacs-env/bin")
 #+END_SRC
 
 Here's a function that tries to activate a virtualenv in the current

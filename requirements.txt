@@ -1,4 +1,4 @@
-elpy
 autopep8
 jedi
+pyflakes
 ghp-import

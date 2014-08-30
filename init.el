@@ -114,6 +114,14 @@
 
 (add-to-list 'exec-path "~/.emacs.d/bin")
 
+(defun my/prepend-path (path)
+  "Add `path' to the beginning of $PATH unless already present."
+  (interactive)
+  (unless (string-match path (getenv "PATH"))
+    (setenv "PATH" (concat path ":" (getenv "PATH")))))
+
+(my/prepend-path "~/.emacs.d/bin")
+
 (add-to-list 'load-path "~/.emacs.d/")
 
 (defun my/ssh-refresh ()
@@ -435,6 +443,8 @@ Assumes that the frame is only split into two."
   (interactive)
   (pyvenv-activate my/venv-default)
   (elpy-rpc-restart))
+
+(my/prepend-path "~/.emacs.d/emacs-env/bin")
 
 (defun my/activate-venv ()
   "Activate a virtualenv if one can be found in the current
