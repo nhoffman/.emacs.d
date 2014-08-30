@@ -10,7 +10,7 @@
 	      	(filename . "/.ssh/"))
 	       ("zsh"
 	      	(filename . "/zsh/"))
-	       ("R help"
+	       ("Help"
 		(name . "\*help"))
 	       ("R processes"
 		(name . "\*R"))
