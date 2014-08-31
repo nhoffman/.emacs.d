@@ -595,10 +595,6 @@ References:
 - http://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html
 - http://www.emacswiki.org/emacs/DeskTop
 
-#+BEGIN_SRC elisp
-
-#+END_SRC
-
 Save desktop periodically instead of just on exit, but not if emacs is
 started with =--no-desktop=
 
