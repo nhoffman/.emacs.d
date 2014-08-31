@@ -156,6 +156,7 @@
     (message
      (format "SSH_AUTH_SOCK %s --> %s"
              ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))))
+(make-alias 'ssh-refresh)
 
 ;; (when (memq window-system '(mac ns))
 ;;   (exec-path-from-shell-initialize))
@@ -174,7 +175,7 @@
   (message (format "** setting default font to %s" font-name))
   (condition-case nil
       (set-default-font font-name)
-    (error (message (format "** could not set to font %s" font-name)))))
+    (error (message (format "** Error: could not set to font %s" font-name)))))
 
 (defun fix-frame (&optional frame)
   "Apply platform-specific settings."
@@ -201,10 +202,10 @@
            (setq x-select-enable-clipboard t)))
         (t
          (message "** running in terminal mode"))))
-
+(global-set-key (kbd "M-s f") 'fix-frame)
+(make-alias 'fix-frame)
 (fix-frame)
 
-;; invoked when emacsclient is called with file as an argument
 (add-hook 'server-visit-hook
           '(lambda ()
             (fix-frame)))
@@ -381,6 +382,7 @@ Assumes that the frame is only split into two."
   (interactive)
   (insert (format-time-string "<%Y-%m-%d %a>")))
 (global-set-key (kbd "C-c d") 'insert-date)
+(make-alias 'insert-date)
 
 (defun org-add-entry (filename time-format)
   ;; Add an entry to an org-file with today's timestamp.
@@ -463,6 +465,7 @@ Assumes that the frame is only split into two."
   (interactive)
   (pyvenv-activate venv-default)
   (elpy-rpc-restart))
+(make-alias 'activate-venv-default)
 
 (prepend-path "~/.emacs.d/emacs-env/bin")
 
@@ -492,6 +495,7 @@ project; otherwise activate the virtualenv defined in
           (pyvenv-activate venv)
           (elpy-rpc-restart)
           (message "Using %s" pyvenv-virtual-env)))))
+(make-alias 'activate-venv)
 
 (defun elpy-install-requirements ()
   "Install `elpy' and `jedi' to the current virtualenv. The
@@ -514,6 +518,7 @@ necessary."
      (format "%s/bin/pip freeze" pyvenv-virtual-env) nil dest)
     (switch-to-buffer dest)
     ))
+(make-alias 'elpy-install-requirements)
 
 (add-hook 'elpy-mode-hook
 '(lambda ()
@@ -536,6 +541,7 @@ necessary."
     source=,
     action=('')
 )"))
+(make-alias 'scons-insert-command)
 
 (add-hook 'text-mode-hook
           '(lambda ()
@@ -740,6 +746,7 @@ This is used to set `sql-alternate-buffer-name' within
   "Add `buffer-file-name' to `kill-ring'"
   (interactive)
   (kill-new buffer-file-name t))
+(make-alias 'copy-buffer-file-name)
 
 (defun copy-and-comment ()
   "Comment active region and paste uncommented text on the
@@ -763,6 +770,7 @@ following line."
   (let ((fill-column (point-max)))
   (fill-paragraph nil)))
 (global-set-key (kbd "M-C-q") 'unfill-paragraph)
+(make-alias 'unfill-paragraph)
 
 (defun occur-region () (interactive)
   "Run `occur` using the current region."

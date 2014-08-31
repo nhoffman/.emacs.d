@@ -453,6 +453,7 @@ function to fix this.
     (message
      (format "SSH_AUTH_SOCK %s --> %s"
              ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))))
+(make-alias 'ssh-refresh)
 #+END_SRC
 ** exec-path-from-shell
 
@@ -499,7 +500,7 @@ server process.
   (message (format "** setting default font to %s" font-name))
   (condition-case nil
       (set-default-font font-name)
-    (error (message (format "** could not set to font %s" font-name)))))
+    (error (message (format "** Error: could not set to font %s" font-name)))))
 
 (defun fix-frame (&optional frame)
   "Apply platform-specific settings."
@@ -526,10 +527,17 @@ server process.
            (setq x-select-enable-clipboard t)))
         (t
          (message "** running in terminal mode"))))
-
+(global-set-key (kbd "M-s f") 'fix-frame)
+(make-alias 'fix-frame)
 (fix-frame)
+#+END_SRC
 
-;; invoked when emacsclient is called with file as an argument
+=server-visit-hook= is invoked when emacsclient is called with a file
+as an argument; unfortunately, this hook is not run when emacsclient
+is not provided a file name argument, in which case fix-frame must be
+invoked manually.
+
+#+BEGIN_SRC elisp
 (add-hook 'server-visit-hook
           '(lambda ()
             (fix-frame)))
@@ -858,6 +866,7 @@ Custom key bindings
   (interactive)
   (insert (format-time-string "<%Y-%m-%d %a>")))
 (global-set-key (kbd "C-c d") 'insert-date)
+(make-alias 'insert-date)
 #+END_SRC
 
 #+BEGIN_SRC elisp
@@ -1102,6 +1111,7 @@ to be available. Assuming elpy dependencies are installed in
   (interactive)
   (pyvenv-activate venv-default)
   (elpy-rpc-restart))
+(make-alias 'activate-venv-default)
 #+END_SRC
 
 Also add executables in the default virtualenv to =$PATH=
@@ -1120,26 +1130,27 @@ project; otherwise activate the virtualenv defined in
 `venv-default'. Also restarts the elpy rpc process."
   (interactive)
   (let ((venv nil)
-	(find-pattern "find %s -path '*bin/activate' -maxdepth 4")
-	(msg ""))
+        (find-pattern "find %s -path '*bin/activate' -maxdepth 4")
+        (msg ""))
 
     (if (elpy-project-root)
-	(setq venv
-	      (replace-regexp-in-string
-	       "/bin/activate[ \t\n]*" ""
-	       (shell-command-to-string
-		(format find-pattern (elpy-project-root))))))
+        (setq venv
+              (replace-regexp-in-string
+               "/bin/activate[ \t\n]*" ""
+               (shell-command-to-string
+                (format find-pattern (elpy-project-root))))))
 
     (if (< (length venv) 1)
-	(progn
-	  (setq venv venv-default)
-	  (setq msg "(cound not find a virtualenv here) ")))
+        (progn
+          (setq venv venv-default)
+          (setq msg "(cound not find a virtualenv here) ")))
 
     (if (y-or-n-p (format "%sActivate %s?" msg venv))
-	(progn
-	  (pyvenv-activate venv)
-	  (elpy-rpc-restart)
-	  (message "Using %s" pyvenv-virtual-env)))))
+        (progn
+          (pyvenv-activate venv)
+          (elpy-rpc-restart)
+          (message "Using %s" pyvenv-virtual-env)))))
+(make-alias 'activate-venv)
 #+END_SRC
 
 This function installs python dependencies to the current virtualenv
@@ -1167,6 +1178,7 @@ necessary."
      (format "%s/bin/pip freeze" pyvenv-virtual-env) nil dest)
     (switch-to-buffer dest)
     ))
+(make-alias 'elpy-install-requirements)
 #+END_SRC
 
 I use =C= + arrows to move between windows, and =M= + arrows to move
@@ -1217,6 +1229,7 @@ I should really start using a snippet package, but for now:
     source=,
     action=('')
 )"))
+(make-alias 'scons-insert-command)
 #+END_SRC
 
 * text-mode
@@ -1537,6 +1550,7 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
   "Add `buffer-file-name' to `kill-ring'"
   (interactive)
   (kill-new buffer-file-name t))
+(make-alias 'copy-buffer-file-name)
 #+END_SRC
 
 ** copy-and-comment
@@ -1570,6 +1584,7 @@ from http://defindit.com/readme_files/emacs_hints_tricks.html
   (let ((fill-column (point-max)))
   (fill-paragraph nil)))
 (global-set-key (kbd "M-C-q") 'unfill-paragraph)
+(make-alias 'unfill-paragraph)
 #+END_SRC
 
 ** occur-region
