@@ -1,9 +1,26 @@
 
-(defun my/init-load ()
+(defvar my-alias-prefix "my/")
+
+(defun make-alias (fun &optional prefix)
+  "Create an alias for function `fun' by prepending the value of
+  `my-alias-prefix' to the symbol name. Use `prefix' to provide
+  an alternative prefix string. Example:
+
+  (defun bar () (message \"I am bar\"))
+  (make-alias 'bar \"foo-\")
+  (foo-bar) => \"I am bar\""
+
+  (interactive)
+  (defalias
+    (intern (concat (or prefix my-alias-prefix) (symbol-name fun)))
+    fun))
+
+(defun init-load ()
   "Load ~/.emacs.d/init.el"
   (interactive)
   (load "~/.emacs.d/init.el"))
-(global-set-key (kbd "M-C-i") 'my/init-load)
+(global-set-key (kbd "M-C-i") 'init-load)
+(make-alias 'init-load)
 
 (unless (= emacs-major-version 24)
   (error "Emacs version 24 is required"))
@@ -28,18 +45,18 @@
        '("elpy" . "http://jorgenschaefer.github.io/packages/") t)
   )
 
-(defun my/package-installed-not-builtin-p (package &optional min-version)
+(defun package-installed-not-builtin-p (package &optional min-version)
   "Return true if PACKAGE, of MIN-VERSION or newer, is installed,
   ignoring built in packages.  MIN-VERSION should be a version list."
   (let ((pkg-desc (assq package package-alist)))
     (if pkg-desc
         (version-list-<= min-version (package-desc-vers (cdr pkg-desc))))))
 
-(defun my/package-install-list (pkg-list)
+(defun package-install-list (pkg-list)
   ;; Install each package in pkg-list if necessary.
   (mapcar
    (lambda (pkg)
-     (unless (my/package-installed-not-builtin-p pkg)
+     (unless (package-installed-not-builtin-p pkg)
        (package-install pkg)))
    pkg-list)
   (message "done installing packages"))
@@ -70,11 +87,12 @@
     yaml-mode
     yas-jit))
 
-(defun my/install-packages ()
+(defun install-packages ()
   ;; Install packages listed in global 'my-package-list'
   (interactive)
   (package-list-packages)
-  (my/package-install-list my-package-list))
+  (package-install-list my-package-list))
+(make-alias 'install-packages)
 
 (if (package-installed-p 'smex)
     (progn
@@ -114,17 +132,17 @@
 
 (add-to-list 'exec-path "~/.emacs.d/bin")
 
-(defun my/prepend-path (path)
+(defun prepend-path (path)
   "Add `path' to the beginning of $PATH unless already present."
   (interactive)
   (unless (string-match path (getenv "PATH"))
     (setenv "PATH" (concat path ":" (getenv "PATH")))))
 
-(my/prepend-path "~/.emacs.d/bin")
+(prepend-path "~/.emacs.d/bin")
 
 (add-to-list 'load-path "~/.emacs.d/")
 
-(defun my/ssh-refresh ()
+(defun ssh-refresh ()
   "Reset the environment variable SSH_AUTH_SOCK"
   (interactive)
   (let (ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))
@@ -151,14 +169,14 @@
 (setq delete-trailing-lines nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(defun my/set-default-font-verbosely (font-name)
+(defun set-default-font-verbosely (font-name)
   (interactive)
   (message (format "** setting default font to %s" font-name))
   (condition-case nil
       (set-default-font font-name)
     (error (message (format "** could not set to font %s" font-name)))))
 
-(defun my/fix-frame (&optional frame)
+(defun fix-frame (&optional frame)
   "Apply platform-specific settings."
   (interactive)
   (menu-bar-mode -1)    ;; hide menu bar
@@ -173,23 +191,23 @@
            (set-keyboard-coding-system 'mac-roman)
            (setq mac-option-modifier 'meta)
            (setq mac-command-key-is-meta nil)
-           (my/set-default-font-verbosely "Bitstream Vera Sans Mono-14")))
+           (set-default-font-verbosely "Bitstream Vera Sans Mono-14")))
         ((string= "x" window-system)
          (progn
            (message (format "** running %s windowing system" window-system))
-           (my/set-default-font-verbosely "Liberation Mono-10")
+           (set-default-font-verbosely "Liberation Mono-10")
            ;; M-w or C-w copies to system clipboard
            ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
            (setq x-select-enable-clipboard t)))
         (t
          (message "** running in terminal mode"))))
 
-(my/fix-frame)
+(fix-frame)
 
 ;; invoked when emacsclient is called with file as an argument
 (add-hook 'server-visit-hook
           '(lambda ()
-            (my/fix-frame)))
+            (fix-frame)))
 
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; number of lines at a time
 (setq mouse-wheel-progressive-speed nil)            ;; don't accelerate scrolling
@@ -205,19 +223,21 @@
 
 (global-set-key (kbd "<f5>") 'call-last-kbd-macro)
 
-(require 'desktop)
+
 
 (defun desktop-save-no-p ()
   "Save desktop without prompting (replaces `desktop-save-in-desktop-dir')"
   (interactive)
-  (message (format "Saving desktop in %s" desktop-dirname))
+  ;; (message (format "Saving desktop in %s" desktop-dirname))
   (desktop-save desktop-dirname))
 
-(if (not (member "--no-desktop" command-line-args))
-    (progn
-      (desktop-save-mode 1)
-      (message "Enabling desktop auto-save")
-      (add-hook 'auto-save-hook 'desktop-save-no-p)))
+(if (member "--no-desktop" command-line-args)
+    (message "** Desktop auto-save is disabled")
+  (progn
+    (require 'desktop)
+    (desktop-save-mode 1)
+    (message "** Desktop auto-save is enabled")
+    (add-hook 'auto-save-hook 'desktop-save-no-p)))
 
 (defun move-line-up ()
   (interactive)
@@ -356,11 +376,11 @@ Assumes that the frame is only split into two."
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 
-(defun my/insert-date ()
+(defun insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
   (interactive)
   (insert (format-time-string "<%Y-%m-%d %a>")))
-(global-set-key (kbd "C-c d") 'my/insert-date)
+(global-set-key (kbd "C-c d") 'insert-date)
 
 (defun org-add-entry (filename time-format)
   ;; Add an entry to an org-file with today's timestamp.
@@ -438,18 +458,18 @@ Assumes that the frame is only split into two."
     (elpy-enable) ;; install from elpa
   (error (message "** could not enable elpy")))
 
-(defvar my/venv-default "~/.emacs.d/emacs-env")
-(defun my/activate-venv-default ()
+(defvar venv-default "~/.emacs.d/emacs-env")
+(defun activate-venv-default ()
   (interactive)
-  (pyvenv-activate my/venv-default)
+  (pyvenv-activate venv-default)
   (elpy-rpc-restart))
 
-(my/prepend-path "~/.emacs.d/emacs-env/bin")
+(prepend-path "~/.emacs.d/emacs-env/bin")
 
-(defun my/activate-venv ()
+(defun activate-venv ()
   "Activate a virtualenv if one can be found in the current
 project; otherwise activate the virtualenv defined in
-`my/venv-default'. Also restarts the elpy rpc process."
+`venv-default'. Also restarts the elpy rpc process."
   (interactive)
   (let ((venv nil)
         (find-pattern "find %s -path '*bin/activate' -maxdepth 4")
@@ -464,7 +484,7 @@ project; otherwise activate the virtualenv defined in
 
     (if (< (length venv) 1)
         (progn
-          (setq venv my/venv-default)
+          (setq venv venv-default)
           (setq msg "(cound not find a virtualenv here) ")))
 
     (if (y-or-n-p (format "%sActivate %s?" msg venv))
@@ -473,7 +493,7 @@ project; otherwise activate the virtualenv defined in
           (elpy-rpc-restart)
           (message "Using %s" pyvenv-virtual-env)))))
 
-(defun my/elpy-install-requirements ()
+(defun elpy-install-requirements ()
   "Install `elpy' and `jedi' to the current virtualenv. The
 version of the `elpy' python package is forced to match the
 version of the elisp package, upgrading or downgrading as
@@ -481,7 +501,7 @@ necessary."
   (interactive)
   (unless pyvenv-virtual-env
     (error "Error: no virtualenv is active"))
-  (let ((dest "*my/elpy-install-requirements-output*")
+  (let ((dest "*elpy-install-requirements-output*")
         (install-cmd (format "%s/bin/pip install --force '%%s'" pyvenv-virtual-env))
         ;; (deps `(,(format "elpy==%s" elpy-version) "jedi")))
         (deps '("jedi" "pyflakes" "pep8")))
@@ -716,12 +736,12 @@ This is used to set `sql-alternate-buffer-name' within
 ;; commands are prefixed with C-c o
 (global-set-key (kbd "C-c o") cm-map)
 
-(defun my/copy-buffer-file-name ()
+(defun copy-buffer-file-name ()
   "Add `buffer-file-name' to `kill-ring'"
   (interactive)
   (kill-new buffer-file-name t))
 
-(defun my/copy-and-comment ()
+(defun copy-and-comment ()
   "Comment active region and paste uncommented text on the
 following line."
   (interactive)
@@ -736,19 +756,19 @@ following line."
   (newline 2)
   (yank))
 
-(global-set-key (kbd "M-C-;") 'my/copy-and-comment)
+(global-set-key (kbd "M-C-;") 'copy-and-comment)
 
-(defun my/unfill-paragraph ()
+(defun unfill-paragraph ()
   (interactive)
   (let ((fill-column (point-max)))
   (fill-paragraph nil)))
-(global-set-key (kbd "M-C-q") 'my/unfill-paragraph)
+(global-set-key (kbd "M-C-q") 'unfill-paragraph)
 
-(defun my/occur-region () (interactive)
+(defun occur-region () (interactive)
   "Run `occur` using the current region."
   (occur
    (buffer-substring (region-beginning) (region-end))))
-(global-set-key (kbd "M-s r") 'my/occur-region)
+(global-set-key (kbd "M-s r") 'occur-region)
 
 (condition-case nil
     (require 'elisp-format)

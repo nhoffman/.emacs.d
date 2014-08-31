@@ -8,7 +8,8 @@
 #+PROPERTY: header-args:elisp :tangle init.el
 #+PROPERTY: header-args:sh :eval no :exports code
 
-In a fit of literate programming yak-shaving, I have implemented my emacs configuration as an org-mode file.
+In a fit of literate programming yak-shaving, I have implemented my
+emacs configuration as an org-mode file.
 
 - The source for this page is available at https://github.com/nhoffman/.emacs.d
 - The html-exported version of this page is hosted at http://nhoffman.github.io/.emacs.d
@@ -112,7 +113,7 @@ section below for a list of packages installed by this configuration
 (defined in =my-package-list=). First, launch Emacs; I'd recommend
 launching without emacs-desktop, for example =emacs -nw
 --no-desktop=. Install specified packages with =M-x
-my/install-packages= (see the *Elpa* section below). At this point
+install-packages= (see the *Elpa* section below). At this point
 it's usually a good idea to quit and relaunch Emacs.
 
 ** create virtualenv
@@ -185,14 +186,37 @@ Additional targets include =scons html= to compile =html/index.html=
 and =scons publish= to update the =gh-pages= branch of the repo on
 GitHub.
 
+To help keep track of functions I've defined, I like to make aliases
+that prepend the value of `my-alias-prefix'. Here's a function to help
+with making aliases.
+
+#+BEGIN_SRC elisp
+(defvar my-alias-prefix "my/")
+
+(defun make-alias (fun &optional prefix)
+  "Create an alias for function `fun' by prepending the value of
+  `my-alias-prefix' to the symbol name. Use `prefix' to provide
+  an alternative prefix string. Example:
+
+  (defun bar () (message \"I am bar\"))
+  (make-alias 'bar \"foo-\")
+  (foo-bar) => \"I am bar\""
+
+  (interactive)
+  (defalias
+    (intern (concat (or prefix my-alias-prefix) (symbol-name fun)))
+    fun))
+#+END_SRC
+
 If you want to reload the init file after a change, here's a function to do so:
 
 #+BEGIN_SRC elisp
-(defun my/init-load ()
+(defun init-load ()
   "Load ~/.emacs.d/init.el"
   (interactive)
   (load "~/.emacs.d/init.el"))
-(global-set-key (kbd "M-C-i") 'my/init-load)
+(global-set-key (kbd "M-C-i") 'init-load)
+(make-alias 'init-load)
 #+END_SRC
 
 * Startup
@@ -244,24 +268,24 @@ Add some extra package repositories. The default value of package-archives is
 
 I could not find an obvious way to define a list of packages to
 automatically install, so here are some functions to do so. Execute
-=M-x my/install-packages= to install any missing packages. Note that
+=M-x install-packages= to install any missing packages. Note that
 when installing org-mode from elpa for the first time, you must be
 sure that the builtin version of org-mode has not been loaded since
 emacs was first started.
 
 #+BEGIN_SRC elisp
-(defun my/package-installed-not-builtin-p (package &optional min-version)
+(defun package-installed-not-builtin-p (package &optional min-version)
   "Return true if PACKAGE, of MIN-VERSION or newer, is installed,
   ignoring built in packages.  MIN-VERSION should be a version list."
   (let ((pkg-desc (assq package package-alist)))
     (if pkg-desc
         (version-list-<= min-version (package-desc-vers (cdr pkg-desc))))))
 
-(defun my/package-install-list (pkg-list)
+(defun package-install-list (pkg-list)
   ;; Install each package in pkg-list if necessary.
   (mapcar
    (lambda (pkg)
-     (unless (my/package-installed-not-builtin-p pkg)
+     (unless (package-installed-not-builtin-p pkg)
        (package-install pkg)))
    pkg-list)
   (message "done installing packages"))
@@ -292,11 +316,12 @@ emacs was first started.
     yaml-mode
     yas-jit))
 
-(defun my/install-packages ()
+(defun install-packages ()
   ;; Install packages listed in global 'my-package-list'
   (interactive)
   (package-list-packages)
-  (my/package-install-list my-package-list))
+  (package-install-list my-package-list))
+(make-alias 'install-packages)
 #+END_SRC
 
 * smex
@@ -387,13 +412,13 @@ Also update the =$PATH= environment variable inherited by shell
 commands run from within Emacs.
 
 #+BEGIN_SRC elisp
-(defun my/prepend-path (path)
+(defun prepend-path (path)
   "Add `path' to the beginning of $PATH unless already present."
   (interactive)
   (unless (string-match path (getenv "PATH"))
     (setenv "PATH" (concat path ":" (getenv "PATH")))))
 
-(my/prepend-path "~/.emacs.d/bin")
+(prepend-path "~/.emacs.d/bin")
 #+END_SRC
 
 * Environment
@@ -414,7 +439,7 @@ updating the value of the SSH_AUTH_SOCK environment variable. Here's a
 function to fix this.
 
 #+BEGIN_SRC elisp
-(defun my/ssh-refresh ()
+(defun ssh-refresh ()
   "Reset the environment variable SSH_AUTH_SOCK"
   (interactive)
   (let (ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))
@@ -465,18 +490,18 @@ Delete trailing whitespace before save.
 
 Detect platform and window system and set up fonts and other
 system-specific settings accordingly. It may be necessary to run =M-x
-my/fix-frame= after opening a new frame attached to a running emacs
+fix-frame= after opening a new frame attached to a running emacs
 server process.
 
 #+BEGIN_SRC elisp
-(defun my/set-default-font-verbosely (font-name)
+(defun set-default-font-verbosely (font-name)
   (interactive)
   (message (format "** setting default font to %s" font-name))
   (condition-case nil
       (set-default-font font-name)
     (error (message (format "** could not set to font %s" font-name)))))
 
-(defun my/fix-frame (&optional frame)
+(defun fix-frame (&optional frame)
   "Apply platform-specific settings."
   (interactive)
   (menu-bar-mode -1)	;; hide menu bar
@@ -491,23 +516,23 @@ server process.
            (set-keyboard-coding-system 'mac-roman)
            (setq mac-option-modifier 'meta)
            (setq mac-command-key-is-meta nil)
-           (my/set-default-font-verbosely "Bitstream Vera Sans Mono-14")))
+           (set-default-font-verbosely "Bitstream Vera Sans Mono-14")))
         ((string= "x" window-system)
          (progn
            (message (format "** running %s windowing system" window-system))
-           (my/set-default-font-verbosely "Liberation Mono-10")
+           (set-default-font-verbosely "Liberation Mono-10")
            ;; M-w or C-w copies to system clipboard
            ;; see http://www.gnu.org/software/emacs/elisp/html_node/Window-System-Selections.html
            (setq x-select-enable-clipboard t)))
         (t
          (message "** running in terminal mode"))))
 
-(my/fix-frame)
+(fix-frame)
 
 ;; invoked when emacsclient is called with file as an argument
 (add-hook 'server-visit-hook
           '(lambda ()
-            (my/fix-frame)))
+            (fix-frame)))
 #+END_SRC
 
 * Scrolling
@@ -563,7 +588,7 @@ References:
 - http://www.emacswiki.org/emacs/DeskTop
 
 #+BEGIN_SRC elisp
-(require 'desktop)
+
 #+END_SRC
 
 Save desktop periodically instead of just on exit, but not if emacs is
@@ -573,14 +598,16 @@ started with =--no-desktop=
 (defun desktop-save-no-p ()
   "Save desktop without prompting (replaces `desktop-save-in-desktop-dir')"
   (interactive)
-  (message (format "Saving desktop in %s" desktop-dirname))
+  ;; (message (format "Saving desktop in %s" desktop-dirname))
   (desktop-save desktop-dirname))
 
-(if (not (member "--no-desktop" command-line-args))
-    (progn
-      (desktop-save-mode 1)
-      (message "Enabling desktop auto-save")
-      (add-hook 'auto-save-hook 'desktop-save-no-p)))
+(if (member "--no-desktop" command-line-args)
+    (message "** Desktop auto-save is disabled")
+  (progn
+    (require 'desktop)
+    (desktop-save-mode 1)
+    (message "** Desktop auto-save is enabled")
+    (add-hook 'auto-save-hook 'desktop-save-no-p)))
 #+END_SRC
 
 * Move lines up and down with arrow keys
@@ -826,11 +853,11 @@ Custom key bindings
 ** org-mode utilities
 
 #+BEGIN_SRC elisp
-(defun my/insert-date ()
+(defun insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
   (interactive)
   (insert (format-time-string "<%Y-%m-%d %a>")))
-(global-set-key (kbd "C-c d") 'my/insert-date)
+(global-set-key (kbd "C-c d") 'insert-date)
 #+END_SRC
 
 #+BEGIN_SRC elisp
@@ -1070,27 +1097,27 @@ to be available. Assuming elpy dependencies are installed in
 ~/.emacs.d/emacs-env
 
 #+BEGIN_SRC elisp
-(defvar my/venv-default "~/.emacs.d/emacs-env")
-(defun my/activate-venv-default ()
+(defvar venv-default "~/.emacs.d/emacs-env")
+(defun activate-venv-default ()
   (interactive)
-  (pyvenv-activate my/venv-default)
+  (pyvenv-activate venv-default)
   (elpy-rpc-restart))
 #+END_SRC
 
 Also add executables in the default virtualenv to =$PATH=
 
 #+BEGIN_SRC elisp
-(my/prepend-path "~/.emacs.d/emacs-env/bin")
+(prepend-path "~/.emacs.d/emacs-env/bin")
 #+END_SRC
 
 Here's a function that tries to activate a virtualenv in the current
 project.
 
 #+BEGIN_SRC elisp
-(defun my/activate-venv ()
+(defun activate-venv ()
   "Activate a virtualenv if one can be found in the current
 project; otherwise activate the virtualenv defined in
-`my/venv-default'. Also restarts the elpy rpc process."
+`venv-default'. Also restarts the elpy rpc process."
   (interactive)
   (let ((venv nil)
 	(find-pattern "find %s -path '*bin/activate' -maxdepth 4")
@@ -1105,7 +1132,7 @@ project; otherwise activate the virtualenv defined in
 
     (if (< (length venv) 1)
 	(progn
-	  (setq venv my/venv-default)
+	  (setq venv venv-default)
 	  (setq msg "(cound not find a virtualenv here) ")))
 
     (if (y-or-n-p (format "%sActivate %s?" msg venv))
@@ -1119,7 +1146,7 @@ This function installs python dependencies to the current virtualenv
 from within Emacs.
 
 #+BEGIN_SRC elisp
-(defun my/elpy-install-requirements ()
+(defun elpy-install-requirements ()
   "Install `elpy' and `jedi' to the current virtualenv. The
 version of the `elpy' python package is forced to match the
 version of the elisp package, upgrading or downgrading as
@@ -1127,7 +1154,7 @@ necessary."
   (interactive)
   (unless pyvenv-virtual-env
     (error "Error: no virtualenv is active"))
-  (let ((dest "*my/elpy-install-requirements-output*")
+  (let ((dest "*elpy-install-requirements-output*")
         (install-cmd (format "%s/bin/pip install --force '%%s'" pyvenv-virtual-env))
         ;; (deps `(,(format "elpy==%s" elpy-version) "jedi")))
         (deps '("jedi" "pyflakes" "pep8")))
@@ -1506,7 +1533,7 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
 ** copy-buffer-file-name
 
 #+BEGIN_SRC elisp
-(defun my/copy-buffer-file-name ()
+(defun copy-buffer-file-name ()
   "Add `buffer-file-name' to `kill-ring'"
   (interactive)
   (kill-new buffer-file-name t))
@@ -1515,7 +1542,7 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
 ** copy-and-comment
 
 #+BEGIN_SRC elisp
-(defun my/copy-and-comment ()
+(defun copy-and-comment ()
   "Comment active region and paste uncommented text on the
 following line."
   (interactive)
@@ -1530,7 +1557,7 @@ following line."
   (newline 2)
   (yank))
 
-(global-set-key (kbd "M-C-;") 'my/copy-and-comment)
+(global-set-key (kbd "M-C-;") 'copy-and-comment)
 #+END_SRC
 
 ** unfill-paragraph
@@ -1538,11 +1565,11 @@ following line."
 from http://defindit.com/readme_files/emacs_hints_tricks.html
 
 #+BEGIN_SRC elisp
-(defun my/unfill-paragraph ()
+(defun unfill-paragraph ()
   (interactive)
   (let ((fill-column (point-max)))
   (fill-paragraph nil)))
-(global-set-key (kbd "M-C-q") 'my/unfill-paragraph)
+(global-set-key (kbd "M-C-q") 'unfill-paragraph)
 #+END_SRC
 
 ** occur-region
@@ -1550,11 +1577,11 @@ from http://defindit.com/readme_files/emacs_hints_tricks.html
 Note that =occur= can be executed using "M-s o"
 
 #+BEGIN_SRC elisp
-(defun my/occur-region () (interactive)
+(defun occur-region () (interactive)
   "Run `occur` using the current region."
   (occur
    (buffer-substring (region-beginning) (region-end))))
-(global-set-key (kbd "M-s r") 'my/occur-region)
+(global-set-key (kbd "M-s r") 'occur-region)
 #+END_SRC
 
 * elisp-format
@@ -1627,6 +1654,8 @@ function, so don't do that.
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #+END_SRC
+
+
 
 
 
