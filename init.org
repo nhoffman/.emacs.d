@@ -36,10 +36,10 @@ setup is required before first use.
 
 ** set up a shell environment
 
-This configuration provides some shell functions and aliases (tested
-with bash and zsh) that are useful for using Emacs from the shell. In
-particular, if you are on a mac and have installed [[http://emacsformacosx.com/][Emacs for OS X]] or
-compiled the Cocoa version, Emacs will be installed to
+This configuration provides some commands (tested with bash and zsh)
+that are useful for using Emacs from the shell. In particular, if you
+are on a mac and have installed [[http://emacsformacosx.com/][Emacs for OS X]] or compiled the Cocoa
+version, Emacs will be installed to
 =/Applications/Emacs.app/Contents/MacOS/Emacs= and =emacsclient= is
 found in
 =/Applications/Emacs.app/Contents/MacOS/bin/emacsclient=. These are
@@ -65,9 +65,43 @@ fi
 #+END_SRC
 
 You will have to open a new terminal window for the shell commands
-above to become available.
+above to become available. Once they are, you can launch the graphical
+version of emacs using:
 
-** option as Meta on a Mac
+: emacs -c &
+
+or the terminal version using
+
+: emacs -nw
+
+A bit of explanation about Emacs server: the above two commands launch
+Emacs in an entirely new process. Using the Emacs server, you can run
+an Emacs server instance in the background and then "attach" either a
+graphical or terminal window as necessary. Working locally, you would
+do this by first starting the server:
+
+: edaemon
+
+And then opening either a graphical or terminal window, for example:
+
+: ec
+
+If you are subsequently working at the command line and you want to
+open =somefile= in an already-open Emacs window, you can use:
+
+: e somefile
+
+(You can of course always open a file from within Emacs using many
+mechanisms, eg using =C-c f=).
+
+Emacs server is particularly useful when you are running Emacs
+remotely on a server and you want to be able to log out and return to
+your work later: if you quit the terminal process using =C-x C-c=
+(=M-x save-buffers-kill-terminal=), the server continues running in
+the background. You can kill the server from within Emacs using =M-x
+save-buffers-kill-emacs=.
+
+** option as Meta (=M-=) on a Mac
 
 I use Emacs from a variety of terminal types on my machines running OS
 X:
@@ -78,8 +112,7 @@ X:
 
 I have done my best to configure all three to provide an experience
 that's as comparable as possible. Here are some configuration
-suggestions to use the option key as Meta (as opposed to Esc, which is
-just insane).
+suggestions to use the option key as Meta (=M-=), as opposed to Esc.
 
 *** Cocoa
 
