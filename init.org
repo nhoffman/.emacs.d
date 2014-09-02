@@ -8,8 +8,11 @@
 #+PROPERTY: header-args:elisp :tangle init.el
 #+PROPERTY: header-args:sh :eval no :exports code
 
-In a fit of literate programming yak-shaving, I have implemented my
-emacs configuration as an org-mode file.
+In a fit of literate programming yak-shaving, I implemented my emacs
+configuration as an org-mode file. I since realized that I could also
+provide complete-ish instructions for getting started with Emacs in a
+single location (I have the pleasure of introducing Emacs to people
+who may be new to both programming and Emacs in my job).
 
 - The source for this page is available at https://github.com/nhoffman/.emacs.d
 - The html-exported version of this page is hosted at http://nhoffman.github.io/.emacs.d
@@ -17,6 +20,16 @@ emacs configuration as an org-mode file.
 #+TOC: headlines 1
 
 * Initial setup
+
+You can install this configuration by either cloning it directly
+from my repository, of by forking on GitHub and installing yours
+(obviously you will want to do the latter if you want to modify the
+configuration):
+
+#+BEGIN_SRC sh
+cd ~
+git clone https://github.com/nhoffman/.emacs.d.git
+#+END_SRC
 
 After cloning the repository into your home directory, just a bit of
 setup is required before first use.
@@ -42,8 +55,8 @@ Emacs in server mode:
 
 Rather than copying the functions defined in =init.bash= elsewhere,
 I'd recommend sourcing it instead. For example, just place the
-following in your =.profile= or =.zshrc= or whatever (depending on
-your shell):
+following in your =~/.bash_login= or =~/.zshrc= or [[http://shreevatsa.wordpress.com/2008/03/30/zshbash-startup-files-loading-order-bashrc-zshrc-etc/][whatever]] (depending
+on your shell):
 
 #+BEGIN_SRC sh :eval no
 if [[ -f ~/.emacs.d/init.bash ]]; then
