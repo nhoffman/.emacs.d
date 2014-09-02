@@ -766,11 +766,17 @@ following line."
 (global-set-key (kbd "M-C-q") 'unfill-paragraph)
 (make-alias 'unfill-paragraph)
 
-(defun occur-region () (interactive)
-  "Run `occur` using the current region."
-  (occur
-   (buffer-substring (region-beginning) (region-end))))
-(global-set-key (kbd "M-s r") 'occur-region)
+(defun occur-region-or-word-at-point ()
+  "Run `occur' using the active region or word at point"
+  (interactive)
+  (let ((occur-string (if (region-active-p)
+                          (buffer-substring (region-beginning) (region-end))
+                        (thing-at-point 'word))))
+    (unless occur-string
+      (error "No active region or word at point"))
+    (occur occur-string)
+    ))
+(global-set-key (kbd "M-s r") 'occur-region-or-word-at-point)
 
 (condition-case nil
     (require 'elisp-format)
