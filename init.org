@@ -45,8 +45,8 @@ found in
 =/Applications/Emacs.app/Contents/MacOS/bin/emacsclient=. These are
 aliased to =emacs= and =emacsclient=, respectively.
 
-In addition, there are some functions that simplify running and using
-Emacs in server mode:
+In addition, there are some shell commands that simplify running and
+using Emacs in server mode:
 
 - edaemon :: launch the Emacs server daemon, removing any locked desktop files.
 - ec :: attach to the Emacs server in GUI mode (=emacsclient -c=) in the background.
@@ -63,6 +63,9 @@ if [[ -f ~/.emacs.d/init.bash ]]; then
     source ~/.emacs.d/init.bash
 fi
 #+END_SRC
+
+You will have to open a new terminal window for the shell commands
+above to become available.
 
 ** option as Meta on a Mac
 
@@ -118,6 +121,13 @@ perform the same actions as =M-f= (=forward-word=) and =M-b=
 (=backward-word=) in both Emacs and in contexts that support default
 readline key bindings (which is [[https://coderwall.com/p/usc8qg][just about everywhere]]).
 
+*** What next?
+If you are completely new to Emacs, the very first thing to do is to
+become acquainted with the built-in help system. You can get to the
+help menu by typing =<f1>= or =C-h ?=.
+
+Next, I'd recommend starting with the built in tutorial by typing =C-h
+t=.
 ** install packages from ELPA
 
 The only required step to use this configuration is to install
