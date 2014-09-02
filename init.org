@@ -340,17 +340,20 @@ used extended commands. Installed using elpa.
 
 * Various aliases and key bindings
 
-Function keys. It's kind of surprising that the function keys aren't
-either defined or bound to more commonly used functions by
-default. I've left the keys related to keyboard macros alone.
+** Function keys.
 
-| key | default binding                      | also bound to | new binding          |
+It's kind of surprising that the function keys aren't
+either defined or bound to more commonly used functions by
+default.
+
+|-----+--------------------------------------+---------------+----------------------|
+| key | default binding                      | also bound to | my binding           |
 |-----+--------------------------------------+---------------+----------------------|
 | f1  | view-order-manuals                   | C-h           |                      |
 | f2  | 2C-command                           | C-x 6         | fix-frame            |
 | f3  | kmacro-start-macro-or-insert-counter |               |                      |
 | f4  | kmacro-end-or-call-macro             |               |                      |
-| f5  | call-last-kbd-macro                  |               |                      |
+| f5  |                                      |               | call-last-kbd-macro  |
 | f6  |                                      |               | lineum-mode          |
 | f7  |                                      |               | visual-line-mode     |
 | f8  |                                      |               | ns-toggle-fullscreen |
