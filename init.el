@@ -101,13 +101,13 @@
       ;; This is your old M-x.
       (global-set-key (kbd "C-x M-x") 'execute-extended-command)))
 
-(defalias 'dtw 'delete-trailing-whitespace)
-
 (global-set-key (kbd "<f6>") 'linum-mode)
 (global-set-key (kbd "<f7>") 'visual-line-mode)
 (global-set-key (kbd "<f8>") 'ns-toggle-fullscreen)
 
 (global-set-key (kbd "C-c r") 'replace-string)
+
+(defalias 'dtw 'delete-trailing-whitespace)
 
 ;; (setq debug-on-error t)
 ;; (setq debug-on-signal t)
@@ -202,13 +202,9 @@
            (setq x-select-enable-clipboard t)))
         (t
          (message "** running in terminal mode"))))
-(global-set-key (kbd "M-s f") 'fix-frame)
+(global-set-key (kbd "<f2>") 'fix-frame)
 (make-alias 'fix-frame)
 (fix-frame)
-
-(add-hook 'server-visit-hook
-          '(lambda ()
-            (fix-frame)))
 
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; number of lines at a time
 (setq mouse-wheel-progressive-speed nil)            ;; don't accelerate scrolling
@@ -223,8 +219,6 @@
 (blink-cursor-mode 1)
 
 (global-set-key (kbd "<f5>") 'call-last-kbd-macro)
-
-
 
 (defun desktop-save-no-p ()
   "Save desktop without prompting (replaces `desktop-save-in-desktop-dir')"

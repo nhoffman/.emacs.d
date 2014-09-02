@@ -340,11 +340,24 @@ used extended commands. Installed using elpa.
 
 * Various aliases and key bindings
 
-#+BEGIN_SRC elisp
-(defalias 'dtw 'delete-trailing-whitespace)
-#+END_SRC
+Function keys. It's kind of surprising that the function keys aren't
+either defined or bound to more commonly used functions by
+default. I've left the keys related to keyboard macros alone.
 
-Function keys
+| key | default binding                      | also bound to | new binding          |
+|-----+--------------------------------------+---------------+----------------------|
+| f1  | view-order-manuals                   | C-h           |                      |
+| f2  | 2C-command                           | C-x 6         | fix-frame            |
+| f3  | kmacro-start-macro-or-insert-counter |               |                      |
+| f4  | kmacro-end-or-call-macro             |               |                      |
+| f5  | call-last-kbd-macro                  |               |                      |
+| f6  |                                      |               | lineum-mode          |
+| f7  |                                      |               | visual-line-mode     |
+| f8  |                                      |               | ns-toggle-fullscreen |
+| f9  |                                      |               |                      |
+| f10 | menu-bar-open                        |               |                      |
+| f11 | (OS X: Show Desktop)                 |               |                      |
+| f12 | (OS X: Show Dashboard)               |               |                      |
 
 #+BEGIN_SRC elisp
 (global-set-key (kbd "<f6>") 'linum-mode)
@@ -352,10 +365,14 @@ Function keys
 (global-set-key (kbd "<f8>") 'ns-toggle-fullscreen)
 #+END_SRC
 
-Various custom key bindings.
+Various other custom key bindings.
 
 #+BEGIN_SRC elisp
 (global-set-key (kbd "C-c r") 'replace-string)
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(defalias 'dtw 'delete-trailing-whitespace)
 #+END_SRC
 
 * General appearance
@@ -505,9 +522,9 @@ server process.
 (defun fix-frame (&optional frame)
   "Apply platform-specific settings."
   (interactive)
-  (menu-bar-mode -1)	;; hide menu bar
-  (tool-bar-mode -1)	;; hide tool bar
-  (scroll-bar-mode -1)	;; hide scroll bar
+  (menu-bar-mode -1)    ;; hide menu bar
+  (tool-bar-mode -1)    ;; hide tool bar
+  (scroll-bar-mode -1)  ;; hide scroll bar
   (cond ((string= "ns" window-system) ;; cocoa
          (progn
            (message (format "** running %s windowing system" window-system))
@@ -527,20 +544,9 @@ server process.
            (setq x-select-enable-clipboard t)))
         (t
          (message "** running in terminal mode"))))
-(global-set-key (kbd "M-s f") 'fix-frame)
+(global-set-key (kbd "<f2>") 'fix-frame)
 (make-alias 'fix-frame)
 (fix-frame)
-#+END_SRC
-
-=server-visit-hook= is invoked when emacsclient is called with a file
-as an argument; unfortunately, this hook is not run when emacsclient
-is not provided a file name argument, in which case fix-frame must be
-invoked manually.
-
-#+BEGIN_SRC elisp
-(add-hook 'server-visit-hook
-          '(lambda ()
-            (fix-frame)))
 #+END_SRC
 
 * Scrolling
@@ -596,7 +602,9 @@ References:
 - http://www.emacswiki.org/emacs/DeskTop
 
 Save desktop periodically instead of just on exit, but not if emacs is
-started with =--no-desktop=
+started with =--no-desktop=. Note that "--no-desktop" is deleted from
+`command-line-args' when desktop is activated, so we have to check
+before that.
 
 #+BEGIN_SRC elisp
 (defun desktop-save-no-p ()
