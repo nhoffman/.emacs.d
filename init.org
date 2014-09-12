@@ -169,7 +169,7 @@ section below for a list of packages installed by this configuration
 (defined in =my-package-list=). First, launch Emacs; I'd recommend
 launching without emacs-desktop, for example =emacs -nw
 --no-desktop=. Install specified packages with =M-x
-install-packages= (see the *Elpa* section below). At this point
+install-packages= (see the *ELPA* section below). At this point
 it's usually a good idea to quit and relaunch Emacs.
 
 ** create virtualenv
@@ -325,7 +325,7 @@ Add some extra package repositories. The default value of package-archives is
 I could not find an obvious way to define a list of packages to
 automatically install, so here are some functions to do so. Execute
 =M-x install-packages= to install any missing packages. Note that
-when installing org-mode from elpa for the first time, you must be
+when installing org-mode from ELPA for the first time, you must be
 sure that the builtin version of org-mode has not been loaded since
 emacs was first started.
 
@@ -353,6 +353,7 @@ emacs was first started.
     edit-server
     elpy
     ess
+    expand-region
     ;; flymake-cursor
     ;; flycheck
     ;; flycheck-color-mode-line
@@ -383,7 +384,7 @@ emacs was first started.
 * smex
 
 See https://github.com/nonsequitur/smex - Ido extension for previously
-used extended commands. Installed using elpa.
+used extended commands. Installed using ELPA.
 
 #+BEGIN_SRC elisp
 (if (package-installed-p 'smex)
@@ -621,8 +622,7 @@ See http://www.emacswiki.org/emacs/SmoothScrolling
 (setq scroll-margin 2)                              ;; Start scrolling when 2 lines from top/bottom
 #+END_SRC
 
-* Cursor movement and appearance.
-
+* Marking, cursor movement and appearance
 ** ace-jump-mode
 
 A quick cursor location minor mode for emacs. I picked =M-'= as the
@@ -637,6 +637,19 @@ key combo for activation. Installed from ELPA.
 #+BEGIN_SRC elisp
 (set-cursor-color "red")
 (blink-cursor-mode 1)
+#+END_SRC
+
+** expand-region
+
+#+BEGIN_QUOTE
+Expand region increases the selected region by semantic units. Just
+keep pressing the key until it selects what you want.
+#+END_QUOTE
+
+Installed using ELPA.
+
+#+BEGIN_SRC elisp
+(global-set-key (kbd "C-=") 'er/expand-region)
 #+END_SRC
 
 * Keyboard macros
@@ -842,11 +855,11 @@ http://snarfed.org/space/emacs%20font-lock%20faces%20for%20composing%20email
 
 * LaTeX
 
-Install AuxTeX from elpa.
+Install AuxTeX from ELPA.
 
 * ESS
 
-Installed using elpa, but seems to need =require= to be called
+Installed using ELPA, but seems to need =require= to be called
 explicitly.
 
 #+BEGIN_SRC elisp
@@ -967,7 +980,7 @@ Add a new entry to main notes file.
 
 * markdown-mode
 
-Installed using elpa.
+Installed using ELPA.
 
 #+BEGIN_SRC elisp
 (push '("\\.md" . markdown-mode) auto-mode-alist)
@@ -975,7 +988,7 @@ Installed using elpa.
 
 * chrome "edit with emacs"
 
-'edit-server' is initialized by elpa, but we need to start the server.
+'edit-server' is initialized by ELPA, but we need to start the server.
 
 #+BEGIN_SRC elisp
 (condition-case nil
@@ -1089,7 +1102,7 @@ it to the output of autopep8.
 
 ** flycheck
 
-An alternative to =flymake=. Install =flycheck= via elpa. For python,
+An alternative to =flymake=. Install =flycheck= via ELPA. For python,
 requires flask8 or pyflakes; flake8 is used preferentially if
 installed.
 
@@ -1114,7 +1127,7 @@ https://astropy.readthedocs.org/en/v0.1/development/codeguide_emacs.html
 Requirements:
 - pep8 (via pip)
 - pyflakes (via pip)
-- flymake-cursor (via elpa)
+- flymake-cursor (via ELPA)
 - "~/.emacs.d/bin/pychecker", a script that will execute pyflakes and
   pep8 (note that "~/.emacs.d/bin" has been added to "exec-path"
   above):
@@ -1131,7 +1144,7 @@ And some configuration:
 
 ;; TODO - first check if flymake-cursor is installed
 (condition-case nil
-    (load-library "flymake-cursor") ;; install from elpa
+    (load-library "flymake-cursor") ;; install from ELPA
       (error (message "** flymake-cursor not installed")))
 
 ;; 'pychecker' script above installed in ~/.emacs.d/bin
@@ -1159,12 +1172,12 @@ And some configuration:
 
 #+BEGIN_SRC elisp
 (condition-case nil
-    (elpy-enable) ;; install from elpa
+    (elpy-enable) ;; install from ELPA
   (error (message "** could not enable elpy")))
 #+END_SRC
 
 As of version 1.5.0, the elpy python package is distributed with the
-elpa elisp package, but other dependencies (such as jedi) still need
+ELPA elisp package, but other dependencies (such as jedi) still need
 to be available. Assuming elpy dependencies are installed in
 ~/.emacs.d/emacs-env
 
@@ -1268,7 +1281,7 @@ them.
 
 Python auto-completion with Jedi (http://tkf.github.io/emacs-jedi/)
 
-Install =jedi.el= via elpa.
+Install =jedi.el= via ELPA.
 
 Install python requirements:
 

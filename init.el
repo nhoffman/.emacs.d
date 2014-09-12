@@ -68,6 +68,7 @@
     edit-server
     elpy
     ess
+    expand-region
     ;; flymake-cursor
     ;; flycheck
     ;; flycheck-color-mode-line
@@ -217,6 +218,8 @@
 
 (set-cursor-color "red")
 (blink-cursor-mode 1)
+
+(global-set-key (kbd "C-=") 'er/expand-region)
 
 (global-set-key (kbd "<f5>") 'call-last-kbd-macro)
 
@@ -451,7 +454,7 @@ Assumes that the frame is only split into two."
     ))
 
 (condition-case nil
-    (elpy-enable) ;; install from elpa
+    (elpy-enable) ;; install from ELPA
   (error (message "** could not enable elpy")))
 
 (defvar venv-default "~/.emacs.d/emacs-env")
