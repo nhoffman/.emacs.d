@@ -85,6 +85,8 @@
     ;; projectile
     rainbow-delimiters
     smex
+    visual-regexp
+    visual-regexp-steroids
     yaml-mode
     yas-jit))
 
@@ -105,8 +107,6 @@
 (global-set-key (kbd "<f6>") 'linum-mode)
 (global-set-key (kbd "<f7>") 'visual-line-mode)
 (global-set-key (kbd "<f8>") 'ns-toggle-fullscreen)
-
-(global-set-key (kbd "C-c r") 'replace-string)
 
 (defalias 'dtw 'delete-trailing-whitespace)
 
@@ -220,6 +220,15 @@
 (blink-cursor-mode 1)
 
 (global-set-key (kbd "C-=") 'er/expand-region)
+
+(if (package-installed-p 'visual-regexp-steroids)
+    (progn (require 'visual-regexp-steroids)
+           (define-key global-map (kbd "C-c r") 'vr/replace)
+           (define-key global-map (kbd "C-c q") 'vr/query-replace)
+           (define-key esc-map (kbd "C-r") 'vr/isearch-backward) ;; C-M-r
+           (define-key esc-map (kbd "C-s") 'vr/isearch-forward)) ;; C-M-s
+  (global-set-key (kbd "C-c r") 'replace-string)
+  (global-set-key (kbd "C-c q") 'query-replace))
 
 (global-set-key (kbd "<f5>") 'call-last-kbd-macro)
 

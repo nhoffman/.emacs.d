@@ -370,6 +370,8 @@ emacs was first started.
     ;; projectile
     rainbow-delimiters
     smex
+    visual-regexp
+    visual-regexp-steroids
     yaml-mode
     yas-jit))
 
@@ -423,12 +425,6 @@ default.
 (global-set-key (kbd "<f6>") 'linum-mode)
 (global-set-key (kbd "<f7>") 'visual-line-mode)
 (global-set-key (kbd "<f8>") 'ns-toggle-fullscreen)
-#+END_SRC
-
-Various other custom key bindings.
-
-#+BEGIN_SRC elisp
-(global-set-key (kbd "C-c r") 'replace-string)
 #+END_SRC
 
 #+BEGIN_SRC elisp
@@ -650,6 +646,30 @@ Installed using ELPA.
 
 #+BEGIN_SRC elisp
 (global-set-key (kbd "C-=") 'er/expand-region)
+#+END_SRC
+
+* visual-regexp
+
+Two packages by the same author add visual cues to searching and/or
+replacing with regular expressions:
+
+- visual-regexp :: https://github.com/benma/visual-regexp.el
+- visual-regexp-steroids :: https://github.com/benma/visual-regexp-steroids.el/
+
+Installed using ELPA.
+
+If =visual-regexp-steroids= isn't installed, we'll still set up
+bindings for =replace-string= and =query-replace=.
+
+#+BEGIN_SRC elisp
+(if (package-installed-p 'visual-regexp-steroids)
+    (progn (require 'visual-regexp-steroids)
+           (define-key global-map (kbd "C-c r") 'vr/replace)
+           (define-key global-map (kbd "C-c q") 'vr/query-replace)
+           (define-key esc-map (kbd "C-r") 'vr/isearch-backward) ;; C-M-r
+           (define-key esc-map (kbd "C-s") 'vr/isearch-forward)) ;; C-M-s
+  (global-set-key (kbd "C-c r") 'replace-string)
+  (global-set-key (kbd "C-c q") 'query-replace))
 #+END_SRC
 
 * Keyboard macros
