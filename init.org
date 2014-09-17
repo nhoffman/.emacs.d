@@ -399,6 +399,34 @@ used extended commands. Installed using ELPA.
 
 * Various aliases and key bindings
 
+** setting up a sparse keymap
+
+Thanks to [[http://endlessparentheses.com/launcher-keymap-for-standalone-features.html][endlessparentheses.com]] for pointing out how to set up a
+sparse keymap for organizing custom key bindings. Much easier than
+trying to find unused combinations and then remember them.
+
+The code block below defines the key sequence =C-x /= as a prefix for
+the keymap =my-key-map=, then assigns a series of functions to single
+characters following this prefix. Use "C-x / /" to list all of the
+bindings.
+
+#+BEGIN_SRC elisp
+(defvar my-key-map-prefix "C-x /")
+
+(defun my/describe-my-key-map ()
+  "List bindings associated with `my-key-map'"
+  (interactive)
+  (describe-bindings (kbd my-key-map-prefix)))
+
+(define-prefix-command 'my-key-map)
+(define-key global-map (kbd my-key-map-prefix) 'my-key-map)
+
+(define-key my-key-map "/" #'my/describe-my-key-map)
+(define-key my-key-map "e" #'save-buffers-kill-emacs)
+(define-key my-key-map "f" #'fix-frame)
+(define-key my-key-map "p" #'package-list-packages)
+#+END_SRC
+
 ** Function keys.
 
 It's kind of surprising that the function keys aren't

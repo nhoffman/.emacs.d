@@ -104,6 +104,21 @@
       ;; This is your old M-x.
       (global-set-key (kbd "C-x M-x") 'execute-extended-command)))
 
+(defvar my-key-map-prefix "C-x /")
+
+(defun my/describe-my-key-map ()
+  "List bindings associated with `my-key-map'"
+  (interactive)
+  (describe-bindings (kbd my-key-map-prefix)))
+
+(define-prefix-command 'my-key-map)
+(define-key global-map (kbd my-key-map-prefix) 'my-key-map)
+
+(define-key my-key-map "/" #'my/describe-my-key-map)
+(define-key my-key-map "e" #'save-buffers-kill-emacs)
+(define-key my-key-map "f" #'fix-frame)
+(define-key my-key-map "p" #'package-list-packages)
+
 (global-set-key (kbd "<f6>") 'linum-mode)
 (global-set-key (kbd "<f7>") 'visual-line-mode)
 (global-set-key (kbd "<f8>") 'ns-toggle-fullscreen)
