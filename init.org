@@ -264,15 +264,28 @@ with making aliases.
     fun))
 #+END_SRC
 
-If you want to reload the init file after a change, here's a function to do so:
+I edit this file so frequently, let's create a function to open it.
 
 #+BEGIN_SRC elisp
-(defun init-load ()
-  "Load ~/.emacs.d/init.el"
+(defun init-edit ()
+  "Edit ~/.emacs.d/init.org"
   (interactive)
-  (load "~/.emacs.d/init.el"))
-(global-set-key (kbd "M-C-i") 'init-load)
-(make-alias 'init-load)
+  (find-file "~/.emacs.d/init.org"))
+(make-alias 'init-edit)
+#+END_SRC
+
+This function automates the process of tangling this file and
+reloading the output.
+
+#+BEGIN_SRC elisp
+(defun init-tangle-and-load ()
+  "Tangle ~/.emacs.d/init.org and load the result"
+  (interactive)
+  (init-edit)
+  (org-babel-tangle)
+  (load "~/.emacs.d/init.el")
+  (switch-to-buffer "*Messages*"))
+(make-alias 'init-tangle-and-load)
 #+END_SRC
 
 * Startup
@@ -399,19 +412,19 @@ used extended commands. Installed using ELPA.
 
 * Various aliases and key bindings
 
-** setting up a sparse keymap
+** setting up a "launcher" keymap
 
 Thanks to [[http://endlessparentheses.com/launcher-keymap-for-standalone-features.html][endlessparentheses.com]] for pointing out how to set up a
 sparse keymap for organizing custom key bindings. Much easier than
 trying to find unused combinations and then remember them.
 
-The code block below defines the key sequence =C-x /= as a prefix for
-the keymap =my-key-map=, then assigns a series of functions to single
-characters following this prefix. Use "C-x / /" to list all of the
-bindings.
+The code block below defines a key sequence specified in
+=my-key-map-prefix= as a prefix for the keymap =my-key-map=, then
+assigns a series of functions to single characters following this
+prefix. Use =my/describe-my-key-map= to list all of the bindings.
 
 #+BEGIN_SRC elisp
-(defvar my-key-map-prefix "C-x /")
+(defvar my-key-map-prefix "C-c l")
 
 (defun my/describe-my-key-map ()
   "List bindings associated with `my-key-map'"
@@ -421,9 +434,11 @@ bindings.
 (define-prefix-command 'my-key-map)
 (define-key global-map (kbd my-key-map-prefix) 'my-key-map)
 
-(define-key my-key-map "/" #'my/describe-my-key-map)
 (define-key my-key-map "e" #'save-buffers-kill-emacs)
 (define-key my-key-map "f" #'fix-frame)
+(define-key my-key-map "i" #'init-edit)
+(define-key my-key-map "l" #'my/describe-my-key-map)
+(define-key my-key-map "m" #'magit-status)
 (define-key my-key-map "p" #'package-list-packages)
 #+END_SRC
 
@@ -1305,7 +1320,7 @@ necessary."
 (make-alias 'elpy-install-requirements)
 #+END_SRC
 
-I use =C= + arrows to move between windows, and =M= + arrows to move
+I use =C-= + arrows to move between windows, and =M= + arrows to move
 by word. These are in muscle memory at this point, and elpy can't have
 them.
 

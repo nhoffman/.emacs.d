@@ -15,12 +15,20 @@
     (intern (concat (or prefix my-alias-prefix) (symbol-name fun)))
     fun))
 
-(defun init-load ()
-  "Load ~/.emacs.d/init.el"
+(defun init-edit ()
+  "Edit ~/.emacs.d/init.org"
   (interactive)
-  (load "~/.emacs.d/init.el"))
-(global-set-key (kbd "M-C-i") 'init-load)
-(make-alias 'init-load)
+  (find-file "~/.emacs.d/init.org"))
+(make-alias 'init-edit)
+
+(defun init-tangle-and-load ()
+  "Tangle ~/.emacs.d/init.org and load the result"
+  (interactive)
+  (init-edit)
+  (org-babel-tangle)
+  (load "~/.emacs.d/init.el")
+  (switch-to-buffer "*Messages*"))
+(make-alias 'init-tangle-and-load)
 
 (unless (= emacs-major-version 24)
   (error "Emacs version 24 is required"))
@@ -104,7 +112,7 @@
       ;; This is your old M-x.
       (global-set-key (kbd "C-x M-x") 'execute-extended-command)))
 
-(defvar my-key-map-prefix "C-x /")
+(defvar my-key-map-prefix "C-c l")
 
 (defun my/describe-my-key-map ()
   "List bindings associated with `my-key-map'"
@@ -114,9 +122,11 @@
 (define-prefix-command 'my-key-map)
 (define-key global-map (kbd my-key-map-prefix) 'my-key-map)
 
-(define-key my-key-map "/" #'my/describe-my-key-map)
 (define-key my-key-map "e" #'save-buffers-kill-emacs)
 (define-key my-key-map "f" #'fix-frame)
+(define-key my-key-map "i" #'init-edit)
+(define-key my-key-map "l" #'my/describe-my-key-map)
+(define-key my-key-map "m" #'magit-status)
 (define-key my-key-map "p" #'package-list-packages)
 
 (global-set-key (kbd "<f6>") 'linum-mode)
