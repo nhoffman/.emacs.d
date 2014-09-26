@@ -14,5 +14,11 @@
 (require 'epa-file)
 (setenv "GPG_AGENT_INFO" nil) ;; suppress graphical passphrase prompt
 
+(defun insert-date ()
+  ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
+  (interactive)
+  (insert (format-time-string "<%Y-%m-%d %a>")))
+(global-set-key (kbd "C-c d") 'insert-date)
+
 (custom-set-variables
   '(safe-local-variable-values (quote ((toggle-read-only . t)))))
