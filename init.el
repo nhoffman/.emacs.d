@@ -128,6 +128,7 @@
 (define-key my-key-map "l" #'my/describe-my-key-map)
 (define-key my-key-map "m" #'magit-status)
 (define-key my-key-map "p" #'package-list-packages)
+(define-key my-key-map "s" #'ssh-refresh)
 
 (global-set-key (kbd "<f6>") 'linum-mode)
 (global-set-key (kbd "<f7>") 'visual-line-mode)

@@ -440,6 +440,7 @@ prefix. Use =my/describe-my-key-map= to list all of the bindings.
 (define-key my-key-map "l" #'my/describe-my-key-map)
 (define-key my-key-map "m" #'magit-status)
 (define-key my-key-map "p" #'package-list-packages)
+(define-key my-key-map "s" #'ssh-refresh)
 #+END_SRC
 
 ** Function keys.
