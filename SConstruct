@@ -1,6 +1,7 @@
 import os
 import platform
 
+import SCons
 from SCons.Script import ARGUMENTS, Variables, Environment, Alias, Default
 
 if platform.system() == 'Darwin':
@@ -14,6 +15,8 @@ vars.Add('init_dir', default=ARGUMENTS.get('init-dir', os.path.abspath('.')))
 env = Environment(ENV=dict(os.environ,
                            PATH=':'.join(['emacs-env/bin', os.environ['PATH']])),
                   variables=vars)
+
+Help(vars.GenerateHelpText(env))
 
 org_file = 'init.org'
 
@@ -50,3 +53,9 @@ reset_log, = env.Command(
     action='git push origin :gh-pages'
 )
 Alias('reset', reset_log)
+
+if GetOption('help'):
+    print 'Available Build Aliases:'
+    print '-----'
+    for alias in sorted(SCons.Node.Alias.default_ans.keys()):
+        print alias
