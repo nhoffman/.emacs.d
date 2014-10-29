@@ -168,7 +168,7 @@
 
 (prepend-path "~/.emacs.d/bin")
 
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/elisp/")
 
 (defun ssh-refresh ()
   "Reset the environment variable SSH_AUTH_SOCK"
@@ -266,11 +266,11 @@
   (desktop-save desktop-dirname))
 
 (if (member "--no-desktop" command-line-args)
-    (message "** Desktop auto-save is disabled")
+    (message "** desktop auto-save is disabled")
   (progn
     (require 'desktop)
     (desktop-save-mode 1)
-    (message "** Desktop auto-save is enabled")
+    (message "** desktop auto-save is enabled")
     (add-hook 'auto-save-hook 'desktop-save-no-p)))
 
 (defun move-line-up ()
