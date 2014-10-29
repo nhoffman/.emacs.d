@@ -46,7 +46,7 @@
   (add-to-list 'package-archives
        '("marmalade" . "http://marmalade-repo.org/packages/") t)
   (add-to-list 'package-archives
-       '("melpa" . "http://melpa.milkbox.net/packages/") t)
+       '("melpa" . "http://melpa.org/packages/") t)
   (add-to-list 'package-archives
        '("org" . "http://orgmode.org/elpa/") t)
   (add-to-list 'package-archives
@@ -122,6 +122,7 @@
 (define-prefix-command 'my-key-map)
 (define-key global-map (kbd my-key-map-prefix) 'my-key-map)
 
+(define-key my-key-map "d" #'describe-minor-mode)
 (define-key my-key-map "e" #'save-buffers-kill-emacs)
 (define-key my-key-map "f" #'fix-frame)
 (define-key my-key-map "i" #'init-edit)
@@ -132,7 +133,7 @@
 
 (global-set-key (kbd "<f6>") 'linum-mode)
 (global-set-key (kbd "<f7>") 'visual-line-mode)
-(global-set-key (kbd "<f8>") 'ns-toggle-fullscreen)
+(global-set-key (kbd "<f8>") 'flymake-popup-current-error-menu)
 
 (defalias 'dtw 'delete-trailing-whitespace)
 
@@ -284,8 +285,6 @@
   (transpose-lines 1)
   (previous-line 1))
 (global-set-key (kbd "M-<down>") 'move-line-down)
-
-(iswitchb-mode 1)
 
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list)
 
@@ -451,7 +450,7 @@ Assumes that the frame is only split into two."
              (setq py-indent-offset tab-width)
              (setq py-smart-indentation t)
              (define-key python-mode-map "\C-m" 'newline-and-indent)
-             (setq python-check-command "~/.emacs.d/bin/pychecker")
+             ;; (setq python-check-command "~/.emacs.d/bin/pychecker")
              ))
 
 (push '("SConstruct" . python-mode) auto-mode-alist)
@@ -540,7 +539,7 @@ necessary."
   (let ((dest "*elpy-install-requirements-output*")
         (install-cmd (format "%s/bin/pip install --force '%%s'" pyvenv-virtual-env))
         ;; (deps `(,(format "elpy==%s" elpy-version) "jedi")))
-        (deps '("jedi" "pyflakes" "pep8")))
+        (deps '("jedi" "pyflakes" "pep8" "flake8")))
     (generate-new-buffer dest)
     (mapcar
      #'(lambda (pkg)
