@@ -54,11 +54,22 @@
   )
 
 (defun package-installed-not-builtin-p (package &optional min-version)
-  "Return true if PACKAGE, of MIN-VERSION or newer, is installed,
-  ignoring built in packages.  MIN-VERSION should be a version list."
-  (let ((pkg-desc (assq package package-alist)))
-    (if pkg-desc
-        (version-list-<= min-version (package-desc-vers (cdr pkg-desc))))))
+  "Return true if PACKAGE, of MIN-VERSION or newer, is installed
+(ignoring built-in versions).  MIN-VERSION should be a version list"
+
+  (unless package--initialized (error "package.el is not yet initialized!"))
+(if (< emacs-major-version 4)
+    ;; < emacs 24.4
+    (let ((pkg-desc (assq package package-alist)))
+      (if pkg-desc
+          (version-list-<= min-version
+                           (package-desc-vers (cdr pkg-desc)))))
+  ;; >= emacs 24.4
+  (let ((pkg-descs (cdr (assq package package-alist))))
+    (and pkg-descs
+         (version-list-<= min-version
+                          (package-desc-version (car pkg-descs)))))
+  ))
 
 (defun package-install-list (pkg-list)
   ;; Install each package in pkg-list if necessary.
