@@ -1083,7 +1083,7 @@ Installed using ELPA.
              (setq py-indent-offset tab-width)
              (setq py-smart-indentation t)
              (define-key python-mode-map "\C-m" 'newline-and-indent)
-             ;; (setq python-check-command "~/.emacs.d/bin/pychecker")
+             (setq python-check-command "~/.emacs.d/bin/pychecker")
              ))
 #+END_SRC
 
