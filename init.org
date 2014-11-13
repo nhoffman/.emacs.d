@@ -772,6 +772,35 @@ before that.
     (add-hook 'auto-save-hook 'desktop-save-no-p)))
 #+END_SRC
 
+When the server is running, start with the first buffer with a name
+not starting with a star or space.
+
+(not working yet, alas!)
+
+#+BEGIN_SRC elisp
+;; (defun buffer-list-nostar ()
+;;     (delq nil (mapcar
+;;                (lambda (buf)
+;;                  (unless (string-match "^[* ]" (buffer-name buf)) buf))
+;;                (buffer-list))))
+
+;; (add-hook 'before-make-frame-hook
+;;           (lambda ()
+;;             (message "** running 'before-make-frame-hook")
+;;             ;; (let ((buf (buffer-file-name (car (buffer-list-nostar)))))
+;;             ;;   (print (buffer-list-nostar))
+;;             ;;   (when buf
+;;             ;;     (setq initial-buffer-choice buf)
+;;             ;;     (message "** setting initial buffer to %s" buf)))
+
+;;             (print (buffer-list))
+;;             (setq initial-buffer-choice (buffer-file-name (car (delq nil (mapcar
+;;                (lambda (buf)
+;;                  (unless (string-match "^[* ]" (buffer-name buf)) buf))
+;;                (buffer-list))))))
+;;             ))
+#+END_SRC
+
 * Move lines up and down with arrow keys
 
 See http://stackoverflow.com/questions/2423834/move-line-region-up-and-down-in-emacs

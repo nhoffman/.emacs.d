@@ -284,6 +284,28 @@
     (message "** desktop auto-save is enabled")
     (add-hook 'auto-save-hook 'desktop-save-no-p)))
 
+;; (defun buffer-list-nostar ()
+;;     (delq nil (mapcar
+;;                (lambda (buf)
+;;                  (unless (string-match "^[* ]" (buffer-name buf)) buf))
+;;                (buffer-list))))
+
+;; (add-hook 'before-make-frame-hook
+;;           (lambda ()
+;;             (message "** running 'before-make-frame-hook")
+;;             ;; (let ((buf (buffer-file-name (car (buffer-list-nostar)))))
+;;             ;;   (print (buffer-list-nostar))
+;;             ;;   (when buf
+;;             ;;     (setq initial-buffer-choice buf)
+;;             ;;     (message "** setting initial buffer to %s" buf)))
+
+;;             (print (buffer-list))
+;;             (setq initial-buffer-choice (buffer-file-name (car (delq nil (mapcar
+;;                (lambda (buf)
+;;                  (unless (string-match "^[* ]" (buffer-name buf)) buf))
+;;                (buffer-list))))))
+;;             ))
+
 (defun move-line-up ()
   (interactive)
   (transpose-lines 1)
