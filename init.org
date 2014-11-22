@@ -422,7 +422,6 @@ used extended commands. Installed using ELPA.
 #+END_SRC
 
 * Various aliases and key bindings
-
 ** setting up a "launcher" keymap
 
 Thanks to [[http://endlessparentheses.com/launcher-keymap-for-standalone-features.html][endlessparentheses.com]] for pointing out how to set up a
@@ -451,6 +450,7 @@ prefix. Use =my/describe-my-key-map= to list all of the bindings.
 (define-key my-key-map "i" #'init-edit)
 (define-key my-key-map "l" #'my/describe-my-key-map)
 (define-key my-key-map "m" #'magit-status)
+(define-key my-key-map "o" #'copy-region-to-other-window)
 (define-key my-key-map "p" #'package-list-packages)
 (define-key my-key-map "s" #'ssh-refresh)
 #+END_SRC
@@ -1782,6 +1782,25 @@ Note that =occur= can be executed using "M-s o"
     (occur occur-string)
     ))
 (global-set-key (kbd "M-s r") 'occur-region-or-word-at-point)
+#+END_SRC
+
+** Copy region to other window
+
+Adapted from http://emacs.stackexchange.com/questions/3743/how-to-move-region-to-other-window
+
+#+BEGIN_SRC elisp
+(defun copy-region-to-other-window (start end)
+  "Copy selected text to other window"
+  (interactive "r")
+  (if (use-region-p)
+      (progn (save-excursion
+               (copy-region-as-kill start end)
+               (other-window 1)
+               (yank))
+             (other-window -1))
+    (message "No region selected")))
+
+(make-alias 'copy-region-to-other-window)
 #+END_SRC
 
 * elisp-format
