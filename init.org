@@ -445,7 +445,8 @@ prefix. Use =my/describe-my-key-map= to list all of the bindings.
 (define-prefix-command 'my-key-map)
 (define-key global-map (kbd my-key-map-prefix) 'my-key-map)
 
-(define-key my-key-map "d" #'describe-minor-mode)
+(define-key my-key-map "d" #'insert-date)
+(define-key my-key-map "D" #'describe-minor-mode)
 (define-key my-key-map "e" #'save-buffers-kill-emacs)
 (define-key my-key-map "f" #'fix-frame)
 (define-key my-key-map "i" #'init-edit)
@@ -1042,7 +1043,6 @@ Custom key bindings
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
   (interactive)
   (insert (format-time-string "<%Y-%m-%d %a>")))
-(global-set-key (kbd "C-c d") 'insert-date)
 (make-alias 'insert-date)
 #+END_SRC
 
