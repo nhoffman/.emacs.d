@@ -140,6 +140,7 @@
 (define-key my-key-map "i" #'init-edit)
 (define-key my-key-map "l" #'my/describe-my-key-map)
 (define-key my-key-map "m" #'magit-status)
+(define-key my-key-map "o" #'copy-region-or-line-other-window)
 (define-key my-key-map "p" #'package-list-packages)
 (define-key my-key-map "s" #'ssh-refresh)
 
@@ -847,6 +848,21 @@ following line."
     (occur occur-string)
     ))
 (global-set-key (kbd "M-s r") 'occur-region-or-word-at-point)
+
+(defun copy-region-or-line-other-window ()
+  "Copy selected text or current line to other window"
+  (interactive)
+  (progn (save-excursion
+           (if (region-active-p)
+               (copy-region-as-kill
+                (region-beginning) (region-end))
+             (copy-region-as-kill
+              (line-beginning-position) (+ (line-end-position) 1)))
+           (other-window 1)
+           (yank))
+         (other-window -1)))
+
+(make-alias 'copy-region-or-line-other-window)
 
 (condition-case nil
     (require 'elisp-format)
