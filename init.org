@@ -413,12 +413,12 @@ See https://github.com/nonsequitur/smex - Ido extension for previously
 used extended commands. Installed using ELPA.
 
 #+BEGIN_SRC elisp
-(if (package-installed-p 'smex)
-    (progn
-      (global-set-key (kbd "M-x") 'smex)
-      (global-set-key (kbd "C-c M-x") 'smex-major-mode-commands)
-      ;; This is your old M-x.
-      (global-set-key (kbd "C-x M-x") 'execute-extended-command)))
+;; (if (package-installed-p 'smex)
+;;     (progn
+;;       (global-set-key (kbd "M-x") 'smex)
+;;       (global-set-key (kbd "C-c M-x") 'smex-major-mode-commands)
+;;       ;; This is your old M-x.
+;;       (global-set-key (kbd "C-x M-x") 'execute-extended-command)))
 #+END_SRC
 
 * Various aliases and key bindings
@@ -834,7 +834,7 @@ Replace default =list-buffers= with =electric-buffer-list= for buffer
 selection.
 
 #+BEGIN_SRC elisp
-(global-set-key (kbd "C-x C-b") 'electric-buffer-list)
+; (global-set-key (kbd "C-x C-b") 'electric-buffer-list)
 #+END_SRC
 
 ** Switch windows with arrow keys
@@ -1598,21 +1598,21 @@ Basic key bindings (see the url above for a complete list).
 - http://www.masteringemacs.org/articles/2010/10/10/introduction-to-ido-mode/
 
 #+BEGIN_SRC elisp
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(setq ido-use-virtual-buffers t)
-(ido-mode 1)
+;; (setq ido-enable-flex-matching t)
+;; (setq ido-everywhere t)
+;; (setq ido-use-virtual-buffers t)
+;; (ido-mode 1)
 #+END_SRC
 
 use recentf with ido - see http://wikemacs.org/wiki/Recentf
 
 #+BEGIN_SRC elisp
-(recentf-mode 1)
-(defun ido-choose-from-recentf ()
-  "Use ido to select a recently visited file from the `recentf-list'"
-  (interactive)
-  (find-file (ido-completing-read "Open file: " recentf-list nil t)))
-(global-set-key (kbd "C-c f") 'ido-choose-from-recentf)
+;; (recentf-mode 1)
+;; (defun ido-choose-from-recentf ()
+;;   "Use ido to select a recently visited file from the `recentf-list'"
+;;   (interactive)
+;;   (find-file (ido-completing-read "Open file: " recentf-list nil t)))
+;; (global-set-key (kbd "C-c f") 'ido-choose-from-recentf)
 #+END_SRC
 
 * git/magit

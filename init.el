@@ -116,12 +116,12 @@
   (package-install-list my-package-list))
 (make-alias 'install-packages)
 
-(if (package-installed-p 'smex)
-    (progn
-      (global-set-key (kbd "M-x") 'smex)
-      (global-set-key (kbd "C-c M-x") 'smex-major-mode-commands)
-      ;; This is your old M-x.
-      (global-set-key (kbd "C-x M-x") 'execute-extended-command)))
+;; (if (package-installed-p 'smex)
+;;     (progn
+;;       (global-set-key (kbd "M-x") 'smex)
+;;       (global-set-key (kbd "C-c M-x") 'smex-major-mode-commands)
+;;       ;; This is your old M-x.
+;;       (global-set-key (kbd "C-x M-x") 'execute-extended-command)))
 
 (defvar my-key-map-prefix "C-c l")
 
@@ -321,7 +321,7 @@
   (previous-line 1))
 (global-set-key (kbd "M-<down>") 'move-line-down)
 
-(global-set-key (kbd "C-x C-b") 'electric-buffer-list)
+; (global-set-key (kbd "C-x C-b") 'electric-buffer-list)
 
 (defun back-window ()
   (interactive)
@@ -725,17 +725,17 @@ necessary."
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(setq ido-use-virtual-buffers t)
-(ido-mode 1)
+;; (setq ido-enable-flex-matching t)
+;; (setq ido-everywhere t)
+;; (setq ido-use-virtual-buffers t)
+;; (ido-mode 1)
 
-(recentf-mode 1)
-(defun ido-choose-from-recentf ()
-  "Use ido to select a recently visited file from the `recentf-list'"
-  (interactive)
-  (find-file (ido-completing-read "Open file: " recentf-list nil t)))
-(global-set-key (kbd "C-c f") 'ido-choose-from-recentf)
+;; (recentf-mode 1)
+;; (defun ido-choose-from-recentf ()
+;;   "Use ido to select a recently visited file from the `recentf-list'"
+;;   (interactive)
+;;   (find-file (ido-completing-read "Open file: " recentf-list nil t)))
+;; (global-set-key (kbd "C-c f") 'ido-choose-from-recentf)
 
 (require 'vc-git)
 
