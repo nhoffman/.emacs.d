@@ -93,6 +93,7 @@
     ;; flycheck-color-mode-line
     gist
     git-timemachine
+    helm
     htmlize
     ;; jedi
     jinja2-mode
@@ -103,7 +104,7 @@
     ;; python-pylint
     ;; projectile
     rainbow-delimiters
-    smex
+    ;; smex
     visual-regexp
     visual-regexp-steroids
     yaml-mode

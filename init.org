@@ -352,13 +352,13 @@ emacs was first started.
     ;; < emacs 24.4
     (let ((pkg-desc (assq package package-alist)))
       (if pkg-desc
-	  (version-list-<= min-version
-			   (package-desc-vers (cdr pkg-desc)))))
+          (version-list-<= min-version
+                           (package-desc-vers (cdr pkg-desc)))))
   ;; >= emacs 24.4
   (let ((pkg-descs (cdr (assq package package-alist))))
     (and pkg-descs
-	 (version-list-<= min-version
-			  (package-desc-version (car pkg-descs)))))
+         (version-list-<= min-version
+                          (package-desc-version (car pkg-descs)))))
   ))
 
 (defun package-install-list (pkg-list)
@@ -383,6 +383,7 @@ emacs was first started.
     ;; flycheck-color-mode-line
     gist
     git-timemachine
+    helm
     htmlize
     ;; jedi
     jinja2-mode
@@ -393,7 +394,7 @@ emacs was first started.
     ;; python-pylint
     ;; projectile
     rainbow-delimiters
-    smex
+    ;; smex
     visual-regexp
     visual-regexp-steroids
     yaml-mode
