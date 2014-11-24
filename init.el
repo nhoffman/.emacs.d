@@ -116,6 +116,16 @@
   (package-install-list my-package-list))
 (make-alias 'install-packages)
 
+(condition-case nil
+    (progn
+      (require 'helm-config)
+      (helm-mode 1)
+      (global-set-key (kbd "M-x") 'helm-M-x)
+      (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+      (global-set-key (kbd "C-c h o") 'helm-occur)
+      (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings))
+  (error (message "** could not activate helm")))
+
 ;; (if (package-installed-p 'smex)
 ;;     (progn
 ;;       (global-set-key (kbd "M-x") 'smex)
@@ -321,7 +331,7 @@
   (previous-line 1))
 (global-set-key (kbd "M-<down>") 'move-line-down)
 
-; (global-set-key (kbd "C-x C-b") 'electric-buffer-list)
+(global-set-key (kbd "C-x C-b") 'electric-buffer-list)
 
 (defun back-window ()
   (interactive)

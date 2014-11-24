@@ -407,6 +407,25 @@ emacs was first started.
 (make-alias 'install-packages)
 #+END_SRC
 
+* helm
+
+Helm is a pretty intense change to the default behavior for executing
+commands, switching buffers, finding files, etc. It takes some getting used to, but woah.
+
+See http://tuhdo.github.io/helm-intro.html for setup suggestions.
+
+#+BEGIN_SRC elisp
+(condition-case nil
+    (progn
+      (require 'helm-config)
+      (helm-mode 1)
+      (global-set-key (kbd "M-x") 'helm-M-x)
+      (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+      (global-set-key (kbd "C-c h o") 'helm-occur)
+      (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings))
+  (error (message "** could not activate helm")))
+#+END_SRC
+
 * smex
 
 See https://github.com/nonsequitur/smex - Ido extension for previously
@@ -834,7 +853,7 @@ Replace default =list-buffers= with =electric-buffer-list= for buffer
 selection.
 
 #+BEGIN_SRC elisp
-; (global-set-key (kbd "C-x C-b") 'electric-buffer-list)
+(global-set-key (kbd "C-x C-b") 'electric-buffer-list)
 #+END_SRC
 
 ** Switch windows with arrow keys
