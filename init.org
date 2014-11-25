@@ -415,6 +415,10 @@ commands, switching buffers, finding files, etc. It takes some getting used to, 
 
 See http://tuhdo.github.io/helm-intro.html for setup suggestions.
 
+Using the configuration below, some hints:
+
+- When in the =helm-M-x= buffer, =TAB= shows documentation for the selected command.
+
 #+BEGIN_SRC elisp
 (condition-case nil
     (progn
@@ -423,7 +427,11 @@ See http://tuhdo.github.io/helm-intro.html for setup suggestions.
       (global-set-key (kbd "M-x") 'helm-M-x)
       (global-set-key (kbd "M-y") 'helm-show-kill-ring)
       (global-set-key (kbd "C-c h o") 'helm-occur)
-      (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings))
+      (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
+      (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+      (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+      (define-key helm-map (kbd "C-z")  'helm-select-action)
+      )
   (error (message "** could not activate helm")))
 #+END_SRC
 
@@ -725,6 +733,7 @@ Installed using ELPA.
 
 #+BEGIN_SRC elisp
 (global-set-key (kbd "C-=") 'er/expand-region)
+(global-set-key (kbd "C-M-=") 'er/contract-region)
 #+END_SRC
 
 * visual-regexp

@@ -124,7 +124,11 @@
       (global-set-key (kbd "M-x") 'helm-M-x)
       (global-set-key (kbd "M-y") 'helm-show-kill-ring)
       (global-set-key (kbd "C-c h o") 'helm-occur)
-      (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings))
+      (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
+      (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+      (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+      (define-key helm-map (kbd "C-z")  'helm-select-action)
+      )
   (error (message "** could not activate helm")))
 
 ;; (if (package-installed-p 'smex)
@@ -271,6 +275,7 @@
 (blink-cursor-mode 1)
 
 (global-set-key (kbd "C-=") 'er/expand-region)
+(global-set-key (kbd "C-M-=") 'er/contract-region)
 
 (if (package-installed-p 'visual-regexp-steroids)
     (progn (require 'visual-regexp-steroids)
