@@ -4,12 +4,13 @@
 ac-comphist.dat
 auto-save-list
 elpa
-image-dired
-projectile-bookmarks.eld
-tramp
-url
 emacs-env
 ghp-import.log
 html/
+image-dired
 inactive.el
+projectile-bookmarks.eld
+publish.log
 src/
+tramp
+url
