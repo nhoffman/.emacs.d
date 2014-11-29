@@ -478,6 +478,8 @@ Using the configuration below, some hints:
 
 ** smex
 
+(seems to be replaced by helm)
+
 See https://github.com/nonsequitur/smex - Ido extension for previously
 used extended commands. Installed using ELPA.
 
@@ -491,6 +493,8 @@ used extended commands. Installed using ELPA.
 #+END_SRC
 
 ** projectile
+
+TODO: check out =helm-projectile=
 
 Project-centric file and directory navigation - see
 https://github.com/bbatsov/projectile
