@@ -35,6 +35,11 @@
 
 (message "loading ~/.emacs.d/init.el")
 
+(global-auto-revert-mode 1)
+
+;; (setq debug-on-error t)
+;; (setq debug-on-signal t)
+
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
@@ -88,20 +93,15 @@
     elpy
     ess
     expand-region
-    ;; flymake-cursor
-    ;; flycheck
-    ;; flycheck-color-mode-line
     gist
     git-timemachine
     helm
     htmlize
-    ;; jedi
     jinja2-mode
     magit
     markdown-mode
     moinmoin-mode
     org
-    ;; python-pylint
     ;; projectile
     rainbow-delimiters
     ;; smex
@@ -116,6 +116,14 @@
   (package-list-packages)
   (package-install-list my-package-list))
 (make-alias 'install-packages)
+
+(global-set-key (kbd "C-x C-b") 'electric-buffer-list)
+
+(defun back-window ()
+  (interactive)
+  (other-window -1))
+(global-set-key (kbd "C-<right>") 'other-window)
+(global-set-key (kbd "C-<left>") 'back-window)
 
 (condition-case nil
     (progn
@@ -137,6 +145,123 @@
 ;;       (global-set-key (kbd "C-c M-x") 'smex-major-mode-commands)
 ;;       ;; This is your old M-x.
 ;;       (global-set-key (kbd "C-x M-x") 'execute-extended-command)))
+
+;; (if (package-installed-p 'projectile)
+;;     (projectile-global-mode))
+
+;; (setq ido-enable-flex-matching t)
+;; (setq ido-everywhere t)
+;; (setq ido-use-virtual-buffers t)
+;; (ido-mode 1)
+
+;; (recentf-mode 1)
+;; (defun ido-choose-from-recentf ()
+;;   "Use ido to select a recently visited file from the `recentf-list'"
+;;   (interactive)
+;;   (find-file (ido-completing-read "Open file: " recentf-list nil t)))
+;; (global-set-key (kbd "C-c f") 'ido-choose-from-recentf)
+
+(require 'ibuffer)
+(global-set-key (kbd "C-x C-g") 'ibuffer)
+(global-set-key (kbd "C-x M-g") 'ibuffer-switch-to-saved-filter-groups)
+(setq ibuffer-show-empty-filter-groups nil)
+
+(defvar my-ibuffer-config-file "~/.emacs.d/ibuffer-config.el")
+
+(defun ibuffer-load-config ()
+  ;; load the ibuffer config file
+  (interactive)
+  (condition-case nil
+      (progn
+        (message (format "** loading ibuffer config in %s" my-ibuffer-config-file))
+        (load my-ibuffer-config-file)
+        )
+    (error (message (format "** could not load %s" my-ibuffer-config-file))))
+  )
+
+(ibuffer-load-config)
+
+(defun ibuffer-show-all-filter-groups ()
+  "Show all filter groups"
+  (interactive)
+  (setq ibuffer-hidden-filter-groups nil)
+  (ibuffer-update nil t))
+
+(defun ibuffer-hide-all-filter-groups ()
+  "Hide all filter groups"
+  (interactive)
+  (setq ibuffer-hidden-filter-groups
+        (delete-dups
+         (append ibuffer-hidden-filter-groups
+                 (mapcar 'car (ibuffer-generate-filter-groups
+                               (ibuffer-current-state-list)
+                               (not ibuffer-show-empty-filter-groups)
+                               t)))))
+  (ibuffer-update nil t))
+
+(defun ibuffer-reload ()
+  ;; kill ibuffer, reload the config file, and return to ibuffer
+  (interactive)
+  (ibuffer)
+  (kill-buffer)
+  (ibuffer-load-config)
+  (ibuffer)
+  )
+
+(defun my-ibuffer-sort-hook ()
+  ;; add another sorting method for ibuffer (allow the grouping of
+  ;; filenames and dired buffers
+  (define-ibuffer-sorter filename-or-dired
+    "Sort the buffers by their pathname."
+    (:description "filenames plus dired")
+    (string-lessp
+     (with-current-buffer (car a)
+       (or buffer-file-name
+           (if (eq major-mode 'dired-mode)
+               (expand-file-name dired-directory))
+           ;; so that all non pathnames are at the end
+           "~"))
+     (with-current-buffer (car b)
+       (or buffer-file-name
+           (if (eq major-mode 'dired-mode)
+               (expand-file-name dired-directory))
+           ;; so that all non pathnames are at the end
+           "~"))))
+  (define-key ibuffer-mode-map (kbd "s p")     'ibuffer-do-sort-by-filename-or-dired)
+  )
+
+(defun ibuffer-ediff-marked-buffers ()
+  "Compare two marked buffers using ediff"
+  (interactive)
+  (let* ((marked-buffers (ibuffer-get-marked-buffers))
+         (len (length marked-buffers)))
+    (unless (= 2 len)
+      (error (format "%s buffer%s been marked (needs to be 2)"
+                     len (if (= len 1) " has" "s have"))))
+    (ediff-buffers (car marked-buffers) (cadr marked-buffers))))
+
+(add-hook 'ibuffer-mode-hook
+          '(lambda ()
+             (ibuffer-auto-mode 1) ;; minor mode that keeps the buffer list up to date
+             (ibuffer-switch-to-saved-filter-groups "default")
+             (define-key ibuffer-mode-map (kbd "a") 'ibuffer-show-all-filter-groups)
+             (define-key ibuffer-mode-map (kbd "z") 'ibuffer-hide-all-filter-groups)
+             (define-key ibuffer-mode-map (kbd "e") 'ibuffer-ediff-marked-buffers)
+             (my-ibuffer-sort-hook)
+             ;; don't accidentally print; see http://irreal.org/blog/?p=2013
+             (defadvice ibuffer-do-print (before print-buffer-query activate)
+               (unless (y-or-n-p "Print buffer? ")
+                 (error "Cancelled")))
+             )
+          )
+
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward)
+
+(define-key global-map (kbd "M-'") 'ace-jump-mode)
+
+(global-set-key (kbd "C-=") 'er/expand-region)
+(global-set-key (kbd "C-M-=") 'er/contract-region)
 
 (defvar my-key-map-prefix "C-c l")
 
@@ -165,9 +290,6 @@
 
 (defalias 'dtw 'delete-trailing-whitespace)
 
-;; (setq debug-on-error t)
-;; (setq debug-on-signal t)
-
 (setq column-number-mode t)
 (setq inhibit-splash-screen t)
 (setq require-final-newline t)
@@ -184,17 +306,8 @@
       (list (format "%s %%S: %%j " (system-name))
             '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
-(global-auto-revert-mode 1)
-
-(add-to-list 'exec-path "~/.emacs.d/bin")
-
-(defun prepend-path (path)
-  "Add `path' to the beginning of $PATH unless already present."
-  (interactive)
-  (unless (string-match path (getenv "PATH"))
-    (setenv "PATH" (concat path ":" (getenv "PATH")))))
-
-(prepend-path "~/.emacs.d/bin")
+(set-cursor-color "red")
+(blink-cursor-mode 1)
 
 (add-to-list 'load-path "~/.emacs.d/elisp/")
 
@@ -213,6 +326,16 @@
      (format "SSH_AUTH_SOCK %s --> %s"
              ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))))
 (make-alias 'ssh-refresh)
+
+(add-to-list 'exec-path "~/.emacs.d/bin")
+
+(defun prepend-path (path)
+  "Add `path' to the beginning of $PATH unless already present."
+  (interactive)
+  (unless (string-match path (getenv "PATH"))
+    (setenv "PATH" (concat path ":" (getenv "PATH")))))
+
+(prepend-path "~/.emacs.d/bin")
 
 ;; (when (memq window-system '(mac ns))
 ;;   (exec-path-from-shell-initialize))
@@ -268,14 +391,6 @@
 (setq scroll-step 1)                                ;; keyboard scroll one line at a time
 (setq scroll-conservatively 1)                      ;; scroll by one line to follow cursor off screen
 (setq scroll-margin 2)                              ;; Start scrolling when 2 lines from top/bottom
-
-(define-key global-map (kbd "M-'") 'ace-jump-mode)
-
-(set-cursor-color "red")
-(blink-cursor-mode 1)
-
-(global-set-key (kbd "C-=") 'er/expand-region)
-(global-set-key (kbd "C-M-=") 'er/contract-region)
 
 (if (package-installed-p 'visual-regexp-steroids)
     (progn (require 'visual-regexp-steroids)
@@ -336,14 +451,6 @@
   (transpose-lines 1)
   (previous-line 1))
 (global-set-key (kbd "M-<down>") 'move-line-down)
-
-(global-set-key (kbd "C-x C-b") 'electric-buffer-list)
-
-(defun back-window ()
-  (interactive)
-  (other-window -1))
-(global-set-key (kbd "C-<right>") 'other-window)
-(global-set-key (kbd "C-<left>") 'back-window)
 
 (defun transpose-buffers (arg)
   "Transpose the buffers shown in two windows."
@@ -509,34 +616,6 @@ Assumes that the frame is only split into two."
 
 (setq backward-delete-char-untabify-method "all")
 
-(defun p8 ()
-  "Apply autopep8 to the current region or buffer"
-  (interactive)
-  (unless (region-active-p)
-    (mark-whole-buffer))
-  (shell-command-on-region
-   (region-beginning) (region-end) ;; beginning and end of region or buffer
-   "autopep8 -"                    ;; command and parameters
-   (current-buffer)                ;; output buffer
-   t                               ;; replace?
-   "*autopep8 errors*"             ;; name of the error buffer
-   t))                             ;; show error buffer?
-
-(defun p8-and-ediff ()
-  "Compare the current buffer to the output of autopep8 using ediff"
-  (interactive)
-  (let ((p8-output
-         (get-buffer-create (format "* %s autopep8 *" (buffer-name)))))
-    (shell-command-on-region
-     (point-min) (point-max)    ;; beginning and end of buffer
-     "autopep8 -"               ;; command and parameters
-     p8-output                  ;; output buffer
-     nil                        ;; replace?
-     "*autopep8 errors*"        ;; name of the error buffer
-     t)                         ;; show error buffer?
-    (ediff-buffers (current-buffer) p8-output)
-    ))
-
 (condition-case nil
     (elpy-enable) ;; install from ELPA
   (error (message "** could not enable elpy")))
@@ -615,6 +694,34 @@ necessary."
    (add-to-list 'elpy-project-ignored-directories "*-env")
 ))
 
+(defun p8 ()
+  "Apply autopep8 to the current region or buffer"
+  (interactive)
+  (unless (region-active-p)
+    (mark-whole-buffer))
+  (shell-command-on-region
+   (region-beginning) (region-end) ;; beginning and end of region or buffer
+   "autopep8 -"                    ;; command and parameters
+   (current-buffer)                ;; output buffer
+   t                               ;; replace?
+   "*autopep8 errors*"             ;; name of the error buffer
+   t))                             ;; show error buffer?
+
+(defun p8-and-ediff ()
+  "Compare the current buffer to the output of autopep8 using ediff"
+  (interactive)
+  (let ((p8-output
+         (get-buffer-create (format "* %s autopep8 *" (buffer-name)))))
+    (shell-command-on-region
+     (point-min) (point-max)    ;; beginning and end of buffer
+     "autopep8 -"               ;; command and parameters
+     p8-output                  ;; output buffer
+     nil                        ;; replace?
+     "*autopep8 errors*"        ;; name of the error buffer
+     t)                         ;; show error buffer?
+    (ediff-buffers (current-buffer) p8-output)
+    ))
+
 (defun scons-insert-command ()
   (interactive)
   (insert "output, = env.Command(
@@ -643,115 +750,6 @@ necessary."
     (require 'tramp)
   (setq tramp-default-method "scp")
   (error (message "** could not load tramp")))
-
-(require 'ibuffer)
-(global-set-key (kbd "C-x C-g") 'ibuffer)
-(global-set-key (kbd "C-x M-g") 'ibuffer-switch-to-saved-filter-groups)
-(setq ibuffer-show-empty-filter-groups nil)
-
-(defvar my-ibuffer-config-file "~/.emacs.d/ibuffer-config.el")
-
-(defun ibuffer-load-config ()
-  ;; load the ibuffer config file
-  (interactive)
-  (condition-case nil
-      (progn
-        (message (format "** loading ibuffer config in %s" my-ibuffer-config-file))
-        (load my-ibuffer-config-file)
-        )
-    (error (message (format "** could not load %s" my-ibuffer-config-file))))
-  )
-
-(ibuffer-load-config)
-
-(defun ibuffer-show-all-filter-groups ()
-  "Show all filter groups"
-  (interactive)
-  (setq ibuffer-hidden-filter-groups nil)
-  (ibuffer-update nil t))
-
-(defun ibuffer-hide-all-filter-groups ()
-  "Hide all filter groups"
-  (interactive)
-  (setq ibuffer-hidden-filter-groups
-        (delete-dups
-         (append ibuffer-hidden-filter-groups
-                 (mapcar 'car (ibuffer-generate-filter-groups
-                               (ibuffer-current-state-list)
-                               (not ibuffer-show-empty-filter-groups)
-                               t)))))
-  (ibuffer-update nil t))
-
-(defun ibuffer-reload ()
-  ;; kill ibuffer, reload the config file, and return to ibuffer
-  (interactive)
-  (ibuffer)
-  (kill-buffer)
-  (ibuffer-load-config)
-  (ibuffer)
-  )
-
-(defun my-ibuffer-sort-hook ()
-  ;; add another sorting method for ibuffer (allow the grouping of
-  ;; filenames and dired buffers
-  (define-ibuffer-sorter filename-or-dired
-    "Sort the buffers by their pathname."
-    (:description "filenames plus dired")
-    (string-lessp
-     (with-current-buffer (car a)
-       (or buffer-file-name
-           (if (eq major-mode 'dired-mode)
-               (expand-file-name dired-directory))
-           ;; so that all non pathnames are at the end
-           "~"))
-     (with-current-buffer (car b)
-       (or buffer-file-name
-           (if (eq major-mode 'dired-mode)
-               (expand-file-name dired-directory))
-           ;; so that all non pathnames are at the end
-           "~"))))
-  (define-key ibuffer-mode-map (kbd "s p")     'ibuffer-do-sort-by-filename-or-dired)
-  )
-
-(defun ibuffer-ediff-marked-buffers ()
-  "Compare two marked buffers using ediff"
-  (interactive)
-  (let* ((marked-buffers (ibuffer-get-marked-buffers))
-         (len (length marked-buffers)))
-    (unless (= 2 len)
-      (error (format "%s buffer%s been marked (needs to be 2)"
-                     len (if (= len 1) " has" "s have"))))
-    (ediff-buffers (car marked-buffers) (cadr marked-buffers))))
-
-(add-hook 'ibuffer-mode-hook
-          '(lambda ()
-             (ibuffer-auto-mode 1) ;; minor mode that keeps the buffer list up to date
-             (ibuffer-switch-to-saved-filter-groups "default")
-             (define-key ibuffer-mode-map (kbd "a") 'ibuffer-show-all-filter-groups)
-             (define-key ibuffer-mode-map (kbd "z") 'ibuffer-hide-all-filter-groups)
-             (define-key ibuffer-mode-map (kbd "e") 'ibuffer-ediff-marked-buffers)
-             (my-ibuffer-sort-hook)
-             ;; don't accidentally print; see http://irreal.org/blog/?p=2013
-             (defadvice ibuffer-do-print (before print-buffer-query activate)
-               (unless (y-or-n-p "Print buffer? ")
-                 (error "Cancelled")))
-             )
-          )
-
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward)
-
-;; (setq ido-enable-flex-matching t)
-;; (setq ido-everywhere t)
-;; (setq ido-use-virtual-buffers t)
-;; (ido-mode 1)
-
-;; (recentf-mode 1)
-;; (defun ido-choose-from-recentf ()
-;;   "Use ido to select a recently visited file from the `recentf-list'"
-;;   (interactive)
-;;   (find-file (ido-completing-read "Open file: " recentf-list nil t)))
-;; (global-set-key (kbd "C-c f") 'ido-choose-from-recentf)
 
 (require 'vc-git)
 

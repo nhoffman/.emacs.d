@@ -292,13 +292,29 @@ reloading the output.
 
 This will only work with emacs 24.x
 
-#+BEGIN_SRC elisp :tangle init.el
+#+BEGIN_SRC elisp
 (unless (= emacs-major-version 24)
   (error "Emacs version 24 is required"))
 #+END_SRC
 
 #+BEGIN_SRC elisp
 (message "loading ~/.emacs.d/init.el")
+#+END_SRC
+
+** Auto-refresh
+
+automatically refresh buffers from disk (default is every 5 sec)
+see http://www.cs.cmu.edu/cgi-bin/info2www?(emacs)Reverting
+
+#+BEGIN_SRC elisp
+(global-auto-revert-mode 1)
+#+END_SRC
+
+** Enable debugging
+
+#+BEGIN_SRC elisp
+;; (setq debug-on-error t)
+;; (setq debug-on-signal t)
 #+END_SRC
 
 * ELPA
@@ -311,6 +327,8 @@ Some useful ELPA variables and functions:
 | =package-activated-list=    | variable containing list of the names of currently activated packages |
 | =package-install=           | install a package                                                     |
 | =package-installed-p=       | return true if package is installed                                   |
+
+** define repositories
 
 Add some extra package repositories. The default value of package-archives is
 =(("gnu" . "http://elpa.gnu.org/packages/"))=
@@ -334,6 +352,8 @@ Add some extra package repositories. The default value of package-archives is
        '("elpy" . "http://jorgenschaefer.github.io/packages/") t)
   )
 #+END_SRC
+
+** define a list of packages
 
 I could not find an obvious way to define a list of packages to
 automatically install, so here are some functions to do so. Execute
@@ -378,20 +398,15 @@ emacs was first started.
     elpy
     ess
     expand-region
-    ;; flymake-cursor
-    ;; flycheck
-    ;; flycheck-color-mode-line
     gist
     git-timemachine
     helm
     htmlize
-    ;; jedi
     jinja2-mode
     magit
     markdown-mode
     moinmoin-mode
     org
-    ;; python-pylint
     ;; projectile
     rainbow-delimiters
     ;; smex
@@ -408,16 +423,42 @@ emacs was first started.
 (make-alias 'install-packages)
 #+END_SRC
 
-* helm
+* Navigation
+** =electric-buffer-list=
+
+Replace default =list-buffers= with =electric-buffer-list= for buffer
+selection.
+
+#+BEGIN_SRC elisp
+(global-set-key (kbd "C-x C-b") 'electric-buffer-list)
+#+END_SRC
+
+** Switch windows with arrow keys
+
+Note that other-window is bound by default to =C-x o=
+
+#+BEGIN_SRC elisp
+(defun back-window ()
+  (interactive)
+  (other-window -1))
+(global-set-key (kbd "C-<right>") 'other-window)
+(global-set-key (kbd "C-<left>") 'back-window)
+#+END_SRC
+
+** helm
 
 Helm is a pretty intense change to the default behavior for executing
-commands, switching buffers, finding files, etc. It takes some getting used to, but woah.
+commands, switching buffers, finding files, etc. It takes some getting
+used to, but woah.
 
 See http://tuhdo.github.io/helm-intro.html for setup suggestions.
 
 Using the configuration below, some hints:
 
 - When in the =helm-M-x= buffer, =TAB= shows documentation for the selected command.
+- As suggested, I've replaced the default behavior of =M-y= to use
+  helm's equivalent, which shows a menu of recently copied regions
+  (rather than cycling through entries of the kill ring after a yank).
 
 #+BEGIN_SRC elisp
 (condition-case nil
@@ -435,7 +476,7 @@ Using the configuration below, some hints:
   (error (message "** could not activate helm")))
 #+END_SRC
 
-* smex
+** smex
 
 See https://github.com/nonsequitur/smex - Ido extension for previously
 used extended commands. Installed using ELPA.
@@ -449,12 +490,211 @@ used extended commands. Installed using ELPA.
 ;;       (global-set-key (kbd "C-x M-x") 'execute-extended-command)))
 #+END_SRC
 
-* Various aliases and key bindings
-** setting up a "launcher" keymap
+** projectile
+
+Project-centric file and directory navigation - see
+https://github.com/bbatsov/projectile
+
+Installed using ELPA.
+
+Basic key bindings (see the url above for a complete list).
+
+| keybinding | description                                       |
+| C-c p C-h  | Help with projectile key bindings                 |
+| C-c p f    | Display a list of all files in the project.       |
+| C-c p d    | Display a list of all directories in the project. |
+
+#+BEGIN_SRC elisp
+;; (if (package-installed-p 'projectile)
+;;     (projectile-global-mode))
+#+END_SRC
+
+** ido-mode
+
+- http://www.masteringemacs.org/articles/2010/10/10/introduction-to-ido-mode/
+
+#+BEGIN_SRC elisp
+;; (setq ido-enable-flex-matching t)
+;; (setq ido-everywhere t)
+;; (setq ido-use-virtual-buffers t)
+;; (ido-mode 1)
+#+END_SRC
+
+use recentf with ido - see http://wikemacs.org/wiki/Recentf
+
+#+BEGIN_SRC elisp
+;; (recentf-mode 1)
+;; (defun ido-choose-from-recentf ()
+;;   "Use ido to select a recently visited file from the `recentf-list'"
+;;   (interactive)
+;;   (find-file (ido-completing-read "Open file: " recentf-list nil t)))
+;; (global-set-key (kbd "C-c f") 'ido-choose-from-recentf)
+#+END_SRC
+
+** ibuffer
+
+- http://emacs-fu.blogspot.com/2010/02/dealing-with-many-buffers-ibuffer.html
+
+#+BEGIN_SRC elisp
+(require 'ibuffer)
+(global-set-key (kbd "C-x C-g") 'ibuffer)
+(global-set-key (kbd "C-x M-g") 'ibuffer-switch-to-saved-filter-groups)
+(setq ibuffer-show-empty-filter-groups nil)
+#+END_SRC
+
+Function to load config file. Load on starup.
+
+#+BEGIN_SRC elisp
+(defvar my-ibuffer-config-file "~/.emacs.d/ibuffer-config.el")
+
+(defun ibuffer-load-config ()
+  ;; load the ibuffer config file
+  (interactive)
+  (condition-case nil
+      (progn
+	(message (format "** loading ibuffer config in %s" my-ibuffer-config-file))
+	(load my-ibuffer-config-file)
+	)
+    (error (message (format "** could not load %s" my-ibuffer-config-file))))
+  )
+
+(ibuffer-load-config)
+#+END_SRC
+
+Show/hide all filter groups
+
+#+BEGIN_SRC elisp
+(defun ibuffer-show-all-filter-groups ()
+  "Show all filter groups"
+  (interactive)
+  (setq ibuffer-hidden-filter-groups nil)
+  (ibuffer-update nil t))
+
+(defun ibuffer-hide-all-filter-groups ()
+  "Hide all filter groups"
+  (interactive)
+  (setq ibuffer-hidden-filter-groups
+	(delete-dups
+	 (append ibuffer-hidden-filter-groups
+		 (mapcar 'car (ibuffer-generate-filter-groups
+			       (ibuffer-current-state-list)
+			       (not ibuffer-show-empty-filter-groups)
+			       t)))))
+  (ibuffer-update nil t))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(defun ibuffer-reload ()
+  ;; kill ibuffer, reload the config file, and return to ibuffer
+  (interactive)
+  (ibuffer)
+  (kill-buffer)
+  (ibuffer-load-config)
+  (ibuffer)
+  )
+#+END_SRC
+
+From http://www.emacswiki.org/emacs/IbufferMode
+
+#+BEGIN_SRC elisp
+(defun my-ibuffer-sort-hook ()
+  ;; add another sorting method for ibuffer (allow the grouping of
+  ;; filenames and dired buffers
+  (define-ibuffer-sorter filename-or-dired
+    "Sort the buffers by their pathname."
+    (:description "filenames plus dired")
+    (string-lessp
+     (with-current-buffer (car a)
+       (or buffer-file-name
+	   (if (eq major-mode 'dired-mode)
+	       (expand-file-name dired-directory))
+	   ;; so that all non pathnames are at the end
+	   "~"))
+     (with-current-buffer (car b)
+       (or buffer-file-name
+	   (if (eq major-mode 'dired-mode)
+	       (expand-file-name dired-directory))
+	   ;; so that all non pathnames are at the end
+	   "~"))))
+  (define-key ibuffer-mode-map (kbd "s p")     'ibuffer-do-sort-by-filename-or-dired)
+  )
+#+END_SRC
+
+From http://curiousprogrammer.wordpress.com/2009/04/02/ibuffer/
+
+#+BEGIN_SRC elisp
+(defun ibuffer-ediff-marked-buffers ()
+  "Compare two marked buffers using ediff"
+  (interactive)
+  (let* ((marked-buffers (ibuffer-get-marked-buffers))
+         (len (length marked-buffers)))
+    (unless (= 2 len)
+      (error (format "%s buffer%s been marked (needs to be 2)"
+                     len (if (= len 1) " has" "s have"))))
+    (ediff-buffers (car marked-buffers) (cadr marked-buffers))))
+#+END_SRC
+
+Hooks
+
+#+BEGIN_SRC elisp
+(add-hook 'ibuffer-mode-hook
+          '(lambda ()
+             (ibuffer-auto-mode 1) ;; minor mode that keeps the buffer list up to date
+             (ibuffer-switch-to-saved-filter-groups "default")
+             (define-key ibuffer-mode-map (kbd "a") 'ibuffer-show-all-filter-groups)
+             (define-key ibuffer-mode-map (kbd "z") 'ibuffer-hide-all-filter-groups)
+             (define-key ibuffer-mode-map (kbd "e") 'ibuffer-ediff-marked-buffers)
+             (my-ibuffer-sort-hook)
+             ;; don't accidentally print; see http://irreal.org/blog/?p=2013
+             (defadvice ibuffer-do-print (before print-buffer-query activate)
+               (unless (y-or-n-p "Print buffer? ")
+                 (error "Cancelled")))
+             )
+          )
+#+END_SRC
+
+** uniquify
+
+Distinguish buffer names for identically-named files.
+
+- http://www.emacswiki.org/emacs/uniquify
+- Note that as of 24.4, uniquify is enabled by default, but with
+  =uniquify-buffer-name-style= set to =post-forward-angle-brackets=.
+
+#+BEGIN_SRC elisp
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward)
+#+END_SRC
+
+* Marking, cursor movement and appearance
+** ace-jump-mode
+
+A quick cursor location minor mode for emacs. I picked =M-'= as the
+key combo for activation. Installed from ELPA.
+
+#+BEGIN_SRC elisp
+(define-key global-map (kbd "M-'") 'ace-jump-mode)
+#+END_SRC
+
+** expand-region
+
+#+BEGIN_QUOTE
+Expand region increases the selected region by semantic units. Just
+keep pressing the key until it selects what you want.
+#+END_QUOTE
+
+Installed using ELPA.
+
+#+BEGIN_SRC elisp
+(global-set-key (kbd "C-=") 'er/expand-region)
+(global-set-key (kbd "C-M-=") 'er/contract-region)
+#+END_SRC
+
+* Defining a "launcher" keymap
 
 Thanks to [[http://endlessparentheses.com/launcher-keymap-for-standalone-features.html][endlessparentheses.com]] for pointing out how to set up a
 sparse keymap for organizing custom key bindings. Much easier than
-trying to find unused combinations and then remember them.
+trying to find unused combinations.
 
 The code block below defines a key sequence specified in
 =my-key-map-prefix= as a prefix for the keymap =my-key-map=, then
@@ -484,7 +724,7 @@ prefix. Use =my/describe-my-key-map= to list all of the bindings.
 (define-key my-key-map "s" #'ssh-refresh)
 #+END_SRC
 
-** Function keys.
+* Function keys.
 
 It's kind of surprising that the function keys aren't
 either defined or bound to more commonly used functions by
@@ -518,14 +758,6 @@ default.
 
 * General appearance
 
-Enable debugging
-
-#+BEGIN_SRC elisp
-;; (setq debug-on-error t)
-;; (setq debug-on-signal t)
-
-#+END_SRC
-
 #+BEGIN_SRC elisp
 (setq column-number-mode t)
 (setq inhibit-splash-screen t)
@@ -536,6 +768,8 @@ Enable debugging
 (show-paren-mode 1)
 #+END_SRC
 
+** status bar
+
 Date and time in status bar. See http://efod.se/writings/linuxbook/html/date-and-time.html
 
 #+BEGIN_SRC elisp
@@ -543,6 +777,8 @@ Date and time in status bar. See http://efod.se/writings/linuxbook/html/date-and
       display-time-24hr-format t)
 (display-time)
 #+END_SRC
+
+** title bar
 
 File path in title bar. See http://stackoverflow.com/questions/3669511/the-function-to-show-current-files-full-path-in-mini-buffer
 
@@ -552,31 +788,11 @@ File path in title bar. See http://stackoverflow.com/questions/3669511/the-funct
             '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 #+END_SRC
 
-automatically refresh buffers from disk (default is every 5 sec)
-see http://www.cs.cmu.edu/cgi-bin/info2www?(emacs)Reverting
+** Prettier cursor
 
 #+BEGIN_SRC elisp
-(global-auto-revert-mode 1)
-#+END_SRC
-
-Add paths to 'exec-path' so that Emacs can find executables not
-otherwise defined in PATH.
-
-#+BEGIN_SRC elisp
-(add-to-list 'exec-path "~/.emacs.d/bin")
-#+END_SRC
-
-Also update the =$PATH= environment variable inherited by shell
-commands run from within Emacs.
-
-#+BEGIN_SRC elisp
-(defun prepend-path (path)
-  "Add `path' to the beginning of $PATH unless already present."
-  (interactive)
-  (unless (string-match path (getenv "PATH"))
-    (setenv "PATH" (concat path ":" (getenv "PATH")))))
-
-(prepend-path "~/.emacs.d/bin")
+(set-cursor-color "red")
+(blink-cursor-mode 1)
 #+END_SRC
 
 * Environment
@@ -615,6 +831,27 @@ function to fix this.
              ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))))
 (make-alias 'ssh-refresh)
 #+END_SRC
+** PATH setup
+Add paths to 'exec-path' so that Emacs can find executables not
+otherwise defined in PATH.
+
+#+BEGIN_SRC elisp
+(add-to-list 'exec-path "~/.emacs.d/bin")
+#+END_SRC
+
+Also update the =$PATH= environment variable inherited by shell
+commands run from within Emacs.
+
+#+BEGIN_SRC elisp
+(defun prepend-path (path)
+  "Add `path' to the beginning of $PATH unless already present."
+  (interactive)
+  (unless (string-match path (getenv "PATH"))
+    (setenv "PATH" (concat path ":" (getenv "PATH")))))
+
+(prepend-path "~/.emacs.d/bin")
+#+END_SRC
+
 ** exec-path-from-shell
 
 Initialize the PATH environment variable when starting up the Emacs
@@ -703,37 +940,6 @@ See http://www.emacswiki.org/emacs/SmoothScrolling
 (setq scroll-step 1)                                ;; keyboard scroll one line at a time
 (setq scroll-conservatively 1)                      ;; scroll by one line to follow cursor off screen
 (setq scroll-margin 2)                              ;; Start scrolling when 2 lines from top/bottom
-#+END_SRC
-
-* Marking, cursor movement and appearance
-** ace-jump-mode
-
-A quick cursor location minor mode for emacs. I picked =M-'= as the
-key combo for activation. Installed from ELPA.
-
-#+BEGIN_SRC elisp
-(define-key global-map (kbd "M-'") 'ace-jump-mode)
-#+END_SRC
-
-** Prettier cursor
-
-#+BEGIN_SRC elisp
-(set-cursor-color "red")
-(blink-cursor-mode 1)
-#+END_SRC
-
-** expand-region
-
-#+BEGIN_QUOTE
-Expand region increases the selected region by semantic units. Just
-keep pressing the key until it selects what you want.
-#+END_QUOTE
-
-Installed using ELPA.
-
-#+BEGIN_SRC elisp
-(global-set-key (kbd "C-=") 'er/expand-region)
-(global-set-key (kbd "C-M-=") 'er/contract-region)
 #+END_SRC
 
 * visual-regexp
@@ -857,27 +1063,6 @@ Move line down.
 #+END_SRC
 
 * Buffers and windows
-** Use =electric-buffer-list=
-
-Replace default =list-buffers= with =electric-buffer-list= for buffer
-selection.
-
-#+BEGIN_SRC elisp
-(global-set-key (kbd "C-x C-b") 'electric-buffer-list)
-#+END_SRC
-
-** Switch windows with arrow keys
-
-Note that other-window is bound by default to =C-x o=
-
-#+BEGIN_SRC elisp
-(defun back-window ()
-  (interactive)
-  (other-window -1))
-(global-set-key (kbd "C-<right>") 'other-window)
-(global-set-key (kbd "C-<left>") 'back-window)
-#+END_SRC
-
 ** Transpose buffers
 
 - see http://www.emacswiki.org/emacs/SwitchingBuffers
@@ -1130,7 +1315,17 @@ Installed using ELPA.
 
 - http://jesselegg.com/archives/2010/02/25/emacs-python-programmers-part-1/
 
-** hooks
+** Python hooks
+
+We'll use flake8 for syntax checking, but we want to be able to ignore
+certain rules, so use a shell-script wrapper set the value of
+=python-check-command= to use it.
+
+#+BEGIN_SRC sh :exports both :results output
+cat ~/.emacs.d/bin/pychecker
+#+END_SRC
+
+Error codes are listed here: http://pep8.readthedocs.org/en/latest/intro.html#error-codes
 
 #+BEGIN_SRC elisp
 (add-hook 'python-mode-hook
@@ -1160,142 +1355,11 @@ deleting a single character.
 (setq backward-delete-char-untabify-method "all")
 #+END_SRC
 
-Make indentation more compliant with pep8 (see http://stackoverflow.com/revisions/5361478/2)
-
-#+BEGIN_SRC elisp :tangle inactive.el
-  (defadvice python-calculate-indentation (around outdent-closing-brackets)
-    "Handle lines beginning with a closing bracket and indent them so that
-    they line up with the line containing the corresponding opening bracket."
-    (save-excursion
-      (beginning-of-line)
-      (let ((syntax (syntax-ppss)))
-        (if (and (not (eq 'string (syntax-ppss-context syntax)))
-                 (python-continuation-line-p)
-                 (cadr syntax)
-                 (skip-syntax-forward "-")
-                 (looking-at "\\s)"))
-            (progn
-              (forward-char 1)
-              (ignore-errors (backward-sexp))
-              (setq ad-return-value (current-indentation)))
-          ad-do-it))))
-
-  (ad-activate 'python-calculate-indentation)
-#+END_SRC
-
-** python-pylint
-
-Installed using ELPA.
-
-Invoke with =M-x python-pylint RET=
-
-** autopep8
-
-Apply =autopep8= (https://github.com/hhatto/autopep8) to the current
-buffer. Reference: *Mastering Emacs*:
-http://www.masteringemacs.org/articles/2011/10/19/executing-shell-commands-emacs/
-
-#+BEGIN_SRC elisp
-  (defun p8 ()
-    "Apply autopep8 to the current region or buffer"
-    (interactive)
-    (unless (region-active-p)
-      (mark-whole-buffer))
-    (shell-command-on-region
-     (region-beginning) (region-end) ;; beginning and end of region or buffer
-     "autopep8 -"                    ;; command and parameters
-     (current-buffer)                ;; output buffer
-     t                               ;; replace?
-     "*autopep8 errors*"             ;; name of the error buffer
-     t))                             ;; show error buffer?
-#+END_SRC
-
-Instead of simply replacing the current buffer, use ediff to compare
-it to the output of autopep8.
-
-#+BEGIN_SRC elisp
-  (defun p8-and-ediff ()
-    "Compare the current buffer to the output of autopep8 using ediff"
-    (interactive)
-    (let ((p8-output
-           (get-buffer-create (format "* %s autopep8 *" (buffer-name)))))
-      (shell-command-on-region
-       (point-min) (point-max)    ;; beginning and end of buffer
-       "autopep8 -"               ;; command and parameters
-       p8-output                  ;; output buffer
-       nil                        ;; replace?
-       "*autopep8 errors*"        ;; name of the error buffer
-       t)                         ;; show error buffer?
-      (ediff-buffers (current-buffer) p8-output)
-      ))
-#+END_SRC
-
-** flycheck
-
-An alternative to =flymake=. Install =flycheck= via ELPA. For python,
-requires flask8 or pyflakes; flake8 is used preferentially if
-installed.
-
-See https://github.com/arcthur/.emacs.d/blob/master/extensions/init-flycheck.el
-
-#+BEGIN_SRC elisp :tangle inactive.el
-(add-hook 'flycheck-mode-hook
-          '(lambda ()
-             (setq flycheck-highlighting-mode 'lines)
-             (flycheck-color-mode-line-mode)
-             )
-          )
-#+END_SRC
-
-** flymake: check code dynamically
-
-Flymake can be used to check python code dynamically, for example
-using pyflakes and pep8. I found (and slightly modified) instructions
-here:
-https://astropy.readthedocs.org/en/v0.1/development/codeguide_emacs.html
-
-Requirements:
-- pep8 (via pip)
-- pyflakes (via pip)
-- flymake-cursor (via ELPA)
-- "~/.emacs.d/bin/pychecker", a script that will execute pyflakes and
-  pep8 (note that "~/.emacs.d/bin" has been added to "exec-path"
-  above):
-
-#+BEGIN_SRC sh :exports both :results output
-cat ~/.emacs.d/bin/pychecker
-#+END_SRC
-
-Error codes are listed here: http://pep8.readthedocs.org/en/latest/intro.html#error-codes
-
-And some configuration:
-#+BEGIN_SRC elisp :tangle inactive.el
-(require 'flymake)
-
-;; TODO - first check if flymake-cursor is installed
-(condition-case nil
-    (load-library "flymake-cursor") ;; install from ELPA
-      (error (message "** flymake-cursor not installed")))
-
-;; 'pychecker' script above installed in ~/.emacs.d/bin
-(setq pycodechecker "pychecker")
-
-(when (load "flymake" t)
-  (defun flymake-pycodecheck-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list pycodechecker (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pycodecheck-init))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("SCons" flymake-pycodecheck-init)))
-;; (add-hook 'python-mode-hook 'flymake-mode)
-#+END_SRC
-
 ** elpy
+
+Along with some helper functions (see below) elpy has replaced a
+number of python-related packages that I was using before, like
+=jedi=, =flymake-cursor=, =flycheck=, and =python-pylint=.
 
 - Installation :: https://github.com/jorgenschaefer/elpy/wiki/Installation
 - note that =python-check-command= (set in python hooks above) defines the program used by =elpy-check=
@@ -1407,20 +1471,46 @@ them.
 ))
 #+END_SRC
 
-** jedi
 
-Python auto-completion with Jedi (http://tkf.github.io/emacs-jedi/)
+** autopep8
 
-Install =jedi.el= via ELPA.
+Apply =autopep8= (https://github.com/hhatto/autopep8) to the current
+buffer. Reference: *Mastering Emacs*:
+http://www.masteringemacs.org/articles/2011/10/19/executing-shell-commands-emacs/
 
-Install python requirements:
+#+BEGIN_SRC elisp
+  (defun p8 ()
+    "Apply autopep8 to the current region or buffer"
+    (interactive)
+    (unless (region-active-p)
+      (mark-whole-buffer))
+    (shell-command-on-region
+     (region-beginning) (region-end) ;; beginning and end of region or buffer
+     "autopep8 -"                    ;; command and parameters
+     (current-buffer)                ;; output buffer
+     t                               ;; replace?
+     "*autopep8 errors*"             ;; name of the error buffer
+     t))                             ;; show error buffer?
+#+END_SRC
 
-: pip install -r $(ls .emacs.d/elpa/jedi-*/requirements.txt)
+Instead of simply replacing the current buffer, use ediff to compare
+it to the output of autopep8.
 
-#+BEGIN_SRC elisp :tangle inactive.el
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:setup-keys t)
-(setq jedi:complete-on-dot t)
+#+BEGIN_SRC elisp
+  (defun p8-and-ediff ()
+    "Compare the current buffer to the output of autopep8 using ediff"
+    (interactive)
+    (let ((p8-output
+           (get-buffer-create (format "* %s autopep8 *" (buffer-name)))))
+      (shell-command-on-region
+       (point-min) (point-max)    ;; beginning and end of buffer
+       "autopep8 -"               ;; command and parameters
+       p8-output                  ;; output buffer
+       nil                        ;; replace?
+       "*autopep8 errors*"        ;; name of the error buffer
+       t)                         ;; show error buffer?
+      (ediff-buffers (current-buffer) p8-output)
+      ))
 #+END_SRC
 
 * scons
@@ -1470,178 +1560,6 @@ I should really start using a snippet package, but for now:
     (require 'tramp)
   (setq tramp-default-method "scp")
   (error (message "** could not load tramp")))
-#+END_SRC
-
-* ibuffer
-
-- http://emacs-fu.blogspot.com/2010/02/dealing-with-many-buffers-ibuffer.html
-
-#+BEGIN_SRC elisp
-(require 'ibuffer)
-(global-set-key (kbd "C-x C-g") 'ibuffer)
-(global-set-key (kbd "C-x M-g") 'ibuffer-switch-to-saved-filter-groups)
-(setq ibuffer-show-empty-filter-groups nil)
-#+END_SRC
-
-Function to load config file. Load on starup.
-
-#+BEGIN_SRC elisp
-(defvar my-ibuffer-config-file "~/.emacs.d/ibuffer-config.el")
-
-(defun ibuffer-load-config ()
-  ;; load the ibuffer config file
-  (interactive)
-  (condition-case nil
-      (progn
-	(message (format "** loading ibuffer config in %s" my-ibuffer-config-file))
-	(load my-ibuffer-config-file)
-	)
-    (error (message (format "** could not load %s" my-ibuffer-config-file))))
-  )
-
-(ibuffer-load-config)
-#+END_SRC
-
-Show/hide all filter groups
-
-#+BEGIN_SRC elisp
-(defun ibuffer-show-all-filter-groups ()
-  "Show all filter groups"
-  (interactive)
-  (setq ibuffer-hidden-filter-groups nil)
-  (ibuffer-update nil t))
-
-(defun ibuffer-hide-all-filter-groups ()
-  "Hide all filter groups"
-  (interactive)
-  (setq ibuffer-hidden-filter-groups
-	(delete-dups
-	 (append ibuffer-hidden-filter-groups
-		 (mapcar 'car (ibuffer-generate-filter-groups
-			       (ibuffer-current-state-list)
-			       (not ibuffer-show-empty-filter-groups)
-			       t)))))
-  (ibuffer-update nil t))
-#+END_SRC
-
-#+BEGIN_SRC elisp
-(defun ibuffer-reload ()
-  ;; kill ibuffer, reload the config file, and return to ibuffer
-  (interactive)
-  (ibuffer)
-  (kill-buffer)
-  (ibuffer-load-config)
-  (ibuffer)
-  )
-#+END_SRC
-
-From http://www.emacswiki.org/emacs/IbufferMode
-
-#+BEGIN_SRC elisp
-(defun my-ibuffer-sort-hook ()
-  ;; add another sorting method for ibuffer (allow the grouping of
-  ;; filenames and dired buffers
-  (define-ibuffer-sorter filename-or-dired
-    "Sort the buffers by their pathname."
-    (:description "filenames plus dired")
-    (string-lessp
-     (with-current-buffer (car a)
-       (or buffer-file-name
-	   (if (eq major-mode 'dired-mode)
-	       (expand-file-name dired-directory))
-	   ;; so that all non pathnames are at the end
-	   "~"))
-     (with-current-buffer (car b)
-       (or buffer-file-name
-	   (if (eq major-mode 'dired-mode)
-	       (expand-file-name dired-directory))
-	   ;; so that all non pathnames are at the end
-	   "~"))))
-  (define-key ibuffer-mode-map (kbd "s p")     'ibuffer-do-sort-by-filename-or-dired)
-  )
-#+END_SRC
-
-From http://curiousprogrammer.wordpress.com/2009/04/02/ibuffer/
-
-#+BEGIN_SRC elisp
-(defun ibuffer-ediff-marked-buffers ()
-  "Compare two marked buffers using ediff"
-  (interactive)
-  (let* ((marked-buffers (ibuffer-get-marked-buffers))
-         (len (length marked-buffers)))
-    (unless (= 2 len)
-      (error (format "%s buffer%s been marked (needs to be 2)"
-                     len (if (= len 1) " has" "s have"))))
-    (ediff-buffers (car marked-buffers) (cadr marked-buffers))))
-#+END_SRC
-
-Hooks
-
-#+BEGIN_SRC elisp
-(add-hook 'ibuffer-mode-hook
-          '(lambda ()
-             (ibuffer-auto-mode 1) ;; minor mode that keeps the buffer list up to date
-             (ibuffer-switch-to-saved-filter-groups "default")
-             (define-key ibuffer-mode-map (kbd "a") 'ibuffer-show-all-filter-groups)
-             (define-key ibuffer-mode-map (kbd "z") 'ibuffer-hide-all-filter-groups)
-             (define-key ibuffer-mode-map (kbd "e") 'ibuffer-ediff-marked-buffers)
-             (my-ibuffer-sort-hook)
-             ;; don't accidentally print; see http://irreal.org/blog/?p=2013
-             (defadvice ibuffer-do-print (before print-buffer-query activate)
-               (unless (y-or-n-p "Print buffer? ")
-                 (error "Cancelled")))
-             )
-          )
-#+END_SRC
-
-* uniquify
-
-- http://www.emacswiki.org/emacs/uniquify
-
-#+BEGIN_SRC elisp
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward)
-#+END_SRC
-
-* projectile
-
-Project-centric file and directory navigation - see
-https://github.com/bbatsov/projectile
-
-Installed using ELPA.
-
-Basic key bindings (see the url above for a complete list).
-
-| keybinding | description                                       |
-| C-c p C-h  | Help with projectile key bindings                 |
-| C-c p f    | Display a list of all files in the project.       |
-| C-c p d    | Display a list of all directories in the project. |
-
-#+BEGIN_SRC elisp :tangle inactive.el
-(if (package-installed-p 'projectile)
-    (projectile-global-mode))
-#+END_SRC
-
-* ido-mode
-
-- http://www.masteringemacs.org/articles/2010/10/10/introduction-to-ido-mode/
-
-#+BEGIN_SRC elisp
-;; (setq ido-enable-flex-matching t)
-;; (setq ido-everywhere t)
-;; (setq ido-use-virtual-buffers t)
-;; (ido-mode 1)
-#+END_SRC
-
-use recentf with ido - see http://wikemacs.org/wiki/Recentf
-
-#+BEGIN_SRC elisp
-;; (recentf-mode 1)
-;; (defun ido-choose-from-recentf ()
-;;   "Use ido to select a recently visited file from the `recentf-list'"
-;;   (interactive)
-;;   (find-file (ido-completing-read "Open file: " recentf-list nil t)))
-;; (global-set-key (kbd "C-c f") 'ido-choose-from-recentf)
 #+END_SRC
 
 * git/magit
@@ -1872,13 +1790,16 @@ rm -r lockstep-master master.zip
 To use, attach emacsclient to a running emacs server and evaluate =M-x lockstep=.
 After this, a second user can do the same.
 
-* enable commands
+* enable "advanced" commands
+
+Not sure why these are disabled by default.
 
 #+BEGIN_SRC elisp
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 #+END_SRC
+
 * custom-set-variables
 
 Emacs modifies this statement if you use the interactive "customize"
