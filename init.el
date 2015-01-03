@@ -279,10 +279,13 @@
 (define-key my-key-map "f" #'fix-frame)
 (define-key my-key-map "i" #'init-edit)
 (define-key my-key-map "l" #'my/describe-my-key-map)
+(define-key my-key-map "n" #'my/find-org-index)
+(define-key my-key-map "N" #'my/org-index-add-entry)
 (define-key my-key-map "m" #'magit-status)
 (define-key my-key-map "o" #'copy-region-or-line-other-window)
 (define-key my-key-map "p" #'package-list-packages)
 (define-key my-key-map "s" #'ssh-refresh)
+(define-key my-key-map "t" #'org-todo-list)
 
 (global-set-key (kbd "<f6>") 'linum-mode)
 (global-set-key (kbd "<f7>") 'visual-line-mode)
@@ -564,8 +567,6 @@ Assumes that the frame is only split into two."
 (push '("\\.org\\'" . org-mode) auto-mode-alist)
 (push '("\\.org\\.txt\\'" . org-mode) auto-mode-alist)
 
-(global-set-key (kbd "C-c a") 'org-agenda)
-
 (defun insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
   (interactive)
@@ -583,10 +584,15 @@ Assumes that the frame is only split into two."
   (beginning-of-line)
   (forward-char 2))
 
-(global-set-key
- (kbd "C-x C-n") (lambda () (interactive)
-                   (org-add-entry "~/Dropbox/notes/index.org"
-                                  "\n* <%Y-%m-%d %a>")))
+(defvar my/org-index "~/Dropbox/notes/index.org")
+
+(defun my/org-index-add-entry ()
+  (interactive)
+  (org-add-entry my/org-index "\n* <%Y-%m-%d %a>"))
+
+(defun my/find-org-index ()
+  (interactive)
+  (find-file my/org-index))
 
 (global-set-key
  (kbd "C-x C-j") (lambda () (interactive)

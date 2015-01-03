@@ -722,10 +722,13 @@ prefix. Use =my/describe-my-key-map= to list all of the bindings.
 (define-key my-key-map "f" #'fix-frame)
 (define-key my-key-map "i" #'init-edit)
 (define-key my-key-map "l" #'my/describe-my-key-map)
+(define-key my-key-map "n" #'my/find-org-index)
+(define-key my-key-map "N" #'my/org-index-add-entry)
 (define-key my-key-map "m" #'magit-status)
 (define-key my-key-map "o" #'copy-region-or-line-other-window)
 (define-key my-key-map "p" #'package-list-packages)
 (define-key my-key-map "s" #'ssh-refresh)
+(define-key my-key-map "t" #'org-todo-list)
 #+END_SRC
 
 * Function keys.
@@ -1250,10 +1253,6 @@ org-mode hooks
 
 Custom key bindings
 
-#+BEGIN_SRC elisp
-(global-set-key (kbd "C-c a") 'org-agenda)
-#+END_SRC
-
 ** org-mode utilities
 
 #+BEGIN_SRC elisp
@@ -1280,15 +1279,18 @@ Custom key bindings
 Add a new entry to main notes file.
 
 #+BEGIN_SRC elisp
-(global-set-key
- (kbd "C-x C-n") (lambda () (interactive)
-		   (org-add-entry "~/Dropbox/notes/index.org"
-				  "\n* <%Y-%m-%d %a>")))
+(defvar my/org-index "~/Dropbox/notes/index.org")
+
+(defun my/org-index-add-entry ()
+  (interactive)
+  (org-add-entry my/org-index "\n* <%Y-%m-%d %a>"))
+
+(defun my/find-org-index ()
+  (interactive)
+  (find-file my/org-index))
 #+END_SRC
 
 Add a new entry to my journal.
-
-Add a new entry to main notes file.
 
 #+BEGIN_SRC elisp
 (global-set-key
