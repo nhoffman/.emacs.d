@@ -264,26 +264,30 @@ with making aliases.
     fun))
 #+END_SRC
 
-I edit this file so frequently, let's create a function to open it.
+I edit this file so frequently, let's make some functions to find,
+tangle, and load it.
 
 #+BEGIN_SRC elisp
+(defvar my/init-org "~/.emacs.d/init.org" "org-mode version of init file")
+(defvar my/init-el "~/.emacs.d/init.el" "tangled version of `my/init-org'")
+
 (defun init-edit ()
-  "Edit ~/.emacs.d/init.org"
+  "Edit org-mode version of init file specified by `my/init-org'"
   (interactive)
-  (find-file "~/.emacs.d/init.org"))
+  (find-file my/init-org))
 (make-alias 'init-edit)
-#+END_SRC
 
-This function automates the process of tangling this file and
-reloading the output.
+(defun init-load ()
+  (interactive)
+  (load my/init-el))
+(make-alias 'init-load)
 
-#+BEGIN_SRC elisp
 (defun init-tangle-and-load ()
-  "Tangle ~/.emacs.d/init.org and load the result"
+  "Tangle `my/init-org' and load the result"
   (interactive)
   (init-edit)
   (org-babel-tangle)
-  (load "~/.emacs.d/init.el")
+  (init-load)
   (switch-to-buffer "*Messages*"))
 (make-alias 'init-tangle-and-load)
 #+END_SRC

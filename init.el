@@ -15,18 +15,26 @@
     (intern (concat (or prefix my-alias-prefix) (symbol-name fun)))
     fun))
 
+(defvar my/init-org "~/.emacs.d/init.org" "org-mode version of init file")
+(defvar my/init-el "~/.emacs.d/init.el" "tangled version of `my/init-org'")
+
 (defun init-edit ()
-  "Edit ~/.emacs.d/init.org"
+  "Edit org-mode version of init file specified by `my/init-org'"
   (interactive)
-  (find-file "~/.emacs.d/init.org"))
+  (find-file my/init-org))
 (make-alias 'init-edit)
 
+(defun init-load ()
+  (interactive)
+  (load my/init-el))
+(make-alias 'init-load)
+
 (defun init-tangle-and-load ()
-  "Tangle ~/.emacs.d/init.org and load the result"
+  "Tangle `my/init-org' and load the result"
   (interactive)
   (init-edit)
   (org-babel-tangle)
-  (load "~/.emacs.d/init.el")
+  (init-load)
   (switch-to-buffer "*Messages*"))
 (make-alias 'init-tangle-and-load)
 
