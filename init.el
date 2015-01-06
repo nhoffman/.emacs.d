@@ -50,21 +50,24 @@
 
 (when (>= emacs-major-version 24)
   (require 'package)
-  (package-initialize)
-  ;; Original Emacs Lisp Package Archive
-  (add-to-list 'package-archives
-       '("elpa" . "http://tromey.com/elpa/") t)
-  ;; User-contributed repository
-  ;; Marmalade is for packages that cannot be uploaded to the official ELPA repository.
-  (add-to-list 'package-archives
-       '("marmalade" . "http://marmalade-repo.org/packages/") t)
-  (add-to-list 'package-archives
-       '("melpa" . "http://melpa.org/packages/") t)
-  (add-to-list 'package-archives
-       '("org" . "http://orgmode.org/elpa/") t)
-  (add-to-list 'package-archives
-       '("elpy" . "http://jorgenschaefer.github.io/packages/") t)
-  )
+  (setq package-archives
+        '(("ELPA" . "http://tromey.com/elpa/")
+          ("gnu" . "http://elpa.gnu.org/packages/")
+          ("melpa" . "http://melpa.org/packages/")
+          ("melpa-stable" . "http://stable.melpa.org/packages/")
+          ("marmalade" . "http://marmalade-repo.org/packages/")
+          ("org" . "http://orgmode.org/elpa/")
+          ("elpy" . "http://jorgenschaefer.github.io/packages/")))
+
+  ;; Check if we're on Emacs 24.4 or newer, if so, use the pinned package feature
+  (when (boundp 'package-pinned-packages)
+    (setq package-pinned-packages
+          '((elpy . "elpy")
+            (org . "org")
+            (magit . "melpa-stable")
+            )))
+
+  (package-initialize))
 
 (defun package-installed-not-builtin-p (package &optional min-version)
   "Return true if PACKAGE, of MIN-VERSION or newer, is installed
