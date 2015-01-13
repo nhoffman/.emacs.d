@@ -57,12 +57,14 @@
           ("melpa-stable" . "http://stable.melpa.org/packages/")
           ("marmalade" . "http://marmalade-repo.org/packages/")
           ("org" . "http://orgmode.org/elpa/")
-          ("elpy" . "http://jorgenschaefer.github.io/packages/")))
+          ("elpy" . "http://jorgenschaefer.github.io/packages/")
+          ))
 
   ;; Check if we're on Emacs 24.4 or newer, if so, use the pinned package feature
+  ;; note that elpy installation fails when pinned to elpy package
   (when (boundp 'package-pinned-packages)
     (setq package-pinned-packages
-          '((elpy . "elpy")
+          '((elpy . "melpa-stable")
             (org . "org")
             (magit . "melpa-stable")
             )))
