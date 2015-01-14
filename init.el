@@ -64,7 +64,8 @@
   ;; note that elpy installation fails when pinned to elpy package
   (when (boundp 'package-pinned-packages)
     (setq package-pinned-packages
-          '((elpy . "melpa-stable")
+          '((elpy . "elpy")
+            (highlight-indentation . "elpy") ;; fixes error in elpy 1.6
             (org . "org")
             (magit . "melpa-stable")
             )))
