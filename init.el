@@ -712,6 +712,7 @@ necessary."
    (setq elpy-rpc-backend "jedi")
    (add-to-list 'elpy-project-ignored-directories "src")
    (add-to-list 'elpy-project-ignored-directories "*-env")
+   (elpy-use-ipython)
 ))
 
 (defun p8 ()
