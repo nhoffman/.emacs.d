@@ -700,8 +700,8 @@ keep pressing the key until it selects what you want.
 Installed using ELPA.
 
 #+BEGIN_SRC elisp
-(global-set-key (kbd "C-=") 'er/expand-region)
-(global-set-key (kbd "C-M-=") 'er/contract-region)
+(global-set-key (kbd "M-=") 'er/expand-region)
+(global-set-key (kbd "M-+") 'er/contract-region)
 #+END_SRC
 
 * Defining a "launcher" keymap
