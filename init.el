@@ -567,6 +567,7 @@ Assumes that the frame is only split into two."
                 (sh . t)
                 (sql . t)
                 (sqlite . t)
+                (dot . t)
                 ))
              ;; (defun org-with-silent-modifications(&rest args)
              ;;   "Replaces function causing error on org-export"
