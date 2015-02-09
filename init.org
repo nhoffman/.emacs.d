@@ -1454,7 +1454,7 @@ necessary."
   (let ((dest "*elpy-install-requirements-output*")
         (install-cmd (format "%s/bin/pip install --force '%%s'" pyvenv-virtual-env))
         ;; (deps `(,(format "elpy==%s" elpy-version) "jedi")))
-        (deps '("jedi" "pyflakes" "pep8" "flake8")))
+        (deps '("jedi" "pyflakes" "pep8" "flake8" "importmagic")))
     (generate-new-buffer dest)
     (mapcar
      #'(lambda (pkg)

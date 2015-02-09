@@ -3,3 +3,4 @@ jedi
 pyflakes
 ghp-import
 flake8
+importmagic
