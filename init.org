@@ -321,6 +321,17 @@ see http://www.cs.cmu.edu/cgi-bin/info2www?(emacs)Reverting
 ;; (setq debug-on-signal t)
 #+END_SRC
 
+** dir-local variables
+
+I can't explain why, but I started getting errors that a
+=.dir-locals.el= file high up in the files system could not be found
+when opening a new file in emacsclient. This seems to have stopped the
+error (conveniently, I don't use this feature):
+
+#+BEGIN_SRC elisp
+(setq enable-dir-local-variables nil)
+#+END_SRC
+
 * ELPA
 
 Set up and initialize ELPA package manager.

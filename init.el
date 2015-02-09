@@ -48,6 +48,8 @@
 ;; (setq debug-on-error t)
 ;; (setq debug-on-signal t)
 
+(setq enable-dir-local-variables nil)
+
 (when (>= emacs-major-version 24)
   (require 'package)
   (setq package-archives
