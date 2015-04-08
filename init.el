@@ -681,16 +681,12 @@ project; otherwise activate the virtualenv defined in
 (make-alias 'activate-venv)
 
 (defun elpy-install-requirements ()
-  "Install `elpy' and `jedi' to the current virtualenv. The
-version of the `elpy' python package is forced to match the
-version of the elisp package, upgrading or downgrading as
-necessary."
+  "Install python requirements to the current virtualenv."
   (interactive)
   (unless pyvenv-virtual-env
     (error "Error: no virtualenv is active"))
   (let ((dest "*elpy-install-requirements-output*")
         (install-cmd (format "%s/bin/pip install --force '%%s'" pyvenv-virtual-env))
-        ;; (deps `(,(format "elpy==%s" elpy-version) "jedi")))
         (deps '("jedi" "pyflakes" "pep8" "flake8" "importmagic")))
     (generate-new-buffer dest)
     (mapcar
@@ -699,8 +695,8 @@ necessary."
          (call-process-shell-command (format install-cmd pkg) nil dest)) deps)
     (call-process-shell-command
      (format "%s/bin/pip freeze" pyvenv-virtual-env) nil dest)
-    (switch-to-buffer dest)
-    ))
+    (switch-to-buffer dest))
+  (elpy-rpc-restart))
 (make-alias 'elpy-install-requirements)
 
 (add-hook 'elpy-mode-hook
@@ -746,8 +742,7 @@ necessary."
      nil                        ;; replace?
      "*autopep8 errors*"        ;; name of the error buffer
      t)                         ;; show error buffer?
-    (ediff-buffers (current-buffer) p8-output)
-    ))
+    (ediff-buffers (current-buffer) p8-output)))
 
 (defun scons-insert-command ()
   (interactive)
