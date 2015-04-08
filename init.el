@@ -724,12 +724,15 @@ necessary."
   (unless (region-active-p)
     (mark-whole-buffer))
   (shell-command-on-region
-   (region-beginning) (region-end) ;; beginning and end of region or buffer
-   "autopep8 -"                    ;; command and parameters
-   (current-buffer)                ;; output buffer
-   t                               ;; replace?
-   "*autopep8 errors*"             ;; name of the error buffer
-   t))                             ;; show error buffer?
+   (region-beginning) (region-end)      ;; beginning and end of region or buffer
+   "autopep8 -"                         ;; command and parameters
+   (current-buffer)                     ;; output buffer
+   t                                    ;; replace?
+   "*autopep8 errors*"                  ;; name of the error buffer
+   t)                                   ;; show error buffer?
+  (goto-char (region-end))              ;; ... and delete trailing newlines
+  (re-search-backward "\n+" nil t)
+  (replace-match "" nil t))
 
 (defun p8-and-ediff ()
   "Compare the current buffer to the output of autopep8 using ediff"

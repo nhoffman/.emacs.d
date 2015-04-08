@@ -1508,38 +1508,40 @@ buffer. Reference: *Mastering Emacs*:
 http://www.masteringemacs.org/articles/2011/10/19/executing-shell-commands-emacs/
 
 #+BEGIN_SRC elisp
-  (defun p8 ()
-    "Apply autopep8 to the current region or buffer"
-    (interactive)
-    (unless (region-active-p)
-      (mark-whole-buffer))
-    (shell-command-on-region
-     (region-beginning) (region-end) ;; beginning and end of region or buffer
-     "autopep8 -"                    ;; command and parameters
-     (current-buffer)                ;; output buffer
-     t                               ;; replace?
-     "*autopep8 errors*"             ;; name of the error buffer
-     t))                             ;; show error buffer?
+(defun p8 ()
+  "Apply autopep8 to the current region or buffer"
+  (interactive)
+  (unless (region-active-p)
+    (mark-whole-buffer))
+  (shell-command-on-region
+   (region-beginning) (region-end)      ;; beginning and end of region or buffer
+   "autopep8 -"                         ;; command and parameters
+   (current-buffer)                     ;; output buffer
+   t                                    ;; replace?
+   "*autopep8 errors*"                  ;; name of the error buffer
+   t)                                   ;; show error buffer?
+  (goto-char (region-end))              ;; ... and delete trailing newlines
+  (re-search-backward "\n+" nil t)
+  (replace-match "" nil t))
 #+END_SRC
 
 Instead of simply replacing the current buffer, use ediff to compare
 it to the output of autopep8.
 
 #+BEGIN_SRC elisp
-  (defun p8-and-ediff ()
-    "Compare the current buffer to the output of autopep8 using ediff"
-    (interactive)
-    (let ((p8-output
-           (get-buffer-create (format "* %s autopep8 *" (buffer-name)))))
-      (shell-command-on-region
-       (point-min) (point-max)    ;; beginning and end of buffer
-       "autopep8 -"               ;; command and parameters
-       p8-output                  ;; output buffer
-       nil                        ;; replace?
-       "*autopep8 errors*"        ;; name of the error buffer
-       t)                         ;; show error buffer?
-      (ediff-buffers (current-buffer) p8-output)
-      ))
+(defun p8-and-ediff ()
+  "Compare the current buffer to the output of autopep8 using ediff"
+  (interactive)
+  (let ((p8-output
+         (get-buffer-create (format "* %s autopep8 *" (buffer-name)))))
+    (shell-command-on-region
+     (point-min) (point-max)    ;; beginning and end of buffer
+     "autopep8 -"               ;; command and parameters
+     p8-output                  ;; output buffer
+     nil                        ;; replace?
+     "*autopep8 errors*"        ;; name of the error buffer
+     t)                         ;; show error buffer?
+    (ediff-buffers (current-buffer) p8-output)))
 #+END_SRC
 
 * scons
