@@ -416,6 +416,7 @@ emacs was first started.
   '(ace-jump-mode
     ace-jump-buffer
     auctex
+    discover
     edit-server
     elpy
     ess
@@ -1830,6 +1831,22 @@ rm -r lockstep-master master.zip
 
 To use, attach emacsclient to a running emacs server and evaluate =M-x lockstep=.
 After this, a second user can do the same.
+
+* discover.el
+
+Introduced in [[https://www.masteringemacs.org/article/discoverel-discover-emacs-context-menus][this blog post]] by Mickey Petersen, =discover.el=
+provides contextual menus for =dired=, register keys in =C-x r=, and
+the Isearch keys in =M-s=.
+
+#+BEGIN_SRC elisp
+(condition-case nil
+    (progn
+      (require 'discover)
+      (global-discover-mode 1))
+      (error (message "** could not activate discover")))
+#+END_SRC
+
+
 
 * enable "advanced" commands
 

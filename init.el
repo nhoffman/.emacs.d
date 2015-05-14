@@ -106,6 +106,7 @@
   '(ace-jump-mode
     ace-jump-buffer
     auctex
+    discover
     edit-server
     elpy
     ess
@@ -915,6 +916,12 @@ following line."
 (setq ns-pop-up-frames nil)
 
 (require 'lockstep)
+
+(condition-case nil
+    (progn
+      (require 'discover)
+      (global-discover-mode 1))
+      (error (message "** could not activate discover")))
 
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
