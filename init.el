@@ -70,6 +70,7 @@
             (highlight-indentation . "elpy") ;; fixes error in elpy 1.6
             (org . "org")
             (magit . "melpa-stable")
+            (helm-descbinds . "melpa-stable")
             )))
 
   (package-initialize))
@@ -112,6 +113,7 @@
     gist
     git-timemachine
     helm
+    helm-descbinds
     htmlize
     jinja2-mode
     magit
@@ -153,6 +155,12 @@
       (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
       (define-key helm-map (kbd "C-z")  'helm-select-action)
       )
+  (error (message "** could not activate helm")))
+
+(condition-case nil
+    (progn
+      (require 'helm-descbinds)
+      (global-set-key (kbd "C-h b") 'helm-descbinds))
   (error (message "** could not activate helm")))
 
 ;; (if (package-installed-p 'smex)
