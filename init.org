@@ -8,11 +8,10 @@
 #+PROPERTY: header-args:elisp :tangle init.el
 #+PROPERTY: header-args:sh :eval no :exports code
 
-In a fit of literate programming yak-shaving, I implemented my emacs
-configuration as an org-mode file. I since realized that I could also
-provide complete-ish instructions for getting started with Emacs in a
-single location (I have the pleasure of introducing Emacs to people
-who may be new to both programming and Emacs in my job).
+In a fit of literate programming yak-shaving, I implemented my Emacs
+configuration as an org-mode file. I have also tried to a provide
+complete-ish description of my environment for anyone interested in
+starting more or less from scratch.
 
 - The source for this page is available at https://github.com/nhoffman/.emacs.d
 - The html-exported version of this page is hosted at http://nhoffman.github.io/.emacs.d
@@ -21,10 +20,10 @@ who may be new to both programming and Emacs in my job).
 
 * Initial setup
 
-You can install this configuration by either cloning it directly
-from my repository, of by forking on GitHub and installing yours
-(obviously you will want to do the latter if you want to modify the
-configuration):
+You can install this configuration by either cloning it directly from
+my repository, of by forking on GitHub and installing yours (obviously
+you will want to do the latter if you want to retain your own
+modifications:
 
 #+BEGIN_SRC sh
 cd ~
@@ -62,6 +61,12 @@ on your shell):
 if [[ -f ~/.emacs.d/init.bash ]]; then
     source ~/.emacs.d/init.bash
 fi
+#+END_SRC
+
+Here's what this file looks like
+
+#+BEGIN_SRC sh :eval yes :exports results
+cat init.bash
 #+END_SRC
 
 You will have to open a new terminal window for the shell commands
@@ -221,7 +226,7 @@ If this doesn't do anything, try
 If there were any changes, you'll need to make a commit in
 =.emacs.d=. Ugh, submodules.
 
-* Maintaining and using this file
+* Using and maintaining this configuration
 
 All changes to the configuration should be made within code blocks in
 this file. After any changes, this file must be "tangled" to produce
@@ -324,7 +329,7 @@ see http://www.cs.cmu.edu/cgi-bin/info2www?(emacs)Reverting
 ** dir-local variables
 
 I can't explain why, but I started getting errors that a
-=.dir-locals.el= file high up in the files system could not be found
+=.dir-locals.el= file high up in the file system could not be found
 when opening a new file in emacsclient. This seems to have stopped the
 error (conveniently, I don't use this feature):
 
@@ -431,9 +436,7 @@ emacs was first started.
     markdown-mode
     moinmoin-mode
     org
-    ;; projectile
     rainbow-delimiters
-    ;; smex
     visual-regexp
     visual-regexp-steroids
     yaml-mode
@@ -512,22 +515,6 @@ Describe key bindings for the current modes: see https://github.com/emacs-helm/h
   (error (message "** could not activate helm")))
 #+END_SRC
 
-** smex
-
-(seems to be replaced by helm)
-
-See https://github.com/nonsequitur/smex - Ido extension for previously
-used extended commands. Installed using ELPA.
-
-#+BEGIN_SRC elisp
-;; (if (package-installed-p 'smex)
-;;     (progn
-;;       (global-set-key (kbd "M-x") 'smex)
-;;       (global-set-key (kbd "C-c M-x") 'smex-major-mode-commands)
-;;       ;; This is your old M-x.
-;;       (global-set-key (kbd "C-x M-x") 'execute-extended-command)))
-#+END_SRC
-
 ** projectile
 
 TODO: check out =helm-projectile=
@@ -549,31 +536,13 @@ Basic key bindings (see the url above for a complete list).
 ;;     (projectile-global-mode))
 #+END_SRC
 
-** ido-mode
-
-- http://www.masteringemacs.org/articles/2010/10/10/introduction-to-ido-mode/
-
-#+BEGIN_SRC elisp
-;; (setq ido-enable-flex-matching t)
-;; (setq ido-everywhere t)
-;; (setq ido-use-virtual-buffers t)
-;; (ido-mode 1)
-#+END_SRC
-
-use recentf with ido - see http://wikemacs.org/wiki/Recentf
-
-#+BEGIN_SRC elisp
-;; (recentf-mode 1)
-;; (defun ido-choose-from-recentf ()
-;;   "Use ido to select a recently visited file from the `recentf-list'"
-;;   (interactive)
-;;   (find-file (ido-completing-read "Open file: " recentf-list nil t)))
-;; (global-set-key (kbd "C-c f") 'ido-choose-from-recentf)
-#+END_SRC
-
 ** ibuffer
 
 - http://emacs-fu.blogspot.com/2010/02/dealing-with-many-buffers-ibuffer.html
+
+I used to rely heavily on =ibuffer= to manage lots of open buffers,
+but now it's so easy to search for buffers by name with =helm= that I
+rarely use it any more.
 
 #+BEGIN_SRC elisp
 (require 'ibuffer)
@@ -1835,8 +1804,9 @@ After this, a second user can do the same.
 * discover.el
 
 Introduced in [[https://www.masteringemacs.org/article/discoverel-discover-emacs-context-menus][this blog post]] by Mickey Petersen, =discover.el=
-provides contextual menus for =dired=, register keys in =C-x r=, and
-the Isearch keys in =M-s=.
+provides Magit-style contextual menus for =dired= (activate using
+=?=), register keys in =C-x r=, and the Isearch keys in =M-s=. I do in
+fact discover something every time I use it!
 
 #+BEGIN_SRC elisp
 (condition-case nil
@@ -1845,8 +1815,6 @@ the Isearch keys in =M-s=.
       (global-discover-mode 1))
       (error (message "** could not activate discover")))
 #+END_SRC
-
-
 
 * enable "advanced" commands
 
@@ -1883,8 +1851,3 @@ function, so don't do that.
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #+END_SRC
-
-
-
-
-

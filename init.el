@@ -121,9 +121,7 @@
     markdown-mode
     moinmoin-mode
     org
-    ;; projectile
     rainbow-delimiters
-    ;; smex
     visual-regexp
     visual-regexp-steroids
     yaml-mode
@@ -164,27 +162,8 @@
       (global-set-key (kbd "C-h b") 'helm-descbinds))
   (error (message "** could not activate helm")))
 
-;; (if (package-installed-p 'smex)
-;;     (progn
-;;       (global-set-key (kbd "M-x") 'smex)
-;;       (global-set-key (kbd "C-c M-x") 'smex-major-mode-commands)
-;;       ;; This is your old M-x.
-;;       (global-set-key (kbd "C-x M-x") 'execute-extended-command)))
-
 ;; (if (package-installed-p 'projectile)
 ;;     (projectile-global-mode))
-
-;; (setq ido-enable-flex-matching t)
-;; (setq ido-everywhere t)
-;; (setq ido-use-virtual-buffers t)
-;; (ido-mode 1)
-
-;; (recentf-mode 1)
-;; (defun ido-choose-from-recentf ()
-;;   "Use ido to select a recently visited file from the `recentf-list'"
-;;   (interactive)
-;;   (find-file (ido-completing-read "Open file: " recentf-list nil t)))
-;; (global-set-key (kbd "C-c f") 'ido-choose-from-recentf)
 
 (require 'ibuffer)
 (global-set-key (kbd "C-x C-g") 'ibuffer)
