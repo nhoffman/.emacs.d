@@ -375,6 +375,8 @@ Add some extra package repositories. The default value of package-archives is
             (org . "org")
             (magit . "melpa-stable")
             (helm-descbinds . "melpa-stable")
+            (helm-swoop . "melpa-stable")
+            (hydra . "gnu")
             )))
 
   (package-initialize))
@@ -430,7 +432,9 @@ emacs was first started.
     git-timemachine
     helm
     helm-descbinds
+    helm-swoop
     htmlize
+    hydra
     jinja2-mode
     magit
     markdown-mode
@@ -512,7 +516,7 @@ Describe key bindings for the current modes: see https://github.com/emacs-helm/h
     (progn
       (require 'helm-descbinds)
       (global-set-key (kbd "C-h b") 'helm-descbinds))
-  (error (message "** could not activate helm")))
+  (error (message "** could not activate helm-descbinds")))
 #+END_SRC
 
 ** projectile
@@ -695,8 +699,10 @@ keep pressing the key until it selects what you want.
 Installed using ELPA.
 
 #+BEGIN_SRC elisp
-(global-set-key (kbd "M-=") 'er/expand-region)
-(global-set-key (kbd "M-+") 'er/contract-region)
+(defhydra hydra-expand-region (global-map "M-=")
+  "hydra-expand-region"
+  ("=" er/expand-region "er/expand-region")
+  ("-" er/contract-region "er/contract-region"))
 #+END_SRC
 
 * Defining a "launcher" keymap
@@ -952,30 +958,6 @@ See http://www.emacswiki.org/emacs/SmoothScrolling
 (setq scroll-step 1)                                ;; keyboard scroll one line at a time
 (setq scroll-conservatively 1)                      ;; scroll by one line to follow cursor off screen
 (setq scroll-margin 2)                              ;; Start scrolling when 2 lines from top/bottom
-#+END_SRC
-
-* visual-regexp
-
-Two packages by the same author add visual cues to searching and/or
-replacing with regular expressions:
-
-- visual-regexp :: https://github.com/benma/visual-regexp.el
-- visual-regexp-steroids :: https://github.com/benma/visual-regexp-steroids.el/
-
-Installed using ELPA.
-
-If =visual-regexp-steroids= isn't installed, we'll still set up
-bindings for =replace-string= and =query-replace=.
-
-#+BEGIN_SRC elisp
-(if (package-installed-p 'visual-regexp-steroids)
-    (progn (require 'visual-regexp-steroids)
-           (define-key global-map (kbd "C-c r") 'vr/replace)
-           (define-key global-map (kbd "C-c q") 'vr/query-replace)
-           (define-key esc-map (kbd "C-r") 'vr/isearch-backward) ;; C-M-r
-           (define-key esc-map (kbd "C-s") 'vr/isearch-forward)) ;; C-M-s
-  (global-set-key (kbd "C-c r") 'replace-string)
-  (global-set-key (kbd "C-c q") 'query-replace))
 #+END_SRC
 
 * Keyboard macros
@@ -1677,6 +1659,94 @@ via emacswiki (http://emacswiki.org/emacs/OutlineMinorMode).
 
 #+END_SRC
 
+* Search and replace
+
+Here are a few packages that make search and replace more fun. I'll
+define a keymap using a hydra in the final section below.
+
+** occur-dwim
+
+Copied from [[http://oremacs.com/2015/01/26/occur-dwim/][a post]] on "(or emacs"
+
+Note that plain-old =occur= can be executed using "M-s o" by default
+(which I can never remember), of via =hyrda-search= defined below.
+
+#+BEGIN_SRC elisp
+(defun occur-dwim ()
+  "Call `occur' with the current region (if active) or word."
+  (interactive)
+  (push (if (region-active-p)
+            (buffer-substring-no-properties
+             (region-beginning)
+             (region-end))
+          (let ((sym (thing-at-point 'symbol)))
+            (when (stringp sym)
+              (regexp-quote sym))))
+        regexp-history)
+  (call-interactively 'occur))
+#+END_SRC
+
+** visual-regexp
+
+Two packages by the same author add visual cues to searching and/or
+replacing with regular expressions:
+
+- visual-regexp :: https://github.com/benma/visual-regexp.el
+- visual-regexp-steroids :: https://github.com/benma/visual-regexp-steroids.el/
+
+Installed using ELPA.
+
+#+BEGIN_SRC elisp
+(if (package-installed-p 'visual-regexp-steroids)
+    (require 'visual-regexp-steroids))
+#+END_SRC
+
+** helm-swoop
+
+Show matches to a search string in a another window.
+
+A couple of nice touches:
+
+- Use =M-i= to activate from within =isearch=
+- While searching, =C-c C-e= activates edit-mode, in which you can
+  edit the buffer from within the =helm-swoop= buffer
+
+#+BEGIN_SRC elisp
+(condition-case nil
+    (require 'helm-swoop)
+  (error (message "** could not activate helm-swoop")))
+#+END_SRC
+
+** Hydra for searching
+
+#+BEGIN_SRC elisp
+(defhydra hydra-search (:color blue)
+  "hydra-search"
+  ("RET" helm-swoop "helm-swoop")
+  ("o" occur "occur-dwim")
+  ("O" occur-dwim "occur")
+  ("m" helm-multi-swoop "helm-multi-swoop")
+  ("M" helm-multi-swoop-all "helm-multi-swoop-all")
+  ("b" helm-swoop-back-to-last-point "helm-swoop-back-to-last-point")
+  ("s" vr/isearch-forward "vr/isearch-forward")
+  ("r" vr/isearch-backward "vr/isearch-backward"))
+
+(global-set-key (kbd "C-c s") 'hydra-search/body)
+#+END_SRC
+
+** Hydra for string replacement
+
+#+BEGIN_SRC elisp
+(defhydra hydra-replace (:color blue)
+  "hydra-replace"
+  ("RET" replace-string "replace-string")
+  ("r" vr/replace "vr/replace")
+  ("q" query-replace "query-replace")
+  ("Q" vr/query-replace "vr/query-replace"))
+
+(global-set-key (kbd "C-c r") 'hydra-replace/body)
+#+END_SRC
+
 * Misc utilities
 ** copy-buffer-file-name
 
@@ -1720,26 +1790,6 @@ from http://defindit.com/readme_files/emacs_hints_tricks.html
   (fill-paragraph nil)))
 (global-set-key (kbd "M-C-q") 'unfill-paragraph)
 (make-alias 'unfill-paragraph)
-#+END_SRC
-
-** occur-region-or-word-at-point
-
-A convenient way to search the current buffer with =occur=.
-
-Note that =occur= can be executed using "M-s o"
-
-#+BEGIN_SRC elisp
-(defun occur-region-or-word-at-point ()
-  "Run `occur' using the active region or word at point"
-  (interactive)
-  (let ((occur-string (if (region-active-p)
-                          (buffer-substring (region-beginning) (region-end))
-                        (thing-at-point 'word))))
-    (unless occur-string
-      (error "No active region or word at point"))
-    (occur occur-string)
-    ))
-(global-set-key (kbd "M-s r") 'occur-region-or-word-at-point)
 #+END_SRC
 
 ** Copy region to other window

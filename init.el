@@ -71,6 +71,8 @@
             (org . "org")
             (magit . "melpa-stable")
             (helm-descbinds . "melpa-stable")
+            (helm-swoop . "melpa-stable")
+            (hydra . "gnu")
             )))
 
   (package-initialize))
@@ -115,7 +117,9 @@
     git-timemachine
     helm
     helm-descbinds
+    helm-swoop
     htmlize
+    hydra
     jinja2-mode
     magit
     markdown-mode
@@ -160,7 +164,7 @@
     (progn
       (require 'helm-descbinds)
       (global-set-key (kbd "C-h b") 'helm-descbinds))
-  (error (message "** could not activate helm")))
+  (error (message "** could not activate helm-descbinds")))
 
 ;; (if (package-installed-p 'projectile)
 ;;     (projectile-global-mode))
@@ -264,8 +268,10 @@
 
 (define-key global-map (kbd "M-'") 'ace-jump-mode)
 
-(global-set-key (kbd "M-=") 'er/expand-region)
-(global-set-key (kbd "M-+") 'er/contract-region)
+(defhydra hydra-expand-region (global-map "M-=")
+  "hydra-expand-region"
+  ("=" er/expand-region "er/expand-region")
+  ("-" er/contract-region "er/contract-region"))
 
 (defvar my-key-map-prefix "C-c l")
 
@@ -398,15 +404,6 @@
 (setq scroll-step 1)                                ;; keyboard scroll one line at a time
 (setq scroll-conservatively 1)                      ;; scroll by one line to follow cursor off screen
 (setq scroll-margin 2)                              ;; Start scrolling when 2 lines from top/bottom
-
-(if (package-installed-p 'visual-regexp-steroids)
-    (progn (require 'visual-regexp-steroids)
-           (define-key global-map (kbd "C-c r") 'vr/replace)
-           (define-key global-map (kbd "C-c q") 'vr/query-replace)
-           (define-key esc-map (kbd "C-r") 'vr/isearch-backward) ;; C-M-r
-           (define-key esc-map (kbd "C-s") 'vr/isearch-forward)) ;; C-M-s
-  (global-set-key (kbd "C-c r") 'replace-string)
-  (global-set-key (kbd "C-c q") 'query-replace))
 
 (global-set-key (kbd "<f5>") 'call-last-kbd-macro)
 
@@ -831,6 +828,48 @@ This is used to set `sql-alternate-buffer-name' within
 ;; commands are prefixed with C-c o
 (global-set-key (kbd "C-c o") cm-map)
 
+(defun occur-dwim ()
+  "Call `occur' with the current region (if active) or word."
+  (interactive)
+  (push (if (region-active-p)
+            (buffer-substring-no-properties
+             (region-beginning)
+             (region-end))
+          (let ((sym (thing-at-point 'symbol)))
+            (when (stringp sym)
+              (regexp-quote sym))))
+        regexp-history)
+  (call-interactively 'occur))
+
+(if (package-installed-p 'visual-regexp-steroids)
+    (require 'visual-regexp-steroids))
+
+(condition-case nil
+    (require 'helm-swoop)
+  (error (message "** could not activate helm-swoop")))
+
+(defhydra hydra-search (:color blue)
+  "hydra-search"
+  ("RET" helm-swoop "helm-swoop")
+  ("o" occur "occur-dwim")
+  ("O" occur-dwim "occur")
+  ("m" helm-multi-swoop "helm-multi-swoop")
+  ("M" helm-multi-swoop-all "helm-multi-swoop-all")
+  ("b" helm-swoop-back-to-last-point "helm-swoop-back-to-last-point")
+  ("s" vr/isearch-forward "vr/isearch-forward")
+  ("r" vr/isearch-backward "vr/isearch-backward"))
+
+(global-set-key (kbd "C-c s") 'hydra-search/body)
+
+(defhydra hydra-replace (:color blue)
+  "hydra-replace"
+  ("RET" replace-string "replace-string")
+  ("r" vr/replace "vr/replace")
+  ("q" query-replace "query-replace")
+  ("Q" vr/query-replace "vr/query-replace"))
+
+(global-set-key (kbd "C-c r") 'hydra-replace/body)
+
 (defun copy-buffer-file-name ()
   "Add `buffer-file-name' to `kill-ring'"
   (interactive)
@@ -860,18 +899,6 @@ following line."
   (fill-paragraph nil)))
 (global-set-key (kbd "M-C-q") 'unfill-paragraph)
 (make-alias 'unfill-paragraph)
-
-(defun occur-region-or-word-at-point ()
-  "Run `occur' using the active region or word at point"
-  (interactive)
-  (let ((occur-string (if (region-active-p)
-                          (buffer-substring (region-beginning) (region-end))
-                        (thing-at-point 'word))))
-    (unless occur-string
-      (error "No active region or word at point"))
-    (occur occur-string)
-    ))
-(global-set-key (kbd "M-s r") 'occur-region-or-word-at-point)
 
 (defun copy-region-or-line-other-window ()
   "Copy selected text or current line to other window"
