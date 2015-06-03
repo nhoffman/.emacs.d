@@ -268,10 +268,13 @@
 
 (define-key global-map (kbd "M-'") 'ace-jump-mode)
 
-(defhydra hydra-expand-region (global-map "M-=")
-  "hydra-expand-region"
-  ("=" er/expand-region "er/expand-region")
-  ("-" er/contract-region "er/contract-region"))
+(if (require 'hydra nil 'noerror)
+    (progn
+      (defhydra hydra-expand-region (global-map "M-=")
+        "hydra-expand-region"
+        ("=" er/expand-region "er/expand-region")
+        ("-" er/contract-region "er/contract-region")))
+  (message "** hydra is not installed"))
 
 (defvar my-key-map-prefix "C-c l")
 
@@ -696,7 +699,7 @@ project; otherwise activate the virtualenv defined in
    (setq elpy-rpc-backend "jedi")
    (add-to-list 'elpy-project-ignored-directories "src")
    (add-to-list 'elpy-project-ignored-directories "*-env")
-   (elpy-use-ipython)
+   ;; (elpy-use-ipython)
 ))
 
 (defun p8 ()
@@ -848,27 +851,32 @@ This is used to set `sql-alternate-buffer-name' within
     (require 'helm-swoop)
   (error (message "** could not activate helm-swoop")))
 
-(defhydra hydra-search (:color blue)
-  "hydra-search"
-  ("RET" helm-swoop "helm-swoop")
-  ("o" occur "occur-dwim")
-  ("O" occur-dwim "occur")
-  ("m" helm-multi-swoop "helm-multi-swoop")
-  ("M" helm-multi-swoop-all "helm-multi-swoop-all")
-  ("b" helm-swoop-back-to-last-point "helm-swoop-back-to-last-point")
-  ("s" vr/isearch-forward "vr/isearch-forward")
-  ("r" vr/isearch-backward "vr/isearch-backward"))
+(if (require 'hydra nil 'noerror)
+    (progn
+      (defhydra hydra-search (:color blue)
+        "hydra-search"
+        ("RET" helm-swoop "helm-swoop")
+        ("o" occur "occur-dwim")
+        ("O" occur-dwim "occur")
+        ("m" helm-multi-swoop "helm-multi-swoop")
+        ("M" helm-multi-swoop-all "helm-multi-swoop-all")
+        ("b" helm-swoop-back-to-last-point "helm-swoop-back-to-last-point")
+        ("s" vr/isearch-forward "vr/isearch-forward")
+        ("r" vr/isearch-backward "vr/isearch-backward"))
 
-(global-set-key (kbd "C-c s") 'hydra-search/body)
+      (global-set-key (kbd "C-c s") 'hydra-search/body))
+  (message "** hydra is not installed"))
 
-(defhydra hydra-replace (:color blue)
-  "hydra-replace"
-  ("RET" replace-string "replace-string")
-  ("r" vr/replace "vr/replace")
-  ("q" query-replace "query-replace")
-  ("Q" vr/query-replace "vr/query-replace"))
+(if (require 'hydra nil 'noerror)
+    (progn (defhydra hydra-replace (:color blue)
+             "hydra-replace"
+             ("RET" replace-string "replace-string")
+             ("r" vr/replace "vr/replace")
+             ("q" query-replace "query-replace")
+             ("Q" vr/query-replace "vr/query-replace"))
 
-(global-set-key (kbd "C-c r") 'hydra-replace/body)
+           (global-set-key (kbd "C-c r") 'hydra-replace/body))
+  (message "** hydra is not installed"))
 
 (defun copy-buffer-file-name ()
   "Add `buffer-file-name' to `kill-ring'"
