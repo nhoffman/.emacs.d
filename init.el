@@ -285,7 +285,6 @@
         ("e" save-buffers-kill-emacs "save-buffers-kill-emacs")
         ("f" fix-frame "fix-frame")
         ("i" init-edit "init-edit")
-        ("l" my/describe-my-key-map "my/describe-my-key-map")
         ("n" my/find-org-index "my/find-org-index")
         ("N" my/org-index-add-entry "my/org-index-add-entry")
         ("m" magit-status "magit-status")
