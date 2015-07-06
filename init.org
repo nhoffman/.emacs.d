@@ -1,4 +1,4 @@
-+TITLE: init.el for Noah Hoffman
+#+TITLE: init.el for Noah Hoffman
 #+AUTHOR: Noah Hoffman
 
 #+LANGUAGE:  en
