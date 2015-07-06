@@ -581,16 +581,13 @@ Assumes that the frame is only split into two."
   (find-file filename)
   (end-of-buffer)
   (delete-blank-lines)
-  ;;(insert "\n* ")
-  (insert (format-time-string time-format))
-  (beginning-of-line)
-  (forward-char 2))
+  (insert (format-time-string time-format)))
 
 (defvar my/org-index "~/Dropbox/notes/index.org")
 
 (defun my/org-index-add-entry ()
   (interactive)
-  (org-add-entry my/org-index "\n* <%Y-%m-%d %a>"))
+  (org-add-entry my/org-index "\n* <%Y-%m-%d %a> "))
 
 (defun my/find-org-index ()
   (interactive)
