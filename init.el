@@ -850,14 +850,14 @@ This is used to set `sql-alternate-buffer-name' within
       (defhydra hydra-search (:color blue)
         "hydra-search"
         ("RET" helm-swoop "helm-swoop")
-        ("o" occur "occur-dwim")
-        ("O" occur-dwim "occur")
+        ("b" helm-swoop-back-to-last-point "helm-swoop-back-to-last-point")
+        ("f" file-file-in-project "find-file-in-project")
         ("m" helm-multi-swoop "helm-multi-swoop")
         ("M" helm-multi-swoop-all "helm-multi-swoop-all")
-        ("b" helm-swoop-back-to-last-point "helm-swoop-back-to-last-point")
-        ("s" vr/isearch-forward "vr/isearch-forward")
-        ("r" vr/isearch-backward "vr/isearch-backward"))
-
+        ("o" occur "occur-dwim")
+        ("O" occur-dwim "occur")
+        ("r" vr/isearch-backward "vr/isearch-backward")
+        ("s" vr/isearch-forward "vr/isearch-forward"))
       (global-set-key (kbd "C-c s") 'hydra-search/body))
   (message "** hydra is not installed"))
 
