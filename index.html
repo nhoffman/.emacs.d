@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>init.org.temp</title>
-<!-- 2015-07-06 Mon 11:50 -->
+<title>init.el for Noah Hoffman</title>
+<!-- 2015-07-06 Mon 11:52 -->
 <meta  charset="utf-8">
 <meta  name="generator" content="Org-mode">
 <meta  name="author" content="Noah Hoffman">
@@ -88,14 +88,14 @@
 </style>
 <style type="text/css">
 HTTP/1.1 200 OK
-Date: Mon, 06 Jul 2015 18:49:57 GMT
+Date: Mon, 06 Jul 2015 18:52:27 GMT
 Content-Type: text/css
 Transfer-Encoding: chunked
 Connection: keep-alive
 Last-Modified: Thu, 13 Feb 2014 17:33:55 GMT
 ETag: W/"8a7442ca6bedd62cec4881040b9a9e83"
 Server: NetDNA-cache/2.2
-Expires: Thu, 30 Jun 2016 18:49:57 GMT
+Expires: Thu, 30 Jun 2016 18:52:27 GMT
 Cache-Control: max-age=31104000
 Vary: Accept-Encoding
 Access-Control-Allow-Origin: *
@@ -160,10 +160,7 @@ for the JavaScript code in this tag.
 </head>
 <body class="container">
 <div id="content">
-<h1 class="title">init.org.temp</h1>
-<p>
-+TITLE: init.el for Noah Hoffman
-</p>
+<h1 class="title">init.el for Noah Hoffman</h1>
 <p>
 In a fit of literate programming yak-shaving, I implemented my Emacs
 configuration as an org-mode file. I have also tried to a provide
@@ -2915,14 +2912,14 @@ edit the buffer from within the <code>helm-swoop</code> buffer
       (defhydra hydra-search (:color blue)
         <span style="color: #dd1144;">"hydra-search"</span>
         (<span style="color: #dd1144;">"RET"</span> helm-swoop <span style="color: #dd1144;">"helm-swoop"</span>)
-        (<span style="color: #dd1144;">"o"</span> occur <span style="color: #dd1144;">"occur-dwim"</span>)
-        (<span style="color: #dd1144;">"O"</span> occur-dwim <span style="color: #dd1144;">"occur"</span>)
+        (<span style="color: #dd1144;">"b"</span> helm-swoop-back-to-last-point <span style="color: #dd1144;">"helm-swoop-back-to-last-point"</span>)
+        (<span style="color: #dd1144;">"f"</span> file-file-in-project <span style="color: #dd1144;">"find-file-in-project"</span>)
         (<span style="color: #dd1144;">"m"</span> helm-multi-swoop <span style="color: #dd1144;">"helm-multi-swoop"</span>)
         (<span style="color: #dd1144;">"M"</span> helm-multi-swoop-all <span style="color: #dd1144;">"helm-multi-swoop-all"</span>)
-        (<span style="color: #dd1144;">"b"</span> helm-swoop-back-to-last-point <span style="color: #dd1144;">"helm-swoop-back-to-last-point"</span>)
-        (<span style="color: #dd1144;">"s"</span> vr/isearch-forward <span style="color: #dd1144;">"vr/isearch-forward"</span>)
-        (<span style="color: #dd1144;">"r"</span> vr/isearch-backward <span style="color: #dd1144;">"vr/isearch-backward"</span>))
-
+        (<span style="color: #dd1144;">"o"</span> occur <span style="color: #dd1144;">"occur-dwim"</span>)
+        (<span style="color: #dd1144;">"O"</span> occur-dwim <span style="color: #dd1144;">"occur"</span>)
+        (<span style="color: #dd1144;">"r"</span> vr/isearch-backward <span style="color: #dd1144;">"vr/isearch-backward"</span>)
+        (<span style="color: #dd1144;">"s"</span> vr/isearch-forward <span style="color: #dd1144;">"vr/isearch-forward"</span>))
       (global-set-key (kbd <span style="color: #dd1144;">"C-c s"</span>) 'hydra-search/body))
   (message <span style="color: #dd1144;">"** hydra is not installed"</span>))
 </pre>
@@ -3189,7 +3186,7 @@ function, so don't do that.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Noah Hoffman</p>
-<p class="date">Created: 2015-07-06 Mon 11:50</p>
+<p class="date">Created: 2015-07-06 Mon 11:52</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
