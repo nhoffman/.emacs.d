@@ -278,8 +278,9 @@
 
 (if (require 'hydra nil 'noerror)
     (progn
-      (defhydra hydra-launcher (:color blue)
+      (defhydra hydra-launcher (:color teal)
         "hydra-launcher"
+        ("C-g" redraw-display "<quit>")
         ("d" insert-date "insert-date")
         ("D" describe-minor-mode "describe-minor-mode")
         ("e" save-buffers-kill-emacs "save-buffers-kill-emacs")
