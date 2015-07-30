@@ -995,6 +995,13 @@ Some additional keyboard macro bindings.
 (global-set-key (kbd "<f5>") 'call-last-kbd-macro)
 #+END_SRC
 
+* ediff
+Always split windows horizontally.
+
+#+BEGIN_SRC elisp
+(csetq ediff-split-window-function 'split-window-horizontally)
+#+END_SRC
+
 * emacs desktop
 
 References:
