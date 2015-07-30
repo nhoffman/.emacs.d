@@ -466,6 +466,18 @@ call =defhydra=. For example:
 :     (progn (message "** hydra is installed"))
 :   (message "** hydra is not installed"))
 
+* sidestepping customize
+
+Cribbed from a [[http://oremacs.com/2015/01/17/setting-up-ediff/][post]] on oremacs, this macro provides "a setq that is
+aware of the custom-set property of a variable."
+
+#+BEGIN_SRC elisp
+(defmacro csetq (variable value)
+  `(funcall (or (get ',variable 'custom-set)
+                'set-default)
+            ',variable ,value))
+#+END_SRC
+
 * Navigation
 ** =electric-buffer-list=
 
