@@ -118,6 +118,7 @@
     helm
     helm-descbinds
     helm-swoop
+    helm-projectile
     htmlize
     hydra
     jinja2-mode
@@ -125,6 +126,7 @@
     markdown-mode
     moinmoin-mode
     org
+    projectile
     rainbow-delimiters
     visual-regexp
     visual-regexp-steroids
@@ -137,6 +139,11 @@
   (package-list-packages)
   (package-install-list my-package-list))
 (make-alias 'install-packages)
+
+(defmacro csetq (variable value)
+  `(funcall (or (get ',variable 'custom-set)
+                'set-default)
+            ',variable ,value))
 
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list)
 
@@ -166,8 +173,12 @@
       (global-set-key (kbd "C-h b") 'helm-descbinds))
   (error (message "** could not activate helm-descbinds")))
 
-;; (if (package-installed-p 'projectile)
-;;     (projectile-global-mode))
+(if (and (package-installed-p 'projectile) (package-installed-p 'helm-projectile))
+    (progn
+      (projectile-global-mode)
+      (setq projectile-completion-system 'helm)
+      (helm-projectile-on))
+  (message "** not using projectile or helm-projectile - one or both not installed"))
 
 (require 'ibuffer)
 (global-set-key (kbd "C-x C-g") 'ibuffer)
@@ -407,6 +418,8 @@
 (setq scroll-margin 2)                              ;; Start scrolling when 2 lines from top/bottom
 
 (global-set-key (kbd "<f5>") 'call-last-kbd-macro)
+
+(csetq ediff-split-window-function 'split-window-horizontally)
 
 (defun desktop-save-no-p ()
   "Save desktop without prompting (replaces `desktop-save-in-desktop-dir')"

@@ -433,6 +433,7 @@ emacs was first started.
     helm
     helm-descbinds
     helm-swoop
+    helm-projectile
     htmlize
     hydra
     jinja2-mode
@@ -440,6 +441,7 @@ emacs was first started.
     markdown-mode
     moinmoin-mode
     org
+    projectile
     rainbow-delimiters
     visual-regexp
     visual-regexp-steroids
@@ -543,7 +545,7 @@ Describe key bindings for the current modes: see https://github.com/emacs-helm/h
   (error (message "** could not activate helm-descbinds")))
 #+END_SRC
 
-** projectile
+** TODO projectile and helm-projectile
 
 TODO: check out =helm-projectile=
 
@@ -559,9 +561,19 @@ Basic key bindings (see the url above for a complete list).
 | C-c p f    | Display a list of all files in the project.       |
 | C-c p d    | Display a list of all directories in the project. |
 
+projectile is integrated with helm by the package
+helm-projectile. Usage information is here:
+http://tuhdo.github.io/helm-projectile.html
+
+We'll configure both together
+
 #+BEGIN_SRC elisp
-;; (if (package-installed-p 'projectile)
-;;     (projectile-global-mode))
+(if (and (package-installed-p 'projectile) (package-installed-p 'helm-projectile))
+    (progn
+      (projectile-global-mode)
+      (setq projectile-completion-system 'helm)
+      (helm-projectile-on))
+  (message "** not using projectile or helm-projectile - one or both not installed"))
 #+END_SRC
 
 ** ibuffer
