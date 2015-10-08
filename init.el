@@ -583,6 +583,23 @@ Assumes that the frame is only split into two."
 (push '("\\.org\\'" . org-mode) auto-mode-alist)
 (push '("\\.org\\.txt\\'" . org-mode) auto-mode-alist)
 
+(if (require 'hydra nil 'noerror)
+    (progn
+      (defhydra hydra-magit-navigation (:exit nil :foreign-keys warn)
+        "hydra-magit-navigation"
+        ("i" org-previous-item "org-previous-item")
+        ("k" org-next-item "org-next-item")
+        ("<right>" org-next-block "org-next-block")
+        ("<left>" org-previous-block "org-previous-block")
+        ("<down>" outline-next-visible-heading "outline-next-visible-heading")
+        ("<up>" outline-previous-visible-heading "outline-previous-visible-heading")
+        ("S-<down>" org-forward-paragraph "org-forward-paragraph")
+        ("S-<up>" org-backward-paragraph "org-backward-paragraph")
+        ("q" nil "<quit>")))
+  (message "** hydra is not installed"))
+
+(define-key org-mode-map (kbd "C-c n")  'hydra-magit-navigation/body)
+
 (defun insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
   (interactive)
