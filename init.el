@@ -558,6 +558,7 @@ Assumes that the frame is only split into two."
              ;; key bindings for org-promote/demote-subtree
              (define-key org-mode-map (kbd "M-S-<right>") 'org-do-demote)
              (define-key org-mode-map (kbd "M-S-<left>") 'org-do-promote)
+             (define-key org-mode-map (kbd "C-c n")  'hydra-magit-navigation/body)
              (visual-line-mode)
              ;; org-babel
              (org-babel-do-load-languages
@@ -598,7 +599,7 @@ Assumes that the frame is only split into two."
         ("q" nil "<quit>")))
   (message "** hydra is not installed"))
 
-(define-key org-mode-map (kbd "C-c n")  'hydra-magit-navigation/body)
+;; org-mode-map binds "C-c n" in org-mode-map
 
 (defun insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
