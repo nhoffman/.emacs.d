@@ -558,7 +558,7 @@ Assumes that the frame is only split into two."
              ;; key bindings for org-promote/demote-subtree
              (define-key org-mode-map (kbd "M-S-<right>") 'org-do-demote)
              (define-key org-mode-map (kbd "M-S-<left>") 'org-do-promote)
-             (define-key org-mode-map (kbd "C-c n")  'hydra-magit-navigation/body)
+             (define-key org-mode-map (kbd "C-c n")  'hydra-org-navigation/body)
              (visual-line-mode)
              ;; org-babel
              (org-babel-do-load-languages
@@ -586,8 +586,8 @@ Assumes that the frame is only split into two."
 
 (if (require 'hydra nil 'noerror)
     (progn
-      (defhydra hydra-magit-navigation (:exit nil :foreign-keys warn)
-        "hydra-magit-navigation"
+      (defhydra hydra-org-navigation (:exit nil :foreign-keys warn)
+        "hydra-org-navigation"
         ("i" org-previous-item "org-previous-item")
         ("k" org-next-item "org-next-item")
         ("<right>" org-next-block "org-next-block")
@@ -598,7 +598,6 @@ Assumes that the frame is only split into two."
         ("S-<up>" org-backward-paragraph "org-backward-paragraph")
         ("q" nil "<quit>")))
   (message "** hydra is not installed"))
-
 ;; org-mode-map binds "C-c n" in org-mode-map
 
 (defun insert-date ()
