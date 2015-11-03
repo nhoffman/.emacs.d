@@ -41,8 +41,8 @@ e(){
     fi
 }
 
-if [[ $(basename $SHELL) == "zsh" ]]; then
-    compdef ec=ls
-    compdef enw=ls
-    compdef e=ls
-fi
+# if [[ $(basename $SHELL) == "zsh" ]]; then
+#     compdef ec=ls
+#     compdef enw=ls
+#     compdef e=ls
+# fi
