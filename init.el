@@ -757,6 +757,9 @@ project; otherwise activate the virtualenv defined in
      t)                         ;; show error buffer?
     (ediff-buffers (current-buffer) p8-output)))
 
+(add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.bash\\'" . sh-mode))
+
 (defun scons-insert-command ()
   (interactive)
   (insert "output, = env.Command(

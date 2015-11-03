@@ -1567,6 +1567,15 @@ it to the output of autopep8.
     (ediff-buffers (current-buffer) p8-output)))
 #+END_SRC
 
+* shell
+
+Recognize zsh and bash scripts by file suffix.
+
+#+BEGIN_SRC elisp
+(add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.bash\\'" . sh-mode))
+#+END_SRC
+
 * scons
 
 I should really start using a snippet package, but for now:
