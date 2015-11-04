@@ -344,9 +344,10 @@
             (car (split-string
                   (shell-command-to-string
                    (if (eq system-type 'darwin)
- "ls -t $(find /tmp/* -user $USER -name Listeners 2> /dev/null)"
- "ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2> /dev/null)"
- )))))
+                       "cat ~/.ssh-auth-sock"
+                     ;; "ls -t $(find /tmp/* -user $USER -name Listeners 2> /dev/null)"
+                     "ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2> /dev/null)"
+                     )))))
     (message
      (format "SSH_AUTH_SOCK %s --> %s"
              ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))))
