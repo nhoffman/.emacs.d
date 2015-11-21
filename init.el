@@ -289,7 +289,7 @@
 
 (if (require 'hydra nil 'noerror)
     (progn
-      (defhydra hydra-launcher (:color teal)
+      (defhydra hydra-launcher (:color teal :columns 4)
         "hydra-launcher"
         ("C-g" redraw-display "<quit>")
         ("d" insert-date "insert-date")
@@ -297,14 +297,15 @@
         ("e" save-buffers-kill-emacs "save-buffers-kill-emacs")
         ("f" fix-frame "fix-frame")
         ("i" init-edit "init-edit")
-        ("n" my/find-org-index "my/find-org-index")
-        ("N" my/org-index-add-entry "my/org-index-add-entry")
+        ("n" find-org-index "find-org-index")
+        ("N" org-index-add-entry "org-index-add-entry")
         ("m" magit-status "magit-status")
         ("o" copy-region-or-line-other-window "copy-region-or-line-other-window")
         ("p" package-list-packages "package-list-packages")
         ("r" redraw-display "redraw-display")
         ("s" ssh-refresh "ssh-refresh")
-        ("t" org-todo-list "org-todo-list"))
+        ("t" org-todo-list "org-todo-list")
+        ("v" activate-venv "activate-venv"))
 
       (global-set-key (kbd "C-c l") 'hydra-launcher/body))
   (message "** hydra is not installed"))
