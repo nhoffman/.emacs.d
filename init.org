@@ -468,6 +468,24 @@ call =defhydra=. For example:
 :     (progn (message "** hydra is installed"))
 :   (message "** hydra is not installed"))
 
+** hydra-toggle-mode
+
+A hydra for toggling modes. Activate via =hydra-launcher= using =C-l g=
+
+#+BEGIN_SRC elisp
+(if (require 'hydra nil 'noerror)
+    (progn
+      (defhydra hydra-toggle-mode (:color blue)
+        "hydra-toggle-mode"
+        ("RET" nil "<quit>")
+        ("o" org-mode "org-mode")
+        ("p" python-mode "python-mode")
+        ("t" text-mode "text-mode")
+        ("r"  "R-mode")
+        ))
+  (message "** hydra is not installed"))
+#+END_SRC
+
 * sidestepping customize
 
 Cribbed from a [[http://oremacs.com/2015/01/17/setting-up-ediff/][post]] on oremacs, this macro provides "a setq that is
@@ -760,6 +778,7 @@ combinations.
         ("D" describe-minor-mode "describe-minor-mode")
         ("e" save-buffers-kill-emacs "save-buffers-kill-emacs")
         ("f" fix-frame "fix-frame")
+        ("g" hydra-toggle-mode/body "toggle mode")
         ("i" init-edit "init-edit")
         ("n" my/find-org-index "my/find-org-index")
         ("N" my/org-index-add-entry "my/org-index-add-entry")

@@ -140,6 +140,18 @@
   (package-install-list my-package-list))
 (make-alias 'install-packages)
 
+(if (require 'hydra nil 'noerror)
+    (progn
+      (defhydra hydra-toggle-mode (:color blue)
+        "hydra-toggle-mode"
+        ("RET" nil "<quit>")
+        ("o" org-mode "org-mode")
+        ("p" python-mode "python-mode")
+        ("t" text-mode "text-mode")
+        ("r"  "R-mode")
+        ))
+  (message "** hydra is not installed"))
+
 (defmacro csetq (variable value)
   `(funcall (or (get ',variable 'custom-set)
                 'set-default)
@@ -296,6 +308,7 @@
         ("D" describe-minor-mode "describe-minor-mode")
         ("e" save-buffers-kill-emacs "save-buffers-kill-emacs")
         ("f" fix-frame "fix-frame")
+        ("g" hydra-toggle-mode/body "toggle mode")
         ("i" init-edit "init-edit")
         ("n" my/find-org-index "my/find-org-index")
         ("N" my/org-index-add-entry "my/org-index-add-entry")
