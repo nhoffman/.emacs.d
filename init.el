@@ -145,10 +145,12 @@
       (defhydra hydra-toggle-mode (:color blue)
         "hydra-toggle-mode"
         ("RET" nil "<quit>")
+        ("j" jinja2-mode "jinja2--mode")
         ("o" org-mode "org-mode")
         ("p" python-mode "python-mode")
+        ("r" R-mode "R-mode")
+        ("s" sql-mode "sql-mode")
         ("t" text-mode "text-mode")
-        ("r"  "R-mode")
         ))
   (message "** hydra is not installed"))
 
