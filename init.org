@@ -475,15 +475,20 @@ A hydra for toggling modes. Activate via =hydra-launcher= using =C-l g=
 #+BEGIN_SRC elisp
 (if (require 'hydra nil 'noerror)
     (progn
-      (defhydra hydra-toggle-mode (:color blue)
+      (defhydra hydra-toggle-mode (:color blue :columns 4)
         "hydra-toggle-mode"
-        ("RET" nil "<quit>")
-        ("j" jinja2-mode "jinja2--mode")
+        ("RET" redraw-display "<quit>")
+        ("j" jinja2-mode "jinja2-mode")
+        ("k" markdown-mode "markdown-mode")
+        ("l" lineum-mode "lineum-mode")
+        ("m" moinmoin-mode "moinmoin-mode")
         ("o" org-mode "org-mode")
         ("p" python-mode "python-mode")
         ("r" R-mode "R-mode")
         ("s" sql-mode "sql-mode")
         ("t" text-mode "text-mode")
+        ("v" visual-line-mode "visual-line-mode")
+        ("y" yaml-mode "yaml-mode")
         ))
   (message "** hydra is not installed"))
 #+END_SRC
