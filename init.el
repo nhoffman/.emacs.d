@@ -108,6 +108,7 @@
   '(ace-jump-mode
     ace-jump-buffer
     auctex
+    csv-mode
     discover
     edit-server
     elpy
@@ -145,6 +146,7 @@
       (defhydra hydra-toggle-mode (:color blue :columns 4)
         "hydra-toggle-mode"
         ("RET" redraw-display "<quit>")
+        ("c" csv-mode "csv-mode")
         ("j" jinja2-mode "jinja2-mode")
         ("k" markdown-mode "markdown-mode")
         ("l" lineum-mode "lineum-mode")
