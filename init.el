@@ -143,7 +143,7 @@
 
 (if (require 'hydra nil 'noerror)
     (progn
-      (defhydra hydra-toggle-mode (:color blue :columns 4)
+      (defhydra hydra-toggle-mode (:color blue :columns 4 :post (redraw-display))
         "hydra-toggle-mode"
         ("RET" redraw-display "<quit>")
         ("c" csv-mode "csv-mode")
@@ -194,6 +194,22 @@
       (require 'helm-descbinds)
       (global-set-key (kbd "C-h b") 'helm-descbinds))
   (error (message "** could not activate helm-descbinds")))
+
+(if (require 'hydra nil 'noerror)
+    (progn
+      (defhydra hydra-helm (:color blue :columns 4 :post (redraw-display))
+        "hydra-toggle-mode"
+        ("RET" redraw-display "<quit>")
+        ("b" helm-browse-project "helm-browse-project")
+        ("f" helm-projectile-find-file-dwim "helm-projectile-find-file-dwim")
+        ("g" helm-projectile-grep "helm-projectile-grep")
+        ("j" helm-projectile-switch-project "helm-projectile-switch-project")
+        ("o" helm-occur "helm-occur")
+        ("O" helm-org-in-buffer-headings "helm-org-in-buffer-headings")
+        ("p" helm-projectile "helm-projectile")
+        ("s" helm-swoop "helm-swoop")
+        ))
+  (message "** hydra is not installed"))
 
 (if (and (package-installed-p 'projectile) (package-installed-p 'helm-projectile))
     (progn
@@ -311,7 +327,7 @@
 
 (if (require 'hydra nil 'noerror)
     (progn
-      (defhydra hydra-launcher (:color teal :columns 4)
+      (defhydra hydra-launcher (:color teal :columns 4 :post (redraw-display))
         "hydra-launcher"
         ("C-g" redraw-display "<quit>")
         ("d" insert-date "insert-date")
@@ -319,6 +335,7 @@
         ("e" save-buffers-kill-emacs "save-buffers-kill-emacs")
         ("f" fix-frame "fix-frame")
         ("g" hydra-toggle-mode/body "toggle mode")
+        ("h" hydra-helm/body "helm commands")
         ("i" init-edit "init-edit")
         ("n" my/find-org-index "my/find-org-index")
         ("N" my/org-index-add-entry "my/org-index-add-entry")
@@ -330,7 +347,8 @@
         ("t" org-todo-list "org-todo-list")
         ("v" activate-venv "activate-venv"))
 
-      (global-set-key (kbd "C-c l") 'hydra-launcher/body))
+      (global-set-key (kbd "C-c l") 'hydra-launcher/body)
+      (global-set-key (kbd "C-M-/") 'hydra-launcher/body))
   (message "** hydra is not installed"))
 
 (global-set-key (kbd "<f6>") 'linum-mode)
