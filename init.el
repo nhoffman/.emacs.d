@@ -349,7 +349,7 @@
         ("v" activate-venv "activate-venv"))
 
       (global-set-key (kbd "C-c l") 'hydra-launcher/body)
-      (global-set-key (kbd "C-M-/") 'hydra-launcher/body))
+      (global-set-key (kbd "M-,") 'hydra-launcher/body))
   (message "** hydra is not installed"))
 
 (global-set-key (kbd "<f6>") 'linum-mode)
