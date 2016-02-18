@@ -5,3 +5,4 @@ ghp-import
 pep8
 flake8
 importmagic
+yapf
