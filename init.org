@@ -819,7 +819,7 @@ combinations.
         ("N" my/org-index-add-entry "my/org-index-add-entry")
         ("m" magit-status "magit-status")
         ("o" copy-region-or-line-other-window "copy-region-or-line-other-window")
-        ("p" package-list-packages "package-list-packages")
+        ("p" list-processes "list-processes")
         ("r" redraw-display "redraw-display")
         ("s" ssh-refresh "ssh-refresh")
         ("t" org-todo-list "org-todo-list")
