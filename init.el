@@ -73,6 +73,7 @@
             (helm-descbinds . "melpa-stable")
             (helm-swoop . "melpa-stable")
             (hydra . "gnu")
+            (smart-mode-line . "melpa-stable")
             )))
 
   (package-initialize))
@@ -129,6 +130,7 @@
     org
     projectile
     rainbow-delimiters
+    smart-mode-line
     visual-regexp
     visual-regexp-steroids
     yaml-mode
@@ -366,9 +368,15 @@
 (setq suggest-key-bindings 4)
 (show-paren-mode 1)
 
-(setq display-time-day-and-date t
-      display-time-24hr-format t)
-(display-time)
+(if (require 'smart-mode-line nil 'noerror)
+    (progn
+      (setq sml/no-confirm-load-theme t)
+      (setq sml/theme 'light)
+      (setq sml/name-width 30)
+      (setq sml/mode-width "full")
+      (setq sml/time-format "%H:%M")
+      (sml/setup))
+  (message "** smart-mode-line is not installed"))
 
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))

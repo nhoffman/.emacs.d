@@ -377,6 +377,7 @@ Add some extra package repositories. The default value of package-archives is
             (helm-descbinds . "melpa-stable")
             (helm-swoop . "melpa-stable")
             (hydra . "gnu")
+            (smart-mode-line . "melpa-stable")
             )))
 
   (package-initialize))
@@ -444,6 +445,7 @@ emacs was first started.
     org
     projectile
     rainbow-delimiters
+    smart-mode-line
     visual-regexp
     visual-regexp-steroids
     yaml-mode
@@ -874,14 +876,20 @@ default.
 (show-paren-mode 1)
 #+END_SRC
 
-** status bar
+** smart-mode-line
 
-Date and time in status bar. See http://efod.se/writings/linuxbook/html/date-and-time.html
+https://github.com/Malabarba/smart-mode-line
 
 #+BEGIN_SRC elisp
-(setq display-time-day-and-date t
-      display-time-24hr-format t)
-(display-time)
+(if (require 'smart-mode-line nil 'noerror)
+    (progn
+      (setq sml/no-confirm-load-theme t)
+      (setq sml/theme 'light)
+      (setq sml/name-width 30)
+      (setq sml/mode-width "full")
+      (setq sml/time-format "%H:%M")
+      (sml/setup))
+  (message "** smart-mode-line is not installed"))
 #+END_SRC
 
 ** title bar
