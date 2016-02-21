@@ -363,11 +363,11 @@
         ("N" my/org-index-add-entry "my/org-index-add-entry")
         ("m" magit-status "magit-status")
         ("o" copy-region-or-line-other-window "copy-region-or-line-other-window")
-        ("p" list-processes "list-processes")
+        ("p" hydra-python/body "python menu")
+        ("P" list-processes "list-processes")
         ("r" redraw-display "redraw-display")
         ("s" ssh-refresh "ssh-refresh")
-        ("t" org-todo-list "org-todo-list")
-        ("v" activate-venv-current-project "activate-venv"))
+        ("t" org-todo-list "org-todo-list"))
 
       (global-set-key (kbd "C-c l") 'hydra-launcher/body)
       (global-set-key (kbd "M-,") 'hydra-launcher/body))
@@ -776,7 +776,7 @@ project; otherwise activate the virtualenv defined in
     (error "Error: no virtualenv is active"))
   (let ((dest "*elpy-install-requirements-output*")
         (install-cmd (format "%s/bin/pip install --force '%%s'" pyvenv-virtual-env))
-        (deps '("jedi" "pyflakes" "pep8" "flake8" "importmagic" "yapf")))
+        (deps '("elpy" "jedi" "pyflakes" "pep8" "flake8" "importmagic" "yapf")))
     (generate-new-buffer dest)
     (mapcar
      #'(lambda (pkg)
@@ -832,6 +832,18 @@ project; otherwise activate the virtualenv defined in
      "*autopep8 errors*"        ;; name of the error buffer
      t)                         ;; show error buffer?
     (ediff-buffers (current-buffer) p8-output)))
+
+(if (require 'hydra nil 'noerror)
+    (progn
+      (defhydra hydra-python (:color blue :columns 4 :post (redraw-display))
+        "hydra-python"
+        ("RET" redraw-display "<quit>")
+        ("E" elpy-config "elpy-config")
+        ("r" elpy-install-requirements "elpy-install-requirements")
+        ("v" activate-venv-current-project "activate-venv-current-project")
+        ("V" activate-venv-default "activate-venv-default")
+        ("y" elpy-yapf-fix-code "elpy-yapf-fix-code")))
+  (message "** hydra is not installed"))
 
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.bash\\'" . sh-mode))
