@@ -630,6 +630,39 @@ We'll configure both together
   (message "** not using projectile or helm-projectile - one or both not installed"))
 #+END_SRC
 
+*** ignoring directories using grep functions
+
+Native emacs grep functions (like =M-x rgrep=) as well as
+=projectile-grep= and =helm-projectile-grep= all ignore directories
+specified by the variable =grep-find-ignored-directories=. Let's
+add some to the defaults.
+
+#+BEGIN_SRC elisp
+(add-to-list 'grep-find-ignored-directories ".eggs")
+(add-to-list 'grep-find-ignored-directories "src")
+#+END_SRC
+
+Make a function to ignore contents of a project's virtualenv, and
+advise functions using grep to apply it before execution.
+
+#+BEGIN_SRC elisp
+(defun grep-ignore-venv-current-project (&rest args)
+  (interactive)
+  (let ((venv (find-venv-current-project)))
+    (if venv
+        (progn
+          (setq venv (file-name-nondirectory
+                      (replace-regexp-in-string "/$" "" venv)))
+          (message "adding '%s' to grep-find-ignored-directories" venv)
+          (add-to-list 'grep-find-ignored-directories venv))
+      (message "no virtualenv at this location")
+      )))
+
+(advice-add 'rgrep :before #'grep-ignore-venv-current-project)
+(advice-add 'projectile-grep :before #'grep-ignore-venv-current-project)
+(advice-add 'helm-projectile-grep :before #'grep-ignore-venv-current-project)
+#+END_SRC
+
 ** ibuffer
 
 - http://emacs-fu.blogspot.com/2010/02/dealing-with-many-buffers-ibuffer.html
@@ -825,7 +858,7 @@ combinations.
         ("r" redraw-display "redraw-display")
         ("s" ssh-refresh "ssh-refresh")
         ("t" org-todo-list "org-todo-list")
-        ("v" activate-venv "activate-venv"))
+        ("v" activate-venv-current-project "activate-venv"))
 
       (global-set-key (kbd "C-c l") 'hydra-launcher/body)
       (global-set-key (kbd "M-,") 'hydra-launcher/body))
@@ -886,7 +919,7 @@ https://github.com/Malabarba/smart-mode-line
       (setq sml/no-confirm-load-theme t)
       (setq sml/theme 'light)
       (setq sml/name-width 30)
-      (setq sml/mode-width "full")
+      ;; (setq sml/mode-width 'full)
       (setq sml/time-format "%H:%M")
       (sml/setup))
   (message "** smart-mode-line is not installed"))
@@ -1519,14 +1552,11 @@ Here's a function that tries to activate a virtualenv in the current
 project.
 
 #+BEGIN_SRC elisp
-(defun activate-venv ()
-  "Activate a virtualenv if one can be found in the current
-project; otherwise activate the virtualenv defined in
-`venv-default'. Also restarts the elpy rpc process."
-  (interactive)
+(defun find-venv-current-project ()
+  "Return the path to the virtualenv in the current project or
+nil if none is found."
   (let ((venv nil)
-        (find-pattern "find %s -path '*bin/activate' -maxdepth 4")
-        (msg ""))
+        (find-pattern "find %s -path '*bin/activate' -maxdepth 4"))
 
     (if (elpy-project-root)
         (setq venv
@@ -1535,17 +1565,25 @@ project; otherwise activate the virtualenv defined in
                (shell-command-to-string
                 (format find-pattern (elpy-project-root))))))
 
-    (if (< (length venv) 1)
-        (progn
-          (setq venv venv-default)
-          (setq msg "(cound not find a virtualenv here) ")))
+    (if (> (length venv) 0)
+        (replace-regexp-in-string "//" "/" venv))
 
-    (if (y-or-n-p (format "%sActivate %s?" msg venv))
-        (progn
-          (pyvenv-activate venv)
-          (elpy-rpc-restart)
-          (message "Using %s" pyvenv-virtual-env)))))
-(make-alias 'activate-venv)
+    ))
+
+(defun activate-venv-current-project ()
+  "Activate a virtualenv if one can be found in the current
+project; otherwise activate the virtualenv defined in
+`venv-default'. Also restarts the elpy rpc process."
+  (interactive)
+  (let ((venv (find-venv-current-project)))
+    (if venv
+        (if (y-or-n-p (format "Activate %s?" venv))
+            (progn
+              (pyvenv-activate venv)
+              (elpy-rpc-restart)
+              (message "Using %s" pyvenv-virtual-env)))
+      (message "could not find a virtualenv here"))))
+(make-alias 'activate-venv-current-project)
 #+END_SRC
 
 This function installs python dependencies to the current virtualenv

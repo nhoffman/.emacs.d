@@ -221,6 +221,25 @@
       (helm-projectile-on))
   (message "** not using projectile or helm-projectile - one or both not installed"))
 
+(add-to-list 'grep-find-ignored-directories ".eggs")
+(add-to-list 'grep-find-ignored-directories "src")
+
+(defun grep-ignore-venv-current-project (&rest args)
+  (interactive)
+  (let ((venv (find-venv-current-project)))
+    (if venv
+        (progn
+          (setq venv (file-name-nondirectory
+                      (replace-regexp-in-string "/$" "" venv)))
+          (message "adding '%s' to grep-find-ignored-directories" venv)
+          (add-to-list 'grep-find-ignored-directories venv))
+      (message "no virtualenv at this location")
+      )))
+
+(advice-add 'rgrep :before #'grep-ignore-venv-current-project)
+(advice-add 'projectile-grep :before #'grep-ignore-venv-current-project)
+(advice-add 'helm-projectile-grep :before #'grep-ignore-venv-current-project)
+
 (require 'ibuffer)
 (global-set-key (kbd "C-x C-g") 'ibuffer)
 (global-set-key (kbd "C-x M-g") 'ibuffer-switch-to-saved-filter-groups)
@@ -348,7 +367,7 @@
         ("r" redraw-display "redraw-display")
         ("s" ssh-refresh "ssh-refresh")
         ("t" org-todo-list "org-todo-list")
-        ("v" activate-venv "activate-venv"))
+        ("v" activate-venv-current-project "activate-venv"))
 
       (global-set-key (kbd "C-c l") 'hydra-launcher/body)
       (global-set-key (kbd "M-,") 'hydra-launcher/body))
@@ -373,7 +392,7 @@
       (setq sml/no-confirm-load-theme t)
       (setq sml/theme 'light)
       (setq sml/name-width 30)
-      (setq sml/mode-width "full")
+      ;; (setq sml/mode-width 'full)
       (setq sml/time-format "%H:%M")
       (sml/setup))
   (message "** smart-mode-line is not installed"))
@@ -717,14 +736,11 @@ Assumes that the frame is only split into two."
 
 (prepend-path "~/.emacs.d/emacs-env/bin")
 
-(defun activate-venv ()
-  "Activate a virtualenv if one can be found in the current
-project; otherwise activate the virtualenv defined in
-`venv-default'. Also restarts the elpy rpc process."
-  (interactive)
+(defun find-venv-current-project ()
+  "Return the path to the virtualenv in the current project or
+nil if none is found."
   (let ((venv nil)
-        (find-pattern "find %s -path '*bin/activate' -maxdepth 4")
-        (msg ""))
+        (find-pattern "find %s -path '*bin/activate' -maxdepth 4"))
 
     (if (elpy-project-root)
         (setq venv
@@ -733,17 +749,25 @@ project; otherwise activate the virtualenv defined in
                (shell-command-to-string
                 (format find-pattern (elpy-project-root))))))
 
-    (if (< (length venv) 1)
-        (progn
-          (setq venv venv-default)
-          (setq msg "(cound not find a virtualenv here) ")))
+    (if (> (length venv) 0)
+        (replace-regexp-in-string "//" "/" venv))
 
-    (if (y-or-n-p (format "%sActivate %s?" msg venv))
-        (progn
-          (pyvenv-activate venv)
-          (elpy-rpc-restart)
-          (message "Using %s" pyvenv-virtual-env)))))
-(make-alias 'activate-venv)
+    ))
+
+(defun activate-venv-current-project ()
+  "Activate a virtualenv if one can be found in the current
+project; otherwise activate the virtualenv defined in
+`venv-default'. Also restarts the elpy rpc process."
+  (interactive)
+  (let ((venv (find-venv-current-project)))
+    (if venv
+        (if (y-or-n-p (format "Activate %s?" venv))
+            (progn
+              (pyvenv-activate venv)
+              (elpy-rpc-restart)
+              (message "Using %s" pyvenv-virtual-env)))
+      (message "could not find a virtualenv here"))))
+(make-alias 'activate-venv-current-project)
 
 (defun elpy-install-requirements ()
   "Install python requirements to the current virtualenv."
