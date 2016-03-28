@@ -221,8 +221,9 @@
       (helm-projectile-on))
   (message "** not using projectile or helm-projectile - one or both not installed"))
 
-(add-to-list 'grep-find-ignored-directories ".eggs")
-(add-to-list 'grep-find-ignored-directories "src")
+(when (boundp 'grep-find-ignored-directories)
+  (add-to-list 'grep-find-ignored-directories ".eggs")
+  (add-to-list 'grep-find-ignored-directories "src"))
 
 (defun grep-ignore-venv-current-project (&rest args)
   (interactive)
