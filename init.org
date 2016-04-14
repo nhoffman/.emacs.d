@@ -449,8 +449,7 @@ emacs was first started.
   (message "done installing packages"))
 
 (defvar my-package-list
-  '(ace-jump-mode
-    auctex
+  '(auctex
     csv-mode
     discover
     edit-server
@@ -831,13 +830,18 @@ Distinguish buffer names for identically-named files.
 #+END_SRC
 
 * Marking, cursor movement and appearance
-** ace-jump-mode
+** avy
 
-A quick cursor location minor mode for emacs. I picked =M-'= as the
-key combo for activation. Installed from ELPA.
+https://github.com/abo-abo/avy
+
+Jump to the start of a word in the visible text of any window by
+choosing the character at the start of the word. Provides a
+replacement for ace-jump-mode.
 
 #+BEGIN_SRC elisp
-(define-key global-map (kbd "M-'") 'ace-jump-mode)
+(use-package avy
+             :ensure t
+             :bind (("M-'" . avy-goto-word-1)))
 #+END_SRC
 
 ** expand-region

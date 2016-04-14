@@ -118,8 +118,7 @@
   (message "done installing packages"))
 
 (defvar my-package-list
-  '(ace-jump-mode
-    auctex
+  '(auctex
     csv-mode
     discover
     edit-server
@@ -349,7 +348,9 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 
-(define-key global-map (kbd "M-'") 'ace-jump-mode)
+(use-package avy
+             :ensure t
+             :bind (("M-'" . avy-goto-word-1)))
 
 (if (require 'hydra nil 'noerror)
     (progn
