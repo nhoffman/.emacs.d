@@ -367,7 +367,6 @@ Add some extra package repositories. The default value of package-archives is
           ))
 
   ;; Check if we're on Emacs 24.4 or newer, if so, use the pinned package feature
-  ;; note that elpy installation fails when pinned to elpy package
   (when (boundp 'package-pinned-packages)
     (setq package-pinned-packages
           '((elpy . "elpy")
@@ -381,6 +380,35 @@ Add some extra package repositories. The default value of package-archives is
             )))
 
   (package-initialize))
+#+END_SRC
+
+** use-package
+
+This init file is designed to fail gracefully when packages are not
+yet installed. =use-package= can automate the installation of missing
+packages (when =:ensure t= is specified), or provides a warning that a
+package is not installed. However, we have a bit of a problem when it
+comes to =use-package= itself, which must be installed to avoid
+failures on startup. Here's the solution that I've arrived at
+
+- when =use-package= is not available, give the user the option of installing it
+- if yes, do so
+- otherwise, define a macro that generates warning messages wherever
+  =use-package= is invoked.
+
+#+BEGIN_SRC elisp
+(unless (package-installed-p 'use-package)
+  (if (yes-or-no-p "use-package is not installed yet - install it? ")
+      (progn
+        ;; bootstrap use-package
+        (message "** installing use-package")
+        (package-refresh-contents)
+        (package-install 'use-package))
+    (message "** defining fake use-package macro")
+    (defmacro use-package (pkg &rest args)
+      (warn
+       "use-package is not installed - could not activate %s" (symbol-name pkg))
+      )))
 #+END_SRC
 
 ** define a list of packages

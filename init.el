@@ -63,7 +63,6 @@
           ))
 
   ;; Check if we're on Emacs 24.4 or newer, if so, use the pinned package feature
-  ;; note that elpy installation fails when pinned to elpy package
   (when (boundp 'package-pinned-packages)
     (setq package-pinned-packages
           '((elpy . "elpy")
@@ -77,6 +76,19 @@
             )))
 
   (package-initialize))
+
+(unless (package-installed-p 'use-package)
+  (if (yes-or-no-p "use-package is not installed yet - install it? ")
+      (progn
+        ;; bootstrap use-package
+        (message "** installing use-package")
+        (package-refresh-contents)
+        (package-install 'use-package))
+    (message "** defining fake use-package macro")
+    (defmacro use-package (pkg &rest args)
+      (warn
+       "use-package is not installed - could not activate %s" (symbol-name pkg))
+      )))
 
 (defun package-installed-not-builtin-p (package &optional min-version)
   "Return true if PACKAGE, of MIN-VERSION or newer, is installed
