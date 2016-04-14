@@ -422,7 +422,6 @@ emacs was first started.
 
 (defvar my-package-list
   '(ace-jump-mode
-    ace-jump-buffer
     auctex
     csv-mode
     discover
@@ -1267,15 +1266,6 @@ Copied from http://www.emacswiki.org/emacs/ToggleWindowSplit (submitted by Wilfr
 
 #+BEGIN_SRC elisp
 (setq split-height-threshold nil)
-#+END_SRC
-
-** ace-jump-buffer
-
-Quickly jump to another buffer by selecting a letter from a pop-up
-menu (bind to =M-"=).
-
-#+BEGIN_SRC elisp
-(define-key global-map (kbd "M-\"") 'ace-jump-buffer)
 #+END_SRC
 
 * spelling

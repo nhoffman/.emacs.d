@@ -107,7 +107,6 @@
 
 (defvar my-package-list
   '(ace-jump-mode
-    ace-jump-buffer
     auctex
     csv-mode
     discover
@@ -585,8 +584,6 @@ Assumes that the frame is only split into two."
 (global-set-key (kbd "C-x 6") 'toggle-frame-split)
 
 (setq split-height-threshold nil)
-
-(define-key global-map (kbd "M-\"") 'ace-jump-buffer)
 
 (setq-default ispell-program-name "aspell")
 (setq ispell-dictionary "en")
