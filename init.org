@@ -367,7 +367,6 @@ Add some extra package repositories. The default value of package-archives is
           ))
 
   ;; Check if we're on Emacs 24.4 or newer, if so, use the pinned package feature
-  ;; note that elpy installation fails when pinned to elpy package
   (when (boundp 'package-pinned-packages)
     (setq package-pinned-packages
           '((elpy . "elpy")
@@ -378,9 +377,39 @@ Add some extra package repositories. The default value of package-archives is
             (helm-swoop . "melpa-stable")
             (hydra . "gnu")
             (smart-mode-line . "melpa-stable")
+            (which-key . "melpa-stable")
             )))
 
   (package-initialize))
+#+END_SRC
+
+** use-package
+
+This init file is designed to fail gracefully when packages are not
+yet installed. =use-package= can automate the installation of missing
+packages (when =:ensure t= is specified), or provides a warning that a
+package is not installed. However, we have a bit of a problem when it
+comes to =use-package= itself, which must be installed to avoid
+failures on startup. Here's the solution that I've arrived at
+
+- when =use-package= is not available, give the user the option of installing it
+- if yes, do so
+- otherwise, define a macro that generates warning messages wherever
+  =use-package= is invoked.
+
+#+BEGIN_SRC elisp
+(unless (package-installed-p 'use-package)
+  (if (yes-or-no-p "use-package is not installed yet - install it? ")
+      (progn
+        ;; bootstrap use-package
+        (message "** installing use-package")
+        (package-refresh-contents)
+        (package-install 'use-package))
+    (message "** defining fake use-package macro")
+    (defmacro use-package (pkg &rest args)
+      (warn
+       "use-package is not installed - could not activate %s" (symbol-name pkg))
+      )))
 #+END_SRC
 
 ** define a list of packages
@@ -421,9 +450,7 @@ emacs was first started.
   (message "done installing packages"))
 
 (defvar my-package-list
-  '(ace-jump-mode
-    ace-jump-buffer
-    auctex
+  '(auctex
     csv-mode
     discover
     edit-server
@@ -448,6 +475,7 @@ emacs was first started.
     smart-mode-line
     visual-regexp
     visual-regexp-steroids
+    which-key
     yaml-mode
     yas-jit))
 
@@ -804,13 +832,18 @@ Distinguish buffer names for identically-named files.
 #+END_SRC
 
 * Marking, cursor movement and appearance
-** ace-jump-mode
+** avy
 
-A quick cursor location minor mode for emacs. I picked =M-'= as the
-key combo for activation. Installed from ELPA.
+https://github.com/abo-abo/avy
+
+Jump to the start of a word in the visible text of any window by
+choosing the character at the start of the word. Provides a
+replacement for ace-jump-mode.
 
 #+BEGIN_SRC elisp
-(define-key global-map (kbd "M-'") 'ace-jump-mode)
+(use-package avy
+             :ensure t
+             :bind (("M-'" . avy-goto-word-1)))
 #+END_SRC
 
 ** expand-region
@@ -832,7 +865,7 @@ Installed using ELPA.
   (message "** hydra is not installed"))
 #+END_SRC
 
-* Define a "launcher" keymap
+* Define a "launcher" keymap with hydra
 
 Use a =hydra= to define a key map containing a grab-bag of commonly
 used functions. Much easier than trying to find unused key
@@ -864,6 +897,25 @@ combinations.
       (global-set-key (kbd "C-c l") 'hydra-launcher/body)
       (global-set-key (kbd "M-,") 'hydra-launcher/body))
   (message "** hydra is not installed"))
+#+END_SRC
+* which-key
+
+"Emacs package that displays available keybindings in popup"
+
+A popup appears showing completions for an uncompleted prefix after a
+short delay. Eg, type =C-x= and pause... a list of available
+completions appears, each identified by the bound function!
+
+see https://github.com/justbur/emacs-which-key
+
+#+BEGIN_SRC elisp
+(use-package which-key
+  :ensure t
+  :pin melpa-stable  ;; this has no effect but I'll leave it here
+                     ;; until the apparent bug in use-package is fixed
+                     ;; (in the meantime, the repo is pinned using
+                     ;; package-pinned-packages)
+  :config (which-key-mode))
 #+END_SRC
 
 * Function keys.
@@ -1267,15 +1319,6 @@ Copied from http://www.emacswiki.org/emacs/ToggleWindowSplit (submitted by Wilfr
 
 #+BEGIN_SRC elisp
 (setq split-height-threshold nil)
-#+END_SRC
-
-** ace-jump-buffer
-
-Quickly jump to another buffer by selecting a letter from a pop-up
-menu (bind to =M-"=).
-
-#+BEGIN_SRC elisp
-(define-key global-map (kbd "M-\"") 'ace-jump-buffer)
 #+END_SRC
 
 * spelling

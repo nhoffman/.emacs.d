@@ -63,7 +63,6 @@
           ))
 
   ;; Check if we're on Emacs 24.4 or newer, if so, use the pinned package feature
-  ;; note that elpy installation fails when pinned to elpy package
   (when (boundp 'package-pinned-packages)
     (setq package-pinned-packages
           '((elpy . "elpy")
@@ -74,9 +73,23 @@
             (helm-swoop . "melpa-stable")
             (hydra . "gnu")
             (smart-mode-line . "melpa-stable")
+            (which-key . "melpa-stable")
             )))
 
   (package-initialize))
+
+(unless (package-installed-p 'use-package)
+  (if (yes-or-no-p "use-package is not installed yet - install it? ")
+      (progn
+        ;; bootstrap use-package
+        (message "** installing use-package")
+        (package-refresh-contents)
+        (package-install 'use-package))
+    (message "** defining fake use-package macro")
+    (defmacro use-package (pkg &rest args)
+      (warn
+       "use-package is not installed - could not activate %s" (symbol-name pkg))
+      )))
 
 (defun package-installed-not-builtin-p (package &optional min-version)
   "Return true if PACKAGE, of MIN-VERSION or newer, is installed
@@ -106,9 +119,7 @@
   (message "done installing packages"))
 
 (defvar my-package-list
-  '(ace-jump-mode
-    ace-jump-buffer
-    auctex
+  '(auctex
     csv-mode
     discover
     edit-server
@@ -133,6 +144,7 @@
     smart-mode-line
     visual-regexp
     visual-regexp-steroids
+    which-key
     yaml-mode
     yas-jit))
 
@@ -338,7 +350,9 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 
-(define-key global-map (kbd "M-'") 'ace-jump-mode)
+(use-package avy
+             :ensure t
+             :bind (("M-'" . avy-goto-word-1)))
 
 (if (require 'hydra nil 'noerror)
     (progn
@@ -373,6 +387,14 @@
       (global-set-key (kbd "C-c l") 'hydra-launcher/body)
       (global-set-key (kbd "M-,") 'hydra-launcher/body))
   (message "** hydra is not installed"))
+
+(use-package which-key
+  :ensure t
+  :pin melpa-stable  ;; this has no effect but I'll leave it here
+                     ;; until the apparent bug in use-package is fixed
+                     ;; (in the meantime, the repo is pinned using
+                     ;; package-pinned-packages)
+  :config (which-key-mode))
 
 (global-set-key (kbd "<f6>") 'linum-mode)
 (global-set-key (kbd "<f7>") 'visual-line-mode)
@@ -585,8 +607,6 @@ Assumes that the frame is only split into two."
 (global-set-key (kbd "C-x 6") 'toggle-frame-split)
 
 (setq split-height-threshold nil)
-
-(define-key global-map (kbd "M-\"") 'ace-jump-buffer)
 
 (setq-default ispell-program-name "aspell")
 (setq ispell-dictionary "en")
