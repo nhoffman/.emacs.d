@@ -377,6 +377,7 @@ Add some extra package repositories. The default value of package-archives is
             (helm-swoop . "melpa-stable")
             (hydra . "gnu")
             (smart-mode-line . "melpa-stable")
+            (which-key . "melpa-stable")
             )))
 
   (package-initialize))
@@ -474,6 +475,7 @@ emacs was first started.
     smart-mode-line
     visual-regexp
     visual-regexp-steroids
+    which-key
     yaml-mode
     yas-jit))
 
@@ -863,7 +865,7 @@ Installed using ELPA.
   (message "** hydra is not installed"))
 #+END_SRC
 
-* Define a "launcher" keymap
+* Define a "launcher" keymap with hydra
 
 Use a =hydra= to define a key map containing a grab-bag of commonly
 used functions. Much easier than trying to find unused key
@@ -895,6 +897,25 @@ combinations.
       (global-set-key (kbd "C-c l") 'hydra-launcher/body)
       (global-set-key (kbd "M-,") 'hydra-launcher/body))
   (message "** hydra is not installed"))
+#+END_SRC
+* which-key
+
+"Emacs package that displays available keybindings in popup"
+
+A popup appears showing completions for an uncompleted prefix after a
+short delay. Eg, type =C-x= and pause... a list of available
+completions appears, each identified by the bound function!
+
+see https://github.com/justbur/emacs-which-key
+
+#+BEGIN_SRC elisp
+(use-package which-key
+  :ensure t
+  :pin melpa-stable  ;; this has no effect but I'll leave it here
+                     ;; until the apparent bug in use-package is fixed
+                     ;; (in the meantime, the repo is pinned using
+                     ;; package-pinned-packages)
+  :config (which-key-mode))
 #+END_SRC
 
 * Function keys.

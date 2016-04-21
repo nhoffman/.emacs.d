@@ -73,6 +73,7 @@
             (helm-swoop . "melpa-stable")
             (hydra . "gnu")
             (smart-mode-line . "melpa-stable")
+            (which-key . "melpa-stable")
             )))
 
   (package-initialize))
@@ -143,6 +144,7 @@
     smart-mode-line
     visual-regexp
     visual-regexp-steroids
+    which-key
     yaml-mode
     yas-jit))
 
@@ -385,6 +387,14 @@
       (global-set-key (kbd "C-c l") 'hydra-launcher/body)
       (global-set-key (kbd "M-,") 'hydra-launcher/body))
   (message "** hydra is not installed"))
+
+(use-package which-key
+  :ensure t
+  :pin melpa-stable  ;; this has no effect but I'll leave it here
+                     ;; until the apparent bug in use-package is fixed
+                     ;; (in the meantime, the repo is pinned using
+                     ;; package-pinned-packages)
+  :config (which-key-mode))
 
 (global-set-key (kbd "<f6>") 'linum-mode)
 (global-set-key (kbd "<f7>") 'visual-line-mode)
