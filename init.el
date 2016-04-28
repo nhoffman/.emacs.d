@@ -367,6 +367,7 @@
       (defhydra hydra-launcher (:color teal :columns 4 :post (redraw-display))
         "hydra-launcher"
         ("C-g" redraw-display "<quit>")
+        ("b" copy-buffer-file-name "copy-buffer-file-name")
         ("d" insert-date "insert-date")
         ("D" describe-minor-mode "describe-minor-mode")
         ("e" save-buffers-kill-emacs "save-buffers-kill-emacs")
@@ -1016,9 +1017,14 @@ This is used to set `sql-alternate-buffer-name' within
   (message "** hydra is not installed"))
 
 (defun copy-buffer-file-name ()
-  "Add `buffer-file-name' to `kill-ring'"
+  "Add `buffer-file-name' to `kill-ring' and echo the value to
+the minibuffer"
   (interactive)
-  (kill-new buffer-file-name t))
+  (if buffer-file-name
+      (progn
+      (kill-new buffer-file-name t)
+      (message buffer-file-name))
+    (message "no file associated with this buffer")))
 (make-alias 'copy-buffer-file-name)
 
 (defun copy-and-comment ()
