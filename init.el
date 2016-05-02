@@ -860,6 +860,7 @@ project; otherwise activate the virtualenv defined in
       (defhydra hydra-python (:color blue :columns 4 :post (redraw-display))
         "hydra-python"
         ("RET" redraw-display "<quit>")
+        ("g" elpy-goto-definition-other-window "elpy-goto-definition-other-window")
         ("E" elpy-config "elpy-config")
         ("r" elpy-install-requirements "elpy-install-requirements")
         ("v" activate-venv-current-project "activate-venv-current-project")
