@@ -1784,6 +1784,17 @@ I should really start using a snippet package, but for now:
 	  )
 #+END_SRC
 
+* moinmoin-mode
+
+A mode for editing moinmoin wiki text. This mode is installed via
+elpa, but must be initialized.
+
+#+BEGIN_SRC elisp
+(condition-case nil
+    (require 'moinmoin-mode)
+  (error (message "** could not load moinmoin-mode")))
+#+END_SRC
+
 * tramp
 
 - http://www.gnu.org/software/tramp/

@@ -896,6 +896,10 @@ project; otherwise activate the virtualenv defined in
           )
 
 (condition-case nil
+    (require 'moinmoin-mode)
+  (error (message "** could not load moinmoin-mode")))
+
+(condition-case nil
     (require 'tramp)
   (setq tramp-default-method "scp")
   (error (message "** could not load tramp")))
