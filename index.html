@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>init.el for Noah Hoffman</title>
-<!-- 2016-04-21 Thu 09:48 -->
+<!-- 2016-06-04 Sat 10:50 -->
 <meta  charset="utf-8">
 <meta  name="generator" content="Org-mode">
 <meta  name="author" content="Noah Hoffman">
@@ -88,14 +88,14 @@
 </style>
 <style type="text/css">
 HTTP/1.1 200 OK
-Date: Thu, 21 Apr 2016 16:48:46 GMT
+Date: Sat, 04 Jun 2016 15:50:46 GMT
 Content-Type: text/css
 Transfer-Encoding: chunked
 Connection: keep-alive
 Last-Modified: Thu, 13 Feb 2014 17:33:55 GMT
 ETag: W/"8a7442ca6bedd62cec4881040b9a9e83"
 Server: NetDNA-cache/2.2
-Expires: Sun, 16 Apr 2017 16:48:46 GMT
+Expires: Tue, 30 May 2017 15:50:46 GMT
 Cache-Control: max-age=31104000
 Vary: Accept-Encoding
 Access-Control-Allow-Origin: *
@@ -212,20 +212,21 @@ starting more or less from scratch.
 <li><a href="#sec-31">31. scons</a></li>
 <li><a href="#sec-32">32. text-mode</a></li>
 <li><a href="#sec-33">33. rst-mode</a></li>
-<li><a href="#sec-34">34. tramp</a></li>
-<li><a href="#sec-35">35. git/magit</a></li>
-<li><a href="#sec-36">36. sql support</a></li>
-<li><a href="#sec-37">37. gpg</a></li>
-<li><a href="#sec-38">38. Outline minor mode</a></li>
-<li><a href="#sec-39">39. Search and replace</a></li>
-<li><a href="#sec-40">40. Misc utilities</a></li>
-<li><a href="#sec-41">41. elisp-format</a></li>
-<li><a href="#sec-42">42. emacsclient</a></li>
-<li><a href="#sec-43">43. lockstep</a></li>
-<li><a href="#sec-44">44. discover.el</a></li>
-<li><a href="#sec-45">45. enable "advanced" commands</a></li>
-<li><a href="#sec-46">46. custom-set-variables</a></li>
-<li><a href="#sec-47">47. License</a></li>
+<li><a href="#sec-34">34. moinmoin-mode</a></li>
+<li><a href="#sec-35">35. tramp</a></li>
+<li><a href="#sec-36">36. git/magit</a></li>
+<li><a href="#sec-37">37. sql support</a></li>
+<li><a href="#sec-38">38. gpg</a></li>
+<li><a href="#sec-39">39. Outline minor mode</a></li>
+<li><a href="#sec-40">40. Search and replace</a></li>
+<li><a href="#sec-41">41. Misc utilities</a></li>
+<li><a href="#sec-42">42. elisp-format</a></li>
+<li><a href="#sec-43">43. emacsclient</a></li>
+<li><a href="#sec-44">44. lockstep</a></li>
+<li><a href="#sec-45">45. discover.el</a></li>
+<li><a href="#sec-46">46. enable "advanced" commands</a></li>
+<li><a href="#sec-47">47. custom-set-variables</a></li>
+<li><a href="#sec-48">48. License</a></li>
 </ul>
 </div>
 </div>
@@ -845,7 +846,7 @@ Add some extra package repositories. The default value of package-archives is
           (<span style="color: #dd1144;">"gnu"</span> . <span style="color: #dd1144;">"http://elpa.gnu.org/packages/"</span>)
           (<span style="color: #dd1144;">"melpa"</span> . <span style="color: #dd1144;">"http://melpa.org/packages/"</span>)
           (<span style="color: #dd1144;">"melpa-stable"</span> . <span style="color: #dd1144;">"http://stable.melpa.org/packages/"</span>)
-          (<span style="color: #dd1144;">"marmalade"</span> . <span style="color: #dd1144;">"http://marmalade-repo.org/packages/"</span>)
+          <span style="color: #999988; font-style: italic;">;; </span><span style="color: #999988; font-style: italic;">("marmalade" . "http://marmalade-repo.org/packages/")</span>
           (<span style="color: #dd1144;">"org"</span> . <span style="color: #dd1144;">"http://orgmode.org/elpa/"</span>)
           (<span style="color: #dd1144;">"elpy"</span> . <span style="color: #dd1144;">"http://jorgenschaefer.github.io/packages/"</span>)
           ))
@@ -1574,6 +1575,7 @@ combinations.
       (defhydra hydra-launcher (:color teal :columns 4 :post (redraw-display))
         <span style="color: #dd1144;">"hydra-launcher"</span>
         (<span style="color: #dd1144;">"C-g"</span> redraw-display <span style="color: #dd1144;">"&lt;quit&gt;"</span>)
+        (<span style="color: #dd1144;">"b"</span> copy-buffer-file-name <span style="color: #dd1144;">"copy-buffer-file-name"</span>)
         (<span style="color: #dd1144;">"d"</span> insert-date <span style="color: #dd1144;">"insert-date"</span>)
         (<span style="color: #dd1144;">"D"</span> describe-minor-mode <span style="color: #dd1144;">"describe-minor-mode"</span>)
         (<span style="color: #dd1144;">"e"</span> save-buffers-kill-emacs <span style="color: #dd1144;">"save-buffers-kill-emacs"</span>)
@@ -2882,6 +2884,7 @@ it to the output of autopep8.
       (defhydra hydra-python (:color blue :columns 4 :post (redraw-display))
         <span style="color: #dd1144;">"hydra-python"</span>
         (<span style="color: #dd1144;">"RET"</span> redraw-display <span style="color: #dd1144;">"&lt;quit&gt;"</span>)
+        (<span style="color: #dd1144;">"g"</span> elpy-goto-definition-other-window <span style="color: #dd1144;">"elpy-goto-definition-other-window"</span>)
         (<span style="color: #dd1144;">"E"</span> elpy-config <span style="color: #dd1144;">"elpy-config"</span>)
         (<span style="color: #dd1144;">"r"</span> elpy-install-requirements <span style="color: #dd1144;">"elpy-install-requirements"</span>)
         (<span style="color: #dd1144;">"v"</span> activate-venv-current-project <span style="color: #dd1144;">"activate-venv-current-project"</span>)
@@ -2966,8 +2969,26 @@ I should really start using a snippet package, but for now:
 </div>
 
 <div id="outline-container-sec-34" class="outline-2">
-<h2 id="sec-34"><span class="section-number-2">34</span> tramp</h2>
+<h2 id="sec-34"><span class="section-number-2">34</span> moinmoin-mode</h2>
 <div class="outline-text-2" id="text-34">
+<p>
+A mode for editing moinmoin wiki text. This mode is installed via
+elpa, but must be initialized.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-elisp">(<span style="font-weight: bold;">condition-case</span> nil
+    (<span style="font-weight: bold;">require</span> '<span style="color: #990073;">moinmoin-mode</span>)
+  (<span style="font-weight: bold;">error</span> (message <span style="color: #dd1144;">"** could not load moinmoin-mode"</span>)))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-35" class="outline-2">
+<h2 id="sec-35"><span class="section-number-2">35</span> tramp</h2>
+<div class="outline-text-2" id="text-35">
 <ul class="org-ul">
 <li><a href="http://www.gnu.org/software/tramp/">http://www.gnu.org/software/tramp/</a>
 </li>
@@ -2984,9 +3005,9 @@ I should really start using a snippet package, but for now:
 </div>
 </div>
 
-<div id="outline-container-sec-35" class="outline-2">
-<h2 id="sec-35"><span class="section-number-2">35</span> git/magit</h2>
-<div class="outline-text-2" id="text-35">
+<div id="outline-container-sec-36" class="outline-2">
+<h2 id="sec-36"><span class="section-number-2">36</span> git/magit</h2>
+<div class="outline-text-2" id="text-36">
 <div class="org-src-container">
 
 <pre class="src src-elisp">(<span style="font-weight: bold;">require</span> '<span style="color: #990073;">vc-git</span>)
@@ -3005,9 +3026,9 @@ Magit is installed via ELPA.
 </div>
 </div>
 
-<div id="outline-container-sec-36" class="outline-2">
-<h2 id="sec-36"><span class="section-number-2">36</span> sql support</h2>
-<div class="outline-text-2" id="text-36">
+<div id="outline-container-sec-37" class="outline-2">
+<h2 id="sec-37"><span class="section-number-2">37</span> sql support</h2>
+<div class="outline-text-2" id="text-37">
 <ul class="org-ul">
 <li>see <a href="http://atomized.org/2008/10/enhancing-emacs%E2%80%99-sql-mode/">http://atomized.org/2008/10/enhancing-emacs%E2%80%99-sql-mode/</a>
 </li>
@@ -3070,9 +3091,9 @@ Preset connections
 </div>
 </div>
 
-<div id="outline-container-sec-37" class="outline-2">
-<h2 id="sec-37"><span class="section-number-2">37</span> gpg</h2>
-<div class="outline-text-2" id="text-37">
+<div id="outline-container-sec-38" class="outline-2">
+<h2 id="sec-38"><span class="section-number-2">38</span> gpg</h2>
+<div class="outline-text-2" id="text-38">
 <ul class="org-ul">
 <li><a href="http://www.emacswiki.org/emacs/EasyPG">http://www.emacswiki.org/emacs/EasyPG</a>
 </li>
@@ -3086,9 +3107,9 @@ Preset connections
 </div>
 </div>
 </div>
-<div id="outline-container-sec-38" class="outline-2">
-<h2 id="sec-38"><span class="section-number-2">38</span> Outline minor mode</h2>
-<div class="outline-text-2" id="text-38">
+<div id="outline-container-sec-39" class="outline-2">
+<h2 id="sec-39"><span class="section-number-2">39</span> Outline minor mode</h2>
+<div class="outline-text-2" id="text-39">
 <p>
 The default key bindings for outline-minor-mode start with 'C-c @ C-',
 which is&#x2026; awkward. Use alternative bindings courtesy of Sue D. Nymme
@@ -3125,18 +3146,18 @@ via emacswiki (<a href="http://emacswiki.org/emacs/OutlineMinorMode">http://emac
 </div>
 </div>
 
-<div id="outline-container-sec-39" class="outline-2">
-<h2 id="sec-39"><span class="section-number-2">39</span> Search and replace</h2>
-<div class="outline-text-2" id="text-39">
+<div id="outline-container-sec-40" class="outline-2">
+<h2 id="sec-40"><span class="section-number-2">40</span> Search and replace</h2>
+<div class="outline-text-2" id="text-40">
 <p>
 Here are a few packages that make search and replace more fun. I'll
 define a keymap using a hydra in the final section below.
 </p>
 </div>
 
-<div id="outline-container-sec-39-1" class="outline-3">
-<h3 id="sec-39-1"><span class="section-number-3">39.1</span> occur-dwim</h3>
-<div class="outline-text-3" id="text-39-1">
+<div id="outline-container-sec-40-1" class="outline-3">
+<h3 id="sec-40-1"><span class="section-number-3">40.1</span> occur-dwim</h3>
+<div class="outline-text-3" id="text-40-1">
 <p>
 Copied from <a href="http://oremacs.com/2015/01/26/occur-dwim/">a post</a> on "(or emacs"
 </p>
@@ -3165,9 +3186,9 @@ Note that plain-old <code>occur</code> can be executed using "M-s o" by default
 </div>
 </div>
 
-<div id="outline-container-sec-39-2" class="outline-3">
-<h3 id="sec-39-2"><span class="section-number-3">39.2</span> visual-regexp</h3>
-<div class="outline-text-3" id="text-39-2">
+<div id="outline-container-sec-40-2" class="outline-3">
+<h3 id="sec-40-2"><span class="section-number-3">40.2</span> visual-regexp</h3>
+<div class="outline-text-3" id="text-40-2">
 <p>
 Two packages by the same author add visual cues to searching and/or
 replacing with regular expressions:
@@ -3193,9 +3214,9 @@ Installed using ELPA.
 </div>
 </div>
 
-<div id="outline-container-sec-39-3" class="outline-3">
-<h3 id="sec-39-3"><span class="section-number-3">39.3</span> helm-swoop</h3>
-<div class="outline-text-3" id="text-39-3">
+<div id="outline-container-sec-40-3" class="outline-3">
+<h3 id="sec-40-3"><span class="section-number-3">40.3</span> helm-swoop</h3>
+<div class="outline-text-3" id="text-40-3">
 <p>
 Show matches to a search string in a another window.
 </p>
@@ -3222,9 +3243,9 @@ edit the buffer from within the <code>helm-swoop</code> buffer
 </div>
 </div>
 
-<div id="outline-container-sec-39-4" class="outline-3">
-<h3 id="sec-39-4"><span class="section-number-3">39.4</span> Hydra for searching</h3>
-<div class="outline-text-3" id="text-39-4">
+<div id="outline-container-sec-40-4" class="outline-3">
+<h3 id="sec-40-4"><span class="section-number-3">40.4</span> Hydra for searching</h3>
+<div class="outline-text-3" id="text-40-4">
 <div class="org-src-container">
 
 <pre class="src src-elisp">(<span style="font-weight: bold;">if</span> (<span style="font-weight: bold;">require</span> '<span style="color: #990073;">hydra</span> nil 'noerror)
@@ -3247,9 +3268,9 @@ edit the buffer from within the <code>helm-swoop</code> buffer
 </div>
 </div>
 
-<div id="outline-container-sec-39-5" class="outline-3">
-<h3 id="sec-39-5"><span class="section-number-3">39.5</span> Hydra for string replacement</h3>
-<div class="outline-text-3" id="text-39-5">
+<div id="outline-container-sec-40-5" class="outline-3">
+<h3 id="sec-40-5"><span class="section-number-3">40.5</span> Hydra for string replacement</h3>
+<div class="outline-text-3" id="text-40-5">
 <div class="org-src-container">
 
 <pre class="src src-elisp">(<span style="font-weight: bold;">if</span> (<span style="font-weight: bold;">require</span> '<span style="color: #990073;">hydra</span> nil 'noerror)
@@ -3268,27 +3289,32 @@ edit the buffer from within the <code>helm-swoop</code> buffer
 </div>
 </div>
 
-<div id="outline-container-sec-40" class="outline-2">
-<h2 id="sec-40"><span class="section-number-2">40</span> Misc utilities</h2>
-<div class="outline-text-2" id="text-40">
-</div><div id="outline-container-sec-40-1" class="outline-3">
-<h3 id="sec-40-1"><span class="section-number-3">40.1</span> copy-buffer-file-name</h3>
-<div class="outline-text-3" id="text-40-1">
+<div id="outline-container-sec-41" class="outline-2">
+<h2 id="sec-41"><span class="section-number-2">41</span> Misc utilities</h2>
+<div class="outline-text-2" id="text-41">
+</div><div id="outline-container-sec-41-1" class="outline-3">
+<h3 id="sec-41-1"><span class="section-number-3">41.1</span> copy-buffer-file-name</h3>
+<div class="outline-text-3" id="text-41-1">
 <div class="org-src-container">
 
 <pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="color: #990000;">copy-buffer-file-name</span> ()
-  <span style="color: #dd1144;">"Add `</span><span style="color: #990073;">buffer-file-name</span><span style="color: #dd1144;">' to `</span><span style="color: #990073;">kill-ring</span><span style="color: #dd1144;">'"</span>
+  <span style="color: #dd1144;">"Add `</span><span style="color: #990073;">buffer-file-name</span><span style="color: #dd1144;">' to `</span><span style="color: #990073;">kill-ring</span><span style="color: #dd1144;">' and echo the value to</span>
+<span style="color: #dd1144;">the minibuffer"</span>
   (interactive)
-  (kill-new buffer-file-name t))
+  (<span style="font-weight: bold;">if</span> buffer-file-name
+      (<span style="font-weight: bold;">progn</span>
+      (kill-new buffer-file-name t)
+      (message buffer-file-name))
+    (message <span style="color: #dd1144;">"no file associated with this buffer"</span>)))
 (make-alias 'copy-buffer-file-name)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-40-2" class="outline-3">
-<h3 id="sec-40-2"><span class="section-number-3">40.2</span> copy-and-comment</h3>
-<div class="outline-text-3" id="text-40-2">
+<div id="outline-container-sec-41-2" class="outline-3">
+<h3 id="sec-41-2"><span class="section-number-3">41.2</span> copy-and-comment</h3>
+<div class="outline-text-3" id="text-41-2">
 <div class="org-src-container">
 
 <pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="color: #990000;">copy-and-comment</span> ()
@@ -3312,9 +3338,9 @@ edit the buffer from within the <code>helm-swoop</code> buffer
 </div>
 </div>
 
-<div id="outline-container-sec-40-3" class="outline-3">
-<h3 id="sec-40-3"><span class="section-number-3">40.3</span> unfill-paragraph</h3>
-<div class="outline-text-3" id="text-40-3">
+<div id="outline-container-sec-41-3" class="outline-3">
+<h3 id="sec-41-3"><span class="section-number-3">41.3</span> unfill-paragraph</h3>
+<div class="outline-text-3" id="text-41-3">
 <p>
 from <a href="http://defindit.com/readme_files/emacs_hints_tricks.html">http://defindit.com/readme_files/emacs_hints_tricks.html</a>
 </p>
@@ -3332,9 +3358,9 @@ from <a href="http://defindit.com/readme_files/emacs_hints_tricks.html">http://d
 </div>
 </div>
 
-<div id="outline-container-sec-40-4" class="outline-3">
-<h3 id="sec-40-4"><span class="section-number-3">40.4</span> Copy region to other window</h3>
-<div class="outline-text-3" id="text-40-4">
+<div id="outline-container-sec-41-4" class="outline-3">
+<h3 id="sec-41-4"><span class="section-number-3">41.4</span> Copy region to other window</h3>
+<div class="outline-text-3" id="text-41-4">
 <p>
 Adapted from <a href="http://emacs.stackexchange.com/questions/3743/how-to-move-region-to-other-window">http://emacs.stackexchange.com/questions/3743/how-to-move-region-to-other-window</a>
 </p>
@@ -3361,9 +3387,9 @@ Adapted from <a href="http://emacs.stackexchange.com/questions/3743/how-to-move-
 </div>
 </div>
 
-<div id="outline-container-sec-41" class="outline-2">
-<h2 id="sec-41"><span class="section-number-2">41</span> elisp-format</h2>
-<div class="outline-text-2" id="text-41">
+<div id="outline-container-sec-42" class="outline-2">
+<h2 id="sec-42"><span class="section-number-2">42</span> elisp-format</h2>
+<div class="outline-text-2" id="text-42">
 <p>
 Written by Andy Stewart and available on emacswiki: <a href="http://www.emacswiki.org/emacs/elisp-format.el">http://www.emacswiki.org/emacs/elisp-format.el</a>
 </p>
@@ -3378,9 +3404,9 @@ Written by Andy Stewart and available on emacswiki: <a href="http://www.emacswik
 </div>
 </div>
 
-<div id="outline-container-sec-42" class="outline-2">
-<h2 id="sec-42"><span class="section-number-2">42</span> emacsclient</h2>
-<div class="outline-text-2" id="text-42">
+<div id="outline-container-sec-43" class="outline-2">
+<h2 id="sec-43"><span class="section-number-2">43</span> emacsclient</h2>
+<div class="outline-text-2" id="text-43">
 <p>
 Buffers opened from command line don't create new frame
 </p>
@@ -3393,9 +3419,9 @@ Buffers opened from command line don't create new frame
 </div>
 </div>
 
-<div id="outline-container-sec-43" class="outline-2">
-<h2 id="sec-43"><span class="section-number-2">43</span> lockstep</h2>
-<div class="outline-text-2" id="text-43">
+<div id="outline-container-sec-44" class="outline-2">
+<h2 id="sec-44"><span class="section-number-2">44</span> lockstep</h2>
+<div class="outline-text-2" id="text-44">
 <p>
 Lockstep is a package for pair programming in Emacs. See <a href="https://github.com/tjim/lockstep">https://github.com/tjim/lockstep</a>
 </p>
@@ -3426,9 +3452,9 @@ After this, a second user can do the same.
 </div>
 </div>
 
-<div id="outline-container-sec-44" class="outline-2">
-<h2 id="sec-44"><span class="section-number-2">44</span> discover.el</h2>
-<div class="outline-text-2" id="text-44">
+<div id="outline-container-sec-45" class="outline-2">
+<h2 id="sec-45"><span class="section-number-2">45</span> discover.el</h2>
+<div class="outline-text-2" id="text-45">
 <p>
 Introduced in <a href="https://www.masteringemacs.org/article/discoverel-discover-emacs-context-menus">this blog post</a> by Mickey Petersen, <code>discover.el</code>
 provides Magit-style contextual menus for <code>dired</code> (activate using
@@ -3448,9 +3474,9 @@ fact discover something every time I use it!
 </div>
 </div>
 
-<div id="outline-container-sec-45" class="outline-2">
-<h2 id="sec-45"><span class="section-number-2">45</span> enable "advanced" commands</h2>
-<div class="outline-text-2" id="text-45">
+<div id="outline-container-sec-46" class="outline-2">
+<h2 id="sec-46"><span class="section-number-2">46</span> enable "advanced" commands</h2>
+<div class="outline-text-2" id="text-46">
 <p>
 Not sure why these are disabled by default.
 </p>
@@ -3465,9 +3491,9 @@ Not sure why these are disabled by default.
 </div>
 </div>
 
-<div id="outline-container-sec-46" class="outline-2">
-<h2 id="sec-46"><span class="section-number-2">46</span> custom-set-variables</h2>
-<div class="outline-text-2" id="text-46">
+<div id="outline-container-sec-47" class="outline-2">
+<h2 id="sec-47"><span class="section-number-2">47</span> custom-set-variables</h2>
+<div class="outline-text-2" id="text-47">
 <p>
 Emacs modifies this statement if you use the interactive "customize"
 function, so don't do that.
@@ -3482,9 +3508,9 @@ function, so don't do that.
 </div>
 </div>
 
-<div id="outline-container-sec-47" class="outline-2">
-<h2 id="sec-47"><span class="section-number-2">47</span> License</h2>
-<div class="outline-text-2" id="text-47">
+<div id="outline-container-sec-48" class="outline-2">
+<h2 id="sec-48"><span class="section-number-2">48</span> License</h2>
+<div class="outline-text-2" id="text-48">
 <div class="org-src-container">
 
 <pre class="src src-elisp"><span style="color: #999988; font-style: italic;">;; </span><span style="color: #999988; font-style: italic;">This program is free software: you can redistribute it and/or modify</span>
@@ -3506,7 +3532,7 @@ function, so don't do that.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Noah Hoffman</p>
-<p class="date">Created: 2016-04-21 Thu 09:48</p>
+<p class="date">Created: 2016-06-04 Sat 10:50</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
