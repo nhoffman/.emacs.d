@@ -57,7 +57,7 @@
           ("gnu" . "http://elpa.gnu.org/packages/")
           ("melpa" . "http://melpa.org/packages/")
           ("melpa-stable" . "http://stable.melpa.org/packages/")
-          ;; ("marmalade" . "http://marmalade-repo.org/packages/")
+          ("marmalade" . "http://marmalade-repo.org/packages/")
           ("org" . "http://orgmode.org/elpa/")
           ("elpy" . "http://jorgenschaefer.github.io/packages/")
           ))
