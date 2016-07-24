@@ -9,7 +9,7 @@
 #+PROPERTY: header-args:sh :eval no :exports code
 
 In a fit of literate programming yak-shaving, I implemented my Emacs
-configuration as an org-mode file. I have also tried to a provide
+configuration as an org-mode file. I have also tried to provide a
 complete-ish description of my environment for anyone interested in
 starting more or less from scratch.
 
