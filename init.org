@@ -377,6 +377,7 @@ Add some extra package repositories. The default value of package-archives is
             (helm-swoop . "melpa-stable")
             (hydra . "gnu")
             (smart-mode-line . "melpa-stable")
+            (swiper . "melpa-stable")
             (which-key . "melpa-stable")
             )))
 
@@ -473,6 +474,7 @@ emacs was first started.
     projectile
     rainbow-delimiters
     smart-mode-line
+    swiper
     visual-regexp
     visual-regexp-steroids
     which-key
@@ -829,6 +831,16 @@ Distinguish buffer names for identically-named files.
 #+BEGIN_SRC elisp
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
+#+END_SRC
+
+** swiper
+
+Swiper is an isearch replacement.
+
+#+BEGIN_SRC elisp
+(use-package swiper
+             :ensure t
+             :bind (("C-s" . swiper)))
 #+END_SRC
 
 * Marking, cursor movement and appearance

@@ -73,6 +73,7 @@
             (helm-swoop . "melpa-stable")
             (hydra . "gnu")
             (smart-mode-line . "melpa-stable")
+            (swiper . "melpa-stable")
             (which-key . "melpa-stable")
             )))
 
@@ -142,6 +143,7 @@
     projectile
     rainbow-delimiters
     smart-mode-line
+    swiper
     visual-regexp
     visual-regexp-steroids
     which-key
@@ -349,6 +351,10 @@
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
+
+(use-package swiper
+             :ensure t
+             :bind (("C-s" . swiper)))
 
 (use-package avy
              :ensure t
