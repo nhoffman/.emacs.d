@@ -867,13 +867,38 @@ keep pressing the key until it selects what you want.
 
 Installed using ELPA.
 
+Expand-region doesn't do what I want inside a quoted string (which is
+to mark the region within the quotes), so here's a function to do
+so. It's pretty naive, and doesn't enforce that the quote characters
+are matching.
+
+#+BEGIN_SRC elisp
+(defun my/mark-inside-quotes ()
+  "Mark string between two quote charactes (double, single, or grave accent)"
+  (interactive)
+  (unless (re-search-forward "[\"'`]" nil t)
+    (error "No quote character after the cursor"))
+  (backward-char 1)
+  (set-mark (point))
+  (unless (re-search-backward "[\"'`]" nil t)
+    (error "No matching quote character before the cursor"))
+  (forward-char 1)
+  (exchange-point-and-mark))
+
+(defun my/mark-first-quoted-string ()
+  (interactive)
+  (re-search-forward "[\"'`]" nil t)
+  (my/mark-inside-quotes))
+#+END_SRC
+
 #+BEGIN_SRC elisp
 (if (require 'hydra nil 'noerror)
-    (progn
-      (defhydra hydra-expand-region (global-map "M-=")
-        "hydra-expand-region"
-        ("=" er/expand-region "er/expand-region")
-        ("-" er/contract-region "er/contract-region")))
+    (defhydra hydra-expand-region (global-map "M-=")
+      "hydra-expand-region"
+      ("=" er/expand-region "er/expand-region")
+      ("-" er/contract-region "er/contract-region")
+      ("q" my/mark-inside-quotes "my/mark-inside-quotes" :color blue)
+      ("Q" my/mark-first-quoted-string "my/mark-first-quoted-string" :color blue))
   (message "** hydra is not installed"))
 #+END_SRC
 

@@ -360,12 +360,30 @@
              :ensure t
              :bind (("M-'" . avy-goto-word-1)))
 
+(defun my/mark-inside-quotes ()
+  "Mark string between two quote charactes (double, single, or grave accent)"
+  (interactive)
+  (unless (re-search-forward "[\"'`]" nil t)
+    (error "No quote character after the cursor"))
+  (backward-char 1)
+  (set-mark (point))
+  (unless (re-search-backward "[\"'`]" nil t)
+    (error "No matching quote character before the cursor"))
+  (forward-char 1)
+  (exchange-point-and-mark))
+
+(defun my/mark-first-quoted-string ()
+  (interactive)
+  (re-search-forward "[\"'`]" nil t)
+  (my/mark-inside-quotes))
+
 (if (require 'hydra nil 'noerror)
-    (progn
-      (defhydra hydra-expand-region (global-map "M-=")
-        "hydra-expand-region"
-        ("=" er/expand-region "er/expand-region")
-        ("-" er/contract-region "er/contract-region")))
+    (defhydra hydra-expand-region (global-map "M-=")
+      "hydra-expand-region"
+      ("=" er/expand-region "er/expand-region")
+      ("-" er/contract-region "er/contract-region")
+      ("q" my/mark-inside-quotes "my/mark-inside-quotes" :color blue)
+      ("Q" my/mark-first-quoted-string "my/mark-first-quoted-string" :color blue))
   (message "** hydra is not installed"))
 
 (if (require 'hydra nil 'noerror)
