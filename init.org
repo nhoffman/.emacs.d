@@ -1520,8 +1520,9 @@ Prevent Markdown mode from redefining some keybindings.
 
 #+BEGIN_SRC elisp
 (eval-after-load "markdown-mode"
-  '(define-key markdown-mode-map (kbd "M-<right>") nil)
-  '(define-key markdown-mode-map (kbd "M-<left>") nil))
+  '(progn
+     (define-key markdown-mode-map (kbd "M-<right>") nil)
+     (define-key markdown-mode-map (kbd "M-<left>") nil)))
 #+END_SRC
 
 * chrome "edit with emacs"

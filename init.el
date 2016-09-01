@@ -731,8 +731,9 @@ Assumes that the frame is only split into two."
 (push '("\\.md" . markdown-mode) auto-mode-alist)
 
 (eval-after-load "markdown-mode"
-  '(define-key markdown-mode-map (kbd "M-<right>") nil)
-  '(define-key markdown-mode-map (kbd "M-<left>") nil))
+  '(progn
+     (define-key markdown-mode-map (kbd "M-<right>") nil)
+     (define-key markdown-mode-map (kbd "M-<left>") nil)))
 
 (condition-case nil
     (edit-server-start)
