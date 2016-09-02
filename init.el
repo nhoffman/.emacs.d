@@ -391,6 +391,7 @@
       (defhydra hydra-launcher (:color teal :columns 4 :post (redraw-display))
         "hydra-launcher"
         ("C-g" redraw-display "<quit>")
+        ("SPC" redraw-display "<quit>")
         ("b" copy-buffer-file-name "copy-buffer-file-name")
         ("d" insert-date "insert-date")
         ("D" describe-minor-mode "describe-minor-mode")
@@ -410,7 +411,8 @@
         ("t" org-todo-list "org-todo-list"))
 
       (global-set-key (kbd "C-c l") 'hydra-launcher/body)
-      (global-set-key (kbd "M-,") 'hydra-launcher/body))
+      (global-set-key (kbd "M-,") 'hydra-launcher/body)
+      (global-set-key (kbd "C-M-SPC") 'hydra-launcher/body))
   (message "** hydra is not installed"))
 
 (use-package which-key
