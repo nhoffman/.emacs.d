@@ -914,7 +914,7 @@ combinations.
       (defhydra hydra-launcher (:color teal :columns 4 :post (redraw-display))
         "hydra-launcher"
         ("C-g" redraw-display "<quit>")
-        ("SPC" redraw-display "<quit>")
+        ("RET" redraw-display "<quit>")
         ("b" copy-buffer-file-name "copy-buffer-file-name")
         ("d" insert-date "insert-date")
         ("D" describe-minor-mode "describe-minor-mode")
@@ -929,13 +929,9 @@ combinations.
         ("o" copy-region-or-line-other-window "copy-region-or-line-other-window")
         ("p" hydra-python/body "python menu")
         ("P" list-processes "list-processes")
-        ("r" redraw-display "redraw-display")
         ("s" ssh-refresh "ssh-refresh")
         ("t" org-todo-list "org-todo-list"))
-
-      (global-set-key (kbd "C-c l") 'hydra-launcher/body)
-      (global-set-key (kbd "M-,") 'hydra-launcher/body)
-      (global-set-key (kbd "C-M-SPC") 'hydra-launcher/body))
+      (global-set-key (kbd "C-\\") 'hydra-launcher/body))
   (message "** hydra is not installed"))
 #+END_SRC
 * which-key
