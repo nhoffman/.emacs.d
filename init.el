@@ -701,8 +701,10 @@ Assumes that the frame is only split into two."
 
 (if (require 'hydra nil 'noerror)
     (progn
-      (defhydra hydra-org-navigation (:exit nil :foreign-keys warn)
+      (defhydra hydra-org-navigation
+        (:exit nil :foreign-keys warn :columns 4 :post (redraw-display))
         "hydra-org-navigation"
+        ("RET" nil "<quit>")
         ("i" org-previous-item "org-previous-item")
         ("k" org-next-item "org-next-item")
         ("<right>" org-next-block "org-next-block")
@@ -1023,7 +1025,7 @@ This is used to set `sql-alternate-buffer-name' within
 
 (if (require 'hydra nil 'noerror)
     (progn
-      (defhydra hydra-search (:color blue)
+      (defhydra hydra-search (:color blue :columns 4)
         "hydra-search"
         ("RET" helm-swoop "helm-swoop")
         ("b" helm-swoop-back-to-last-point "helm-swoop-back-to-last-point")
