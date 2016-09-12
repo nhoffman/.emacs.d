@@ -149,6 +149,7 @@
     visual-regexp-steroids
     which-key
     yaml-mode
+    yasnippet
     yas-jit))
 
 (defun install-packages ()
@@ -643,6 +644,16 @@ Assumes that the frame is only split into two."
              (if (equal "pico." (substring (buffer-name (current-buffer)) 0 5))
                  ;; (message "** running hook for pine/alpine")
                  (mail-mode))))
+
+(use-package yasnippet
+  :init
+  (progn
+    (add-hook 'after-save-hook
+              (lambda ()
+                (when (eql major-mode 'snippet-mode)
+                  (yas-reload-all))))
+    (yas-global-mode 1))
+  :mode ("\\.yasnippet" . snippet-mode))
 
 (condition-case nil
     (require 'ess-site)

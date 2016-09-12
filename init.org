@@ -480,6 +480,7 @@ emacs was first started.
     visual-regexp-steroids
     which-key
     yaml-mode
+    yasnippet
     yas-jit))
 
 (defun install-packages ()
@@ -1384,6 +1385,23 @@ http://snarfed.org/space/emacs%20font-lock%20faces%20for%20composing%20email
                (if (equal "pico." (substring (buffer-name (current-buffer)) 0 5))
                    ;; (message "** running hook for pine/alpine")
                    (mail-mode))))
+#+END_SRC
+
+* yasnippet
+
+Use yasnippet. The =after-save-hook= causes all snippets to be
+reloaded after saving a snippet file.
+
+#+BEGIN_SRC elisp
+(use-package yasnippet
+  :init
+  (progn
+    (add-hook 'after-save-hook
+              (lambda ()
+                (when (eql major-mode 'snippet-mode)
+                  (yas-reload-all))))
+    (yas-global-mode 1))
+  :mode ("\\.yasnippet" . snippet-mode))
 #+END_SRC
 
 * LaTeX
