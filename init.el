@@ -699,6 +699,7 @@ Assumes that the frame is only split into two."
              (R-cmd
               (format
                "library(rmarkdown); rmarkdown::render(\"%s\")" buffer-file-name)))
+        (save-buffer)
         (message "Running rmarkdown on %s" buffer-file-name)
         (ess-execute R-cmd 'buffer nil nil)
         (switch-to-buffer rmd-buf)
