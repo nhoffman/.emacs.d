@@ -1,5 +1,5 @@
-(unless (= emacs-major-version 24)
-  (error "Emacs version 24 is required"))
+(unless (>= emacs-major-version 24)
+  (error "Emacs version 24 or higher is required"))
 
 (menu-bar-mode -1)   ;; hide menu bar
 (tool-bar-mode -1)   ;; hide tool bar

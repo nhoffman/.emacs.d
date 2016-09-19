@@ -39,7 +39,7 @@
 (make-alias 'init-tangle-and-load)
 
 (unless (>= emacs-major-version 24)
-  (error "Emacs version 24 is required"))
+  (error "Emacs version 24 or higher is required"))
 
 (message "loading ~/.emacs.d/init.el")
 

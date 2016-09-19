@@ -303,7 +303,7 @@ This will only work with emacs >= 24.x
 
 #+BEGIN_SRC elisp
 (unless (>= emacs-major-version 24)
-  (error "Emacs version 24 is required"))
+  (error "Emacs version 24 or higher is required"))
 #+END_SRC
 
 #+BEGIN_SRC elisp
