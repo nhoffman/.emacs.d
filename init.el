@@ -38,7 +38,7 @@
   (switch-to-buffer "*Messages*"))
 (make-alias 'init-tangle-and-load)
 
-(unless (= emacs-major-version 24)
+(unless (>= emacs-major-version 24)
   (error "Emacs version 24 is required"))
 
 (message "loading ~/.emacs.d/init.el")
@@ -78,6 +78,15 @@
             )))
 
   (package-initialize))
+
+(setq package-archive-priorities
+      '(("org" . 30)
+        ("elpy" . 30)
+        ("melpa-stable" . 20)
+        ("marmalade" . 10)
+        ("gnu" . 10)
+        ("melpa" . 5)))
+(setq package-menu-hide-low-priority t)
 
 (unless (package-installed-p 'use-package)
   (if (yes-or-no-p "use-package is not installed yet - install it? ")
@@ -651,8 +660,8 @@ Assumes that the frame is only split into two."
     (add-hook 'after-save-hook
               (lambda ()
                 (when (eql major-mode 'snippet-mode)
-                  (yas-reload-all))))
-    (yas-global-mode 1))
+                  (yas-reload-all)))))
+  :commands (yas-global-mode)
   :mode ("\\.yasnippet" . snippet-mode))
 
 (condition-case nil

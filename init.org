@@ -299,10 +299,10 @@ tangle, and load it.
 
 * Startup
 
-This will only work with emacs 24.x
+This will only work with emacs >= 24.x
 
 #+BEGIN_SRC elisp
-(unless (= emacs-major-version 24)
+(unless (>= emacs-major-version 24)
   (error "Emacs version 24 is required"))
 #+END_SRC
 
@@ -382,6 +382,21 @@ Add some extra package repositories. The default value of package-archives is
             )))
 
   (package-initialize))
+#+END_SRC
+
+Starting in emacs 25.1, repositories can be assigned a priority, which
+can be used to hide packages in low priority repositories also
+represented in higher-priority repositories.
+
+#+BEGIN_SRC elisp
+(setq package-archive-priorities
+      '(("org" . 30)
+        ("elpy" . 30)
+        ("melpa-stable" . 20)
+        ("marmalade" . 10)
+        ("gnu" . 10)
+        ("melpa" . 5)))
+(setq package-menu-hide-low-priority t)
 #+END_SRC
 
 ** use-package
@@ -1399,8 +1414,8 @@ reloaded after saving a snippet file.
     (add-hook 'after-save-hook
               (lambda ()
                 (when (eql major-mode 'snippet-mode)
-                  (yas-reload-all))))
-    (yas-global-mode 1))
+                  (yas-reload-all)))))
+  :commands (yas-global-mode)
   :mode ("\\.yasnippet" . snippet-mode))
 #+END_SRC
 
