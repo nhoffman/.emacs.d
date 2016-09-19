@@ -1173,7 +1173,7 @@ server process.
            (set-keyboard-coding-system 'mac-roman)
            (setq mac-option-modifier 'meta)
            (setq mac-command-key-is-meta nil)
-           (set-default-font-verbosely "Bitstream Vera Sans Mono-14")))
+           (set-default-font-verbosely "Menlo-14")))
         ((string= "x" window-system)
          (progn
            (message (format "** running %s windowing system" window-system))
