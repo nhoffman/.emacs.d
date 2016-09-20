@@ -880,7 +880,7 @@ project; otherwise activate the virtualenv defined in
   (unless pyvenv-virtual-env
     (error "Error: no virtualenv is active"))
   (let ((dest "*elpy-install-requirements-output*")
-        (install-cmd (format "%s/bin/pip install --force '%%s'" pyvenv-virtual-env))
+        (install-cmd (format "%s/bin/pip install -U --force '%%s'" pyvenv-virtual-env))
         (deps '("elpy" "jedi" "pyflakes" "pep8" "flake8" "importmagic" "yapf")))
     (generate-new-buffer dest)
     (mapcar
