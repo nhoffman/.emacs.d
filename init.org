@@ -635,7 +635,7 @@ remember. Activate via =hydra-launcher= using =C-l h=
         ("RET" redraw-display "<quit>")
         ("b" helm-browse-project "helm-browse-project")
         ("d" helm-descbinds "helm-descbinds")
-        ("f" helm-projectile-find-file-dwim "helm-projectile-find-file-dwim")
+        ("f" helm-projectile-find-file "helm-projectile-find-file")
         ("g" helm-projectile-grep "helm-projectile-grep")
         ("j" helm-projectile-switch-project "helm-projectile-switch-project")
         ("o" helm-occur "helm-occur")
