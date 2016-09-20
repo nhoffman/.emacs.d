@@ -376,6 +376,7 @@ Add some extra package repositories. The default value of package-archives is
             (helm-descbinds . "melpa-stable")
             (helm-swoop . "melpa-stable")
             (hydra . "gnu")
+            (markdown-mode . "melpa-stable")
             (smart-mode-line . "melpa-stable")
             (swiper . "melpa-stable")
             (which-key . "melpa-stable")
@@ -1417,6 +1418,33 @@ Hooks
 	     )
 	  )
 #+END_SRC
+* markdown-mode
+
+Installed using ELPA.
+
+Some useful key bindings to keep in mind:
+
+| S-TAB | visibility cycling for headings and content |
+
+=use-package= fails to catch errors when a package is not installed,
+so the =use-package= declaration is only evaluated when
+=markdown-mode= is actually installed.
+
+#+BEGIN_SRC elisp
+(if (require 'markdown-mode nil 'noerror)
+    (use-package markdown-mode
+      :commands (markdown-mode gfm-mode)
+      :mode (("README\\.md" . gfm-mode)
+             ("\\.md" . markdown-mode)
+             ("\\.markdown" . markdown-mode))
+      :bind (:map markdown-mode-map
+                  ;; don't redefine =M-<left>= and =M-<right>= in this mode
+                  ("M-<right>" . nil)
+                  ("M-<left>" . nil))
+      :init  (setq markdown-command "multimarkdown"))
+  (message "** markdown-mode is not installed"))
+#+END_SRC
+
 * rmarkdown and polymode
 
 Polymode is what you might expect given the name: it supports multiple
@@ -1433,7 +1461,7 @@ markdown-mode. =C-c C-c= evaluates a code chunk.
       (require 'poly-R)
       (require 'poly-markdown)
       (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
-      (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
+      ;; (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
       (define-key polymode-mode-map (kbd "M-n r") 'my/ess-render-rmarkdown))
   (error (message "** could not activate polymode")))
 #+END_SRC
@@ -1583,23 +1611,6 @@ Add a new entry to my journal.
  (kbd "C-x C-j") (lambda () (interactive)
                    (org-add-entry "~/Dropbox/journal/journal.org"
                                   "\n* %A, %B %d, %Y")))
-#+END_SRC
-
-* markdown-mode
-
-Installed using ELPA.
-
-#+BEGIN_SRC elisp
-(push '("\\.md" . markdown-mode) auto-mode-alist)
-#+END_SRC
-
-Prevent Markdown mode from redefining some keybindings.
-
-#+BEGIN_SRC elisp
-(eval-after-load "markdown-mode"
-  '(progn
-     (define-key markdown-mode-map (kbd "M-<right>") nil)
-     (define-key markdown-mode-map (kbd "M-<left>") nil)))
 #+END_SRC
 
 * chrome "edit with emacs"

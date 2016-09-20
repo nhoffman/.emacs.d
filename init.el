@@ -72,6 +72,7 @@
             (helm-descbinds . "melpa-stable")
             (helm-swoop . "melpa-stable")
             (hydra . "gnu")
+            (markdown-mode . "melpa-stable")
             (smart-mode-line . "melpa-stable")
             (swiper . "melpa-stable")
             (which-key . "melpa-stable")
@@ -661,12 +662,25 @@ Assumes that the frame is only split into two."
              )
           )
 
+(if (require 'markdown-mode nil 'noerror)
+    (use-package markdown-mode
+      :commands (markdown-mode gfm-mode)
+      :mode (("README\\.md" . gfm-mode)
+             ("\\.md" . markdown-mode)
+             ("\\.markdown" . markdown-mode))
+      :bind (:map markdown-mode-map
+                  ;; don't redefine =M-<left>= and =M-<right>= in this mode
+                  ("M-<right>" . nil)
+                  ("M-<left>" . nil))
+      :init  (setq markdown-command "multimarkdown"))
+  (message "** markdown-mode is not installed"))
+
 (condition-case nil
     (progn
       (require 'poly-R)
       (require 'poly-markdown)
       (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
-      (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
+      ;; (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
       (define-key polymode-mode-map (kbd "M-n r") 'my/ess-render-rmarkdown))
   (error (message "** could not activate polymode")))
 
@@ -778,13 +792,6 @@ Assumes that the frame is only split into two."
  (kbd "C-x C-j") (lambda () (interactive)
                    (org-add-entry "~/Dropbox/journal/journal.org"
                                   "\n* %A, %B %d, %Y")))
-
-(push '("\\.md" . markdown-mode) auto-mode-alist)
-
-(eval-after-load "markdown-mode"
-  '(progn
-     (define-key markdown-mode-map (kbd "M-<right>") nil)
-     (define-key markdown-mode-map (kbd "M-<left>") nil)))
 
 (condition-case nil
     (edit-server-start)
