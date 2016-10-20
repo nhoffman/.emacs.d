@@ -267,100 +267,6 @@
 (advice-add 'projectile-grep :before #'grep-ignore-venv-current-project)
 (advice-add 'helm-projectile-grep :before #'grep-ignore-venv-current-project)
 
-(require 'ibuffer)
-(global-set-key (kbd "C-x C-g") 'ibuffer)
-(global-set-key (kbd "C-x M-g") 'ibuffer-switch-to-saved-filter-groups)
-(setq ibuffer-show-empty-filter-groups nil)
-
-(defvar my-ibuffer-config-file "~/.emacs.d/ibuffer-config.el")
-
-(defun ibuffer-load-config ()
-  ;; load the ibuffer config file
-  (interactive)
-  (condition-case nil
-      (progn
-        (message (format "** loading ibuffer config in %s" my-ibuffer-config-file))
-        (load my-ibuffer-config-file)
-        )
-    (error (message (format "** could not load %s" my-ibuffer-config-file))))
-  )
-
-(ibuffer-load-config)
-
-(defun ibuffer-show-all-filter-groups ()
-  "Show all filter groups"
-  (interactive)
-  (setq ibuffer-hidden-filter-groups nil)
-  (ibuffer-update nil t))
-
-(defun ibuffer-hide-all-filter-groups ()
-  "Hide all filter groups"
-  (interactive)
-  (setq ibuffer-hidden-filter-groups
-        (delete-dups
-         (append ibuffer-hidden-filter-groups
-                 (mapcar 'car (ibuffer-generate-filter-groups
-                               (ibuffer-current-state-list)
-                               (not ibuffer-show-empty-filter-groups)
-                               t)))))
-  (ibuffer-update nil t))
-
-(defun ibuffer-reload ()
-  ;; kill ibuffer, reload the config file, and return to ibuffer
-  (interactive)
-  (ibuffer)
-  (kill-buffer)
-  (ibuffer-load-config)
-  (ibuffer)
-  )
-
-(defun my-ibuffer-sort-hook ()
-  ;; add another sorting method for ibuffer (allow the grouping of
-  ;; filenames and dired buffers
-  (define-ibuffer-sorter filename-or-dired
-    "Sort the buffers by their pathname."
-    (:description "filenames plus dired")
-    (string-lessp
-     (with-current-buffer (car a)
-       (or buffer-file-name
-           (if (eq major-mode 'dired-mode)
-               (expand-file-name dired-directory))
-           ;; so that all non pathnames are at the end
-           "~"))
-     (with-current-buffer (car b)
-       (or buffer-file-name
-           (if (eq major-mode 'dired-mode)
-               (expand-file-name dired-directory))
-           ;; so that all non pathnames are at the end
-           "~"))))
-  (define-key ibuffer-mode-map (kbd "s p")     'ibuffer-do-sort-by-filename-or-dired)
-  )
-
-(defun ibuffer-ediff-marked-buffers ()
-  "Compare two marked buffers using ediff"
-  (interactive)
-  (let* ((marked-buffers (ibuffer-get-marked-buffers))
-         (len (length marked-buffers)))
-    (unless (= 2 len)
-      (error (format "%s buffer%s been marked (needs to be 2)"
-                     len (if (= len 1) " has" "s have"))))
-    (ediff-buffers (car marked-buffers) (cadr marked-buffers))))
-
-(add-hook 'ibuffer-mode-hook
-          '(lambda ()
-             (ibuffer-auto-mode 1) ;; minor mode that keeps the buffer list up to date
-             (ibuffer-switch-to-saved-filter-groups "default")
-             (define-key ibuffer-mode-map (kbd "a") 'ibuffer-show-all-filter-groups)
-             (define-key ibuffer-mode-map (kbd "z") 'ibuffer-hide-all-filter-groups)
-             (define-key ibuffer-mode-map (kbd "e") 'ibuffer-ediff-marked-buffers)
-             (my-ibuffer-sort-hook)
-             ;; don't accidentally print; see http://irreal.org/blog/?p=2013
-             (defadvice ibuffer-do-print (before print-buffer-query activate)
-               (unless (y-or-n-p "Print buffer? ")
-                 (error "Cancelled")))
-             )
-          )
-
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 
@@ -1167,13 +1073,18 @@ following line."
 
 (setq ns-pop-up-frames nil)
 
-(require 'lockstep)
-
 (condition-case nil
     (progn
       (require 'discover)
       (global-discover-mode 1))
       (error (message "** could not activate discover")))
+
+(use-package dired-x
+  :config
+  (progn
+    (setq dired-omit-verbose nil)
+    (add-hook 'dired-mode-hook #'dired-omit-mode)
+    (setq dired-omit-files "^\\.?#")))
 
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
