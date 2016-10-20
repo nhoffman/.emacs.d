@@ -1072,6 +1072,13 @@ following line."
       (global-discover-mode 1))
       (error (message "** could not activate discover")))
 
+(use-package dired-x
+  :config
+  (progn
+    (setq dired-omit-verbose nil)
+    (add-hook 'dired-mode-hook #'dired-omit-mode)
+    (setq dired-omit-files "^\\.?#")))
+
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)

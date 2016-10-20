@@ -2113,6 +2113,21 @@ fact discover something every time I use it!
       (error (message "** could not activate discover")))
 #+END_SRC
 
+* dired-x
+
+Toggle =dired-omit-mode= with =C-x M-o=. Hide uninteresting files by
+default. By default, =.= and =..= are hidden in =dired-omit-mode=;
+redefine =dired-omit-files= to show these.
+
+#+BEGIN_SRC elisp
+(use-package dired-x
+  :config
+  (progn
+    (setq dired-omit-verbose nil)
+    (add-hook 'dired-mode-hook #'dired-omit-mode)
+    (setq dired-omit-files "^\\.?#")))
+#+END_SRC
+
 * enable "advanced" commands
 
 Not sure why these are disabled by default.
