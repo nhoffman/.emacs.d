@@ -1160,8 +1160,6 @@ following line."
 
 (setq ns-pop-up-frames nil)
 
-(require 'lockstep)
-
 (condition-case nil
     (progn
       (require 'discover)
