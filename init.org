@@ -379,6 +379,7 @@ Add some extra package repositories. The default value of package-archives is
             (markdown-mode . "melpa-stable")
             (smart-mode-line . "melpa-stable")
             (swiper . "melpa-stable")
+            (web-mode . "melpa")
             (which-key . "melpa-stable")
             )))
 
@@ -494,6 +495,7 @@ emacs was first started.
     swiper
     visual-regexp
     visual-regexp-steroids
+    web-mode
     which-key
     yaml-mode
     yasnippet
@@ -521,7 +523,7 @@ call =defhydra=. For example:
 
 ** hydra-toggle-mode
 
-A hydra for toggling modes. Activate via =hydra-launcher= using =C-l g=
+A hydra for toggling modes. Activate via =hydra-launcher= using =C-\ g=
 
 #+BEGIN_SRC elisp
 (if (require 'hydra nil 'noerror)
@@ -530,6 +532,7 @@ A hydra for toggling modes. Activate via =hydra-launcher= using =C-l g=
         "hydra-toggle-mode"
         ("RET" redraw-display "<quit>")
         ("c" csv-mode "csv-mode")
+        ("h" html-mode "html-mode")
         ("j" jinja2-mode "jinja2-mode")
         ("k" markdown-mode "markdown-mode")
         ("l" lineum-mode "lineum-mode")
@@ -540,6 +543,7 @@ A hydra for toggling modes. Activate via =hydra-launcher= using =C-l g=
         ("s" sql-mode "sql-mode")
         ("t" text-mode "text-mode")
         ("v" visual-line-mode "visual-line-mode")
+        ("w" web-mode "web-mode")
         ("y" yaml-mode "yaml-mode")
         ))
   (message "** hydra is not installed"))
@@ -822,7 +826,9 @@ combinations.
         ("p" hydra-python/body "python menu")
         ("P" list-processes "list-processes")
         ("s" ssh-refresh "ssh-refresh")
-        ("t" org-todo-list "org-todo-list"))
+        ("t" org-todo-list "org-todo-list")
+        ("u" untabify "untabify")
+        ("w" hydra-web-mode/body "web-mode commands"))
       (global-set-key (kbd "C-\\") 'hydra-launcher/body))
   (message "** hydra is not installed"))
 #+END_SRC
@@ -1810,6 +1816,31 @@ elpa, but must be initialized.
 (condition-case nil
     (require 'moinmoin-mode)
   (error (message "** could not load moinmoin-mode")))
+#+END_SRC
+
+* web-mode
+
+A major-mode for editing web templates http://web-mode.org
+
+Also: A Hydra for web-mode commands; activate via =hydra-launcher= using =C-\ w=
+
+#+BEGIN_SRC elisp
+(if (require 'web-mode nil 'noerror)
+    (use-package web-mode
+      :mode (("\\.html" . web-mode))
+      :bind ("C-c w" . hydra-web-mode/body)
+      :init
+      (setq web-mode-enable-current-element-highlight t)
+      (setq web-mode-engines-alist
+            '(("django" . "\\.html")))
+      (setq indent-tabs-mode nil)
+      (defhydra hydra-web-mode (:color blue :columns 4 :post (redraw-display))
+        "hydra-web-mode"
+        ("RET" redraw-display "<quit>")
+        ("b" web-mode-element-beginning "element-beginning")
+        ("e" web-mode-element-beginning "element-end")
+        ("/" web-mode-element-close "element-close")))
+  (message "** web-mode is not installed"))
 #+END_SRC
 
 * tramp

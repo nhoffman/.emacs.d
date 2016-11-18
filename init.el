@@ -75,6 +75,7 @@
             (markdown-mode . "melpa-stable")
             (smart-mode-line . "melpa-stable")
             (swiper . "melpa-stable")
+            (web-mode . "melpa")
             (which-key . "melpa-stable")
             )))
 
@@ -157,6 +158,7 @@
     swiper
     visual-regexp
     visual-regexp-steroids
+    web-mode
     which-key
     yaml-mode
     yasnippet
@@ -175,6 +177,7 @@
         "hydra-toggle-mode"
         ("RET" redraw-display "<quit>")
         ("c" csv-mode "csv-mode")
+        ("h" html-mode "html-mode")
         ("j" jinja2-mode "jinja2-mode")
         ("k" markdown-mode "markdown-mode")
         ("l" lineum-mode "lineum-mode")
@@ -185,6 +188,7 @@
         ("s" sql-mode "sql-mode")
         ("t" text-mode "text-mode")
         ("v" visual-line-mode "visual-line-mode")
+        ("w" web-mode "web-mode")
         ("y" yaml-mode "yaml-mode")
         ))
   (message "** hydra is not installed"))
@@ -325,7 +329,9 @@
         ("p" hydra-python/body "python menu")
         ("P" list-processes "list-processes")
         ("s" ssh-refresh "ssh-refresh")
-        ("t" org-todo-list "org-todo-list"))
+        ("t" org-todo-list "org-todo-list")
+        ("u" untabify "untabify")
+        ("w" hydra-web-mode/body "web-mode commands"))
       (global-set-key (kbd "C-\\") 'hydra-launcher/body))
   (message "** hydra is not installed"))
 
@@ -894,6 +900,23 @@ project; otherwise activate the virtualenv defined in
 (condition-case nil
     (require 'moinmoin-mode)
   (error (message "** could not load moinmoin-mode")))
+
+(if (require 'web-mode nil 'noerror)
+    (use-package web-mode
+      :mode (("\\.html" . web-mode))
+      :bind ("C-c w" . hydra-web-mode/body)
+      :init
+      (setq web-mode-enable-current-element-highlight t)
+      (setq web-mode-engines-alist
+            '(("django" . "\\.html")))
+      (setq indent-tabs-mode nil)
+      (defhydra hydra-web-mode (:color blue :columns 4 :post (redraw-display))
+        "hydra-web-mode"
+        ("RET" redraw-display "<quit>")
+        ("b" web-mode-element-beginning "element-beginning")
+        ("e" web-mode-element-beginning "element-end")
+        ("/" web-mode-element-close "element-close")))
+  (message "** web-mode is not installed"))
 
 (condition-case nil
     (require 'tramp)
