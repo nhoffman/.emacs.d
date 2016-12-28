@@ -555,11 +555,35 @@ Assumes that the frame is only split into two."
 
 (setq split-height-threshold nil)
 
-(setq-default ispell-program-name "aspell")
-(setq ispell-dictionary "en")
+(defvar enable-flyspell-p)
 
-(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
-(setq flyspell-issue-welcome-flag nil) ;; fix error message
+(if (cond
+     ;; ((executable-find "hunspell")
+     ;;  (setq ispell-local-dictionary "en_US")
+     ;;  (setq ispell-local-dictionary-alist
+     ;;        '(("en_US"                                  ;; DICTIONARY-name
+     ;;           "[[:alpha:]]"                            ;; CASECHARS
+     ;;           "[^[:alpha:]]"                           ;; NOT-CASECHARS
+     ;;           "[']"                                    ;; OTHERCHARS
+     ;;           nil                                      ;; MANY-OTHERCHARS-P
+     ;;           ;; ("-p" "~/.emacs.d/dictionaries/en_US")   ;; ISPELL-ARGS
+     ;;           ("-d" "en_US")   ;; ISPELL-ARGS
+     ;;           nil                                      ;; EXTENDED-CHARACTER-MODE
+     ;;           utf-8                                    ;; CHARACTER-SET
+     ;;           )))
+     ;;  ;; (add-to-list 'ispell-hunspell-dict-paths-alist '("~/.emacs.d/dictionaries"))
+     ;;  (setenv "DICPATH" "~/.emacs.d/dictionaries")
+     ;;  (setq ispell-program-name "hunspell"))
+     ((executable-find "aspell")
+      (setq ispell-dictionary "en")
+      (setq ispell-program-name "aspell")))
+    (progn
+      (message "** using %s for flyspell" ispell-program-name)
+      (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+      (setq flyspell-issue-welcome-flag nil)
+      (setq enable-flyspell-p t))
+  (setq enable-flyspell-p nil)
+  (message "** could not find hunspell or aspell"))
 
 (add-hook 'find-file-hooks
           '(lambda ()
@@ -590,7 +614,7 @@ Assumes that the frame is only split into two."
              ;; set ESS indentation style
              ;; choose from GNU, BSD, K&R, CLB, and C++
              (ess-set-style 'GNU 'quiet)
-             (flyspell-mode)
+             (if enable-flyspell-p (flyspell-mode))
              )
           )
 
@@ -885,17 +909,13 @@ project; otherwise activate the virtualenv defined in
 (add-hook 'text-mode-hook
           '(lambda ()
              ;; (longlines-mode)
-             (flyspell-mode)
-             )
-          )
+             (if enable-flyspell-p (flyspell-mode))))
 
 (add-hook 'rst-mode-hook
           '(lambda ()
              (message "Loading rst-mode hooks")
-             (flyspell-mode)
-             (define-key rst-mode-map (kbd "C-c C-a") 'rst-adjust)
-             )
-          )
+             (if enable-flyspell-p (flyspell-mode))
+             (define-key rst-mode-map (kbd "C-c C-a") 'rst-adjust)))
 
 (condition-case nil
     (require 'moinmoin-mode)
