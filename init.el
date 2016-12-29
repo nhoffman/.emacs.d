@@ -557,6 +557,9 @@ Assumes that the frame is only split into two."
 
 (defvar enable-flyspell-p)
 
+;; (setq debug-on-error t)
+;; (setq debug-on-signal t)
+
 (if (cond
      ;; ((executable-find "hunspell")
      ;;  (setq ispell-local-dictionary "en_US")
@@ -566,14 +569,14 @@ Assumes that the frame is only split into two."
      ;;           "[^[:alpha:]]"                           ;; NOT-CASECHARS
      ;;           "[']"                                    ;; OTHERCHARS
      ;;           nil                                      ;; MANY-OTHERCHARS-P
-     ;;           ;; ("-p" "~/.emacs.d/dictionaries/en_US")   ;; ISPELL-ARGS
-     ;;           ("-d" "en_US")   ;; ISPELL-ARGS
+     ;;           ("-d" "~/.emacs.d/dictionaries/en_US")   ;; ISPELL-ARGS
+     ;;           ;; ("-d" "en_US")   ;; ISPELL-ARGS
      ;;           nil                                      ;; EXTENDED-CHARACTER-MODE
      ;;           utf-8                                    ;; CHARACTER-SET
      ;;           )))
-     ;;  ;; (add-to-list 'ispell-hunspell-dict-paths-alist '("~/.emacs.d/dictionaries"))
      ;;  (setenv "DICPATH" "~/.emacs.d/dictionaries")
-     ;;  (setq ispell-program-name "hunspell"))
+     ;;  (setq-default ispell-program-name "hunspell")
+     ;;  (setq ispell-really-hunspell t))
      ((executable-find "aspell")
       (setq ispell-dictionary "en")
       (setq ispell-program-name "aspell")))
