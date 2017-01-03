@@ -1,4 +1,3 @@
-
 (defvar my-alias-prefix "my/")
 
 (defun make-alias (fun &optional prefix)
@@ -407,10 +406,10 @@
 ;;   (exec-path-from-shell-initialize))
 
 (global-set-key [(control x) (control c)]
-                (function
-                 (lambda () (interactive)
-                   (cond ((y-or-n-p "Quit? (save-buffers-kill-terminal) ")
-                          (save-buffers-kill-terminal))))))
+		(function
+		 (lambda () (interactive)
+		   (cond ((y-or-n-p "Quit? (save-buffers-kill-terminal) ")
+			  (save-buffers-kill-terminal))))))
 
 (setq delete-trailing-lines nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -530,7 +529,7 @@
   "switch-buffers-between-frames switches the buffers between the two last frames"
   (interactive)
   (let ((this-frame-buffer nil)
-        (other-frame-buffer nil))
+	(other-frame-buffer nil))
     (setq this-frame-buffer (car (frame-parameter nil 'buffer-list)))
     (other-frame 1)
     (setq other-frame-buffer (car (frame-parameter nil 'buffer-list)))
@@ -609,17 +608,17 @@ Assumes that the frame is only split into two."
   (error (message "** could not load ESS")))
 
 (add-hook 'ess-mode-hook
-          '(lambda()
-             (message "Loading ess-mode hooks")
-             ;; leave my underscore key alone!
-             (setq ess-S-assign "_")
-             ;; (ess-toggle-underscore nil)
-             ;; set ESS indentation style
-             ;; choose from GNU, BSD, K&R, CLB, and C++
-             (ess-set-style 'GNU 'quiet)
-             (if enable-flyspell-p (flyspell-mode))
-             )
-          )
+	  '(lambda()
+	     (message "Loading ess-mode hooks")
+	     ;; leave my underscore key alone!
+	     (setq ess-S-assign "_")
+	     ;; (ess-toggle-underscore nil)
+	     ;; set ESS indentation style
+	     ;; choose from GNU, BSD, K&R, CLB, and C++
+	     (ess-set-style 'GNU 'quiet)
+	     (if enable-flyspell-p (flyspell-mode))
+	     )
+	  )
 
 (if (require 'markdown-mode nil 'noerror)
     (use-package markdown-mode
@@ -688,7 +687,7 @@ Assumes that the frame is only split into two."
               '((R . t)
                 (latex . t)
                 (python . t)
-                (sh . t)
+                (shell . t)
                 (sql . t)
                 (sqlite . t)
                 (dot . t)

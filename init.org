@@ -1462,7 +1462,7 @@ org-mode hooks
               '((R . t)
                 (latex . t)
                 (python . t)
-                (sh . t)
+                (shell . t)
                 (sql . t)
                 (sqlite . t)
                 (dot . t)
