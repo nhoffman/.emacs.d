@@ -685,17 +685,27 @@ Assumes that the frame is only split into two."
              (define-key org-mode-map (kbd "C-c n")  'hydra-org-navigation/body)
              (visual-line-mode)
              ;; org-babel
+
+             ;; enable a subset of languages for evaluation in code blocks
+             (setq my/org-babel-load-languages
+                   '((R . t)
+                     (latex . t)
+                     (python . t)
+                     (sql . t)
+                     (sqlite . t)
+                     (emacs-lisp . t)
+                     (dot . t)))
+
+             ;; use "shell" for org-mode versions 9 and above
+             (add-to-list 'my/org-babel-load-languages
+                          (if (>= (string-to-number (substring (org-version) 0 1)) 9)
+                              '(shell . t) '(sh . t)))
+
              (org-babel-do-load-languages
-              'org-babel-load-languages
-              '((R . t)
-                (latex . t)
-                (python . t)
-                (shell . t)
-                (sql . t)
-                (sqlite . t)
-                (dot . t)
-                ))
+              'org-babel-load-languages my/org-babel-load-languages)
+
 	     (require 'ox-minutes nil t)
+
              ;; (defun org-with-silent-modifications(&rest args)
              ;;   "Replaces function causing error on org-export"
              ;;   (message "Using fake 'org-with-silent-modifications'"))
