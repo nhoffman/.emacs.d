@@ -330,6 +330,7 @@
         ("P" list-processes "list-processes")
         ("s" ssh-refresh "ssh-refresh")
         ("t" org-todo-list "org-todo-list")
+        ("T" transpose-buffers "transpose-buffers")
         ("u" untabify "untabify")
         ("w" hydra-web-mode/body "web-mode commands"))
       (global-set-key (kbd "C-\\") 'hydra-launcher/body))
