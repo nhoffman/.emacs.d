@@ -489,6 +489,7 @@ emacs was first started.
     markdown-mode
     moinmoin-mode
     org
+    ox-minutes
     polymode
     projectile
     rainbow-delimiters
@@ -1469,6 +1470,7 @@ org-mode hooks
                 (sqlite . t)
                 (dot . t)
                 ))
+	     (require 'ox-minutes nil t)
              ;; (defun org-with-silent-modifications(&rest args)
              ;;   "Replaces function causing error on org-export"
              ;;   (message "Using fake 'org-with-silent-modifications'"))

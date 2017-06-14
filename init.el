@@ -151,6 +151,7 @@
     markdown-mode
     moinmoin-mode
     org
+    ox-minutes
     polymode
     projectile
     rainbow-delimiters
@@ -694,6 +695,7 @@ Assumes that the frame is only split into two."
                 (sqlite . t)
                 (dot . t)
                 ))
+	     (require 'ox-minutes nil t)
              ;; (defun org-with-silent-modifications(&rest args)
              ;;   "Replaces function causing error on org-export"
              ;;   (message "Using fake 'org-with-silent-modifications'"))
