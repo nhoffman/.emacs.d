@@ -133,6 +133,7 @@
   '(auctex
     csv-mode
     discover
+    dash-at-point
     edit-server
     elpy
     ess
@@ -315,7 +316,7 @@
         ("RET" redraw-display "<quit>")
         ("b" copy-buffer-file-name "copy-buffer-file-name")
         ("d" insert-date "insert-date")
-        ("D" describe-minor-mode "describe-minor-mode")
+        ("D" dash-at-point "dash-at-point")
         ("e" save-buffers-kill-emacs "save-buffers-kill-emacs")
         ("f" fix-frame "fix-frame")
         ("g" hydra-toggle-mode/body "toggle mode")
