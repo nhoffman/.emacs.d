@@ -1821,7 +1821,7 @@ it to the output of autopep8.
     (ediff-buffers (current-buffer) p8-output)))
 #+END_SRC
 
-** a hydra for working with python
+** a hydra for python-related actions
 
 Let's expose some of the frequently-used actions using a hyrda
 
@@ -1831,13 +1831,14 @@ Let's expose some of the frequently-used actions using a hyrda
       (defhydra hydra-python (:color blue :columns 4 :post (redraw-display))
         "hydra-python"
         ("RET" redraw-display "<quit>")
-        ("g" elpy-goto-definition-other-window "elpy-goto-definition-other-window")
-        ("e" elpy-config "elpy-config")
-        ("f" flycheck-verify-setup "flycheck-verify-setup")
-        ("i" elpy-install-requirements "elpy-install-requirements")
-        ("v" activate-venv-current-project "activate-venv-current-project")
         ("2" activate-venv-default-py2 "activate-venv-default-py2")
         ("3" activate-venv-default-py3 "activate-venv-default-py3")
+        ("c" flycheck-list-errors "flycheck-list-errors")
+        ("e" elpy-config "elpy-config")
+        ("f" flycheck-verify-setup "flycheck-verify-setup")
+        ("g" elpy-goto-definition-other-window "elpy-goto-definition-other-window")
+        ("i" elpy-install-requirements "elpy-install-requirements")
+        ("v" activate-venv-current-project "activate-venv-current-project")
         ("y" elpy-yapf-fix-code "elpy-yapf-fix-code")))
   (message "** hydra is not installed"))
 #+END_SRC
