@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2017-11-20 Mon 10:00 -->
+<!-- 2017-11-20 Mon 10:35 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>init.el for Noah Hoffman</title>
@@ -180,14 +180,14 @@
 </style>
 <style type="text/css">
 HTTP/1.1 200 OK
-Date: Mon, 20 Nov 2017 18:00:56 GMT
+Date: Mon, 20 Nov 2017 18:35:34 GMT
 Content-Type: text/css
 Transfer-Encoding: chunked
 Connection: keep-alive
 Last-Modified: Thu, 13 Feb 2014 17:33:55 GMT
 ETag: W/"8a7442ca6bedd62cec4881040b9a9e83"
 Server: NetDNA-cache/2.2
-Expires: Thu, 15 Nov 2018 18:00:56 GMT
+Expires: Thu, 15 Nov 2018 18:35:34 GMT
 Cache-Control: max-age=31104000
 Vary: Accept-Encoding
 Access-Control-Allow-Origin: *
@@ -269,63 +269,63 @@ starting more or less from scratch.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7fac5e5">1. Initial setup</a></li>
-<li><a href="#org120d7ea">2. Using and maintaining this configuration</a></li>
-<li><a href="#org2066191">3. Startup</a></li>
-<li><a href="#org5b378b0">4. ELPA</a></li>
-<li><a href="#org8c71070">5. hydra</a></li>
-<li><a href="#orgf642403">6. sidestepping customize</a></li>
-<li><a href="#orgbab57c1">7. Navigation</a></li>
-<li><a href="#orgc20d89f">8. Marking, cursor movement and appearance</a></li>
-<li><a href="#org767828e">9. Define a "launcher" keymap with hydra</a></li>
-<li><a href="#org059a304">10. which-key</a></li>
-<li><a href="#org6a9199d">11. Function keys.</a></li>
-<li><a href="#org2d41659">12. General appearance</a></li>
-<li><a href="#org0977167">13. Environment</a></li>
-<li><a href="#org3995811">14. Exiting and saving</a></li>
-<li><a href="#org7a0abeb">15. Platform and display-specific settings</a></li>
-<li><a href="#org3298649">16. Scrolling</a></li>
-<li><a href="#org0a92b28">17. Keyboard macros</a></li>
-<li><a href="#org2f28160">18. ediff</a></li>
-<li><a href="#org6cc26ce">19. emacs desktop</a></li>
-<li><a href="#org180f5b0">20. Move lines up and down with arrow keys</a></li>
-<li><a href="#org6daf7c7">21. Buffers and windows</a></li>
-<li><a href="#org874da1d">22. spelling</a></li>
-<li><a href="#orgef07fff">23. pine/alpine</a></li>
-<li><a href="#org4aa8f34">24. yasnippet</a></li>
-<li><a href="#org3a16888">25. LaTeX</a></li>
-<li><a href="#org9b94ad8">26. ESS</a></li>
-<li><a href="#org1f8e998">27. markdown-mode</a></li>
-<li><a href="#org1240820">28. rmarkdown and polymode</a></li>
-<li><a href="#org1eef481">29. org-mode</a></li>
-<li><a href="#orgac4f851">30. chrome "edit with emacs"</a></li>
-<li><a href="#orge0058c7">31. Python</a></li>
-<li><a href="#orge6c8ab9">32. shell</a></li>
-<li><a href="#org94c2929">33. scons</a></li>
-<li><a href="#org5508a7e">34. text-mode</a></li>
-<li><a href="#org9aef3af">35. rst-mode</a></li>
-<li><a href="#orga152dbf">36. moinmoin-mode</a></li>
-<li><a href="#org95c4788">37. web-mode</a></li>
-<li><a href="#orgfb04c6a">38. tramp</a></li>
-<li><a href="#org26df01b">39. git/magit</a></li>
-<li><a href="#org82e8b45">40. sql support</a></li>
-<li><a href="#org0aec107">41. gpg</a></li>
-<li><a href="#org387789e">42. Outline minor mode</a></li>
-<li><a href="#org8b008ac">43. Search and replace</a></li>
-<li><a href="#orgfd64d91">44. Misc utilities</a></li>
-<li><a href="#org4dc5021">45. elisp-format</a></li>
-<li><a href="#orgcfd5717">46. emacsclient</a></li>
-<li><a href="#org14a9e48">47. discover.el</a></li>
-<li><a href="#org84b5e82">48. dired-x</a></li>
-<li><a href="#orgec5bb0a">49. enable "advanced" commands</a></li>
-<li><a href="#orgcb6a6ca">50. custom-set-variables</a></li>
-<li><a href="#org2ea01a2">51. License</a></li>
+<li><a href="#orgec8376f">1. Initial setup</a></li>
+<li><a href="#org1ad7fd3">2. Using and maintaining this configuration</a></li>
+<li><a href="#org1e04b90">3. Startup</a></li>
+<li><a href="#orga0a002a">4. ELPA</a></li>
+<li><a href="#org928ca78">5. hydra</a></li>
+<li><a href="#orgfbed2f1">6. sidestepping customize</a></li>
+<li><a href="#org0dbb27f">7. Navigation</a></li>
+<li><a href="#org7294b40">8. Marking, cursor movement and appearance</a></li>
+<li><a href="#org0586667">9. Define a "launcher" keymap with hydra</a></li>
+<li><a href="#orge353d90">10. which-key</a></li>
+<li><a href="#orgf40c5f3">11. Function keys.</a></li>
+<li><a href="#org0ce8744">12. General appearance</a></li>
+<li><a href="#org6e132fc">13. Environment</a></li>
+<li><a href="#orgb88e0f9">14. Exiting and saving</a></li>
+<li><a href="#org85a5540">15. Platform and display-specific settings</a></li>
+<li><a href="#orgd069f06">16. Scrolling</a></li>
+<li><a href="#org6bc33b9">17. Keyboard macros</a></li>
+<li><a href="#org2f5697e">18. ediff</a></li>
+<li><a href="#org2f9738f">19. emacs desktop</a></li>
+<li><a href="#org4fdaaff">20. Move lines up and down with arrow keys</a></li>
+<li><a href="#org89fec96">21. Buffers and windows</a></li>
+<li><a href="#org23e1d3c">22. spelling</a></li>
+<li><a href="#org504bacf">23. pine/alpine</a></li>
+<li><a href="#orgcd74730">24. yasnippet</a></li>
+<li><a href="#orgfa20746">25. LaTeX</a></li>
+<li><a href="#orge6aa301">26. ESS</a></li>
+<li><a href="#org87a5f92">27. markdown-mode</a></li>
+<li><a href="#orgf6cf370">28. rmarkdown and polymode</a></li>
+<li><a href="#orgeab4259">29. org-mode</a></li>
+<li><a href="#org156cc3b">30. chrome "edit with emacs"</a></li>
+<li><a href="#org2b0bf54">31. Python</a></li>
+<li><a href="#org9a706fc">32. shell</a></li>
+<li><a href="#orgac45070">33. scons</a></li>
+<li><a href="#org5c89573">34. text-mode</a></li>
+<li><a href="#org1c4b5d4">35. rst-mode</a></li>
+<li><a href="#org00a4c9e">36. moinmoin-mode</a></li>
+<li><a href="#org40e361a">37. web-mode</a></li>
+<li><a href="#org094f287">38. tramp</a></li>
+<li><a href="#org8fb7df6">39. git/magit</a></li>
+<li><a href="#org65acaac">40. sql support</a></li>
+<li><a href="#org47b2095">41. gpg</a></li>
+<li><a href="#org8f3755d">42. Outline minor mode</a></li>
+<li><a href="#org0a38bf6">43. Search and replace</a></li>
+<li><a href="#org215ceae">44. Misc utilities</a></li>
+<li><a href="#orgb5f72a5">45. elisp-format</a></li>
+<li><a href="#org56550a4">46. emacsclient</a></li>
+<li><a href="#orgbaccfb3">47. discover.el</a></li>
+<li><a href="#org087ccd5">48. dired-x</a></li>
+<li><a href="#org5f58fda">49. enable "advanced" commands</a></li>
+<li><a href="#orgb85ebaa">50. custom-set-variables</a></li>
+<li><a href="#org7b8070d">51. License</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7fac5e5" class="outline-2">
-<h2 id="org7fac5e5"><span class="section-number-2">1</span> Initial setup</h2>
+<div id="outline-container-orgec8376f" class="outline-2">
+<h2 id="orgec8376f"><span class="section-number-2">1</span> Initial setup</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 You can install this configuration by either cloning it directly from
@@ -346,8 +346,8 @@ setup is required before first use.
 </p>
 </div>
 
-<div id="outline-container-org0d34af8" class="outline-3">
-<h3 id="org0d34af8"><span class="section-number-3">1.1</span> set up a shell environment</h3>
+<div id="outline-container-org49b08e8" class="outline-3">
+<h3 id="org49b08e8"><span class="section-number-3">1.1</span> set up a shell environment</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 This configuration provides some commands (tested with bash and zsh)
@@ -509,8 +509,8 @@ save-buffers-kill-emacs</code>.
 </div>
 </div>
 
-<div id="outline-container-org7e3bea8" class="outline-3">
-<h3 id="org7e3bea8"><span class="section-number-3">1.2</span> option as Meta (<code>M-</code>) on a Mac</h3>
+<div id="outline-container-orgf10c405" class="outline-3">
+<h3 id="orgf10c405"><span class="section-number-3">1.2</span> option as Meta (<code>M-</code>) on a Mac</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 I use Emacs from a variety of terminal types on my machines running OS
@@ -530,8 +530,8 @@ suggestions to use the option key as Meta (<code>M-</code>), as opposed to Esc.
 </p>
 </div>
 
-<div id="outline-container-org0fc7b41" class="outline-4">
-<h4 id="org0fc7b41"><span class="section-number-4">1.2.1</span> Cocoa</h4>
+<div id="outline-container-orgbde0faa" class="outline-4">
+<h4 id="orgbde0faa"><span class="section-number-4">1.2.1</span> Cocoa</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <p>
 I just download it from <a href="http://emacsformacosx.com/">http://emacsformacosx.com/</a> - as far as I can
@@ -540,8 +540,8 @@ tell, option is used as Meta by default.
 </div>
 </div>
 
-<div id="outline-container-orge07e2ca" class="outline-4">
-<h4 id="orge07e2ca"><span class="section-number-4">1.2.2</span> X11</h4>
+<div id="outline-container-orgad8fcf4" class="outline-4">
+<h4 id="orgad8fcf4"><span class="section-number-4">1.2.2</span> X11</h4>
 <div class="outline-text-4" id="text-1-2-2">
 <p>
 I use <a href="http://xquartz.macosforge.org/downloads/SL/XQuartz-2.7.7.dmg">XQuartz</a>
@@ -570,8 +570,8 @@ Create the file ~/.Xmodmap as follows to use option as Meta in X11
 </div>
 </div>
 
-<div id="outline-container-org1387912" class="outline-4">
-<h4 id="org1387912"><span class="section-number-4">1.2.3</span> Terminal</h4>
+<div id="outline-container-org6e12cb1" class="outline-4">
+<h4 id="org6e12cb1"><span class="section-number-4">1.2.3</span> Terminal</h4>
 <div class="outline-text-4" id="text-1-2-3">
 <p>
 I prefer <a href="http://iterm2.com/">iTerm2</a> over Terminal.app
@@ -596,8 +596,8 @@ readline key bindings (which is <a href="https://coderwall.com/p/usc8qg">just ab
 </div>
 </div>
 
-<div id="outline-container-org566f3ea" class="outline-4">
-<h4 id="org566f3ea"><span class="section-number-4">1.2.4</span> What next?</h4>
+<div id="outline-container-org866eb0e" class="outline-4">
+<h4 id="org866eb0e"><span class="section-number-4">1.2.4</span> What next?</h4>
 <div class="outline-text-4" id="text-1-2-4">
 <p>
 If you are completely new to Emacs, the very first thing to do is to
@@ -612,8 +612,8 @@ t</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-org3544697" class="outline-3">
-<h3 id="org3544697"><span class="section-number-3">1.3</span> install packages from ELPA</h3>
+<div id="outline-container-org2696909" class="outline-3">
+<h3 id="org2696909"><span class="section-number-3">1.3</span> install packages from ELPA</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 The only required step to use this configuration is to install
@@ -628,8 +628,8 @@ it's usually a good idea to quit and relaunch Emacs.
 </div>
 </div>
 
-<div id="outline-container-orge80caa2" class="outline-3">
-<h3 id="orge80caa2"><span class="section-number-3">1.4</span> create virtualenv</h3>
+<div id="outline-container-orgc20e478" class="outline-3">
+<h3 id="orgc20e478"><span class="section-number-3">1.4</span> create virtualenv</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 The packages used here (particularly <code>elpy</code>) require some python
@@ -652,8 +652,8 @@ useful.
 </div>
 </div>
 
-<div id="outline-container-org664cf71" class="outline-3">
-<h3 id="org664cf71"><span class="section-number-3">1.5</span> initialize org-export submodule (optional)</h3>
+<div id="outline-container-org77d084f" class="outline-3">
+<h3 id="org77d084f"><span class="section-number-3">1.5</span> initialize org-export submodule (optional)</h3>
 <div class="outline-text-3" id="text-1-5">
 <p>
 If you want to compile <code>init.org</code> to html using the provided build
@@ -708,8 +708,8 @@ If there were any changes, you'll need to make a commit in
 </div>
 </div>
 
-<div id="outline-container-org120d7ea" class="outline-2">
-<h2 id="org120d7ea"><span class="section-number-2">2</span> Using and maintaining this configuration</h2>
+<div id="outline-container-org1ad7fd3" class="outline-2">
+<h2 id="org1ad7fd3"><span class="section-number-2">2</span> Using and maintaining this configuration</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 All changes to the configuration should be made within code blocks in
@@ -797,8 +797,8 @@ tangle, and load it.
 </div>
 </div>
 
-<div id="outline-container-org2066191" class="outline-2">
-<h2 id="org2066191"><span class="section-number-2">3</span> Startup</h2>
+<div id="outline-container-org1e04b90" class="outline-2">
+<h2 id="org1e04b90"><span class="section-number-2">3</span> Startup</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 This will only work with emacs &gt;= 24.x
@@ -816,8 +816,8 @@ This will only work with emacs &gt;= 24.x
 </div>
 </div>
 
-<div id="outline-container-org20c7fe5" class="outline-3">
-<h3 id="org20c7fe5"><span class="section-number-3">3.1</span> Auto-refresh</h3>
+<div id="outline-container-org7ee3859" class="outline-3">
+<h3 id="org7ee3859"><span class="section-number-3">3.1</span> Auto-refresh</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 automatically refresh buffers from disk (default is every 5 sec)
@@ -831,8 +831,8 @@ see <a href="http://www.cs.cmu.edu/cgi-bin/info2www?(emacs)">http://www.cs.cmu.e
 </div>
 </div>
 
-<div id="outline-container-orgae91164" class="outline-3">
-<h3 id="orgae91164"><span class="section-number-3">3.2</span> Enable debugging</h3>
+<div id="outline-container-orgcdd2943" class="outline-3">
+<h3 id="orgcdd2943"><span class="section-number-3">3.2</span> Enable debugging</h3>
 <div class="outline-text-3" id="text-3-2">
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">(setq debug-on-error t)</span>
@@ -842,8 +842,8 @@ see <a href="http://www.cs.cmu.edu/cgi-bin/info2www?(emacs)">http://www.cs.cmu.e
 </div>
 </div>
 
-<div id="outline-container-org808abf5" class="outline-3">
-<h3 id="org808abf5"><span class="section-number-3">3.3</span> dir-local variables</h3>
+<div id="outline-container-org39aba62" class="outline-3">
+<h3 id="org39aba62"><span class="section-number-3">3.3</span> dir-local variables</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 I can't explain why, but I started getting errors that a
@@ -860,8 +860,8 @@ error (conveniently, I don't use this feature):
 </div>
 </div>
 
-<div id="outline-container-org5b378b0" class="outline-2">
-<h2 id="org5b378b0"><span class="section-number-2">4</span> ELPA</h2>
+<div id="outline-container-orga0a002a" class="outline-2">
+<h2 id="orga0a002a"><span class="section-number-2">4</span> ELPA</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Set up and initialize ELPA package manager.
@@ -904,8 +904,8 @@ Some useful ELPA variables and functions:
 </table>
 </div>
 
-<div id="outline-container-org9d31156" class="outline-3">
-<h3 id="org9d31156"><span class="section-number-3">4.1</span> define repositories</h3>
+<div id="outline-container-orga572d18" class="outline-3">
+<h3 id="orga572d18"><span class="section-number-3">4.1</span> define repositories</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 Add some extra package repositories. The default value of package-archives is
@@ -967,8 +967,8 @@ represented in higher-priority repositories.
 </div>
 </div>
 
-<div id="outline-container-orgeb60793" class="outline-3">
-<h3 id="orgeb60793"><span class="section-number-3">4.2</span> use-package</h3>
+<div id="outline-container-orgaff0dca" class="outline-3">
+<h3 id="orgaff0dca"><span class="section-number-3">4.2</span> use-package</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 This init file is designed to fail gracefully when packages are not
@@ -1004,8 +1004,8 @@ failures on startup. Here's the solution that I've arrived at
 </div>
 </div>
 
-<div id="outline-container-orga70870e" class="outline-3">
-<h3 id="orga70870e"><span class="section-number-3">4.3</span> define a list of packages</h3>
+<div id="outline-container-org9ed1b43" class="outline-3">
+<h3 id="org9ed1b43"><span class="section-number-3">4.3</span> define a list of packages</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 I could not find an obvious way to define a list of packages to
@@ -1093,8 +1093,8 @@ emacs was first started.
 </div>
 </div>
 
-<div id="outline-container-org8c71070" class="outline-2">
-<h2 id="org8c71070"><span class="section-number-2">5</span> hydra</h2>
+<div id="outline-container-org928ca78" class="outline-2">
+<h2 id="org928ca78"><span class="section-number-2">5</span> hydra</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <a href="https://github.com/abo-abo/hydra">Hydra</a> is "a package for GNU Emacs that can be used to tie related
@@ -1112,8 +1112,8 @@ call <code>defhydra</code>. For example:
 </pre>
 </div>
 
-<div id="outline-container-orgaad2afd" class="outline-3">
-<h3 id="orgaad2afd"><span class="section-number-3">5.1</span> hydra-toggle-mode</h3>
+<div id="outline-container-orgdff9dcc" class="outline-3">
+<h3 id="orgdff9dcc"><span class="section-number-3">5.1</span> hydra-toggle-mode</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 A hydra for toggling modes. Activate via <code>hydra-launcher</code> using <code>C-\ g</code>
@@ -1147,8 +1147,8 @@ A hydra for toggling modes. Activate via <code>hydra-launcher</code> using <code
 </div>
 </div>
 
-<div id="outline-container-orgf642403" class="outline-2">
-<h2 id="orgf642403"><span class="section-number-2">6</span> sidestepping customize</h2>
+<div id="outline-container-orgfbed2f1" class="outline-2">
+<h2 id="orgfbed2f1"><span class="section-number-2">6</span> sidestepping customize</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Cribbed from a <a href="http://oremacs.com/2015/01/17/setting-up-ediff/">post</a> on oremacs, this macro provides "a setq that is
@@ -1165,12 +1165,12 @@ aware of the custom-set property of a variable."
 </div>
 </div>
 
-<div id="outline-container-orgbab57c1" class="outline-2">
-<h2 id="orgbab57c1"><span class="section-number-2">7</span> Navigation</h2>
+<div id="outline-container-org0dbb27f" class="outline-2">
+<h2 id="org0dbb27f"><span class="section-number-2">7</span> Navigation</h2>
 <div class="outline-text-2" id="text-7">
 </div>
-<div id="outline-container-org37e44d3" class="outline-3">
-<h3 id="org37e44d3"><span class="section-number-3">7.1</span> <code>electric-buffer-list</code></h3>
+<div id="outline-container-orgc152b68" class="outline-3">
+<h3 id="orgc152b68"><span class="section-number-3">7.1</span> <code>electric-buffer-list</code></h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 Replace default <code>list-buffers</code> with <code>electric-buffer-list</code> for buffer
@@ -1184,8 +1184,8 @@ selection.
 </div>
 </div>
 
-<div id="outline-container-orgd6e3e67" class="outline-3">
-<h3 id="orgd6e3e67"><span class="section-number-3">7.2</span> Switch windows with arrow keys</h3>
+<div id="outline-container-org0beba92" class="outline-3">
+<h3 id="org0beba92"><span class="section-number-3">7.2</span> Switch windows with arrow keys</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 Note that other-window is bound by default to <code>C-x o</code>
@@ -1202,8 +1202,8 @@ Note that other-window is bound by default to <code>C-x o</code>
 </div>
 </div>
 
-<div id="outline-container-orgf39cc4e" class="outline-3">
-<h3 id="orgf39cc4e"><span class="section-number-3">7.3</span> helm</h3>
+<div id="outline-container-org808bcd9" class="outline-3">
+<h3 id="org808bcd9"><span class="section-number-3">7.3</span> helm</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 Helm is a pretty intense change to the default behavior for executing
@@ -1246,8 +1246,8 @@ helm's equivalent, which shows a menu of recently copied regions
 </div>
 </div>
 
-<div id="outline-container-org75c812a" class="outline-3">
-<h3 id="org75c812a"><span class="section-number-3">7.4</span> helm-descbinds</h3>
+<div id="outline-container-orgdec0af5" class="outline-3">
+<h3 id="orgdec0af5"><span class="section-number-3">7.4</span> helm-descbinds</h3>
 <div class="outline-text-3" id="text-7-4">
 <p>
 Describe key bindings for the current modes: see <a href="https://github.com/emacs-helm/helm-descbinds">https://github.com/emacs-helm/helm-descbinds</a>
@@ -1264,8 +1264,8 @@ Describe key bindings for the current modes: see <a href="https://github.com/ema
 </div>
 </div>
 
-<div id="outline-container-orgc981903" class="outline-3">
-<h3 id="orgc981903"><span class="section-number-3">7.5</span> hydra for helm</h3>
+<div id="outline-container-orgb86e00a" class="outline-3">
+<h3 id="orgb86e00a"><span class="section-number-3">7.5</span> hydra for helm</h3>
 <div class="outline-text-3" id="text-7-5">
 <p>
 A hydra for activating helm commands that I can't otherwise
@@ -1294,8 +1294,8 @@ remember. Activate via <code>hydra-launcher</code> using <code>C-l h</code>
 </div>
 </div>
 
-<div id="outline-container-orgbda5cd4" class="outline-3">
-<h3 id="orgbda5cd4"><span class="section-number-3">7.6</span> <span class="todo TODO">TODO</span> projectile and helm-projectile</h3>
+<div id="outline-container-org79e0ba7" class="outline-3">
+<h3 id="org79e0ba7"><span class="section-number-3">7.6</span> <span class="todo TODO">TODO</span> projectile and helm-projectile</h3>
 <div class="outline-text-3" id="text-7-6">
 <p>
 TODO: check out <code>helm-projectile</code>
@@ -1367,8 +1367,8 @@ We'll configure both together
 </div>
 </div>
 
-<div id="outline-container-org673b805" class="outline-4">
-<h4 id="org673b805"><span class="section-number-4">7.6.1</span> ignoring directories using grep functions</h4>
+<div id="outline-container-org1361d18" class="outline-4">
+<h4 id="org1361d18"><span class="section-number-4">7.6.1</span> ignoring directories using grep functions</h4>
 <div class="outline-text-4" id="text-7-6-1">
 <p>
 Native emacs grep functions (like <code>M-x rgrep</code>) as well as
@@ -1411,8 +1411,8 @@ advise functions using grep to apply it before execution.
 </div>
 </div>
 
-<div id="outline-container-org9da7e6d" class="outline-3">
-<h3 id="org9da7e6d"><span class="section-number-3">7.7</span> uniquify</h3>
+<div id="outline-container-orgafbf999" class="outline-3">
+<h3 id="orgafbf999"><span class="section-number-3">7.7</span> uniquify</h3>
 <div class="outline-text-3" id="text-7-7">
 <p>
 Distinguish buffer names for identically-named files.
@@ -1432,8 +1432,8 @@ Distinguish buffer names for identically-named files.
 </div>
 </div>
 
-<div id="outline-container-orgc983720" class="outline-3">
-<h3 id="orgc983720"><span class="section-number-3">7.8</span> swiper</h3>
+<div id="outline-container-org028617c" class="outline-3">
+<h3 id="org028617c"><span class="section-number-3">7.8</span> swiper</h3>
 <div class="outline-text-3" id="text-7-8">
 <p>
 Swiper is an isearch replacement.
@@ -1449,12 +1449,12 @@ Swiper is an isearch replacement.
 </div>
 </div>
 
-<div id="outline-container-orgc20d89f" class="outline-2">
-<h2 id="orgc20d89f"><span class="section-number-2">8</span> Marking, cursor movement and appearance</h2>
+<div id="outline-container-org7294b40" class="outline-2">
+<h2 id="org7294b40"><span class="section-number-2">8</span> Marking, cursor movement and appearance</h2>
 <div class="outline-text-2" id="text-8">
 </div>
-<div id="outline-container-orgbd3577b" class="outline-3">
-<h3 id="orgbd3577b"><span class="section-number-3">8.1</span> avy</h3>
+<div id="outline-container-org2e1396d" class="outline-3">
+<h3 id="org2e1396d"><span class="section-number-3">8.1</span> avy</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 <a href="https://github.com/abo-abo/avy">https://github.com/abo-abo/avy</a>
@@ -1475,8 +1475,8 @@ replacement for ace-jump-mode.
 </div>
 </div>
 
-<div id="outline-container-orga26db2c" class="outline-3">
-<h3 id="orga26db2c"><span class="section-number-3">8.2</span> expand-region</h3>
+<div id="outline-container-org72b5299" class="outline-3">
+<h3 id="org72b5299"><span class="section-number-3">8.2</span> expand-region</h3>
 <div class="outline-text-3" id="text-8-2">
 <blockquote>
 <p>
@@ -1531,8 +1531,8 @@ are matching.
 </div>
 </div>
 
-<div id="outline-container-org767828e" class="outline-2">
-<h2 id="org767828e"><span class="section-number-2">9</span> Define a "launcher" keymap with hydra</h2>
+<div id="outline-container-org0586667" class="outline-2">
+<h2 id="org0586667"><span class="section-number-2">9</span> Define a "launcher" keymap with hydra</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 Use a <code>hydra</code> to define a key map containing a grab-bag of commonly
@@ -1572,8 +1572,8 @@ combinations.
 </div>
 </div>
 </div>
-<div id="outline-container-org059a304" class="outline-2">
-<h2 id="org059a304"><span class="section-number-2">10</span> which-key</h2>
+<div id="outline-container-orge353d90" class="outline-2">
+<h2 id="orge353d90"><span class="section-number-2">10</span> which-key</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 "Emacs package that displays available keybindings in popup"
@@ -1602,8 +1602,8 @@ see <a href="https://github.com/justbur/emacs-which-key">https://github.com/just
 </div>
 </div>
 
-<div id="outline-container-org6a9199d" class="outline-2">
-<h2 id="org6a9199d"><span class="section-number-2">11</span> Function keys.</h2>
+<div id="outline-container-orgf40c5f3" class="outline-2">
+<h2 id="orgf40c5f3"><span class="section-number-2">11</span> Function keys.</h2>
 <div class="outline-text-2" id="text-11">
 <p>
 It's kind of surprising that the function keys aren't
@@ -1733,8 +1733,8 @@ default.
 </div>
 </div>
 
-<div id="outline-container-org2d41659" class="outline-2">
-<h2 id="org2d41659"><span class="section-number-2">12</span> General appearance</h2>
+<div id="outline-container-org0ce8744" class="outline-2">
+<h2 id="org0ce8744"><span class="section-number-2">12</span> General appearance</h2>
 <div class="outline-text-2" id="text-12">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="font-weight: bold;">setq</span> column-number-mode t)
@@ -1748,8 +1748,8 @@ default.
 </div>
 </div>
 
-<div id="outline-container-org0bd3229" class="outline-3">
-<h3 id="org0bd3229"><span class="section-number-3">12.1</span> smart-mode-line</h3>
+<div id="outline-container-orga30ddb3" class="outline-3">
+<h3 id="orga30ddb3"><span class="section-number-3">12.1</span> smart-mode-line</h3>
 <div class="outline-text-3" id="text-12-1">
 <p>
 <a href="https://github.com/Malabarba/smart-mode-line">https://github.com/Malabarba/smart-mode-line</a>
@@ -1770,8 +1770,8 @@ default.
 </div>
 </div>
 
-<div id="outline-container-org0017499" class="outline-3">
-<h3 id="org0017499"><span class="section-number-3">12.2</span> title bar</h3>
+<div id="outline-container-org459d8eb" class="outline-3">
+<h3 id="org459d8eb"><span class="section-number-3">12.2</span> title bar</h3>
 <div class="outline-text-3" id="text-12-2">
 <p>
 File path in title bar. See <a href="http://stackoverflow.com/questions/3669511/the-function-to-show-current-files-full-path-in-mini-buffer">http://stackoverflow.com/questions/3669511/the-function-to-show-current-files-full-path-in-mini-buffer</a>
@@ -1786,8 +1786,8 @@ File path in title bar. See <a href="http://stackoverflow.com/questions/3669511/
 </div>
 </div>
 
-<div id="outline-container-org83652d4" class="outline-3">
-<h3 id="org83652d4"><span class="section-number-3">12.3</span> Prettier cursor</h3>
+<div id="outline-container-org5fda240" class="outline-3">
+<h3 id="org5fda240"><span class="section-number-3">12.3</span> Prettier cursor</h3>
 <div class="outline-text-3" id="text-12-3">
 <div class="org-src-container">
 <pre class="src src-elisp">(set-cursor-color <span style="font-style: italic;">"red"</span>)
@@ -1798,12 +1798,12 @@ File path in title bar. See <a href="http://stackoverflow.com/questions/3669511/
 </div>
 </div>
 
-<div id="outline-container-org0977167" class="outline-2">
-<h2 id="org0977167"><span class="section-number-2">13</span> Environment</h2>
+<div id="outline-container-org6e132fc" class="outline-2">
+<h2 id="org6e132fc"><span class="section-number-2">13</span> Environment</h2>
 <div class="outline-text-2" id="text-13">
 </div>
-<div id="outline-container-org9375ca7" class="outline-3">
-<h3 id="org9375ca7"><span class="section-number-3">13.1</span> update load path</h3>
+<div id="outline-container-org87a5153" class="outline-3">
+<h3 id="org87a5153"><span class="section-number-3">13.1</span> update load path</h3>
 <div class="outline-text-3" id="text-13-1">
 <p>
 Store packages not available via elpa in <code>~./.emacs.d/elisp</code>
@@ -1816,8 +1816,8 @@ Store packages not available via elpa in <code>~./.emacs.d/elisp</code>
 </div>
 </div>
 
-<div id="outline-container-orgd51643d" class="outline-3">
-<h3 id="orgd51643d"><span class="section-number-3">13.2</span> update SSH_AUTH_SOCK</h3>
+<div id="outline-container-org21d9733" class="outline-3">
+<h3 id="org21d9733"><span class="section-number-3">13.2</span> update SSH_AUTH_SOCK</h3>
 <div class="outline-text-3" id="text-13-2">
 <p>
 If you 1) forward ssh authentication (ie, ssh -A), 2) have a
@@ -1857,8 +1857,8 @@ Homebrew. Using this scheme, <code>~/.ssh-auth-sock</code> stores the value of
 </div>
 </div>
 </div>
-<div id="outline-container-orgc40788d" class="outline-3">
-<h3 id="orgc40788d"><span class="section-number-3">13.3</span> PATH setup</h3>
+<div id="outline-container-org5205042" class="outline-3">
+<h3 id="org5205042"><span class="section-number-3">13.3</span> PATH setup</h3>
 <div class="outline-text-3" id="text-13-3">
 <p>
 Add paths to 'exec-path' so that Emacs can find executables not
@@ -1888,8 +1888,8 @@ commands run from within Emacs.
 </div>
 </div>
 
-<div id="outline-container-org8581cba" class="outline-3">
-<h3 id="org8581cba"><span class="section-number-3">13.4</span> exec-path-from-shell</h3>
+<div id="outline-container-orga88f16c" class="outline-3">
+<h3 id="orga88f16c"><span class="section-number-3">13.4</span> exec-path-from-shell</h3>
 <div class="outline-text-3" id="text-13-4">
 <p>
 Initialize the PATH environment variable when starting up the Emacs
@@ -1909,8 +1909,8 @@ Commenting out for now, but seems promising&#x2026;.
 </div>
 </div>
 
-<div id="outline-container-org3995811" class="outline-2">
-<h2 id="org3995811"><span class="section-number-2">14</span> Exiting and saving</h2>
+<div id="outline-container-orgb88e0f9" class="outline-2">
+<h2 id="orgb88e0f9"><span class="section-number-2">14</span> Exiting and saving</h2>
 <div class="outline-text-2" id="text-14">
 <p>
 Require prompt before exit on C-x C-c
@@ -1940,8 +1940,8 @@ Delete trailing whitespace before save.
 </div>
 </div>
 
-<div id="outline-container-org7a0abeb" class="outline-2">
-<h2 id="org7a0abeb"><span class="section-number-2">15</span> Platform and display-specific settings</h2>
+<div id="outline-container-org85a5540" class="outline-2">
+<h2 id="org85a5540"><span class="section-number-2">15</span> Platform and display-specific settings</h2>
 <div class="outline-text-2" id="text-15">
 <p>
 Detect platform and window system and set up fonts and other
@@ -1991,8 +1991,8 @@ server process.
 </div>
 </div>
 
-<div id="outline-container-org3298649" class="outline-2">
-<h2 id="org3298649"><span class="section-number-2">16</span> Scrolling</h2>
+<div id="outline-container-orgd069f06" class="outline-2">
+<h2 id="orgd069f06"><span class="section-number-2">16</span> Scrolling</h2>
 <div class="outline-text-2" id="text-16">
 <p>
 See <a href="http://www.emacswiki.org/emacs/SmoothScrolling">http://www.emacswiki.org/emacs/SmoothScrolling</a>
@@ -2010,8 +2010,8 @@ See <a href="http://www.emacswiki.org/emacs/SmoothScrolling">http://www.emacswik
 </div>
 </div>
 
-<div id="outline-container-org0a92b28" class="outline-2">
-<h2 id="org0a92b28"><span class="section-number-2">17</span> Keyboard macros</h2>
+<div id="outline-container-org6bc33b9" class="outline-2">
+<h2 id="org6bc33b9"><span class="section-number-2">17</span> Keyboard macros</h2>
 <div class="outline-text-2" id="text-17">
 <p>
 See <a href="http://www.emacswiki.org/emacs/KeyboardMacros">http://www.emacswiki.org/emacs/KeyboardMacros</a>
@@ -2056,8 +2056,8 @@ Some additional keyboard macro bindings.
 </div>
 </div>
 
-<div id="outline-container-org2f28160" class="outline-2">
-<h2 id="org2f28160"><span class="section-number-2">18</span> ediff</h2>
+<div id="outline-container-org2f5697e" class="outline-2">
+<h2 id="org2f5697e"><span class="section-number-2">18</span> ediff</h2>
 <div class="outline-text-2" id="text-18">
 <p>
 Always split windows horizontally.
@@ -2070,8 +2070,8 @@ Always split windows horizontally.
 </div>
 </div>
 
-<div id="outline-container-org6cc26ce" class="outline-2">
-<h2 id="org6cc26ce"><span class="section-number-2">19</span> emacs desktop</h2>
+<div id="outline-container-org2f9738f" class="outline-2">
+<h2 id="org2f9738f"><span class="section-number-2">19</span> emacs desktop</h2>
 <div class="outline-text-2" id="text-19">
 <p>
 References:
@@ -2141,8 +2141,8 @@ not starting with a star or space.
 </div>
 </div>
 
-<div id="outline-container-org180f5b0" class="outline-2">
-<h2 id="org180f5b0"><span class="section-number-2">20</span> Move lines up and down with arrow keys</h2>
+<div id="outline-container-org4fdaaff" class="outline-2">
+<h2 id="org4fdaaff"><span class="section-number-2">20</span> Move lines up and down with arrow keys</h2>
 <div class="outline-text-2" id="text-20">
 <p>
 See <a href="http://stackoverflow.com/questions/2423834/move-line-region-up-and-down-in-emacs">http://stackoverflow.com/questions/2423834/move-line-region-up-and-down-in-emacs</a>
@@ -2177,12 +2177,12 @@ Move line down.
 </div>
 </div>
 
-<div id="outline-container-org6daf7c7" class="outline-2">
-<h2 id="org6daf7c7"><span class="section-number-2">21</span> Buffers and windows</h2>
+<div id="outline-container-org89fec96" class="outline-2">
+<h2 id="org89fec96"><span class="section-number-2">21</span> Buffers and windows</h2>
 <div class="outline-text-2" id="text-21">
 </div>
-<div id="outline-container-org6d3790a" class="outline-3">
-<h3 id="org6d3790a"><span class="section-number-3">21.1</span> Transpose buffers</h3>
+<div id="outline-container-org3f1d0a7" class="outline-3">
+<h3 id="org3f1d0a7"><span class="section-number-3">21.1</span> Transpose buffers</h3>
 <div class="outline-text-3" id="text-21-1">
 <ul class="org-ul">
 <li>see <a href="http://www.emacswiki.org/emacs/SwitchingBuffers">http://www.emacswiki.org/emacs/SwitchingBuffers</a></li>
@@ -2209,8 +2209,8 @@ Move line down.
 </div>
 </div>
 
-<div id="outline-container-orgb7d1e7a" class="outline-3">
-<h3 id="orgb7d1e7a"><span class="section-number-3">21.2</span> Switch buffers between frames</h3>
+<div id="outline-container-org6d541d7" class="outline-3">
+<h3 id="org6d541d7"><span class="section-number-3">21.2</span> Switch buffers between frames</h3>
 <div class="outline-text-3" id="text-21-2">
 <p>
 Also from <a href="http://www.emacswiki.org/emacs/SwitchingBuffers">http://www.emacswiki.org/emacs/SwitchingBuffers</a>
@@ -2234,8 +2234,8 @@ Also from <a href="http://www.emacswiki.org/emacs/SwitchingBuffers">http://www.e
 </div>
 </div>
 
-<div id="outline-container-org9a2b4e7" class="outline-3">
-<h3 id="org9a2b4e7"><span class="section-number-3">21.3</span> Toggle frame split</h3>
+<div id="outline-container-org9f1819b" class="outline-3">
+<h3 id="org9f1819b"><span class="section-number-3">21.3</span> Toggle frame split</h3>
 <div class="outline-text-3" id="text-21-3">
 <p>
 Toggles between a horizontal and vertical split (two frames only).
@@ -2264,8 +2264,8 @@ Copied from <a href="http://www.emacswiki.org/emacs/ToggleWindowSplit">http://ww
 </div>
 </div>
 
-<div id="outline-container-orga2fccf5" class="outline-3">
-<h3 id="orga2fccf5"><span class="section-number-3">21.4</span> Force horizontal splits</h3>
+<div id="outline-container-orgc85cace" class="outline-3">
+<h3 id="orgc85cace"><span class="section-number-3">21.4</span> Force horizontal splits</h3>
 <div class="outline-text-3" id="text-21-4">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="font-weight: bold;">setq</span> split-height-threshold nil)
@@ -2275,8 +2275,8 @@ Copied from <a href="http://www.emacswiki.org/emacs/ToggleWindowSplit">http://ww
 </div>
 </div>
 
-<div id="outline-container-org874da1d" class="outline-2">
-<h2 id="org874da1d"><span class="section-number-2">22</span> spelling</h2>
+<div id="outline-container-org23e1d3c" class="outline-2">
+<h2 id="org23e1d3c"><span class="section-number-2">22</span> spelling</h2>
 <div class="outline-text-2" id="text-22">
 <p>
 Use hunspell or aspell instead of ispell if one is available. For
@@ -2322,8 +2322,8 @@ spell check program is available, enable <code>flyspell-mode</code>.
 </div>
 </div>
 
-<div id="outline-container-orgef07fff" class="outline-2">
-<h2 id="orgef07fff"><span class="section-number-2">23</span> pine/alpine</h2>
+<div id="outline-container-org504bacf" class="outline-2">
+<h2 id="org504bacf"><span class="section-number-2">23</span> pine/alpine</h2>
 <div class="outline-text-2" id="text-23">
 <p>
 <a href="http://snarfed.org/space/emacs%20font-lock%20faces%20for%20composing%20email">http://snarfed.org/space/emacs font-lock faces for composing email</a>
@@ -2340,8 +2340,8 @@ spell check program is available, enable <code>flyspell-mode</code>.
 </div>
 </div>
 
-<div id="outline-container-org4aa8f34" class="outline-2">
-<h2 id="org4aa8f34"><span class="section-number-2">24</span> yasnippet</h2>
+<div id="outline-container-orgcd74730" class="outline-2">
+<h2 id="orgcd74730"><span class="section-number-2">24</span> yasnippet</h2>
 <div class="outline-text-2" id="text-24">
 <p>
 Use yasnippet. The <code>after-save-hook</code> causes all snippets to be
@@ -2363,8 +2363,8 @@ reloaded after saving a snippet file.
 </div>
 </div>
 
-<div id="outline-container-org3a16888" class="outline-2">
-<h2 id="org3a16888"><span class="section-number-2">25</span> LaTeX</h2>
+<div id="outline-container-orgfa20746" class="outline-2">
+<h2 id="orgfa20746"><span class="section-number-2">25</span> LaTeX</h2>
 <div class="outline-text-2" id="text-25">
 <p>
 Install AuxTeX from ELPA.
@@ -2372,8 +2372,8 @@ Install AuxTeX from ELPA.
 </div>
 </div>
 
-<div id="outline-container-org9b94ad8" class="outline-2">
-<h2 id="org9b94ad8"><span class="section-number-2">26</span> ESS</h2>
+<div id="outline-container-orge6aa301" class="outline-2">
+<h2 id="orge6aa301"><span class="section-number-2">26</span> ESS</h2>
 <div class="outline-text-2" id="text-26">
 <p>
 Installed using ELPA, but seems to need <code>require</code> to be called
@@ -2408,8 +2408,8 @@ Hooks
 </div>
 </div>
 </div>
-<div id="outline-container-org1f8e998" class="outline-2">
-<h2 id="org1f8e998"><span class="section-number-2">27</span> markdown-mode</h2>
+<div id="outline-container-org87a5f92" class="outline-2">
+<h2 id="org87a5f92"><span class="section-number-2">27</span> markdown-mode</h2>
 <div class="outline-text-2" id="text-27">
 <p>
 Installed using ELPA.
@@ -2460,8 +2460,8 @@ so the <code>use-package</code> declaration is only evaluated when
 </div>
 </div>
 
-<div id="outline-container-org1240820" class="outline-2">
-<h2 id="org1240820"><span class="section-number-2">28</span> rmarkdown and polymode</h2>
+<div id="outline-container-orgf6cf370" class="outline-2">
+<h2 id="orgf6cf370"><span class="section-number-2">28</span> rmarkdown and polymode</h2>
 <div class="outline-text-2" id="text-28">
 <p>
 Polymode is what you might expect given the name: it supports multiple
@@ -2526,8 +2526,8 @@ modified a bit) from a comment left by @kwstat on an issue in the
 </div>
 </div>
 
-<div id="outline-container-org1eef481" class="outline-2">
-<h2 id="org1eef481"><span class="section-number-2">29</span> org-mode</h2>
+<div id="outline-container-orgeab4259" class="outline-2">
+<h2 id="orgeab4259"><span class="section-number-2">29</span> org-mode</h2>
 <div class="outline-text-2" id="text-29">
 <p>
 org-mode hooks
@@ -2590,8 +2590,8 @@ org-mode hooks
 Custom key bindings
 </p>
 </div>
-<div id="outline-container-orgf113c1e" class="outline-3">
-<h3 id="orgf113c1e"><span class="section-number-3">29.1</span> navigation</h3>
+<div id="outline-container-org51807ff" class="outline-3">
+<h3 id="org51807ff"><span class="section-number-3">29.1</span> navigation</h3>
 <div class="outline-text-3" id="text-29-1">
 <p>
 I can't seem to remember the default bindings for navigation in
@@ -2623,8 +2623,8 @@ blocks.
 </div>
 </div>
 
-<div id="outline-container-orge11a5ac" class="outline-3">
-<h3 id="orge11a5ac"><span class="section-number-3">29.2</span> org-mode utilities</h3>
+<div id="outline-container-org1389f03" class="outline-3">
+<h3 id="org1389f03"><span class="section-number-3">29.2</span> org-mode utilities</h3>
 <div class="outline-text-3" id="text-29-2">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">insert-date</span> ()
@@ -2678,8 +2678,8 @@ Add a new entry to my journal.
 </div>
 </div>
 
-<div id="outline-container-orgac4f851" class="outline-2">
-<h2 id="orgac4f851"><span class="section-number-2">30</span> chrome "edit with emacs"</h2>
+<div id="outline-container-org156cc3b" class="outline-2">
+<h2 id="org156cc3b"><span class="section-number-2">30</span> chrome "edit with emacs"</h2>
 <div class="outline-text-2" id="text-30">
 <p>
 'edit-server' is initialized by ELPA, but we need to start the server.
@@ -2694,16 +2694,16 @@ Add a new entry to my journal.
 </div>
 </div>
 
-<div id="outline-container-orge0058c7" class="outline-2">
-<h2 id="orge0058c7"><span class="section-number-2">31</span> Python</h2>
+<div id="outline-container-org2b0bf54" class="outline-2">
+<h2 id="org2b0bf54"><span class="section-number-2">31</span> Python</h2>
 <div class="outline-text-2" id="text-31">
 <ul class="org-ul">
 <li><a href="http://jesselegg.com/archives/2010/02/25/emacs-python-programmers-part-1/">http://jesselegg.com/archives/2010/02/25/emacs-python-programmers-part-1/</a></li>
 </ul>
 </div>
 
-<div id="outline-container-orgacdafcb" class="outline-3">
-<h3 id="orgacdafcb"><span class="section-number-3">31.1</span> python-mode hooks</h3>
+<div id="outline-container-orgd8fe18e" class="outline-3">
+<h3 id="orgd8fe18e"><span class="section-number-3">31.1</span> python-mode hooks</h3>
 <div class="outline-text-3" id="text-31-1">
 <div class="org-src-container">
 <pre class="src src-elisp">(add-hook 'python-mode-hook
@@ -2739,8 +2739,8 @@ deleting a single character.
 </div>
 </div>
 
-<div id="outline-container-orga7625f0" class="outline-3">
-<h3 id="orga7625f0"><span class="section-number-3">31.2</span> flycheck</h3>
+<div id="outline-container-org6446c4a" class="outline-3">
+<h3 id="org6446c4a"><span class="section-number-3">31.2</span> flycheck</h3>
 <div class="outline-text-3" id="text-31-2">
 <p>
 Flycheck implements syntax checking for many languages, but for now,
@@ -2759,8 +2759,8 @@ configure flycheck separately from elpy, but I did so below.
 </div>
 </div>
 
-<div id="outline-container-orgd8cfcc3" class="outline-3">
-<h3 id="orgd8cfcc3"><span class="section-number-3">31.3</span> elpy</h3>
+<div id="outline-container-org36f5c0b" class="outline-3">
+<h3 id="org36f5c0b"><span class="section-number-3">31.3</span> elpy</h3>
 <div class="outline-text-3" id="text-31-3">
 <p>
 <code>elpy</code> (installed from ELPA above) provides the primary basis for my
@@ -2772,23 +2772,6 @@ programming environments.
 
 <p>
 See <a href="https://github.com/jorgenschaefer/elpy/wiki/Installation">https://github.com/jorgenschaefer/elpy/wiki/Installation</a>
-</p>
-
-<p>
-Features such as syntax checking, linting, and code completion rely on
-external python packages. Here's a script that creates a default
-virtualenv for each of python2 and python3, and installs all of the
-external packages that I use there:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span style="font-weight: bold;">cd</span> ~/.emacs.d
-bin/venv.sh
-</pre>
-</div>
-
-<p>
-Also see below for elisp functions for installing dependencies.
 </p>
 
 <p>
@@ -2821,19 +2804,24 @@ at this point, and elpy can't have them (these bindings are removed below).
 </pre>
 </div>
 
+<p>
+Features such as syntax checking, linting, and code completion rely on
+external python packages. Here's a script that creates a default
+virtualenv for each of python2 and python3, and installs all of the
+external packages that I use there:
+</p>
+
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="font-weight: bold;">condition-case</span> nil
-    (<span style="font-weight: bold;">progn</span>
-      (elpy-enable)
-      (<span style="font-weight: bold;">setq</span> elpy-modules (delq 'elpy-module-django elpy-modules))
-      <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">disable flymake and replace with flycheck</span>
-      (<span style="font-weight: bold;">setq</span> elpy-modules (delq 'elpy-module-flymake elpy-modules))
-      (<span style="font-weight: bold;">when</span> (<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">flycheck</span> nil t)
-        (add-hook 'elpy-mode-hook 'flycheck-mode)
-        (<span style="font-weight: bold;">setq</span> flycheck-flake8rc <span style="font-style: italic;">"~/.emacs.d/flake8.conf"</span>)))
-  (<span style="font-weight: bold;">error</span> (message <span style="font-style: italic;">"** could not enable elpy"</span>)))
+<pre class="src src-sh"><span style="font-weight: bold;">cd</span> ~/.emacs.d
+bin/venv.sh
 </pre>
 </div>
+
+<p>
+On (re)activation of a virtualenv, it seems to be necessary to restart
+the elpy RPC process and reload <code>elpy-mode</code> to reset syntax
+checking. Otherwise, <code>elpy</code> does a nice job of switching virtualenvs.
+</p>
 
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="font-weight: bold;">defvar</span> <span style="font-weight: bold; font-style: italic;">venv-default-py2</span> <span style="font-style: italic;">"~/.emacs.d/python2-env"</span>)
@@ -2841,70 +2829,19 @@ at this point, and elpy can't have them (these bindings are removed below).
 (<span style="font-weight: bold;">defvar</span> <span style="font-weight: bold; font-style: italic;">venv-default</span> venv-default-py2)
 
 (<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">activate-venv-and-reload</span> (venv)
-  (<span style="font-weight: bold;">interactive</span>)
   (pyvenv-activate venv)
   (elpy-rpc-restart)
-  (python-mode))
-(make-alias 'activate-venv-and-reload)
+  (elpy-mode))
 
 (<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">activate-venv-default-py2</span> ()
   (<span style="font-weight: bold;">interactive</span>)
+  (<span style="font-weight: bold;">setq</span> elpy-rpc-python-command <span style="font-style: italic;">"python2"</span>)
   (activate-venv-and-reload venv-default-py2))
-(make-alias 'activate-venv-default-py2)
 
 (<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">activate-venv-default-py3</span> ()
   (<span style="font-weight: bold;">interactive</span>)
   (<span style="font-weight: bold;">setq</span> elpy-rpc-python-command <span style="font-style: italic;">"python3"</span>)
   (activate-venv-and-reload venv-default-py3))
-(make-alias 'activate-venv-default-py3)
-</pre>
-</div>
-
-<p>
-Here's a function that tries to activate a virtualenv in the current
-project.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">list-venvs</span> (basedir)
-  <span style="font-style: italic;">"Return a list of paths to virtualenvs in 'basedir' or nil if</span>
-<span style="font-style: italic;"> none can be found"</span>
-  (<span style="font-weight: bold;">interactive</span>)
-  (<span style="font-weight: bold;">let</span> ((fstr <span style="font-style: italic;">"find %s -path '*bin/activate' -maxdepth 4"</span>)
-        (pth (replace-regexp-in-string <span style="font-style: italic;">"/$"</span> <span style="font-style: italic;">""</span> basedir)))
-
-    (mapcar (<span style="font-weight: bold;">lambda</span> (string)
-              (replace-regexp-in-string <span style="font-style: italic;">"/bin/activate$"</span> <span style="font-style: italic;">""</span> string))
-            (cl-remove-if
-             (<span style="font-weight: bold;">lambda</span> (string) (= (length string) 0))
-             (split-string (shell-command-to-string (format fstr pth)) <span style="font-style: italic;">"\n"</span>)))
-    ))
-
-(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">list-venvs-current-project</span> ()
-  (<span style="font-weight: bold;">if</span> (elpy-project-root)
-      (list-venvs elpy-project-root)
-    (<span style="font-weight: bold;">error</span> <span style="font-style: italic;">"error: there is no project here"</span>)))
-
-(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">helm-choose-venv-current-project</span> ()
-  (<span style="font-weight: bold;">interactive</span>)
-  (helm
-   <span style="font-weight: bold;">:sources</span> (helm-build-sync-source <span style="font-style: italic;">"choose a virtualenv"</span>
-              <span style="font-weight: bold;">:candidates</span> 'list-venvs-current-project)
-   <span style="font-weight: bold;">:buffer</span> <span style="font-style: italic;">"*helm choose virtualenvs*"</span>))
-
-(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">activate-venv-current-project</span> ()
-  <span style="font-style: italic;">"Activate a virtualenv if one can be found in the current</span>
-<span style="font-style: italic;">project; otherwise activate the virtualenv defined in</span>
-<span style="font-style: italic;">`</span><span style="font-weight: bold; font-style: italic; text-decoration: underline;">venv-default</span><span style="font-style: italic;">'. Also restarts the elpy rpc process."</span>
-  (<span style="font-weight: bold;">interactive</span>)
-  (<span style="font-weight: bold;">let</span> ((venv (helm-choose-venv-current-project)))
-    (<span style="font-weight: bold;">if</span> venv
-        (<span style="font-weight: bold;">if</span> (y-or-n-p (format <span style="font-style: italic;">"Activate %s?"</span> venv))
-            (<span style="font-weight: bold;">progn</span>
-              (activate-venv-and-reload venv)
-              (message <span style="font-style: italic;">"Using %s"</span> pyvenv-virtual-env)))
-      (message <span style="font-style: italic;">"could not find a virtualenv here"</span>))))
-(make-alias 'activate-venv-current-project)
 </pre>
 </div>
 
@@ -2934,11 +2871,62 @@ from within Emacs.
 (make-alias 'elpy-install-requirements)
 </pre>
 </div>
+
+<p>
+Define some utilities for activating a virtualenv in the current
+project. Especially during the transition to python3, there may be
+more than one around, and it's useful to be able to switch between
+virtualenvs for the same project. Turns out it's really easy to use
+<code>helm</code> to present a menu of options.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">list-venvs</span> (basedir)
+  <span style="font-style: italic;">"Return a list of paths to virtualenvs in 'basedir' or nil if</span>
+<span style="font-style: italic;"> none can be found"</span>
+  (<span style="font-weight: bold;">interactive</span>)
+  (<span style="font-weight: bold;">let</span> ((fstr <span style="font-style: italic;">"find %s -path '*bin/activate' -maxdepth 4"</span>)
+        (pth (replace-regexp-in-string <span style="font-style: italic;">"/$"</span> <span style="font-style: italic;">""</span> basedir)))
+
+    (mapcar (<span style="font-weight: bold;">lambda</span> (string)
+              (replace-regexp-in-string <span style="font-style: italic;">"/bin/activate$"</span> <span style="font-style: italic;">""</span> string))
+            (cl-remove-if
+             (<span style="font-weight: bold;">lambda</span> (string) (= (length string) 0))
+             (split-string (shell-command-to-string (format fstr pth)) <span style="font-style: italic;">"\n"</span>)))
+    ))
+
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">list-venvs-current-project</span> ()
+  (<span style="font-weight: bold;">if</span> (elpy-project-root)
+      (list-venvs elpy-project-root)
+    (<span style="font-weight: bold;">error</span> <span style="font-style: italic;">"error: there is no project here"</span>)))
+
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">helm-choose-venv-current-project</span> ()
+  (<span style="font-weight: bold;">interactive</span>)
+  (helm
+   <span style="font-weight: bold;">:sources</span> (helm-build-sync-source <span style="font-style: italic;">"choose a virtualenv"</span>
+              <span style="font-weight: bold;">:candidates</span> 'list-venvs-current-project)
+   <span style="font-weight: bold;">:buffer</span> <span style="font-style: italic;">"*helm choose virtualenv*"</span>))
+
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">activate-venv-current-project</span> ()
+  <span style="font-style: italic;">"Activate a virtualenv if one can be found in the current</span>
+<span style="font-style: italic;">project; otherwise activate the virtualenv defined in</span>
+<span style="font-style: italic;">`</span><span style="font-weight: bold; font-style: italic; text-decoration: underline;">venv-default</span><span style="font-style: italic;">'. Also restarts the elpy rpc process."</span>
+  (<span style="font-weight: bold;">interactive</span>)
+  (<span style="font-weight: bold;">let</span> ((venv (helm-choose-venv-current-project)))
+    (<span style="font-weight: bold;">if</span> venv
+        (<span style="font-weight: bold;">if</span> (y-or-n-p (format <span style="font-style: italic;">"Activate %s?"</span> venv))
+            (<span style="font-weight: bold;">progn</span>
+              (activate-venv-and-reload venv)
+              (message <span style="font-style: italic;">"Using %s"</span> pyvenv-virtual-env)))
+      (message <span style="font-style: italic;">"could not find a virtualenv here"</span>))))
+(make-alias 'activate-venv-current-project)
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-orgaae6e56" class="outline-3">
-<h3 id="orgaae6e56"><span class="section-number-3">31.4</span> autopep8</h3>
+<div id="outline-container-org1891e7e" class="outline-3">
+<h3 id="org1891e7e"><span class="section-number-3">31.4</span> autopep8</h3>
 <div class="outline-text-3" id="text-31-4">
 <p>
 Apply <code>autopep8</code> (<a href="https://github.com/hhatto/autopep8">https://github.com/hhatto/autopep8</a>) to the current
@@ -2989,8 +2977,8 @@ it to the output of autopep8.
 </div>
 </div>
 
-<div id="outline-container-orgac2f831" class="outline-3">
-<h3 id="orgac2f831"><span class="section-number-3">31.5</span> a hydra for python-related actions</h3>
+<div id="outline-container-org33d64be" class="outline-3">
+<h3 id="org33d64be"><span class="section-number-3">31.5</span> a hydra for python-related actions</h3>
 <div class="outline-text-3" id="text-31-5">
 <p>
 Let's expose some of the frequently-used actions using a hyrda
@@ -3018,8 +3006,8 @@ Let's expose some of the frequently-used actions using a hyrda
 </div>
 </div>
 
-<div id="outline-container-orge6c8ab9" class="outline-2">
-<h2 id="orge6c8ab9"><span class="section-number-2">32</span> shell</h2>
+<div id="outline-container-org9a706fc" class="outline-2">
+<h2 id="org9a706fc"><span class="section-number-2">32</span> shell</h2>
 <div class="outline-text-2" id="text-32">
 <p>
 Recognize zsh and bash scripts by file suffix.
@@ -3033,8 +3021,8 @@ Recognize zsh and bash scripts by file suffix.
 </div>
 </div>
 
-<div id="outline-container-org94c2929" class="outline-2">
-<h2 id="org94c2929"><span class="section-number-2">33</span> scons</h2>
+<div id="outline-container-orgac45070" class="outline-2">
+<h2 id="orgac45070"><span class="section-number-2">33</span> scons</h2>
 <div class="outline-text-2" id="text-33">
 <p>
 I should really start using a snippet package, but for now:
@@ -3054,8 +3042,8 @@ I should really start using a snippet package, but for now:
 </div>
 </div>
 
-<div id="outline-container-org5508a7e" class="outline-2">
-<h2 id="org5508a7e"><span class="section-number-2">34</span> text-mode</h2>
+<div id="outline-container-org5c89573" class="outline-2">
+<h2 id="org5c89573"><span class="section-number-2">34</span> text-mode</h2>
 <div class="outline-text-2" id="text-34">
 <div class="org-src-container">
 <pre class="src src-elisp">(add-hook 'text-mode-hook
@@ -3067,8 +3055,8 @@ I should really start using a snippet package, but for now:
 </div>
 </div>
 
-<div id="outline-container-org9aef3af" class="outline-2">
-<h2 id="org9aef3af"><span class="section-number-2">35</span> rst-mode</h2>
+<div id="outline-container-org1c4b5d4" class="outline-2">
+<h2 id="org1c4b5d4"><span class="section-number-2">35</span> rst-mode</h2>
 <div class="outline-text-2" id="text-35">
 <div class="org-src-container">
 <pre class="src src-elisp">(add-hook 'rst-mode-hook
@@ -3081,8 +3069,8 @@ I should really start using a snippet package, but for now:
 </div>
 </div>
 
-<div id="outline-container-orga152dbf" class="outline-2">
-<h2 id="orga152dbf"><span class="section-number-2">36</span> moinmoin-mode</h2>
+<div id="outline-container-org00a4c9e" class="outline-2">
+<h2 id="org00a4c9e"><span class="section-number-2">36</span> moinmoin-mode</h2>
 <div class="outline-text-2" id="text-36">
 <p>
 A mode for editing moinmoin wiki text. This mode is installed via
@@ -3098,8 +3086,8 @@ elpa, but must be initialized.
 </div>
 </div>
 
-<div id="outline-container-org95c4788" class="outline-2">
-<h2 id="org95c4788"><span class="section-number-2">37</span> web-mode</h2>
+<div id="outline-container-org40e361a" class="outline-2">
+<h2 id="org40e361a"><span class="section-number-2">37</span> web-mode</h2>
 <div class="outline-text-2" id="text-37">
 <p>
 A major-mode for editing web templates <a href="http://web-mode.org">http://web-mode.org</a>
@@ -3131,8 +3119,8 @@ Also: A Hydra for web-mode commands; activate via <code>hydra-launcher</code> us
 </div>
 </div>
 
-<div id="outline-container-orgfb04c6a" class="outline-2">
-<h2 id="orgfb04c6a"><span class="section-number-2">38</span> tramp</h2>
+<div id="outline-container-org094f287" class="outline-2">
+<h2 id="org094f287"><span class="section-number-2">38</span> tramp</h2>
 <div class="outline-text-2" id="text-38">
 <ul class="org-ul">
 <li><a href="http://www.gnu.org/software/tramp/">http://www.gnu.org/software/tramp/</a></li>
@@ -3148,8 +3136,8 @@ Also: A Hydra for web-mode commands; activate via <code>hydra-launcher</code> us
 </div>
 </div>
 
-<div id="outline-container-org26df01b" class="outline-2">
-<h2 id="org26df01b"><span class="section-number-2">39</span> git/magit</h2>
+<div id="outline-container-org8fb7df6" class="outline-2">
+<h2 id="org8fb7df6"><span class="section-number-2">39</span> git/magit</h2>
 <div class="outline-text-2" id="text-39">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">vc-git</span>)
@@ -3167,8 +3155,8 @@ Magit is installed via ELPA.
 </div>
 </div>
 
-<div id="outline-container-org82e8b45" class="outline-2">
-<h2 id="org82e8b45"><span class="section-number-2">40</span> sql support</h2>
+<div id="outline-container-org65acaac" class="outline-2">
+<h2 id="org65acaac"><span class="section-number-2">40</span> sql support</h2>
 <div class="outline-text-2" id="text-40">
 <ul class="org-ul">
 <li>see <a href="http://atomized.org/2008/10/enhancing-emacs%E2%80%99-sql-mode/">http://atomized.org/2008/10/enhancing-emacs’-sql-mode/</a></li>
@@ -3229,8 +3217,8 @@ Preset connections
 </div>
 </div>
 
-<div id="outline-container-org0aec107" class="outline-2">
-<h2 id="org0aec107"><span class="section-number-2">41</span> gpg</h2>
+<div id="outline-container-org47b2095" class="outline-2">
+<h2 id="org47b2095"><span class="section-number-2">41</span> gpg</h2>
 <div class="outline-text-2" id="text-41">
 <ul class="org-ul">
 <li><a href="http://www.emacswiki.org/emacs/EasyPG">http://www.emacswiki.org/emacs/EasyPG</a></li>
@@ -3243,8 +3231,8 @@ Preset connections
 </div>
 </div>
 </div>
-<div id="outline-container-org387789e" class="outline-2">
-<h2 id="org387789e"><span class="section-number-2">42</span> Outline minor mode</h2>
+<div id="outline-container-org8f3755d" class="outline-2">
+<h2 id="org8f3755d"><span class="section-number-2">42</span> Outline minor mode</h2>
 <div class="outline-text-2" id="text-42">
 <p>
 The default key bindings for outline-minor-mode start with 'C-c @ C-',
@@ -3282,8 +3270,8 @@ via emacswiki (<a href="http://emacswiki.org/emacs/OutlineMinorMode">http://emac
 </div>
 </div>
 
-<div id="outline-container-org8b008ac" class="outline-2">
-<h2 id="org8b008ac"><span class="section-number-2">43</span> Search and replace</h2>
+<div id="outline-container-org0a38bf6" class="outline-2">
+<h2 id="org0a38bf6"><span class="section-number-2">43</span> Search and replace</h2>
 <div class="outline-text-2" id="text-43">
 <p>
 Here are a few packages that make search and replace more fun. I'll
@@ -3291,8 +3279,8 @@ define a keymap using a hydra in the final section below.
 </p>
 </div>
 
-<div id="outline-container-orgda69548" class="outline-3">
-<h3 id="orgda69548"><span class="section-number-3">43.1</span> occur-dwim</h3>
+<div id="outline-container-org1992c39" class="outline-3">
+<h3 id="org1992c39"><span class="section-number-3">43.1</span> occur-dwim</h3>
 <div class="outline-text-3" id="text-43-1">
 <p>
 Copied from <a href="http://oremacs.com/2015/01/26/occur-dwim/">a post</a> on "(or emacs"
@@ -3321,8 +3309,8 @@ Note that plain-old <code>occur</code> can be executed using "M-s o" by default
 </div>
 </div>
 
-<div id="outline-container-orgf2de103" class="outline-3">
-<h3 id="orgf2de103"><span class="section-number-3">43.2</span> visual-regexp</h3>
+<div id="outline-container-orgf756626" class="outline-3">
+<h3 id="orgf756626"><span class="section-number-3">43.2</span> visual-regexp</h3>
 <div class="outline-text-3" id="text-43-2">
 <p>
 Two packages by the same author add visual cues to searching and/or
@@ -3346,8 +3334,8 @@ Installed using ELPA.
 </div>
 </div>
 
-<div id="outline-container-orgd2b5346" class="outline-3">
-<h3 id="orgd2b5346"><span class="section-number-3">43.3</span> helm-swoop</h3>
+<div id="outline-container-orgfdceee1" class="outline-3">
+<h3 id="orgfdceee1"><span class="section-number-3">43.3</span> helm-swoop</h3>
 <div class="outline-text-3" id="text-43-3">
 <p>
 Show matches to a search string in a another window.
@@ -3372,8 +3360,8 @@ edit the buffer from within the <code>helm-swoop</code> buffer</li>
 </div>
 </div>
 
-<div id="outline-container-org519a37c" class="outline-3">
-<h3 id="org519a37c"><span class="section-number-3">43.4</span> Hydra for searching</h3>
+<div id="outline-container-orgc5990cf" class="outline-3">
+<h3 id="orgc5990cf"><span class="section-number-3">43.4</span> Hydra for searching</h3>
 <div class="outline-text-3" id="text-43-4">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="font-weight: bold;">if</span> (<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">hydra</span> nil 'noerror)
@@ -3396,8 +3384,8 @@ edit the buffer from within the <code>helm-swoop</code> buffer</li>
 </div>
 </div>
 
-<div id="outline-container-org5c304bf" class="outline-3">
-<h3 id="org5c304bf"><span class="section-number-3">43.5</span> Hydra for string replacement</h3>
+<div id="outline-container-org90c16e0" class="outline-3">
+<h3 id="org90c16e0"><span class="section-number-3">43.5</span> Hydra for string replacement</h3>
 <div class="outline-text-3" id="text-43-5">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="font-weight: bold;">if</span> (<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">hydra</span> nil 'noerror)
@@ -3416,12 +3404,12 @@ edit the buffer from within the <code>helm-swoop</code> buffer</li>
 </div>
 </div>
 
-<div id="outline-container-orgfd64d91" class="outline-2">
-<h2 id="orgfd64d91"><span class="section-number-2">44</span> Misc utilities</h2>
+<div id="outline-container-org215ceae" class="outline-2">
+<h2 id="org215ceae"><span class="section-number-2">44</span> Misc utilities</h2>
 <div class="outline-text-2" id="text-44">
 </div>
-<div id="outline-container-org673bb31" class="outline-3">
-<h3 id="org673bb31"><span class="section-number-3">44.1</span> copy-buffer-file-name</h3>
+<div id="outline-container-orgd0f08e7" class="outline-3">
+<h3 id="orgd0f08e7"><span class="section-number-3">44.1</span> copy-buffer-file-name</h3>
 <div class="outline-text-3" id="text-44-1">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">copy-buffer-file-name</span> ()
@@ -3439,8 +3427,8 @@ edit the buffer from within the <code>helm-swoop</code> buffer</li>
 </div>
 </div>
 
-<div id="outline-container-org2741639" class="outline-3">
-<h3 id="org2741639"><span class="section-number-3">44.2</span> copy-and-comment</h3>
+<div id="outline-container-org605b10c" class="outline-3">
+<h3 id="org605b10c"><span class="section-number-3">44.2</span> copy-and-comment</h3>
 <div class="outline-text-3" id="text-44-2">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">copy-and-comment</span> ()
@@ -3464,8 +3452,8 @@ edit the buffer from within the <code>helm-swoop</code> buffer</li>
 </div>
 </div>
 
-<div id="outline-container-org72c6843" class="outline-3">
-<h3 id="org72c6843"><span class="section-number-3">44.3</span> unfill-paragraph</h3>
+<div id="outline-container-org4af8497" class="outline-3">
+<h3 id="org4af8497"><span class="section-number-3">44.3</span> unfill-paragraph</h3>
 <div class="outline-text-3" id="text-44-3">
 <p>
 from <a href="http://defindit.com/readme_files/emacs_hints_tricks.html">http://defindit.com/readme_files/emacs_hints_tricks.html</a>
@@ -3483,8 +3471,8 @@ from <a href="http://defindit.com/readme_files/emacs_hints_tricks.html">http://d
 </div>
 </div>
 
-<div id="outline-container-org5a98e8c" class="outline-3">
-<h3 id="org5a98e8c"><span class="section-number-3">44.4</span> Copy region to other window</h3>
+<div id="outline-container-org61e3068" class="outline-3">
+<h3 id="org61e3068"><span class="section-number-3">44.4</span> Copy region to other window</h3>
 <div class="outline-text-3" id="text-44-4">
 <p>
 Adapted from <a href="http://emacs.stackexchange.com/questions/3743/how-to-move-region-to-other-window">http://emacs.stackexchange.com/questions/3743/how-to-move-region-to-other-window</a>
@@ -3511,8 +3499,8 @@ Adapted from <a href="http://emacs.stackexchange.com/questions/3743/how-to-move-
 </div>
 </div>
 
-<div id="outline-container-org4dc5021" class="outline-2">
-<h2 id="org4dc5021"><span class="section-number-2">45</span> elisp-format</h2>
+<div id="outline-container-orgb5f72a5" class="outline-2">
+<h2 id="orgb5f72a5"><span class="section-number-2">45</span> elisp-format</h2>
 <div class="outline-text-2" id="text-45">
 <p>
 Written by Andy Stewart and available on emacswiki: <a href="http://www.emacswiki.org/emacs/elisp-format.el">http://www.emacswiki.org/emacs/elisp-format.el</a>
@@ -3527,8 +3515,8 @@ Written by Andy Stewart and available on emacswiki: <a href="http://www.emacswik
 </div>
 </div>
 
-<div id="outline-container-orgcfd5717" class="outline-2">
-<h2 id="orgcfd5717"><span class="section-number-2">46</span> emacsclient</h2>
+<div id="outline-container-org56550a4" class="outline-2">
+<h2 id="org56550a4"><span class="section-number-2">46</span> emacsclient</h2>
 <div class="outline-text-2" id="text-46">
 <p>
 Buffers opened from command line don't create new frame
@@ -3541,8 +3529,8 @@ Buffers opened from command line don't create new frame
 </div>
 </div>
 
-<div id="outline-container-org14a9e48" class="outline-2">
-<h2 id="org14a9e48"><span class="section-number-2">47</span> discover.el</h2>
+<div id="outline-container-orgbaccfb3" class="outline-2">
+<h2 id="orgbaccfb3"><span class="section-number-2">47</span> discover.el</h2>
 <div class="outline-text-2" id="text-47">
 <p>
 Introduced in <a href="https://www.masteringemacs.org/article/discoverel-discover-emacs-context-menus">this blog post</a> by Mickey Petersen, <code>discover.el</code>
@@ -3562,8 +3550,8 @@ fact discover something every time I use it!
 </div>
 </div>
 
-<div id="outline-container-org84b5e82" class="outline-2">
-<h2 id="org84b5e82"><span class="section-number-2">48</span> dired-x</h2>
+<div id="outline-container-org087ccd5" class="outline-2">
+<h2 id="org087ccd5"><span class="section-number-2">48</span> dired-x</h2>
 <div class="outline-text-2" id="text-48">
 <p>
 Toggle <code>dired-omit-mode</code> with <code>C-x M-o</code>. Hide uninteresting files by
@@ -3583,8 +3571,8 @@ redefine <code>dired-omit-files</code> to show these.
 </div>
 </div>
 
-<div id="outline-container-orgec5bb0a" class="outline-2">
-<h2 id="orgec5bb0a"><span class="section-number-2">49</span> enable "advanced" commands</h2>
+<div id="outline-container-org5f58fda" class="outline-2">
+<h2 id="org5f58fda"><span class="section-number-2">49</span> enable "advanced" commands</h2>
 <div class="outline-text-2" id="text-49">
 <p>
 Not sure why these are disabled by default.
@@ -3599,8 +3587,8 @@ Not sure why these are disabled by default.
 </div>
 </div>
 
-<div id="outline-container-orgcb6a6ca" class="outline-2">
-<h2 id="orgcb6a6ca"><span class="section-number-2">50</span> custom-set-variables</h2>
+<div id="outline-container-orgb85ebaa" class="outline-2">
+<h2 id="orgb85ebaa"><span class="section-number-2">50</span> custom-set-variables</h2>
 <div class="outline-text-2" id="text-50">
 <p>
 Emacs modifies this statement if you use the interactive "customize"
@@ -3615,8 +3603,8 @@ function, so don't do that.
 </div>
 </div>
 
-<div id="outline-container-org2ea01a2" class="outline-2">
-<h2 id="org2ea01a2"><span class="section-number-2">51</span> License</h2>
+<div id="outline-container-org7b8070d" class="outline-2">
+<h2 id="org7b8070d"><span class="section-number-2">51</span> License</h2>
 <div class="outline-text-2" id="text-51">
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">This program is free software: you can redistribute it and/or modify</span>
@@ -3638,7 +3626,7 @@ function, so don't do that.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Noah Hoffman</p>
-<p class="date">Created: 2017-11-20 Mon 10:00</p>
+<p class="date">Created: 2017-11-20 Mon 10:35</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
