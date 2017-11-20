@@ -1633,18 +1633,6 @@ programming environments.
 
 See https://github.com/jorgenschaefer/elpy/wiki/Installation
 
-Features such as syntax checking, linting, and code completion rely on
-external python packages. Here's a script that creates a default
-virtualenv for each of python2 and python3, and installs all of the
-external packages that I use there:
-
-#+BEGIN_SRC sh :eval no
-cd ~/.emacs.d
-bin/venv.sh
-#+END_SRC
-
-Also see below for elisp functions for installing dependencies.
-
 Configure =elpy=. Note that I use =C-= + arrows to move between
 windows, and =M= + arrows to move by word. These are in muscle memory
 at this point, and elpy can't have them (these bindings are removed below).
@@ -1672,18 +1660,19 @@ at this point, and elpy can't have them (these bindings are removed below).
   (message "** elpy is not installed"))
 #+END_SRC
 
-#+BEGIN_SRC elisp
-(condition-case nil
-    (progn
-      (elpy-enable)
-      (setq elpy-modules (delq 'elpy-module-django elpy-modules))
-      ;; disable flymake and replace with flycheck
-      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-      (when (require 'flycheck nil t)
-        (add-hook 'elpy-mode-hook 'flycheck-mode)
-        (setq flycheck-flake8rc "~/.emacs.d/flake8.conf")))
-  (error (message "** could not enable elpy")))
+Features such as syntax checking, linting, and code completion rely on
+external python packages. Here's a script that creates a default
+virtualenv for each of python2 and python3, and installs all of the
+external packages that I use there:
+
+#+BEGIN_SRC sh :eval no
+cd ~/.emacs.d
+bin/venv.sh
 #+END_SRC
+
+On (re)activation of a virtualenv, it seems to be necessary to restart
+the elpy RPC process and reload =elpy-mode= to reset syntax
+checking. Otherwise, =elpy= does a nice job of switching virtualenvs.
 
 #+BEGIN_SRC elisp
 (defvar venv-default-py2 "~/.emacs.d/python2-env")
@@ -1691,26 +1680,50 @@ at this point, and elpy can't have them (these bindings are removed below).
 (defvar venv-default venv-default-py2)
 
 (defun activate-venv-and-reload (venv)
-  (interactive)
   (pyvenv-activate venv)
   (elpy-rpc-restart)
-  (python-mode))
-(make-alias 'activate-venv-and-reload)
+  (elpy-mode))
 
 (defun activate-venv-default-py2 ()
   (interactive)
+  (setq elpy-rpc-python-command "python2")
   (activate-venv-and-reload venv-default-py2))
-(make-alias 'activate-venv-default-py2)
 
 (defun activate-venv-default-py3 ()
   (interactive)
   (setq elpy-rpc-python-command "python3")
   (activate-venv-and-reload venv-default-py3))
-(make-alias 'activate-venv-default-py3)
 #+END_SRC
 
-Here's a function that tries to activate a virtualenv in the current
-project.
+This function installs python dependencies to the current virtualenv
+from within Emacs.
+
+#+BEGIN_SRC elisp
+(defun elpy-install-requirements ()
+  "Install python requirements to the current virtualenv."
+  (interactive)
+  (unless pyvenv-virtual-env
+    (error "Error: no virtualenv is active"))
+  (let ((dest "*elpy-install-requirements-output*")
+        (install-cmd (format "%s/bin/pip install -U --force '%%s'" pyvenv-virtual-env))
+        (deps '("elpy" "jedi" "pyflakes" "pep8" "flake8" "importmagic" "yapf")))
+    (generate-new-buffer dest)
+    (mapcar
+     #'(lambda (pkg)
+         (message (format install-cmd pkg))
+         (call-process-shell-command (format install-cmd pkg) nil dest)) deps)
+    (call-process-shell-command
+     (format "%s/bin/pip freeze" pyvenv-virtual-env) nil dest)
+    (switch-to-buffer dest))
+  (elpy-rpc-restart))
+(make-alias 'elpy-install-requirements)
+#+END_SRC
+
+Define some utilities for activating a virtualenv in the current
+project. Especially during the transition to python3, there may be
+more than one around, and it's useful to be able to switch between
+virtualenvs for the same project. Turns out it's really easy to use
+=helm= to present a menu of options.
 
 #+BEGIN_SRC elisp
 (defun list-venvs (basedir)
@@ -1737,7 +1750,7 @@ project.
   (helm
    :sources (helm-build-sync-source "choose a virtualenv"
               :candidates 'list-venvs-current-project)
-   :buffer "*helm choose virtualenvs*"))
+   :buffer "*helm choose virtualenv*"))
 
 (defun activate-venv-current-project ()
   "Activate a virtualenv if one can be found in the current
@@ -1752,30 +1765,6 @@ project; otherwise activate the virtualenv defined in
               (message "Using %s" pyvenv-virtual-env)))
       (message "could not find a virtualenv here"))))
 (make-alias 'activate-venv-current-project)
-#+END_SRC
-
-This function installs python dependencies to the current virtualenv
-from within Emacs.
-
-#+BEGIN_SRC elisp
-(defun elpy-install-requirements ()
-  "Install python requirements to the current virtualenv."
-  (interactive)
-  (unless pyvenv-virtual-env
-    (error "Error: no virtualenv is active"))
-  (let ((dest "*elpy-install-requirements-output*")
-        (install-cmd (format "%s/bin/pip install -U --force '%%s'" pyvenv-virtual-env))
-        (deps '("elpy" "jedi" "pyflakes" "pep8" "flake8" "importmagic" "yapf")))
-    (generate-new-buffer dest)
-    (mapcar
-     #'(lambda (pkg)
-         (message (format install-cmd pkg))
-         (call-process-shell-command (format install-cmd pkg) nil dest)) deps)
-    (call-process-shell-command
-     (format "%s/bin/pip freeze" pyvenv-virtual-env) nil dest)
-    (switch-to-buffer dest))
-  (elpy-rpc-restart))
-(make-alias 'elpy-install-requirements)
 #+END_SRC
 
 ** autopep8

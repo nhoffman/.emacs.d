@@ -814,38 +814,43 @@ Assumes that the frame is only split into two."
       (add-to-list 'elpy-project-ignored-directories "*-env"))
   (message "** elpy is not installed"))
 
-(condition-case nil
-    (progn
-      (elpy-enable)
-      (setq elpy-modules (delq 'elpy-module-django elpy-modules))
-      ;; disable flymake and replace with flycheck
-      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-      (when (require 'flycheck nil t)
-        (add-hook 'elpy-mode-hook 'flycheck-mode)
-        (setq flycheck-flake8rc "~/.emacs.d/flake8.conf")))
-  (error (message "** could not enable elpy")))
-
 (defvar venv-default-py2 "~/.emacs.d/python2-env")
 (defvar venv-default-py3 "~/.emacs.d/python3-env")
 (defvar venv-default venv-default-py2)
 
 (defun activate-venv-and-reload (venv)
-  (interactive)
   (pyvenv-activate venv)
   (elpy-rpc-restart)
-  (python-mode))
-(make-alias 'activate-venv-and-reload)
+  (elpy-mode))
 
 (defun activate-venv-default-py2 ()
   (interactive)
+  (setq elpy-rpc-python-command "python2")
   (activate-venv-and-reload venv-default-py2))
-(make-alias 'activate-venv-default-py2)
 
 (defun activate-venv-default-py3 ()
   (interactive)
   (setq elpy-rpc-python-command "python3")
   (activate-venv-and-reload venv-default-py3))
-(make-alias 'activate-venv-default-py3)
+
+(defun elpy-install-requirements ()
+  "Install python requirements to the current virtualenv."
+  (interactive)
+  (unless pyvenv-virtual-env
+    (error "Error: no virtualenv is active"))
+  (let ((dest "*elpy-install-requirements-output*")
+        (install-cmd (format "%s/bin/pip install -U --force '%%s'" pyvenv-virtual-env))
+        (deps '("elpy" "jedi" "pyflakes" "pep8" "flake8" "importmagic" "yapf")))
+    (generate-new-buffer dest)
+    (mapcar
+     #'(lambda (pkg)
+         (message (format install-cmd pkg))
+         (call-process-shell-command (format install-cmd pkg) nil dest)) deps)
+    (call-process-shell-command
+     (format "%s/bin/pip freeze" pyvenv-virtual-env) nil dest)
+    (switch-to-buffer dest))
+  (elpy-rpc-restart))
+(make-alias 'elpy-install-requirements)
 
 (defun list-venvs (basedir)
   "Return a list of paths to virtualenvs in 'basedir' or nil if
@@ -871,7 +876,7 @@ Assumes that the frame is only split into two."
   (helm
    :sources (helm-build-sync-source "choose a virtualenv"
               :candidates 'list-venvs-current-project)
-   :buffer "*helm choose virtualenvs*"))
+   :buffer "*helm choose virtualenv*"))
 
 (defun activate-venv-current-project ()
   "Activate a virtualenv if one can be found in the current
@@ -886,25 +891,6 @@ project; otherwise activate the virtualenv defined in
               (message "Using %s" pyvenv-virtual-env)))
       (message "could not find a virtualenv here"))))
 (make-alias 'activate-venv-current-project)
-
-(defun elpy-install-requirements ()
-  "Install python requirements to the current virtualenv."
-  (interactive)
-  (unless pyvenv-virtual-env
-    (error "Error: no virtualenv is active"))
-  (let ((dest "*elpy-install-requirements-output*")
-        (install-cmd (format "%s/bin/pip install -U --force '%%s'" pyvenv-virtual-env))
-        (deps '("elpy" "jedi" "pyflakes" "pep8" "flake8" "importmagic" "yapf")))
-    (generate-new-buffer dest)
-    (mapcar
-     #'(lambda (pkg)
-         (message (format install-cmd pkg))
-         (call-process-shell-command (format install-cmd pkg) nil dest)) deps)
-    (call-process-shell-command
-     (format "%s/bin/pip freeze" pyvenv-virtual-env) nil dest)
-    (switch-to-buffer dest))
-  (elpy-rpc-restart))
-(make-alias 'elpy-install-requirements)
 
 (defun p8 ()
   "Apply autopep8 to the current region or buffer"
