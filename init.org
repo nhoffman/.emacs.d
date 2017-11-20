@@ -1713,9 +1713,24 @@ Here's a function that tries to activate a virtualenv in the current
 project.
 
 #+BEGIN_SRC elisp
+(defun list-venvs (basedir)
+  "Return a list of paths to virtualenvs in 'basedir' or nil if
+ none can be found"
+  (interactive)
+  (let ((fstr "find %s -path '*bin/activate' -maxdepth 4")
+	(pth (replace-regexp-in-string "/$" "" basedir)))
+
+    (mapcar (lambda (string)
+	      (replace-regexp-in-string "/bin/activate$" "" string))
+	    (cl-remove-if
+	     (lambda (string) (= (length string) 0))
+	     (split-string (shell-command-to-string (format fstr pth)) "\n")))
+    ))
+
 (defun find-venv-current-project ()
   "Return the path to the virtualenv in the current project or
 nil if none is found."
+  (interactive)
   (let ((venv nil)
         (find-pattern "find %s -path '*bin/activate' -maxdepth 4"))
 
