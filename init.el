@@ -1,3 +1,4 @@
+
 (defvar my-alias-prefix "my/")
 
 (defun make-alias (fun &optional prefix)
@@ -65,13 +66,14 @@
   (when (boundp 'package-pinned-packages)
     (setq package-pinned-packages
           '((elpy . "elpy")
-            (highlight-indentation . "elpy") ;; fixes error in elpy 1.6
-            (org . "org")
-            (magit . "melpa-stable")
+            (flycheck . "melpa-stable")
             (helm-descbinds . "melpa-stable")
             (helm-swoop . "melpa-stable")
+            (highlight-indentation . "elpy") ;; fixes error in elpy 1.6
             (hydra . "gnu")
+            (magit . "melpa-stable")
             (markdown-mode . "melpa-stable")
+            (org . "org")
             (smart-mode-line . "melpa-stable")
             (swiper . "melpa-stable")
             (web-mode . "melpa")
@@ -138,6 +140,7 @@
     elpy
     ess
     expand-region
+    flycheck
     gist
     git-timemachine
     helm
@@ -409,10 +412,10 @@
 ;;   (exec-path-from-shell-initialize))
 
 (global-set-key [(control x) (control c)]
-		(function
-		 (lambda () (interactive)
-		   (cond ((y-or-n-p "Quit? (save-buffers-kill-terminal) ")
-			  (save-buffers-kill-terminal))))))
+                (function
+                 (lambda () (interactive)
+                   (cond ((y-or-n-p "Quit? (save-buffers-kill-terminal) ")
+                          (save-buffers-kill-terminal))))))
 
 (setq delete-trailing-lines nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -532,7 +535,7 @@
   "switch-buffers-between-frames switches the buffers between the two last frames"
   (interactive)
   (let ((this-frame-buffer nil)
-	(other-frame-buffer nil))
+        (other-frame-buffer nil))
     (setq this-frame-buffer (car (frame-parameter nil 'buffer-list)))
     (other-frame 1)
     (setq other-frame-buffer (car (frame-parameter nil 'buffer-list)))
@@ -611,17 +614,17 @@ Assumes that the frame is only split into two."
   (error (message "** could not load ESS")))
 
 (add-hook 'ess-mode-hook
-	  '(lambda()
-	     (message "Loading ess-mode hooks")
-	     ;; leave my underscore key alone!
-	     (setq ess-S-assign "_")
-	     ;; (ess-toggle-underscore nil)
-	     ;; set ESS indentation style
-	     ;; choose from GNU, BSD, K&R, CLB, and C++
-	     (ess-set-style 'GNU 'quiet)
-	     (if enable-flyspell-p (flyspell-mode))
-	     )
-	  )
+          '(lambda()
+             (message "Loading ess-mode hooks")
+             ;; leave my underscore key alone!
+             (setq ess-S-assign "_")
+             ;; (ess-toggle-underscore nil)
+             ;; set ESS indentation style
+             ;; choose from GNU, BSD, K&R, CLB, and C++
+             (ess-set-style 'GNU 'quiet)
+             (if enable-flyspell-p (flyspell-mode))
+             )
+          )
 
 (if (require 'markdown-mode nil 'noerror)
     (use-package markdown-mode
@@ -704,7 +707,7 @@ Assumes that the frame is only split into two."
              (org-babel-do-load-languages
               'org-babel-load-languages my/org-babel-load-languages)
 
-	     (require 'ox-minutes nil t)
+             (require 'ox-minutes nil t)
 
              ;; (defun org-with-silent-modifications(&rest args)
              ;;   "Replaces function causing error on org-export"
@@ -772,14 +775,11 @@ Assumes that the frame is only split into two."
 
 (add-hook 'python-mode-hook
           '(lambda ()
-             (message "Loading python-mode hooks")
              (setq indent-tabs-mode nil)
              (setq tab-width 4)
              (setq py-indent-offset tab-width)
              (setq py-smart-indentation t)
-             (define-key python-mode-map "\C-m" 'newline-and-indent)
-             (setq python-check-command "~/.emacs.d/bin/pychecker")
-             ))
+             (define-key python-mode-map "\C-m" 'newline-and-indent)))
 
 (push '("SConstruct" . python-mode) auto-mode-alist)
 (push '("SConscript" . python-mode) auto-mode-alist)
@@ -787,18 +787,65 @@ Assumes that the frame is only split into two."
 
 (setq backward-delete-char-untabify-method "all")
 
+(if (require 'flycheck nil 'noerror)
+    (use-package flycheck
+      :init
+      (setq flycheck-flake8rc "~/.emacs.d/flake8.conf"))
+  (message "** flycheck is not installed"))
+
+(if (require 'elpy nil 'noerror)
+    (use-package elpy
+      :bind (:map elpy-mode-map
+                  ("C-<right>" . nil)
+                  ("C-<left>" . nil)
+                  ("M-<right>" . nil)
+                  ("M-<left>" . nil)
+                  ("M-<right>" . nil)
+                  ("M-C-]" . elpy-nav-move-iblock-right)
+                  ("M-C-[" . elpy-nav-move-iblock-left))
+      :init
+      (when (require 'flycheck nil t)
+        (add-hook 'elpy-mode-hook 'flycheck-mode))
+      :config
+      (setq elpy-modules (delq 'elpy-module-django elpy-modules))
+      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+      (setq elpy-rpc-backend "jedi")
+      (add-to-list 'elpy-project-ignored-directories "src")
+      (add-to-list 'elpy-project-ignored-directories "*-env"))
+  (message "** elpy is not installed"))
+
 (condition-case nil
-    (elpy-enable) ;; install from ELPA
+    (progn
+      (elpy-enable)
+      (setq elpy-modules (delq 'elpy-module-django elpy-modules))
+      ;; disable flymake and replace with flycheck
+      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+      (when (require 'flycheck nil t)
+        (add-hook 'elpy-mode-hook 'flycheck-mode)
+        (setq flycheck-flake8rc "~/.emacs.d/flake8.conf")))
   (error (message "** could not enable elpy")))
 
-(defvar venv-default "~/.emacs.d/emacs-env")
-(defun activate-venv-default ()
-  (interactive)
-  (pyvenv-activate venv-default)
-  (elpy-rpc-restart))
-(make-alias 'activate-venv-default)
+(defvar venv-default-py2 "~/.emacs.d/python2-env")
+(defvar venv-default-py3 "~/.emacs.d/python3-env")
+(defvar venv-default venv-default-py2)
 
-(prepend-path "~/.emacs.d/emacs-env/bin")
+(defun activate-venv-and-reload (venv)
+  (interactive)
+  (pyvenv-activate venv)
+  (elpy-rpc-restart)
+  (python-mode))
+(make-alias 'activate-venv-and-reload)
+
+(defun activate-venv-default-py2 ()
+  (interactive)
+  (activate-venv-and-reload venv-default-py2))
+(make-alias 'activate-venv-default-py2)
+
+(defun activate-venv-default-py3 ()
+  (interactive)
+  (setq elpy-rpc-python-command "python3")
+  (activate-venv-and-reload venv-default-py3))
+(make-alias 'activate-venv-default-py3)
 
 (defun find-venv-current-project ()
   "Return the path to the virtualenv in the current project or
@@ -827,8 +874,7 @@ project; otherwise activate the virtualenv defined in
     (if venv
         (if (y-or-n-p (format "Activate %s?" venv))
             (progn
-              (pyvenv-activate venv)
-              (elpy-rpc-restart)
+              (activate-venv-and-reload venv)
               (message "Using %s" pyvenv-virtual-env)))
       (message "could not find a virtualenv here"))))
 (make-alias 'activate-venv-current-project)
@@ -851,21 +897,6 @@ project; otherwise activate the virtualenv defined in
     (switch-to-buffer dest))
   (elpy-rpc-restart))
 (make-alias 'elpy-install-requirements)
-
-(add-hook 'elpy-mode-hook
-'(lambda ()
-   (define-key elpy-mode-map (kbd "C-<right>") nil)
-   (define-key elpy-mode-map (kbd "C-<left>") nil)
-   (define-key elpy-mode-map (kbd "M-<right>") nil)
-   (define-key elpy-mode-map (kbd "M-<left>") nil)
-   (define-key elpy-mode-map (kbd "M-<right>") nil)
-   (define-key elpy-mode-map (kbd "M-C-]") 'elpy-nav-move-iblock-right)
-   (define-key elpy-mode-map (kbd "M-C-[") 'elpy-nav-move-iblock-left)
-   (setq elpy-rpc-backend "jedi")
-   (add-to-list 'elpy-project-ignored-directories "src")
-   (add-to-list 'elpy-project-ignored-directories "*-env")
-   ;; (elpy-use-ipython)
-))
 
 (defun p8 ()
   "Apply autopep8 to the current region or buffer"
@@ -903,10 +934,12 @@ project; otherwise activate the virtualenv defined in
         "hydra-python"
         ("RET" redraw-display "<quit>")
         ("g" elpy-goto-definition-other-window "elpy-goto-definition-other-window")
-        ("E" elpy-config "elpy-config")
-        ("r" elpy-install-requirements "elpy-install-requirements")
+        ("e" elpy-config "elpy-config")
+        ("f" flycheck-verify-setup "flycheck-verify-setup")
+        ("i" elpy-install-requirements "elpy-install-requirements")
         ("v" activate-venv-current-project "activate-venv-current-project")
-        ("V" activate-venv-default "activate-venv-default")
+        ("2" activate-venv-default-py2 "activate-venv-default-py2")
+        ("3" activate-venv-default-py3 "activate-venv-default-py3")
         ("y" elpy-yapf-fix-code "elpy-yapf-fix-code")))
   (message "** hydra is not installed"))
 

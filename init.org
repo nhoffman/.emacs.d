@@ -370,13 +370,14 @@ Add some extra package repositories. The default value of package-archives is
   (when (boundp 'package-pinned-packages)
     (setq package-pinned-packages
           '((elpy . "elpy")
-            (highlight-indentation . "elpy") ;; fixes error in elpy 1.6
-            (org . "org")
-            (magit . "melpa-stable")
+            (flycheck . "melpa-stable")
             (helm-descbinds . "melpa-stable")
             (helm-swoop . "melpa-stable")
+            (highlight-indentation . "elpy") ;; fixes error in elpy 1.6
             (hydra . "gnu")
+            (magit . "melpa-stable")
             (markdown-mode . "melpa-stable")
+            (org . "org")
             (smart-mode-line . "melpa-stable")
             (swiper . "melpa-stable")
             (web-mode . "melpa")
@@ -476,6 +477,7 @@ emacs was first started.
     elpy
     ess
     expand-region
+    flycheck
     gist
     git-timemachine
     helm
@@ -1580,29 +1582,16 @@ Add a new entry to my journal.
 
 - http://jesselegg.com/archives/2010/02/25/emacs-python-programmers-part-1/
 
-** Python hooks
-
-We'll use flake8 for syntax checking, but we want to be able to ignore
-certain rules, so use a shell-script wrapper set the value of
-=python-check-command= to use it.
-
-#+BEGIN_SRC sh :exports both :results output
-cat ~/.emacs.d/bin/pychecker
-#+END_SRC
-
-Error codes are listed here: http://pep8.readthedocs.org/en/latest/intro.html#error-codes
+** python-mode hooks
 
 #+BEGIN_SRC elisp
 (add-hook 'python-mode-hook
           '(lambda ()
-             (message "Loading python-mode hooks")
              (setq indent-tabs-mode nil)
              (setq tab-width 4)
              (setq py-indent-offset tab-width)
              (setq py-smart-indentation t)
-             (define-key python-mode-map "\C-m" 'newline-and-indent)
-             (setq python-check-command "~/.emacs.d/bin/pychecker")
-             ))
+             (define-key python-mode-map "\C-m" 'newline-and-indent)))
 #+END_SRC
 
 File name mappings
@@ -1620,39 +1609,104 @@ deleting a single character.
 (setq backward-delete-char-untabify-method "all")
 #+END_SRC
 
+** flycheck
+
+Flycheck implements syntax checking for many languages, but for now,
+I'm just using it in the context of =elpy=. It's a tossup whether to
+configure flycheck separately from elpy, but I did so below.
+
+#+BEGIN_SRC elisp
+(if (require 'flycheck nil 'noerror)
+    (use-package flycheck
+      :init
+      (setq flycheck-flake8rc "~/.emacs.d/flake8.conf"))
+  (message "** flycheck is not installed"))
+#+END_SRC
+
 ** elpy
 
-Along with some helper functions (see below) elpy has replaced a
-number of python-related packages that I was using before, like
-=jedi=, =flymake-cursor=, =flycheck=, and =python-pylint=.
+=elpy= (installed from ELPA above) provides the primary basis for my
+python programming environment. After a bit of trial and error, the
+combination of =elpy= and =flycheck= (as opposed to =flymake=, see
+below) supports fairly seamless switching between python2 and python3
+programming environments.
 
-- Installation :: https://github.com/jorgenschaefer/elpy/wiki/Installation
-- note that =python-check-command= (set in python hooks above) defines the program used by =elpy-check=
+See https://github.com/jorgenschaefer/elpy/wiki/Installation
+
+Features such as syntax checking, linting, and code completion rely on
+external python packages. Here's a script that creates a default
+virtualenv for each of python2 and python3, and installs all of the
+external packages that I use there:
+
+#+BEGIN_SRC sh :eval no
+cd ~/.emacs.d
+bin/venv.sh
+#+END_SRC
+
+Also see below for elisp functions for installing dependencies.
+
+Configure =elpy=. Note that I use =C-= + arrows to move between
+windows, and =M= + arrows to move by word. These are in muscle memory
+at this point, and elpy can't have them (these bindings are removed below).
+
+#+BEGIN_SRC elisp
+(if (require 'elpy nil 'noerror)
+    (use-package elpy
+      :bind (:map elpy-mode-map
+                  ("C-<right>" . nil)
+                  ("C-<left>" . nil)
+                  ("M-<right>" . nil)
+                  ("M-<left>" . nil)
+                  ("M-<right>" . nil)
+                  ("M-C-]" . elpy-nav-move-iblock-right)
+                  ("M-C-[" . elpy-nav-move-iblock-left))
+      :init
+      (when (require 'flycheck nil t)
+        (add-hook 'elpy-mode-hook 'flycheck-mode))
+      :config
+      (setq elpy-modules (delq 'elpy-module-django elpy-modules))
+      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+      (setq elpy-rpc-backend "jedi")
+      (add-to-list 'elpy-project-ignored-directories "src")
+      (add-to-list 'elpy-project-ignored-directories "*-env"))
+  (message "** elpy is not installed"))
+#+END_SRC
 
 #+BEGIN_SRC elisp
 (condition-case nil
-    (elpy-enable) ;; install from ELPA
+    (progn
+      (elpy-enable)
+      (setq elpy-modules (delq 'elpy-module-django elpy-modules))
+      ;; disable flymake and replace with flycheck
+      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+      (when (require 'flycheck nil t)
+        (add-hook 'elpy-mode-hook 'flycheck-mode)
+        (setq flycheck-flake8rc "~/.emacs.d/flake8.conf")))
   (error (message "** could not enable elpy")))
 #+END_SRC
 
-As of version 1.5.0, the elpy python package is distributed with the
-ELPA elisp package, but other dependencies (such as jedi) still need
-to be available. Assuming elpy dependencies are installed in
-~/.emacs.d/emacs-env
-
 #+BEGIN_SRC elisp
-(defvar venv-default "~/.emacs.d/emacs-env")
-(defun activate-venv-default ()
+(defvar venv-default-py2 "~/.emacs.d/python2-env")
+(defvar venv-default-py3 "~/.emacs.d/python3-env")
+(defvar venv-default venv-default-py2)
+
+(defun activate-venv-and-reload (venv)
   (interactive)
-  (pyvenv-activate venv-default)
-  (elpy-rpc-restart))
-(make-alias 'activate-venv-default)
-#+END_SRC
+  (pyvenv-activate venv)
+  (elpy-rpc-restart)
+  (python-mode))
+(make-alias 'activate-venv-and-reload)
 
-Also add executables in the default virtualenv to =$PATH=
+(defun activate-venv-default-py2 ()
+  (interactive)
+  (activate-venv-and-reload venv-default-py2))
+(make-alias 'activate-venv-default-py2)
 
-#+BEGIN_SRC elisp
-(prepend-path "~/.emacs.d/emacs-env/bin")
+(defun activate-venv-default-py3 ()
+  (interactive)
+  (setq elpy-rpc-python-command "python3")
+  (activate-venv-and-reload venv-default-py3))
+(make-alias 'activate-venv-default-py3)
 #+END_SRC
 
 Here's a function that tries to activate a virtualenv in the current
@@ -1686,8 +1740,7 @@ project; otherwise activate the virtualenv defined in
     (if venv
         (if (y-or-n-p (format "Activate %s?" venv))
             (progn
-              (pyvenv-activate venv)
-              (elpy-rpc-restart)
+              (activate-venv-and-reload venv)
               (message "Using %s" pyvenv-virtual-env)))
       (message "could not find a virtualenv here"))))
 (make-alias 'activate-venv-current-project)
@@ -1716,28 +1769,6 @@ from within Emacs.
   (elpy-rpc-restart))
 (make-alias 'elpy-install-requirements)
 #+END_SRC
-
-I use =C-= + arrows to move between windows, and =M= + arrows to move
-by word. These are in muscle memory at this point, and elpy can't have
-them.
-
-#+BEGIN_SRC elisp
-(add-hook 'elpy-mode-hook
-'(lambda ()
-   (define-key elpy-mode-map (kbd "C-<right>") nil)
-   (define-key elpy-mode-map (kbd "C-<left>") nil)
-   (define-key elpy-mode-map (kbd "M-<right>") nil)
-   (define-key elpy-mode-map (kbd "M-<left>") nil)
-   (define-key elpy-mode-map (kbd "M-<right>") nil)
-   (define-key elpy-mode-map (kbd "M-C-]") 'elpy-nav-move-iblock-right)
-   (define-key elpy-mode-map (kbd "M-C-[") 'elpy-nav-move-iblock-left)
-   (setq elpy-rpc-backend "jedi")
-   (add-to-list 'elpy-project-ignored-directories "src")
-   (add-to-list 'elpy-project-ignored-directories "*-env")
-   ;; (elpy-use-ipython)
-))
-#+END_SRC
-
 
 ** autopep8
 
@@ -1784,6 +1815,8 @@ it to the output of autopep8.
 
 ** a hydra for working with python
 
+Let's expose some of the frequently-used actions using a hyrda
+
 #+BEGIN_SRC elisp
 (if (require 'hydra nil 'noerror)
     (progn
@@ -1791,10 +1824,12 @@ it to the output of autopep8.
         "hydra-python"
         ("RET" redraw-display "<quit>")
         ("g" elpy-goto-definition-other-window "elpy-goto-definition-other-window")
-        ("E" elpy-config "elpy-config")
-        ("r" elpy-install-requirements "elpy-install-requirements")
+        ("e" elpy-config "elpy-config")
+        ("f" flycheck-verify-setup "flycheck-verify-setup")
+        ("i" elpy-install-requirements "elpy-install-requirements")
         ("v" activate-venv-current-project "activate-venv-current-project")
-        ("V" activate-venv-default "activate-venv-default")
+        ("2" activate-venv-default-py2 "activate-venv-default-py2")
+        ("3" activate-venv-default-py3 "activate-venv-default-py3")
         ("y" elpy-yapf-fix-code "elpy-yapf-fix-code")))
   (message "** hydra is not installed"))
 #+END_SRC
