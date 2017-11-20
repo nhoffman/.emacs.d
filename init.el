@@ -847,30 +847,38 @@ Assumes that the frame is only split into two."
   (activate-venv-and-reload venv-default-py3))
 (make-alias 'activate-venv-default-py3)
 
-(defun find-venv-current-project ()
-  "Return the path to the virtualenv in the current project or
-nil if none is found."
-  (let ((venv nil)
-        (find-pattern "find %s -path '*bin/activate' -maxdepth 4"))
+(defun list-venvs (basedir)
+  "Return a list of paths to virtualenvs in 'basedir' or nil if
+ none can be found"
+  (interactive)
+  (let ((fstr "find %s -path '*bin/activate' -maxdepth 4")
+        (pth (replace-regexp-in-string "/$" "" basedir)))
 
-    (if (elpy-project-root)
-        (setq venv
-              (replace-regexp-in-string
-               "/bin/activate[ \t\n]*" ""
-               (shell-command-to-string
-                (format find-pattern (elpy-project-root))))))
-
-    (if (> (length venv) 0)
-        (replace-regexp-in-string "//" "/" venv))
-
+    (mapcar (lambda (string)
+              (replace-regexp-in-string "/bin/activate$" "" string))
+            (cl-remove-if
+             (lambda (string) (= (length string) 0))
+             (split-string (shell-command-to-string (format fstr pth)) "\n")))
     ))
+
+(defun list-venvs-current-project ()
+  (if (elpy-project-root)
+      (list-venvs elpy-project-root)
+    (error "error: there is no project here")))
+
+(defun helm-choose-venv-current-project ()
+  (interactive)
+  (helm
+   :sources (helm-build-sync-source "choose a virtualenv"
+              :candidates 'list-venvs-current-project)
+   :buffer "*helm choose virtualenvs*"))
 
 (defun activate-venv-current-project ()
   "Activate a virtualenv if one can be found in the current
 project; otherwise activate the virtualenv defined in
 `venv-default'. Also restarts the elpy rpc process."
   (interactive)
-  (let ((venv (find-venv-current-project)))
+  (let ((venv (helm-choose-venv-current-project)))
     (if venv
         (if (y-or-n-p (format "Activate %s?" venv))
             (progn
