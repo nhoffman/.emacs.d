@@ -1727,6 +1727,13 @@ project.
 	     (split-string (shell-command-to-string (format fstr pth)) "\n")))
     ))
 
+(defun helm-list-venvs ()
+  (interactive)
+  (helm
+   :sources (helm-build-sync-source "choose a virtualenv"
+	      :candidates 'list-venvs-test)
+   :buffer "*helm list virtualenvs*"))
+
 (defun find-venv-current-project ()
   "Return the path to the virtualenv in the current project or
 nil if none is found."
