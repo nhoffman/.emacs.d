@@ -790,7 +790,8 @@ Assumes that the frame is only split into two."
 (if (require 'flycheck nil 'noerror)
     (use-package flycheck
       :init
-      (setq flycheck-flake8rc "~/.emacs.d/flake8.conf"))
+      (setq flycheck-flake8rc "~/.emacs.d/flake8.conf")
+      (setq flycheck-check-syntax-automatically '(mode-enabled save)))
   (message "** flycheck is not installed"))
 
 (if (require 'elpy nil 'noerror)

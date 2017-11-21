@@ -1619,7 +1619,8 @@ configure flycheck separately from elpy, but I did so below.
 (if (require 'flycheck nil 'noerror)
     (use-package flycheck
       :init
-      (setq flycheck-flake8rc "~/.emacs.d/flake8.conf"))
+      (setq flycheck-flake8rc "~/.emacs.d/flake8.conf")
+      (setq flycheck-check-syntax-automatically '(mode-enabled save)))
   (message "** flycheck is not installed"))
 #+END_SRC
 
