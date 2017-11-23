@@ -11,7 +11,7 @@ else:
 
 vars = Variables()
 vars.Add('emacs', default=ARGUMENTS.get('emacs', emacs))
-vars.Add('init_dir', default=ARGUMENTS.get('init-dir', os.path.abspath('.')))
+vars.Add('init_dir', default=ARGUMENTS.get('init-dir', os.path.abspath('org-export')))
 env = Environment(ENV=dict(os.environ,
                            PATH=':'.join(['emacs-env/bin', os.environ['PATH']])),
                   variables=vars)
