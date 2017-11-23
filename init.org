@@ -187,11 +187,9 @@ virtualenv. There's a script to do this - just run:
 bin/venv.sh
 #+END_SRC
 
-This will create =~/.emacs.d/emacs-env=. If =scons= isn't installed,
-this will add that, too. In this case, you'll need to activate the
-virtualenv (=source emacs-env/bin/activate=) to use the version of
-=scons= installed there. I'll explain later why having =scons= is
-useful.
+This will create =~/.emacs.d/python2-env= and
+=~/.emacs.d/python3-env=. See the [[Python][Python]] section below for more about
+virtualenvs.
 
 ** initialize org-export submodule (optional)
 
@@ -1580,7 +1578,28 @@ Add a new entry to my journal.
 
 * Python
 
-- http://jesselegg.com/archives/2010/02/25/emacs-python-programmers-part-1/
+=elpy= (installed from ELPA above) provides the primary basis for my
+python programming environment. After a bit of trial and error, the
+combination of =elpy= and =flycheck= (as opposed to =flymake=, see
+below) supports fairly seamless switching between python2 and python3
+programming environments.
+
+An important note on using virtualenvs: when emacs is first launched,
+no venv is activated, and =elpy= uses system defaults for the python
+interpreter and any supporting python packages that may be
+installed. This is probably not what you want. Use the functions via
+the hydra defined below to activate appropriate virtualenv for your
+project. The table below shows my key bindings:
+
+| =C-\ p 2= | activate-venv-default-py2     |
+| =C-\ p 3= | activate-venv-default-py3     |
+| =C-\ p v= | activate-venv-current-project |
+
+See below for the definition of these functions.
+
+The default virtualenvs may be created using =bin/venv.sh=, which looks like this:
+
+#+INCLUDE: "bin/venv.sh" src sh :eval no
 
 ** python-mode hooks
 
@@ -1591,7 +1610,8 @@ Add a new entry to my journal.
              (setq tab-width 4)
              (setq py-indent-offset tab-width)
              (setq py-smart-indentation t)
-             (define-key python-mode-map "\C-m" 'newline-and-indent)))
+             (define-key python-mode-map "\C-m" 'newline-and-indent)
+             (elpy-mode)))
 #+END_SRC
 
 File name mappings
@@ -1625,12 +1645,6 @@ configure flycheck separately from elpy, but I did so below.
 #+END_SRC
 
 ** elpy
-
-=elpy= (installed from ELPA above) provides the primary basis for my
-python programming environment. After a bit of trial and error, the
-combination of =elpy= and =flycheck= (as opposed to =flymake=, see
-below) supports fairly seamless switching between python2 and python3
-programming environments.
 
 See https://github.com/jorgenschaefer/elpy/wiki/Installation
 
@@ -1814,6 +1828,7 @@ it to the output of autopep8.
 ** a hydra for python-related actions
 
 Let's expose some of the frequently-used actions using a hyrda
+presented as a submenu of my main hydra (ie, =C-\ p=).
 
 #+BEGIN_SRC elisp
 (if (require 'hydra nil 'noerror)

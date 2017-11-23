@@ -779,7 +779,8 @@ Assumes that the frame is only split into two."
              (setq tab-width 4)
              (setq py-indent-offset tab-width)
              (setq py-smart-indentation t)
-             (define-key python-mode-map "\C-m" 'newline-and-indent)))
+             (define-key python-mode-map "\C-m" 'newline-and-indent)
+             (elpy-mode)))
 
 (push '("SConstruct" . python-mode) auto-mode-alist)
 (push '("SConscript" . python-mode) auto-mode-alist)
