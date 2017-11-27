@@ -318,6 +318,7 @@
         "hydra-launcher"
         ("C-g" redraw-display "<quit>")
         ("RET" redraw-display "<quit>")
+        ("4" transpose-buffers)
         ("b" copy-buffer-file-name "copy-buffer-file-name")
         ("d" insert-date "insert-date")
         ("D" dash-at-point "dash-at-point")
