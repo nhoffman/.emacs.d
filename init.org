@@ -1344,22 +1344,40 @@ explicitly.
   (error (message "** could not load ESS")))
 #+END_SRC
 
+On systems using "modules", use this function to specify the R
+interpreter for inferior R processes.
+
+#+BEGIN_SRC elisp
+(defun set-inferior-ess-r-program-name ()
+     "Set `inferior-ess-r-program-name' as the absolute path to
+the R interpreter. On systems using
+'modules' (http://modules.sourceforge.net/), load the R module
+before defining the path."
+     (interactive)
+     (setq inferior-ess-r-program-name
+	   (replace-regexp-in-string
+	    "\n" ""
+	    (shell-command-to-string
+	     "which ml > /dev/null && (ml R; which R) || which R"))))
+(make-alias 'set-inferior-ess-r-program-name)
+#+END_SRC
+
 Hooks
 
 #+BEGIN_SRC elisp
 (add-hook 'ess-mode-hook
-	  '(lambda()
-	     (message "Loading ess-mode hooks")
-	     ;; leave my underscore key alone!
-	     (setq ess-S-assign "_")
-	     ;; (ess-toggle-underscore nil)
-	     ;; set ESS indentation style
-	     ;; choose from GNU, BSD, K&R, CLB, and C++
-	     (ess-set-style 'GNU 'quiet)
-	     (if enable-flyspell-p (flyspell-mode))
-	     )
-	  )
+          '(lambda()
+             (message "Loading ess-mode hooks")
+             ;; leave my underscore key alone!
+             (setq ess-S-assign "_")
+             ;; (ess-toggle-underscore nil)
+             ;; set ESS indentation style
+             ;; choose from GNU, BSD, K&R, CLB, and C++
+             (ess-set-style 'GNU 'quiet)
+             (if enable-flyspell-p (flyspell-mode))
+             (set-inferior-ess-r-program-name)))
 #+END_SRC
+
 * markdown-mode
 
 Installed using ELPA.

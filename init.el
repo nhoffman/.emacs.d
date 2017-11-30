@@ -614,6 +614,19 @@ Assumes that the frame is only split into two."
     (require 'ess-site)
   (error (message "** could not load ESS")))
 
+(defun set-inferior-ess-r-program-name ()
+     "Set `inferior-ess-r-program-name' as the absolute path to
+the R interpreter. On systems using
+'modules' (http://modules.sourceforge.net/), load the R module
+before defining the path."
+     (interactive)
+     (setq inferior-ess-r-program-name
+           (replace-regexp-in-string
+            "\n" ""
+            (shell-command-to-string
+             "which ml > /dev/null && (ml R; which R) || which R"))))
+(make-alias 'set-inferior-ess-r-program-name)
+
 (add-hook 'ess-mode-hook
           '(lambda()
              (message "Loading ess-mode hooks")
@@ -624,8 +637,7 @@ Assumes that the frame is only split into two."
              ;; choose from GNU, BSD, K&R, CLB, and C++
              (ess-set-style 'GNU 'quiet)
              (if enable-flyspell-p (flyspell-mode))
-             )
-          )
+             (set-inferior-ess-r-program-name)))
 
 (if (require 'markdown-mode nil 'noerror)
     (use-package markdown-mode
