@@ -803,7 +803,7 @@ convert to .docx with pandoc"
                    "Directory:"
                    "/Volumes/og_labmed_informatics/Documents/Meeting Minutes"))
          (orgfile (make-temp-file fname nil ".org"))
-         (docx (format "%s/%s.docx" basedir fname)))
+         (docx (concat (file-name-as-directory basedir) fname ".docx")))
     (write-region
      (plist-get sec ':begin) (plist-get sec ':end) orgfile)
     (call-process-shell-command (format "pandoc \"%s\" -o \"%s\"" orgfile docx))
