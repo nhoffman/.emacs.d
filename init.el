@@ -783,19 +783,31 @@ before defining the path."
                    (org-add-entry "~/Dropbox/journal/journal.org"
                                   "\n* %A, %B %d, %Y")))
 
+(defun safename (str)
+  "Remove non-alphanum characters and downcase"
+  (let ((exprs '(("^\\W+" "") ("\\W+$" "") ("\\W+" "-"))))
+    (while exprs
+      (setq e (pop exprs))
+      (setq str (replace-regexp-in-string (pop e) (pop e) str))
+      ))
+  (downcase str))
+
 (defun my/org-element-as-docx ()
+  "Export the contents of the element at point to a file and
+convert to .docx with pandoc"
   (interactive)
   (let* ((sec (car (cdr (org-element-at-point))))
          (header (plist-get sec ':raw-value))
-         (tag (substring header 1 11))
+         (fname (safename header))
          (basedir (read-directory-name
                    "Directory:"
                    "/Volumes/og_labmed_informatics/Documents/Meeting Minutes"))
-         (orgfile (make-temp-file tag nil ".org"))
-         (docx (format "%s/%s.docx" basedir tag)))
+         (orgfile (make-temp-file fname nil ".org"))
+         (docx (format "%s/%s.docx" basedir fname)))
     (write-region
      (plist-get sec ':begin) (plist-get sec ':end) orgfile)
     (call-process-shell-command (format "pandoc \"%s\" -o \"%s\"" orgfile docx))
+    (message "wrote %s" docx)
     ))
 
 (condition-case nil
