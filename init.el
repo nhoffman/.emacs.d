@@ -749,6 +749,7 @@ before defining the path."
         ("<up>" outline-previous-visible-heading "outline-previous-visible-heading")
         ("S-<down>" org-forward-paragraph "org-forward-paragraph")
         ("S-<up>" org-backward-paragraph "org-backward-paragraph")
+        ("w" my/org-element-as-docx "my/org-element-as-docx" :color blue)
         ("q" nil "<quit>")))
   (message "** hydra is not installed"))
 ;; org-mode-map binds "C-c n" in org-mode-map
@@ -781,6 +782,21 @@ before defining the path."
  (kbd "C-x C-j") (lambda () (interactive)
                    (org-add-entry "~/Dropbox/journal/journal.org"
                                   "\n* %A, %B %d, %Y")))
+
+(defun my/org-element-as-docx ()
+  (interactive)
+  (let* ((sec (car (cdr (org-element-at-point))))
+         (header (plist-get sec ':raw-value))
+         (tag (substring header 1 11))
+         (basedir (read-directory-name
+                   "Directory:"
+                   "/Volumes/og_labmed_informatics/Documents/Meeting Minutes"))
+         (orgfile (make-temp-file tag nil ".org"))
+         (docx (format "%s/%s.docx" basedir tag)))
+    (write-region
+     (plist-get sec ':begin) (plist-get sec ':end) orgfile)
+    (call-process-shell-command (format "pandoc \"%s\" -o \"%s\"" orgfile docx))
+    ))
 
 (condition-case nil
     (edit-server-start)
