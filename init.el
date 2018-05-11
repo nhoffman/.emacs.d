@@ -799,14 +799,17 @@ convert to .docx with pandoc"
   (let* ((sec (car (cdr (org-element-at-point))))
          (header (plist-get sec ':raw-value))
          (fname (safename header))
-         (basedir (read-directory-name
-                   "Directory:"
-                   "/Volumes/og_labmed_informatics/Documents/Meeting Minutes"))
+         (basedir
+          (read-directory-name
+           "Output directory: "
+           (shell-quote-argument (expand-file-name "~/Downloads"))))
          (orgfile (make-temp-file fname nil ".org"))
          (docx (concat (file-name-as-directory basedir) fname ".docx")))
     (write-region
      (plist-get sec ':begin) (plist-get sec ':end) orgfile)
-    (call-process-shell-command (format "pandoc \"%s\" -o \"%s\"" orgfile docx))
+    (call-process-shell-command (format "pandoc %s -o %s" orgfile docx))
+    (if (y-or-n-p "open file?")
+        (shell-command (format "open %s" docx)))
     (message "wrote %s" docx)
     ))
 
