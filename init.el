@@ -786,18 +786,16 @@ before defining the path."
 (defun safename (str)
   "Remove non-alphanum characters and downcase"
   (let ((exprs '(("^\\W+" "") ("\\W+$" "") ("\\W+" "-"))))
-    (while exprs
-      (setq e (pop exprs))
-      (setq str (replace-regexp-in-string (pop e) (pop e) str))
-      ))
-  (downcase str))
+    (dolist (e exprs)
+      (setq str (replace-regexp-in-string (nth 0 e) (nth 1 e) str)))
+    (downcase str)))
 
 (defun my/org-element-as-docx ()
   "Export the contents of the element at point to a file and
 convert to .docx with pandoc"
   (interactive)
   (let* ((sec (car (cdr (org-element-at-point))))
-         (header (plist-get sec ':raw-value))
+         (header (plist-get sec ':title))
          (fname (safename header))
          (basedir
           (read-directory-name
