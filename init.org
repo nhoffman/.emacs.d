@@ -1604,9 +1604,8 @@ convert to .docx with pandoc"
          (header (plist-get sec ':title))
          (fname (safename header))
          (basedir
-          (read-directory-name
-           "Output directory: "
-           (shell-quote-argument (expand-file-name "~/Downloads"))))
+          (shell-quote-argument (read-directory-name
+           "Output directory: " (expand-file-name "~/Downloads"))))
          (orgfile (make-temp-file fname nil ".org"))
          (docx (concat (file-name-as-directory basedir) fname ".docx")))
     (write-region

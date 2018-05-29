@@ -1,4 +1,3 @@
-
 (defvar my-alias-prefix "my/")
 
 (defun make-alias (fun &optional prefix)
@@ -413,10 +412,10 @@
 ;;   (exec-path-from-shell-initialize))
 
 (global-set-key [(control x) (control c)]
-                (function
-                 (lambda () (interactive)
-                   (cond ((y-or-n-p "Quit? (save-buffers-kill-terminal) ")
-                          (save-buffers-kill-terminal))))))
+		(function
+		 (lambda () (interactive)
+		   (cond ((y-or-n-p "Quit? (save-buffers-kill-terminal) ")
+			  (save-buffers-kill-terminal))))))
 
 (setq delete-trailing-lines nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -536,7 +535,7 @@
   "switch-buffers-between-frames switches the buffers between the two last frames"
   (interactive)
   (let ((this-frame-buffer nil)
-        (other-frame-buffer nil))
+	(other-frame-buffer nil))
     (setq this-frame-buffer (car (frame-parameter nil 'buffer-list)))
     (other-frame 1)
     (setq other-frame-buffer (car (frame-parameter nil 'buffer-list)))
@@ -621,10 +620,10 @@ the R interpreter. On systems using
 before defining the path."
      (interactive)
      (setq inferior-ess-r-program-name
-           (replace-regexp-in-string
-            "\n" ""
-            (shell-command-to-string
-             "which ml > /dev/null && (ml R; which R) || which R"))))
+	   (replace-regexp-in-string
+	    "\n" ""
+	    (shell-command-to-string
+	     "which ml > /dev/null && (ml R; which R) || which R"))))
 (make-alias 'set-inferior-ess-r-program-name)
 
 (add-hook 'ess-mode-hook
@@ -720,7 +719,7 @@ before defining the path."
              (org-babel-do-load-languages
               'org-babel-load-languages my/org-babel-load-languages)
 
-             (require 'ox-minutes nil t)
+	     (require 'ox-minutes nil t)
 
              ;; (defun org-with-silent-modifications(&rest args)
              ;;   "Replaces function causing error on org-export"
@@ -798,9 +797,8 @@ convert to .docx with pandoc"
          (header (plist-get sec ':title))
          (fname (safename header))
          (basedir
-          (read-directory-name
-           "Output directory: "
-           (shell-quote-argument (expand-file-name "~/Downloads"))))
+          (shell-quote-argument (read-directory-name
+           "Output directory: " (expand-file-name "~/Downloads"))))
          (orgfile (make-temp-file fname nil ".org"))
          (docx (concat (file-name-as-directory basedir) fname ".docx")))
     (write-region
