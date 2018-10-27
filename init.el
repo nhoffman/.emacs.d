@@ -648,7 +648,10 @@ before defining the path."
                   ;; don't redefine =M-<left>= and =M-<right>= in this mode
                   ("M-<right>" . nil)
                   ("M-<left>" . nil))
-      :init  (setq markdown-command "multimarkdown"))
+      :init  (setq markdown-command "multimarkdown")
+      :config (custom-set-faces
+	       '(markdown-code-face
+		 ((t (:inherit fixed-pitch :background "lavender"))))))
   (message "** markdown-mode is not installed"))
 
 (condition-case nil
