@@ -21,7 +21,7 @@ starting more or less from scratch.
 * Initial setup
 
 You can install this configuration by either cloning it directly from
-my repository, of by forking on GitHub and installing yours (obviously
+my repository, or by forking on GitHub and installing yours (obviously
 you will want to do the latter if you want to retain your own
 modifications:
 
