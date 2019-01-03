@@ -1902,6 +1902,17 @@ presented as a submenu of my main hydra (ie, =C-\ p=).
   (message "** hydra is not installed"))
 #+END_SRC
 
+* Javascript/json
+
+Indent json files using 2 spaces (default is 4).
+
+#+BEGIN_SRC elisp
+(add-hook 'json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
+#+END_SRC
+
 * shell
 
 Recognize zsh and bash scripts by file suffix.

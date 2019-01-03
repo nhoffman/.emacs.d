@@ -983,6 +983,11 @@ project; otherwise activate the virtualenv defined in
         ("y" elpy-yapf-fix-code "elpy-yapf-fix-code")))
   (message "** hydra is not installed"))
 
+(add-hook 'json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
+
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.bash\\'" . sh-mode))
 
