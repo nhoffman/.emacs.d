@@ -55,7 +55,7 @@ reset_log, = env.Command(
 Alias('reset', reset_log)
 
 if GetOption('help'):
-    print 'Available Build Aliases:'
-    print '-----'
+    print('Available Build Aliases:')
+    print('-----')
     for alias in sorted(SCons.Node.Alias.default_ans.keys()):
-        print alias
+        print(alias)
