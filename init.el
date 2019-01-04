@@ -132,7 +132,7 @@
 
 (defvar my-package-list
   '(auctex
-    csv-mode
+    ;; csv-mode
     discover
     dash-at-point
     edit-server
@@ -151,10 +151,11 @@
     jinja2-mode
     magit
     markdown-mode
-    moinmoin-mode
+    ;; moinmoin-mode
     org
     ox-minutes
     polymode
+    poly-R
     projectile
     rainbow-delimiters
     smart-mode-line
@@ -179,7 +180,7 @@
       (defhydra hydra-toggle-mode (:color blue :columns 4 :post (redraw-display))
         "hydra-toggle-mode"
         ("RET" redraw-display "<quit>")
-        ("c" csv-mode "csv-mode")
+        ;; ("c" csv-mode "csv-mode")
         ("h" html-mode "html-mode")
         ("j" jinja2-mode "jinja2-mode")
         ("k" markdown-mode "markdown-mode")
@@ -1011,9 +1012,9 @@ project; otherwise activate the virtualenv defined in
              (if enable-flyspell-p (flyspell-mode))
              (define-key rst-mode-map (kbd "C-c C-a") 'rst-adjust)))
 
-(condition-case nil
-    (require 'moinmoin-mode)
-  (error (message "** could not load moinmoin-mode")))
+;; (condition-case nil
+;;     (require 'moinmoin-mode)
+;;   (error (message "** could not load moinmoin-mode")))
 
 (if (require 'web-mode nil 'noerror)
     (use-package web-mode
