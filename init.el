@@ -252,7 +252,10 @@
     (progn
       (projectile-global-mode)
       (setq projectile-completion-system 'helm)
-      (helm-projectile-on))
+      (helm-projectile-on)
+      (if (executable-find "fd")
+	  (setq projectile-generic-command "fd . -0"))
+      (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
   (message "** not using projectile or helm-projectile - one or both not installed"))
 
 (when (boundp 'grep-find-ignored-directories)
