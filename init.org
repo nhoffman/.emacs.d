@@ -489,6 +489,7 @@ emacs was first started.
     markdown-mode
     ;; moinmoin-mode
     org
+    org-re-reveal
     ox-minutes
     polymode
     poly-R
@@ -1545,6 +1546,30 @@ blocks.
   (message "** hydra is not installed"))
 ;; org-mode-map binds "C-c n" in org-mode-map
 
+#+END_SRC
+
+** org-re-reveal
+
+Fork of =org-reveal= for generating presentations with [[https://revealjs.com][reveal.js]]
+
+Example document header:
+
+#+BEGIN_SRC
+#+OPTIONS: num:nil toc:nil
+#+REVEAL_TRANS: None
+#+REVEAL_THEME: Moon
+#+REVEAL_ROOT: ./reveal.js
+#+Title: LM510: Informatics Managenent
+#+Author: Noah Hoffman
+#+Email: ngh2@uw.edu
+#+END_SRC
+
+This assumes that you have cloned https://github.com/hakimel/reveal.js in the same directory as the .org file.
+
+#+BEGIN_SRC elisp
+(if (require 'org-re-reveal nil 'noerror)
+    (use-package org-re-reveal)
+  (message "** org-re-reveal is not installed"))
 #+END_SRC
 
 ** org-mode utilities

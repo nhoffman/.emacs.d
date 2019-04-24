@@ -153,6 +153,7 @@
     markdown-mode
     ;; moinmoin-mode
     org
+    org-re-reveal
     ox-minutes
     polymode
     poly-R
@@ -756,6 +757,10 @@ before defining the path."
         ("q" nil "<quit>")))
   (message "** hydra is not installed"))
 ;; org-mode-map binds "C-c n" in org-mode-map
+
+(if (require 'org-re-reveal nil 'noerror)
+    (use-package org-re-reveal)
+  (message "** org-re-reveal is not installed"))
 
 (defun insert-date ()
   ;; Insert today's timestamp in format "<%Y-%m-%d %a>"
