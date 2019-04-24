@@ -634,7 +634,7 @@ Describe key bindings for the current modes: see https://github.com/emacs-helm/h
 ** hydra for helm
 
 A hydra for activating helm commands that I can't otherwise
-remember. Activate via =hydra-launcher= using =C-l h=
+remember. Activate via =hydra-launcher= using =C-\ h=
 
 #+BEGIN_SRC elisp
 (if (require 'hydra nil 'noerror)
@@ -655,9 +655,7 @@ remember. Activate via =hydra-launcher= using =C-l h=
   (message "** hydra is not installed"))
 #+END_SRC
 
-** TODO projectile and helm-projectile
-
-TODO: check out =helm-projectile=
+** projectile and helm-projectile
 
 Project-centric file and directory navigation - see
 https://github.com/bbatsov/projectile
@@ -682,7 +680,10 @@ We'll configure both together
     (progn
       (projectile-global-mode)
       (setq projectile-completion-system 'helm)
-      (helm-projectile-on))
+      (helm-projectile-on)
+      (if (executable-find "fd")
+	  (setq projectile-generic-command "fd . -0"))
+      (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
   (message "** not using projectile or helm-projectile - one or both not installed"))
 #+END_SRC
 
