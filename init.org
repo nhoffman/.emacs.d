@@ -1931,9 +1931,14 @@ presented as a submenu of my main hydra (ie, =C-\ p=).
 
 * Javascript/json
 
-Indent json files using 2 spaces (default is 4).
+Indent json and javascript files using 2 spaces (default is 4).
 
 #+BEGIN_SRC elisp
+(add-hook 'js-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
+
 (add-hook 'json-mode-hook
           (lambda ()
             (make-local-variable 'js-indent-level)

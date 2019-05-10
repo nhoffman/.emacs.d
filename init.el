@@ -992,6 +992,11 @@ project; otherwise activate the virtualenv defined in
         ("y" elpy-yapf-fix-code "elpy-yapf-fix-code")))
   (message "** hydra is not installed"))
 
+(add-hook 'js-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
+
 (add-hook 'json-mode-hook
           (lambda ()
             (make-local-variable 'js-indent-level)
