@@ -756,6 +756,7 @@ before defining the path."
         ("<up>" outline-previous-visible-heading "outline-previous-visible-heading")
         ("S-<down>" org-forward-paragraph "org-forward-paragraph")
         ("S-<up>" org-backward-paragraph "org-backward-paragraph")
+	("s" (org-insert-structure-template "src") "add src block" :color blue)
         ("w" my/org-element-as-docx "my/org-element-as-docx" :color blue)
         ("q" nil "<quit>")))
   (message "** hydra is not installed"))
