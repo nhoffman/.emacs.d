@@ -142,6 +142,7 @@
     flycheck
     gist
     git-timemachine
+    groovy-mode
     helm
     helm-descbinds
     helm-swoop
@@ -1002,6 +1003,10 @@ project; otherwise activate the virtualenv defined in
           (lambda ()
             (make-local-variable 'js-indent-level)
             (setq js-indent-level 2)))
+
+(use-package groovy-mode
+             :ensure t
+	     :mode ("\\.nf" . groovy-mode))
 
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.bash\\'" . sh-mode))

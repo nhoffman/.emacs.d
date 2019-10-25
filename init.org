@@ -478,6 +478,7 @@ emacs was first started.
     flycheck
     gist
     git-timemachine
+    groovy-mode
     helm
     helm-descbinds
     helm-swoop
@@ -1944,6 +1945,16 @@ Indent json and javascript files using 2 spaces (default is 4).
           (lambda ()
             (make-local-variable 'js-indent-level)
             (setq js-indent-level 2)))
+#+END_SRC
+
+* Groovy mode
+
+Useful for nextflow
+
+#+BEGIN_SRC elisp
+(use-package groovy-mode
+             :ensure t
+	     :mode ("\\.nf" . groovy-mode))
 #+END_SRC
 
 * shell
