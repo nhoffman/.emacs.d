@@ -607,7 +607,7 @@ the path."
 (defvar nh/org-index "~/Dropbox/notes/index.org")
 (defun nh/org-index-add-entry ()
   (interactive)
-  (org-add-entry nh/org-index "\n* <%Y-%m-%d %a> "))
+  (nh/org-add-entry nh/org-index "\n* <%Y-%m-%d %a> "))
 
 (defun nh/find-org-index ()
   (interactive)
