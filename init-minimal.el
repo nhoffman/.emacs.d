@@ -308,12 +308,13 @@ Assumes that the frame is only split into two."
 			 (setq tab-width 4)
 			 (setq py-indent-offset tab-width)
 			 (setq py-smart-indentation t)
-			 (define-key python-mode-map "\C-m" 'newline-and-indent)
 			 (push '("SConstruct" . python-mode) auto-mode-alist)
 			 (push '("SConscript" . python-mode) auto-mode-alist)
 			 (push '("*.cgi" . python-mode) auto-mode-alist)
                          (require 'lsp-python-ms)
-                         (lsp))))
+                         (lsp)))
+  :config
+  (setq lsp-python-ms-python-executable-cmd "python3"))
 
 ;; Default 'untabify converts a tab to equivalent number of spaces
 ;; before deleting a single character.
