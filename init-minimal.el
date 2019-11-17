@@ -5,8 +5,13 @@
 (set-cursor-color "red")
 (setq column-number-mode t)
 (setq ediff-split-window-function 'split-window-horizontally)
+;; prevent windows from being split vertically
+(setq split-height-threshold nil)
 (show-paren-mode 1)
 (tool-bar-mode -1)   ;; hide tool bar
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
 
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
@@ -55,6 +60,8 @@
 (setq require-final-newline t)
 (setq delete-trailing-lines nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; buffers opened from command line don't create new frame
+(setq ns-pop-up-frames nil)
 
 ;; require prompt before exit on C-x C-c
 (defun nh/ask-before-exit ()
@@ -194,8 +201,24 @@ Assumes that the frame is only split into two."
     (switch-to-buffer nil))) ; restore the original window in this part of the frame
 (global-set-key (kbd "C-x 6") 'nh/toggle-frame-split)
 
-;; prevent windows from being split vertically
-(setq split-height-threshold nil)
+(defun nh/unfill-paragraph ()
+  (interactive)
+  (let ((fill-column (point-max)))
+  (fill-paragraph nil)))
+(global-set-key (kbd "M-C-q") 'nh/unfill-paragraph)
+
+(defun nh/copy-region-or-line-other-window ()
+  "Copy selected text or current line to other window"
+  (interactive)
+  (progn (save-excursion
+           (if (region-active-p)
+               (copy-region-as-kill
+                (region-beginning) (region-end))
+             (copy-region-as-kill
+              (line-beginning-position) (+ (line-end-position) 1)))
+           (other-window 1)
+           (yank))
+         (other-window -1)))
 
 ;;* spelling
 (defvar nh/enable-flyspell-p "enable flyspell in various modes")
@@ -281,10 +304,64 @@ Assumes that the frame is only split into two."
 (use-package lsp-python-ms
   :ensure t
   :hook (python-mode . (lambda ()
+			 (setq indent-tabs-mode nil)
+			 (setq tab-width 4)
+			 (setq py-indent-offset tab-width)
+			 (setq py-smart-indentation t)
+			 (define-key python-mode-map "\C-m" 'newline-and-indent)
+			 (push '("SConstruct" . python-mode) auto-mode-alist)
+			 (push '("SConscript" . python-mode) auto-mode-alist)
+			 (push '("*.cgi" . python-mode) auto-mode-alist)
                          (require 'lsp-python-ms)
-                         (lsp))))  ; or lsp-deferred
+                         (lsp))))
 
-;;* ivy, counsel, and friends
+;; Default 'untabify converts a tab to equivalent number of spaces
+;; before deleting a single character.
+(setq backward-delete-char-untabify-method "all")
+
+;; autopep8
+(defun nh/autopep8-region-or-buffer ()
+  "Apply autopep8 to the current region or buffer"
+  (interactive)
+  (unless (region-active-p)
+    (mark-whole-buffer))
+  (shell-command-on-region
+   (region-beginning) (region-end)      ;; beginning and end of region or buffer
+   "autopep8 -"                         ;; command and parameters
+   (current-buffer)                     ;; output buffer
+   t                                    ;; replace?
+   "*autopep8 errors*"                  ;; name of the error buffer
+   t)                                   ;; show error buffer?
+  (goto-char (region-end))              ;; ... and delete trailing newlines
+  (re-search-backward "\n+" nil t)
+  (replace-match "" nil t))
+
+(defun nh/autopep8-and-ediff ()
+  "Compare the current buffer to the output of autopep8 using ediff"
+  (interactive)
+  (let ((p8-output
+         (get-buffer-create (format "* %s autopep8 *" (buffer-name)))))
+    (shell-command-on-region
+     (point-min) (point-max)    ;; beginning and end of buffer
+     "autopep8 -"               ;; command and parameters
+     p8-output                  ;; output buffer
+     nil                        ;; replace?
+     "*autopep8 errors*"        ;; name of the error buffer
+     t)                         ;; show error buffer?
+    (ediff-buffers (current-buffer) p8-output)))
+
+;;* javascript/json
+(add-hook 'js-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
+
+(add-hook 'json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
+
+;;* search and navigation (ivy, counsel, and friends)
 
 (use-package ivy
   :ensure t
@@ -302,7 +379,6 @@ Assumes that the frame is only split into two."
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
   (global-set-key (kbd "C-c g") 'counsel-git)
   (global-set-key (kbd "C-c j") 'counsel-git-grep)
-  (global-set-key (kbd "C-c a") 'counsel-ag)
   (global-set-key (kbd "C-x l") 'counsel-locate)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
@@ -360,22 +436,21 @@ Assumes that the frame is only split into two."
     ("RET" redraw-display "<quit>")
     ("b" nh/copy-buffer-file-name "nh/copy-buffer-file-name")
     ("d" nh/insert-date "nh/insert-date")
-    ("D" dash-at-point "dash-at-point")
     ("e" save-buffers-kill-emacs "save-buffers-kill-emacs")
     ("f" nh/fix-frame "fix-frame")
     ("g" hydra-toggle-mode/body "toggle mode")
     ("h" hydra-helm/body "helm commands")
     ("i" hydra-init-file/body "hydra for init file")
-    ("n" my/find-org-index "my/find-org-index")
-    ("N" my/org-index-add-entry "my/org-index-add-entry")
+    ("n" nh/find-org-index "my/find-org-index")
+    ("N" nh/org-index-add-entry "my/org-index-add-entry")
     ("m" magit-status "magit-status")
     ("o" hydra-org-navigation/body "hydra-org-navigation")
-    ("O" copy-region-or-line-other-window "copy-region-or-line-other-window")
+    ("O" nh/copy-region-or-line-other-window "copy-region-or-line-other-window")
     ("p" hydra-python/body "python menu")
     ("P" list-processes "list-processes")
-    ("s" ssh-refresh "ssh-refresh")
+    ("s" nh/ssh-refresh "ssh-refresh")
     ("t" org-todo-list "org-todo-list")
-    ("T" transpose-buffers "transpose-buffers")
+    ("T" nh/transpose-buffers "transpose-buffers")
     ("u" untabify "untabify")
     ("w" hydra-web-mode/body "web-mode commands"))
   (global-set-key (kbd "C-\\") 'hydra-launcher/body)
@@ -565,6 +640,32 @@ convert to .docx with pandoc"
     (message "wrote %s" docx)
     ))
 
+;;* sh-mode
+
+(add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.bash\\'" . sh-mode))
+
+;;* text-mode
+
+(add-hook 'text-mode-hook
+          '(lambda ()
+             ;; (longlines-mode)
+             (if nh/enable-flyspell-p (flyspell-mode))))
+;;* rst-mode
+
+(add-hook 'rst-mode-hook
+          '(lambda ()
+             (message "Loading rst-mode hooks")
+             (if nh/enable-flyspell-p (flyspell-mode))
+             (define-key rst-mode-map (kbd "C-c C-a") 'rst-adjust)))
+
+;;* tramp
+
+(condition-case nil
+    (require 'tramp)
+  (setq tramp-default-method "scp")
+  (error (message "** could not load tramp")))
+
 ;;* misc packages
 
 (use-package yasnippet
@@ -609,6 +710,15 @@ convert to .docx with pandoc"
   :config (custom-set-faces
 	   '(markdown-code-face
 	     ((t (:inherit fixed-pitch :background "lavender"))))))
+
+(use-package groovy-mode
+  :ensure t
+  :mode ("\\.nf" . groovy-mode))
+
+(use-package discover
+  :ensure t
+  :config
+  (global-discover-mode 1))
 
 ;; (use-package company-lsp
 ;;   :ensure t
