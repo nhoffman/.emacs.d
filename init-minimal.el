@@ -311,10 +311,25 @@ Assumes that the frame is only split into two."
   :ensure t
   :config
   (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
   (setq ivy-count-format "%d/%d ")
+  ;; https://github.com/abo-abo/swiper/wiki/ivy-display-function
+  ;; (setq ivy-display-functions-alist
+  ;; 	'((counsel-M-x . ivy-display-function-lv)
+  ;;         (ivy-completion-in-region . ivy-display-function-overlay)))
   (global-set-key (kbd "C-c C-r") 'ivy-resume))
+
+;; (defun ivy-display-function-lv (text)
+;;   (let ((lv-force-update t))
+;;     (lv-message
+;;      (replace-regexp-in-string
+;;       "%" "%%"
+;;       (if (string-match "\\`\n" text)
+;;           (substring text 1)
+;;         text)))))
+
+;; (use-package lv
+;;   :ensure t)
 
 (use-package counsel
   :ensure t
@@ -324,6 +339,7 @@ Assumes that the frame is only split into two."
   (global-set-key (kbd "C-c g") 'counsel-git)
   (global-set-key (kbd "C-c j") 'counsel-git-grep)
   (global-set-key (kbd "C-x l") 'counsel-locate)
+  (global-set-key (kbd "M-y") 'counsel-yank-pop)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
 (use-package swiper
