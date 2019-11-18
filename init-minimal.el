@@ -13,6 +13,12 @@
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
+;; save customizations in a file other than init.el
+(defconst custom-file (expand-file-name "custom.el" user-emacs-directory))
+(unless (file-exists-p custom-file)
+  (write-region "" nil custom-file))
+(load custom-file)
+
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
             '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
@@ -301,6 +307,7 @@ Assumes that the frame is only split into two."
 
 ;;* python
 
+;; https://vxlabs.com/2018/11/19/configuring-emacs-lsp-mode-and-microsofts-visual-studio-code-python-language-server/
 (use-package lsp-python-ms
   :ensure t
   :hook (python-mode . (lambda ()
@@ -315,6 +322,9 @@ Assumes that the frame is only split into two."
                          (lsp)))
   :config
   (setq lsp-python-ms-python-executable-cmd "python3"))
+
+;; TODO: add to hydra
+;; lsp-describe-thing-at-point
 
 ;; Default 'untabify converts a tab to equivalent number of spaces
 ;; before deleting a single character.
