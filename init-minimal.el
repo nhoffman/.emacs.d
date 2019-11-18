@@ -245,7 +245,7 @@ Assumes that the frame is only split into two."
 ;;* init file utilities
 (defvar nh/init-el "~/.emacs.d/init-minimal.el" "My init file")
 (defun nh/init-file-edit ()
-  "Edit org-mode version of init file specified by `my/init-org'"
+  "Edit init file specified by `nh/init-el'"
   (interactive)
   (find-file nh/init-el))
 
@@ -581,7 +581,7 @@ the path."
                ;; org-babel
 
                ;; enable a subset of languages for evaluation in code blocks
-               (setq my/org-babel-load-languages
+               (setq nh/org-babel-load-languages
                      '((R . t)
                        (latex . t)
                        (python . t)
@@ -591,12 +591,12 @@ the path."
                        (dot . t)))
 
                ;; use "shell" for org-mode versions 9 and above
-               (add-to-list 'my/org-babel-load-languages
+               (add-to-list 'nh/org-babel-load-languages
                             (if (>= (string-to-number (substring (org-version) 0 1)) 9)
 				'(shell . t) '(sh . t)))
 
                (org-babel-do-load-languages
-		'org-babel-load-languages my/org-babel-load-languages)
+		'org-babel-load-languages nh/org-babel-load-languages)
 
                (defadvice org-todo-list (after org-todo-list-bottom ())
 		 "Move to bottom of page after entering org-todo-list"
