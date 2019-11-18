@@ -305,6 +305,99 @@ Assumes that the frame is only split into two."
        "use-package is not installed - could not activate %s" (symbol-name pkg))
       )))
 
+;;* search and navigation (ivy, counsel, and friends)
+
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  (setq ivy-count-format "%d/%d ")
+  (global-set-key (kbd "C-c C-r") 'ivy-resume))
+
+(use-package counsel
+  :ensure t
+  :config
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "C-c g") 'counsel-git)
+  (global-set-key (kbd "C-c j") 'counsel-git-grep)
+  (global-set-key (kbd "C-x l") 'counsel-locate)
+  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
+
+(use-package swiper
+  :ensure t
+  :config
+  (global-set-key (kbd "C-s") 'swiper))
+
+(use-package projectile
+  :ensure t
+  :init
+  (setq projectile-completion-system 'ivy)
+  :config
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1))
+
+(use-package avy
+  :ensure t
+  :bind (("M-'" . avy-goto-word-1)))
+
+;; see https://github.com/ericdanan/counsel-projectile
+(use-package counsel-projectile
+  :ensure t
+  :config
+  (counsel-projectile-mode))
+
+(when (boundp 'grep-find-ignored-directories)
+  (add-to-list 'grep-find-ignored-directories ".eggs")
+  (add-to-list 'grep-find-ignored-directories "src"))
+
+(defun nh/grep-ignore-venv-current-project (&rest args)
+  (interactive)
+  (let ((venv (find-venv-current-project)))
+    (if venv
+        (progn
+          (setq venv (file-name-nondirectory
+                      (replace-regexp-in-string "/$" "" venv)))
+          (message "adding '%s' to grep-find-ignored-directories" venv)
+          (add-to-list 'grep-find-ignored-directories venv))
+      (message "no virtualenv at this location")
+      )))
+
+(advice-add 'rgrep :before #'nh/grep-ignore-venv-current-project)
+(advice-add 'projectile-grep :before #'nh/grep-ignore-venv-current-project)
+(advice-add 'counsel-projectile-grep :before #'nh/grep-ignore-venv-current-project)
+
+;;* auto-complete using company-mode
+
+(use-package company
+  :ensure t
+  :config
+  (setq company-minimum-prefix-length 1
+	company-idle-delay 0
+	company-tooltip-limit 10
+	company-transformers nil
+	company-show-numbers t)
+  (global-company-mode +1))
+
+;;* lsp-mode
+(use-package lsp-mode
+  :ensure t)
+
+(use-package lsp-ui
+  :ensure t
+  :config
+  (setq lsp-ui-doc-max-height 20
+	    lsp-ui-doc-max-width 50
+	    lsp-ui-sideline-ignore-duplicate t
+	    lsp-ui-peek-always-show t))
+
+(use-package company-lsp
+  :ensure t
+  :config
+  (push 'company-lsp company-backends))
+
 ;;* python
 
 ;; https://vxlabs.com/2018/11/19/configuring-emacs-lsp-mode-and-microsofts-visual-studio-code-python-language-server/
@@ -371,72 +464,6 @@ Assumes that the frame is only split into two."
           (lambda ()
             (make-local-variable 'js-indent-level)
             (setq js-indent-level 2)))
-
-;;* search and navigation (ivy, counsel, and friends)
-
-(use-package ivy
-  :ensure t
-  :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
-  (setq ivy-count-format "%d/%d ")
-  (global-set-key (kbd "C-c C-r") 'ivy-resume))
-
-(use-package counsel
-  :ensure t
-  :config
-  (global-set-key (kbd "M-x") 'counsel-M-x)
-  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-  (global-set-key (kbd "C-c g") 'counsel-git)
-  (global-set-key (kbd "C-c j") 'counsel-git-grep)
-  (global-set-key (kbd "C-x l") 'counsel-locate)
-  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
-
-(use-package swiper
-  :ensure t
-  :config
-  (global-set-key (kbd "C-s") 'swiper))
-
-(use-package projectile
-  :ensure t
-  :init
-  (setq projectile-completion-system 'ivy)
-  :config
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (projectile-mode +1))
-
-(use-package avy
-  :ensure t
-  :bind (("M-'" . avy-goto-word-1)))
-
-;; see https://github.com/ericdanan/counsel-projectile
-(use-package counsel-projectile
-  :ensure t
-  :config
-  (counsel-projectile-mode))
-
-(when (boundp 'grep-find-ignored-directories)
-  (add-to-list 'grep-find-ignored-directories ".eggs")
-  (add-to-list 'grep-find-ignored-directories "src"))
-
-(defun nh/grep-ignore-venv-current-project (&rest args)
-  (interactive)
-  (let ((venv (find-venv-current-project)))
-    (if venv
-        (progn
-          (setq venv (file-name-nondirectory
-                      (replace-regexp-in-string "/$" "" venv)))
-          (message "adding '%s' to grep-find-ignored-directories" venv)
-          (add-to-list 'grep-find-ignored-directories venv))
-      (message "no virtualenv at this location")
-      )))
-
-(advice-add 'rgrep :before #'nh/grep-ignore-venv-current-project)
-(advice-add 'projectile-grep :before #'nh/grep-ignore-venv-current-project)
-(advice-add 'counsel-projectile-grep :before #'nh/grep-ignore-venv-current-project)
-
-
 
 ;;* hydra
 
@@ -664,6 +691,7 @@ convert to .docx with pandoc"
           '(lambda ()
              ;; (longlines-mode)
              (if nh/enable-flyspell-p (flyspell-mode))))
+
 ;;* rst-mode
 
 (add-hook 'rst-mode-hook
@@ -733,11 +761,7 @@ convert to .docx with pandoc"
   :config
   (global-discover-mode 1))
 
-;; (use-package company-lsp
-;;   :ensure t
-;;   :config
-;;   (push 'company-lsp company-backends))
-
-;; (use-package which-key
-;;   :ensure t
-;;   :config (which-key-mode))
+;; shows list of options following prefix command
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
