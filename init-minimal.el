@@ -436,6 +436,8 @@ Assumes that the frame is only split into two."
 (advice-add 'projectile-grep :before #'nh/grep-ignore-venv-current-project)
 (advice-add 'counsel-projectile-grep :before #'nh/grep-ignore-venv-current-project)
 
+
+
 ;;* hydra
 
 (use-package hydra
@@ -452,8 +454,8 @@ Assumes that the frame is only split into two."
     ("g" hydra-toggle-mode/body "toggle mode")
     ("h" hydra-helm/body "helm commands")
     ("i" hydra-init-file/body "hydra for init file")
-    ("n" nh/find-org-index "my/find-org-index")
-    ("N" nh/org-index-add-entry "my/org-index-add-entry")
+    ("n" nh/org-find-index "nh/org-find-index")
+    ("N" nh/org-add-entry-to-index "nh/org-add-entry-to-index")
     ("m" magit-status "magit-status")
     ("o" hydra-org-navigation/body "hydra-org-navigation")
     ("O" nh/copy-region-or-line-other-window "copy-region-or-line-other-window")
@@ -507,7 +509,7 @@ Assumes that the frame is only split into two."
     ("S-<down>" org-forward-paragraph "org-forward-paragraph")
     ("S-<up>" org-backward-paragraph "org-backward-paragraph")
     ("s" (org-insert-structure-template "src") "add src block" :color blue)
-    ("w" my/org-element-as-docx "my/org-element-as-docx" :color blue)
+    ("w" nh/org-element-as-docx "nh/org-element-as-docx" :color blue)
     ("q" nil "<quit>"))
 
   ) ;; end hydra config
@@ -616,11 +618,11 @@ the path."
   (insert (format-time-string time-format)))
 
 (defvar nh/org-index "~/Dropbox/notes/index.org")
-(defun nh/org-index-add-entry ()
+(defun nh/org-add-entry-to-index ()
   (interactive)
   (nh/org-add-entry nh/org-index "\n* <%Y-%m-%d %a> "))
 
-(defun nh/find-org-index ()
+(defun nh/org-find-index ()
   (interactive)
   (find-file nh/org-index))
 
