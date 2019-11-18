@@ -338,7 +338,6 @@ Assumes that the frame is only split into two."
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
   (global-set-key (kbd "C-c g") 'counsel-git)
   (global-set-key (kbd "C-c j") 'counsel-git-grep)
-  (global-set-key (kbd "C-x l") 'counsel-locate)
   (global-set-key (kbd "M-y") 'counsel-yank-pop)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
@@ -413,6 +412,9 @@ Assumes that the frame is only split into two."
   :ensure t
   :config
   (push 'company-lsp company-backends))
+
+(use-package lsp-ivy
+  :ensure t)
 
 ;;* python
 
