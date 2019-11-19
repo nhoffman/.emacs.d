@@ -85,9 +85,9 @@
 (if (member "--no-desktop" command-line-args)
     (message "** desktop auto-save is disabled")
   (progn
+    (message "** desktop auto-save is enabled")
     (require 'desktop)
     (desktop-save-mode 1)
-    (message "** desktop auto-save is enabled")
     (add-hook 'auto-save-hook 'nh/desktop-save-no-p)))
 
 ;;* execution environment
@@ -338,6 +338,7 @@ Assumes that the frame is only split into two."
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
   (global-set-key (kbd "C-c g") 'counsel-git)
   (global-set-key (kbd "C-c j") 'counsel-git-grep)
+  (global-set-key (kbd "C-c a") 'counsel-ag)
   (global-set-key (kbd "M-y") 'counsel-yank-pop)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
@@ -368,21 +369,21 @@ Assumes that the frame is only split into two."
   (add-to-list 'grep-find-ignored-directories ".eggs")
   (add-to-list 'grep-find-ignored-directories "src"))
 
-(defun nh/grep-ignore-venv-current-project (&rest args)
-  (interactive)
-  (let ((venv (find-venv-current-project)))
-    (if venv
-        (progn
-          (setq venv (file-name-nondirectory
-                      (replace-regexp-in-string "/$" "" venv)))
-          (message "adding '%s' to grep-find-ignored-directories" venv)
-          (add-to-list 'grep-find-ignored-directories venv))
-      (message "no virtualenv at this location")
-      )))
+;; (defun nh/grep-ignore-venv-current-project (&rest args)
+;;   (interactive)
+;;   (let ((venv (find-venv-current-project)))
+;;     (if venv
+;;         (progn
+;;           (setq venv (file-name-nondirectory
+;;                       (replace-regexp-in-string "/$" "" venv)))
+;;           (message "adding '%s' to grep-find-ignored-directories" venv)
+;;           (add-to-list 'grep-find-ignored-directories venv))
+;;       (message "no virtualenv at this location")
+;;       )))
 
-(advice-add 'rgrep :before #'nh/grep-ignore-venv-current-project)
-(advice-add 'projectile-grep :before #'nh/grep-ignore-venv-current-project)
-(advice-add 'counsel-projectile-grep :before #'nh/grep-ignore-venv-current-project)
+;; (advice-add 'rgrep :before #'nh/grep-ignore-venv-current-project)
+;; (advice-add 'projectile-grep :before #'nh/grep-ignore-venv-current-project)
+;; (advice-add 'counsel-projectile-grep :before #'nh/grep-ignore-venv-current-project)
 
 ;;* auto-complete using company-mode
 
@@ -417,6 +418,9 @@ Assumes that the frame is only split into two."
   :ensure t)
 
 ;;* python
+
+(use-package virtualenvwrapper
+  :ensure t)
 
 ;; https://vxlabs.com/2018/11/19/configuring-emacs-lsp-mode-and-microsofts-visual-studio-code-python-language-server/
 (use-package lsp-python-ms
