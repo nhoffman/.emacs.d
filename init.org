@@ -1,4 +1,4 @@
-#+TITLE: init.el for Noah Hoffman
+#+TITLE: init.el for Noah Hoffman (deprecated)
 #+AUTHOR: Noah Hoffman
 
 #+LANGUAGE:  en
@@ -7,6 +7,8 @@
 #+BIND: org-export-html-postamble nil
 #+PROPERTY: header-args:elisp :tangle init.el
 #+PROPERTY: header-args:sh :eval no :exports code
+
+*This configuration served me well for many years, but I have transitioned to a much simpler setup (https://github.com/nhoffman/emacs-config). I'm leaving this here for (my own) historical interest*
 
 In a fit of literate programming yak-shaving, I implemented my Emacs
 configuration as an org-mode file. I have also tried to provide a

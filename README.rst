@@ -1,6 +1,11 @@
-======================
-My emacs configuration
-======================
+===================================
+My emacs configuration (deprecated)
+===================================
+
+This configuration served me well for many years, but I have
+transitioned to a much simpler setup
+(https://github.com/nhoffman/emacs-config). I'm leaving this here for
+(my own) historical interest
 
 The html-exported version of init.el is available here:
 http://nhoffman.github.io/.emacs.d/
